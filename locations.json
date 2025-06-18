@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Apples",
+    "category": "Fruit",
+    "lat": 50.8733,
+    "lng": 0.009,
+    "short_description": "Orchard behind St Thomas' Church.",
+    "description": "These apples grow in abundance during late summer in the orchard behind St Thomas' Church. Open access for community picking.",
+    "season": [8, 9, 10],
+    "image": "images/apples.jpg",
+    "link": "https://example.com/apples"
+
+  },
+  {
+    "id": 2,
+    "name": "Blackberries",
+    "category": "Fruit",
+    "lat": 50.879,
+    "lng": 0.0112,
+        "short_description": "Orchard behind St Thomas' Church.",
+
+    "description": "Along the path at the Pells.",
+    "season": [8, 9],
+    "image": "images/blackberries.jpg",
+    "link": "https://example.com/apples"
+  },
+  {
+    "id": 3,
+    "name": "Wild Garlic",
+    "category": "Vegetable",
+    "lat": 50.869,
+    "lng": 0.004,
+    "description": "In the woods near the old racecourse.",
+    "season": [3, 4, 5],
+    "image": "images/wild-garlic.jpg",
+    "link": "https://example.com/apples"
+  },
+  {
+    "id": 4,
+    "name": "Elderflower",
+    "category": "Flower",
+    "lat": 50.8755,
+    "lng": -0.002,
+    "description": "Common in the hedgerows on Chapel Hill.",
+    "season": [5, 6],
+    "image": "images/elderflower.jpg",
+
+    "link": "https://example.com/apples"
+  },
+    {
+    "id": 5,
+    "name": "Apples",
+    "category": "Fruit",
+    "lat": 50.870,
+    "lng": 0.015,
+    "description": "A few trees in the Southover Grange Gardens.",
+    "season": [9, 10],
+    "image": "images/apples.jpg",
+    "link": "https://example.com/apples"
+  }
+  ,
+    {
+    "id": 6,
+    "name": "Wild Garlic",
+    "category": "Herb",
+    "lat": 50.872,
+    "lng": 0.017,
+    "description": "A few trees in the Southover Grange Gardens.",
+    "season": [9, 10],
+    "image": "images/apples.jpg",
+    "link": "https://example.com/apples"
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "flowers": [
+    "Elderflower",
+    "Nasturtium",
+    "Violet",
+    "Dandelion",
+    "Hawthorn",
+    "Rose",
+    "Chamomile",
+    "Lavender",
+    "Borage",
+    "Calendula"
+  ],
+  "fruits": [
+    "Apple",
+    "Blackberry",
+    "Raspberry",
+    "Strawberry",
+    "Cherry",
+    "Plum",
+    "Gooseberry",
+    "Blueberry",
+    "Redcurrant",
+    "Blackcurrant"
+  ],
+  "vegetables": [
+    "Carrot",
+    "Potato",
+    "Cabbage",
+    "Leek",
+    "Parsnip",
+    "Broccoli",
+    "Cauliflower",
+    "Pea",
+    "Onion",
+    "Swede"
+  ],
+  "herbs": [
+    "Mint",
+    "Rosemary",
+    "Thyme",
+    "Parsley",
+    "Sage",
+    "Chives",
+    "Basil",
+    "Oregano",
+    "Wild Garlic",
+    "Coriander"
+  ]
+}

@@ -1,0 +1,141 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 10px;
+}
+
+.logo {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+#map {
+  height: 80vh; /* 80% of the viewport height */
+  width: 100%;
+}
+
+.controls {
+  text-align: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+select {
+  padding: 8px;
+  margin: 0 5px;
+}
+
+
+#footer-details {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f9f9f9;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  font-family: sans-serif;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+#footer-details.visible {
+  transform: translateY(0);
+}
+
+#footer-details::-webkit-scrollbar {
+  width: 6px;
+}
+#footer-details::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+#footer-text {
+  flex-grow: 1;
+  max-height: 120px; /* Leave room for padding */
+  overflow-y: auto;
+}
+
+#footer-image-container {
+  flex-shrink: 0;
+  margin-right: 15px;
+}
+
+
+#footer-image {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  display: none;
+  border-radius: 6px;
+  margin: 0 12px 0 0;;
+}
+
+#footer-text {
+  flex-grow: 1;
+}
+
+.myDivIcon {
+  text-align: center;
+  /* Horizontally center the text (icon) */
+  line-height: 20px;
+  /* Vertically center the text (icon) */
+}
+
+
+/* Dark Mode Styles */
+
+
+  body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+
+  body.dark-mode .form-control,
+  body.dark-mode .form-select {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-color: #444;
+  }
+
+  body.dark-mode .form-control::placeholder {
+    color: #aaa;
+  }
+
+  body.dark-mode .select2-container--default .select2-selection--single {
+    background-color: #1e1e1e;
+    color: #fff;
+    border: 1px solid #444;
+  }
+
+  body.dark-mode .select2-results__option {
+    background-color: #1e1e1e;
+    color: #fff;
+  }
+
+  body.dark-mode .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #fff;
+  }
+
+  body.dark-mode .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #fff transparent transparent transparent;
+  }
+
+  .dark-mode .dark-mode-footer {
+    background-color: #222;
+    color: #aaa;
+  }

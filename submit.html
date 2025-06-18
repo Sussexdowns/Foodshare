@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Content</title>
+
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- CSS & Icons -->  
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://kit.fontawesome.com/f90ec7d4eb.js" crossorigin="anonymous"></script>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Font Awesome (required for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Leaflet AwesomeMarkers CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
+
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- Select2 CSS -->
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+  <!-- Favicons & Manifest -->
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Foodshare" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: 400px; /* Or 100vh, but 400px gives space for form */
+    width: 100%;
+  }
+</style>
+</head>
+
+<body class="p-4">
+
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      🌿 Map Menu
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="topics.html">📌 Topics</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html">🗺️ Search Map</a></li>
+        <li class="nav-item"><a class="nav-link" href="submit.html">✏️ Submit Content</a></li>
+        <li class="nav-item"><a class="nav-link" href="credits.html">📜 Credits</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Page Heading -->
+<div class="container my-4 text-center">
+  <h1 class="d-flex align-items-center justify-content-center">
+    ✏️ Submit New Location
+  </h1>
+</div>
+
+  <form name="submitForm" id="submitForm" class="container mb-4">
+
+    <input type="hidden" id="lat" name="lat">
+<input type="hidden" id="lng" name="lng">
+
+  <div class="mb-3">
+    <label for="category" class="form-label">Category</label>
+    <select id="category" class="form-select">
+      <option value="fruits">Fruit</option>
+      <option value="vegetables">Vegetable</option>
+      <option value="flowers">Flower</option>
+      <option value="herbs">Herb</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="item" class="form-label">Item</label>
+    <select id="item" class="form-select"></select>
+    <input type="text" id="new-item" class="form-control mt-2 d-none" placeholder="Enter new item name" />
+  </div>
+  
+    <div class="col-md-3">
+    <label for="month" class="form-label">Month</label>
+    <select id="month" class="form-select" multiple aria-label="Select months">
+      <option value="january">January</option>
+      <option value="february">February</option>
+      <option value="march">March</option>
+      <option value="april">April</option>
+      <option value="may">May</option>
+      <option value="june">June</option>
+      <option value="july">July</option>
+      <option value="august">August</option>
+      <option value="september">September</option>
+      <option value="october">October</option>
+      <option value="november">November</option>
+      <option value="december">December</option>
+    </select>
+  </div>
+
+
+
+    <div class="mb-3">
+      <label for="name" class="form-label">Location Name</label>
+      <input type="text" id="name" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="shortDesc" class="form-label">Short Description</label>
+      <input type="text" id="shortDesc" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="desc" class="form-label">Full Description</label>
+      <textarea id="desc" class="form-control" rows="4"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="links" class="form-label">Links (optional)</label>
+      <input type="text" id="links" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Image URL (optional)</label>
+      <input type="url" id="image" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+<div class="my-4">
+  <h5>📍 Click on the map to set pin location</h5>
+  <div id="map"></div>
+</div>
+
+<div class="my-3">
+  <p>
+    <strong>📍 Selected Coordinates:</strong>
+    <span id="coord-display">None</span>
+  </p>
+  <button type="button" class="btn btn-outline-secondary btn-sm" id="preview-location-btn">
+    🔍 Preview Pin Location
+  </button>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
+
+
+<script>
+  let map = L.map('map').setView([50.873, 0.009], 14);
+  let marker = null;
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  map.on('click', function(e) {
+    const { lat, lng } = e.latlng;
+    updateMarker(lat, lng);
+  });
+
+ function updateMarker(lat, lng) {
+  if (marker) map.removeLayer(marker);
+
+  marker = L.marker([lat, lng], {
+    draggable: true,
+    icon: L.AwesomeMarkers.icon({
+      icon: 'map-pin',
+      markerColor: 'blue',
+      prefix: 'fa'
+    })
+  }).addTo(map);
+
+  // Set initial coordinate values
+  updateLatLngInputs(lat, lng);
+
+  // Update coordinates when the marker is dragged
+  marker.on('dragend', function (e) {
+    const position = marker.getLatLng();
+    updateLatLngInputs(position.lat, position.lng);
+  });
+}
+
+function updateLatLngInputs(lat, lng) {
+  document.getElementById('lat').value = lat.toFixed(6);
+  document.getElementById('lng').value = lng.toFixed(6);
+  document.getElementById('coord-display').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+}
+
+
+  // Preview button functionality
+  document.getElementById('preview-location-btn').addEventListener('click', () => {
+    const lat = parseFloat(document.getElementById('lat').value);
+    const lng = parseFloat(document.getElementById('lng').value);
+
+    if (!isNaN(lat) && !isNaN(lng)) {
+      map.setView([lat, lng], 16);
+      updateMarker(lat, lng);
+    } else {
+      alert("Please select a location by clicking on the map first.");
+    }
+  });
+
+  // Try to center map on user's current location
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      map.setView([latitude, longitude], 16);
+
+      // Optional: drop a temporary marker at current location
+      L.circleMarker([latitude, longitude], {
+        radius: 6,
+        color: 'blue',
+        fillColor: '#3f51b5',
+        fillOpacity: 0.8
+      })
+      .bindPopup("You are here")
+      .addTo(map)
+      .openPopup();
+    },
+    (error) => {
+      console.warn("Geolocation failed:", error.message);
+    }
+  );
+} else {
+  console.warn("Geolocation not supported by this browser.");
+}
+
+</script>
+
+<script>
+$(document).ready(function () {
+  // Your icon formatting function
+  function formatOptionWithIcon(state) {
+    if (!state.id) return state.text;
+
+    const iconMap = {
+      "Fruit": "fa-apple-whole",
+      "Vegetable": "fa-carrot",
+      "Flower": "fa-seedling",
+      "Herb": "fa-leaf"
+    };
+
+    const iconClass = iconMap[state.text] || "fa-tag";
+    return $(`<span><i class="fa-solid ${iconClass} me-2"></i>${state.text}</span>`);
+  }
+
+  // Initialize Select2 on #category with icon formatting
+  $('#category').select2({
+    width: '100%',
+    templateResult: formatOptionWithIcon,
+    templateSelection: formatOptionWithIcon,
+    minimumResultsForSearch: Infinity // hides search box
+  });
+
+  // Listen for category changes using Select2 event
+  $('#category').on('change', function () {
+    const selectedCategory = $(this).val();
+    populateItemsDropdown(selectedCategory);
+  });
+
+  // Assuming itemsData is loaded from your JSON somewhere before this
+  let itemsData = {};
+
+  // Load items.json and populate category/items on page load
+  fetch('items.json')
+    .then(res => res.json())
+    .then(data => {
+      itemsData = data;
+      // Sort all categories alphabetically
+      for (const cat in itemsData) {
+        itemsData[cat].sort((a, b) => a.localeCompare(b));
+      }
+
+      // Initialize items dropdown based on selected category in Select2
+      const initialCategory = $('#category').val();
+      populateItemsDropdown(initialCategory);
+    });
+
+  // Populate items dropdown function
+  function populateItemsDropdown(categoryKey) {
+    const itemSelect = $('#item');
+    const newItemInput = $('#new-item');
+
+    itemSelect.empty();
+
+    if (!itemsData[categoryKey]) {
+      newItemInput.removeClass('d-none');
+      newItemInput.val('');
+      return;
+    }
+
+    itemsData[categoryKey].forEach(item => {
+      const option = $('<option>').val(item.toLowerCase().replace(/\s+/g, '-')).text(item);
+      itemSelect.append(option);
+    });
+
+    newItemInput.addClass('d-none').val('');
+  }
+});
+
+</script>
+
+<script src="form.js"></script>
+</body>
+</html>
