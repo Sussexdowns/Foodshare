@@ -32,6 +32,9 @@ select {
   margin: 0 5px;
 }
 
+main > .container {
+  padding: 60px 15px 0;
+}
 
 #footer-details {
   display: flex;
@@ -95,6 +98,20 @@ select {
   line-height: 20px;
   /* Vertically center the text (icon) */
 }
+
+.select2 :focus, .select2 textarea :focus  {
+  border-color: #007bff;
+  color: var(--bs-body-color);
+   /*border-color: #007bff;*/
+   border-color: var(--bs-body-bg);
+   outline: 0;;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+.select2 {
+    background-size: 16px 12px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+ }
 
 
 /* Dark Mode Styles */

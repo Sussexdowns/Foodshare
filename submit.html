@@ -3,35 +3,23 @@
 <head>
   <title>Submit Content</title>
 
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
   <!-- CSS & Icons -->  
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <script src="https://kit.fontawesome.com/f90ec7d4eb.js" crossorigin="anonymous"></script>
 
-  <!-- Leaflet CSS -->
+  <!-- Leaflet / font Awesome CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
-
-  <!-- Font Awesome (required for icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- Leaflet AwesomeMarkers CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
 
+  <!-- Styles -->
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-
-  <!-- Select2 CSS -->
-  <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-
-<!-- jQuery (required for Select2) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 
   <!-- Favicons & Manifest -->
   <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
@@ -56,7 +44,11 @@
 
 <body class="p-4">
 
+  <!-- Begin page content -->
+<main class="flex-shrink-0">
+
     <!-- Navbar -->
+     <div class=" fixed-top">
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center" href="#">
@@ -72,10 +64,13 @@
         <li class="nav-item"><a class="nav-link" href="index.html">🗺️ Search Map</a></li>
         <li class="nav-item"><a class="nav-link" href="submit.html">✏️ Submit Content</a></li>
         <li class="nav-item"><a class="nav-link" href="credits.html">📜 Credits</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">💬 Contact Us</a></li>
+
       </ul>
     </div>
   </div>
 </nav>
+</div>
 
 
 <!-- Page Heading -->
@@ -105,7 +100,7 @@
     <input type="text" id="new-item" class="form-control mt-2 d-none" placeholder="Enter new item name" />
   </div>
   
-    <div class="col-md-3">
+  <div class="mb-3">
     <label for="month" class="form-label">Month</label>
     <select id="month" class="form-select" multiple aria-label="Select months">
       <option value="january">January</option>
@@ -148,7 +143,9 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-<div class="my-4">
+  <div class="container mb-4">
+
+<div class="my-3">
   <h5>📍 Click on the map to set pin location</h5>
   <div id="map"></div>
 </div>
@@ -162,14 +159,27 @@
     🔍 Preview Pin Location
   </button>
 </div>
+</div>
+
+</main>
+<div class="fixed-bottom">
+
+  <footer class="bg-light p-3 d-flex flex-wrap justify-content-between align-items-center py-4 border-top"> 
+    <p class="col-md-6 text-body-secondary"> 2025 Pixelagent. All rights reserved.</p>
+      <ul class=" nav col-md-6 justify-content-end"> 
+        <li class="nav-item"><a href="credits.html" class="nav-link px-2 text-body-primary">Credits</a></li> 
+        <li class="nav-item"><a href="contact.html" class="nav-link px-2 text-body-primary">Contact</a></li> 
+        </ul> 
+    </footer>
+</div>
 
 <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
 
-<!-- jQuery (required for Select2) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
   let map = L.map('map').setView([50.873, 0.009], 14);
@@ -328,7 +338,7 @@ $(document).ready(function () {
 
 </script>
 
-<script src="form.js"></script>
-<script src="base.js"></script>
+<script src="scripts/form.js"></script>
+<script src="scripts/base.js"></script>
 </body>
 </html>

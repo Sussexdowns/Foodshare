@@ -222,16 +222,25 @@ function displayAllLocations() {
   safeGet('item').value = 'all';
   safeGet('month').value = 'all';
 
+  if (allLocations.length > 0) {
+    const bounds = L.latLngBounds(allLocations.map(loc => [loc.lat, loc.lng]));
+    map.fitBounds(bounds, { padding: [50, 50] }); // Add some padding
+  }
+
   addStatusMessage(`📍 Displaying all ${allLocations.length} locations`, 'success');
 }
 
 function displayFilteredLocations(locations) {
   clearMarkers();
   locations.forEach(addMarker);
+
+  if (locations.length > 0) {
+    const bounds = L.latLngBounds(locations.map(loc => [loc.lat, loc.lng]));
+    map.fitBounds(bounds, { padding: [50, 50] });
+  }
 }
 
 function showFooterDetails(location) {
-
 
 
   const footer = safeGet('footer-details');
