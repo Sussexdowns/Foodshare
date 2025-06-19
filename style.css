@@ -135,7 +135,61 @@ select {
     border-color: #fff transparent transparent transparent;
   }
 
-  .dark-mode .dark-mode-footer {
+  body.dark-mode .dark-mode-footer {
     background-color: #222;
     color: #aaa;
   }
+
+
+  /* Dark mode styles when body has .dark-mode */
+body.dark-mode .navbar {
+  background-color: #212529 !important; /* Dark background */
+  color: #f8f9fa !important;
+}
+
+body.dark-mode .navbar .navbar-brand,
+body.dark-mode .navbar .nav-link,
+body.dark-mode .navbar .navbar-toggler-icon {
+  color: #f8f9fa !important;
+}
+
+body.dark-mode .navbar .nav-link:hover,
+body.dark-mode .navbar .nav-link:focus {
+  color: #adb5bd !important;
+}
+
+body.dark-mode .navbar .navbar-toggler {
+  border-color: #f8f9fa !important;
+}
+
+body.dark-mode .navbar .dropdown-menu {
+  background-color: #343a40 !important;
+  color: #f8f9fa !important;
+}
+
+body.dark-mode .navbar .dropdown-item {
+  color: #f8f9fa !important;
+}
+
+body.dark-mode .navbar .dropdown-item:hover,
+body.dark-mode .navbar .dropdown-item:focus {
+  background-color: #495057 !important;
+  color: #ffffff !important;
+}
+
+
+body.dark-mode .container, body.dark-mode .bg-light{
+  background-color: #222 !important;
+  color: #aaa !important;
+  background-color: #121212 !important;
+}
+
+body.dark-mode #footer-details{
+  background-color: #222 !important;
+  color: #aaa !important;
+}
+
+body.dark-mode .btn-close {
+  filter: invert(1);
+}
+

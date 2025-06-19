@@ -139,7 +139,12 @@
 
 <!-- Footer Details -->
 <div id="footer-details" class="visible">
-  <img id="footer-image" src="" alt="Location Image">
+
+   <!-- Close Button -->
+  <button type="button" id="footer-close" class="btn-close position-absolute" aria-label="Close" style="top: 10px; right: 10px;"></button>
+ 
+
+  <img id="footer-image" src="" alt="Location Image" lass="flex-shrink-0 me-3">
   <div>
     <h5 id="footer-title">Click or hover on a pin to see details</h5>
     <p id="footer-description"></p>
@@ -154,6 +159,15 @@
 <script src="app.js"></script>
 <script src="base.js"></script>
 
+<script>
+
+  const footer = safeGet('footer-details');
+  const closefooter = safeGet('footer-close');
+
+  closefooter.addEventListener("click", function () {
+    footer.classList.remove('visible');
+  });
+</script>
 
 </body>
 </html>

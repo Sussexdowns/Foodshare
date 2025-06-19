@@ -7,10 +7,15 @@
     "lng": 0.009,
     "short_description": "Orchard behind St Thomas' Church.",
     "description": "These apples grow in abundance during late summer in the orchard behind St Thomas' Church. Open access for community picking.",
-    "season": [8, 9, 10],
+    "season": "8,9,10",
     "image": "images/apples.jpg",
-    "link": "https://example.com/apples"
-
+    "link": "https://example.com/apples",
+    "tags": "\"fruit\", \"orchard\", \"community\"",
+    "likes": 0,
+    "dislikes": 0,
+    "reports": 0,
+    "comments": "",
+    "whatthreewords": ""
   },
   {
     "id": 2,
@@ -18,12 +23,17 @@
     "category": "Fruit",
     "lat": 50.879,
     "lng": 0.0112,
-        "short_description": "Orchard behind St Thomas' Church.",
-
+    "short_description": "Orchard behind St Thomas' Church.",
     "description": "Along the path at the Pells.",
-    "season": [8, 9],
+    "season": "8,9",
     "image": "images/blackberries.jpg",
-    "link": "https://example.com/apples"
+    "link": "https://example.com/apples",
+    "tags": "\"fruit\", \"orchard\", \"community\"",
+    "likes": 0,
+    "dislikes": 0,
+    "reports": 0,
+    "comments": "",
+    "whatthreewords": ""
   },
   {
     "id": 3,
@@ -31,10 +41,17 @@
     "category": "Vegetable",
     "lat": 50.869,
     "lng": 0.004,
+    "short_description": "In the woods near the old racecourse.",
     "description": "In the woods near the old racecourse.",
-    "season": [3, 4, 5],
+    "season": "3,4",
     "image": "images/wild-garlic.jpg",
-    "link": "https://example.com/apples"
+    "link": "https://example.com/apples",
+    "tags": "\"vegetable\", \"wild\", \"foraging\"",
+    "likes": 0,
+    "dislikes": 0,
+    "reports": 0,
+    "comments": "",
+    "whatthreewords": ""
   },
   {
     "id": 4,
@@ -42,33 +59,52 @@
     "category": "Flower",
     "lat": 50.8755,
     "lng": -0.002,
+    "short_description": "Common in the hedgerows on Chapel Hill.",
     "description": "Common in the hedgerows on Chapel Hill.",
-    "season": [5, 6],
+    "season": "5,6",
     "image": "images/elderflower.jpg",
-
-    "link": "https://example.com/apples"
+    "link": "https://example.com/apples",
+    "tags": "\"flower\", \"hedgerow\", \"foraging\"",
+    "likes": 0,
+    "dislikes": 0,
+    "reports": 0,
+    "comments": "",
+    "whatthreewords": ""
   },
-    {
+  {
     "id": 5,
     "name": "Apples",
     "category": "Fruit",
-    "lat": 50.870,
+    "lat": 50.87,
     "lng": 0.015,
+    "short_description": "A few trees in the Southover Grange Gardens.",
     "description": "A few trees in the Southover Grange Gardens.",
-    "season": [9, 10],
+    "season": "9,10",
     "image": "images/apples.jpg",
-    "link": "https://example.com/apples"
-  }
-  ,
-    {
+    "link": "https://example.com/apples",
+    "tags": "\"fruit\", \"garden\", \"community\"",
+    "likes": 0,
+    "dislikes": 0,
+    "reports": 0,
+    "comments": "",
+    "whatthreewords": ""
+  },
+  {
     "id": 6,
     "name": "Wild Garlic",
     "category": "Herb",
     "lat": 50.872,
     "lng": 0.017,
+    "short_description": "A few trees in the Southover Grange Gardens.",
     "description": "A few trees in the Southover Grange Gardens.",
-    "season": [9, 10],
+    "season": "9,10",
     "image": "images/apples.jpg",
-    "link": "https://example.com/apples"
+    "link": "https://example.com/apples",
+    "tags": "\"herb\", \"garden\", \"community\"",
+    "likes": 0,
+    "dislikes": 0,
+    "reports": 0,
+    "comments": "",
+    "whatthreewords": ""
   }
 ]

@@ -30,15 +30,21 @@ function initMap() {
   }).addTo(map);
 }
 
+let jsonfile = 'locations.json'; // Default JSON file path
+// If you want to use a remote JSON file, uncomment the next line and comment the above
+// jsonfile = 'https://example.com/path/to/locations.json'; // Remote JSON file
+//let jsonfile = 'https://drive.google.com/uc?export=download&id=1dwvgMt5PLTjfxt9xjzW4hNGrntNisEON'; // Example JSON file URL
+
 // Load JSON data
 function fetchData() {
-  fetch('locations.json')
+  fetch(jsonfile)
     .then(response => response.json())
     .then(data => {
       allLocations = data;
       populateFilters();
       addEventListeners();
       displayAllLocations();
+
     })
     .catch(error => {
       console.error('Error loading location data:', error);
@@ -99,6 +105,10 @@ function clearMarkers() {
 }
 
 function addMarker(location) {
+
+
+
+
   const categoryColors = {
     "Fruit": "red",
     "Vegetable": "green",
@@ -135,7 +145,66 @@ function addMarker(location) {
     });
 
     const marker = L.marker([location.lat, location.lng], { icon }).addTo(map);
-    marker.bindPopup(`<h3>${location.name}</h3><p>${location.short_description || location.description || "No description available."}</p>`);
+    //marker.bindPopup(`<h3>${location.name}</h3><p>${location.short_description || location.description || "No description available."}</p>`);
+
+  marker.bindPopup(`
+    <div class="popup-content">
+      <h3>${location.name}</h3>
+      <p>${location.short_description || location.description || "No description available."}</p>
+      <div class="popup-actions" data-id="${location.id}">
+        <button class="like-btn" title="Like"><i class="fa fa-thumbs-up"></i> <span>${location.likes}</span></button>
+        <button class="dislike-btn" title="Dislike"><i class="fa fa-thumbs-down"></i> <span>${location.dislikes}</span></button>
+        <button class="flag-btn" title="Report"><i class="fa fa-flag"></i></button>
+      </div>
+    </div>
+  `);
+
+marker.on('popupopen', function (e) {
+  setTimeout(() => {
+    const container = e.popup.getElement();
+    if (!container) return;
+
+    const locationId = location.id;
+
+    // Utility: handle one-click feedback
+    function handleClick(buttonType) {
+      const key = `${locationId}-${buttonType}`;
+      if (sessionStorage.getItem(key)) return; // already clicked
+
+      sessionStorage.setItem(key, 'true');
+      submitFeedback(locationId, buttonType);
+      updateButtonCount(`${buttonType}-btn`, container);
+
+      // Disable button after click
+      const btn = container.querySelector(`.${buttonType}-btn`);
+      if (btn) btn.disabled = true;
+    }
+
+    // Bind buttons
+    const likeBtn = container.querySelector('.like-btn');
+    const dislikeBtn = container.querySelector('.dislike-btn');
+    const flagBtn = container.querySelector('.flag-btn');
+
+    if (likeBtn) {
+      if (sessionStorage.getItem(`${locationId}-like`)) likeBtn.disabled = true;
+      likeBtn.addEventListener('click', () => handleClick('like'));
+    }
+
+    if (dislikeBtn) {
+      if (sessionStorage.getItem(`${locationId}-dislike`)) dislikeBtn.disabled = true;
+      dislikeBtn.addEventListener('click', () => handleClick('dislike'));
+    }
+
+    if (flagBtn) {
+      if (sessionStorage.getItem(`${locationId}-report`)) flagBtn.disabled = true;
+      flagBtn.addEventListener('click', () => handleClick('report'));
+    }
+
+  }, 50);
+});
+
+
+
     marker.on('click', () => showFooterDetails(location));
     marker.on('mouseover', () => showFooterDetails(location));
     markers.push(marker);
@@ -162,6 +231,9 @@ function displayFilteredLocations(locations) {
 }
 
 function showFooterDetails(location) {
+
+
+
   const footer = safeGet('footer-details');
   safeGet('footer-title').textContent = location.name;
   safeGet('footer-description').textContent = location.description || location.short_description || "No additional info available.";
@@ -220,3 +292,24 @@ function debugLibraries() {
 function addStatusMessage(msg, type = 'info') {
   console.log(`[${type.toUpperCase()}] ${msg}`);
 }
+
+function submitFeedback(id, action) {
+
+  const formURL = 'https://script.google.com/macros/s/AKfycbyVbvLGFU371wPBkT6SY85mXUr3piiUqEyZnSnSMEVirAyLfjQoM9R2k3hglCatGniM/exec';
+  
+  fetch(formURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ id, action })
+  })
+  .then(() => console.log(`✅ Sent ${action} for ID ${id}`))
+  .catch(err => console.error('❌ Submission error:', err));
+}
+
+function updateButtonCount(buttonClass, popupEl) {
+  const span = popupEl.querySelector(`.${buttonClass} span`);
+  if (!span) return;
+  const current = parseInt(span.textContent) || 0;
+  span.textContent = current + 1;
+}
+
