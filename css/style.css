@@ -46,7 +46,7 @@ main > .container {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 1040; /* over Bootstrap's z-index for modals 1030 */
   font-family: sans-serif;
   transform: translateY(100%);
   transition: transform 0.3s ease-in-out;
