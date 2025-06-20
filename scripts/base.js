@@ -74,5 +74,19 @@ let links = [
     { name: 'Lewes Bonfire Society', url: 'https://www.lewesbonfirecelebrations.com/' }
   ];  
 
+  let categorylinks = [
+    { name: 'Fruit', url: 'https://example.com/fruit' },
+    { name: 'Vegetable', url: 'https://example.com/vegetable' },
+    { name: 'Flower', url: 'https://example.com/flower' },
+    { name: 'Herb', url: 'https://example.com/herb' }
+  ];
+
+  let itemLinks = [
+    { name: 'Apple', url: 'https://example.com/apple' },
+    { name: 'Carrot', url: 'https://example.com/carrot' },
+    { name: 'Rose', url: 'https://example.com/rose' },
+    { name: 'Basil', url: 'https://example.com/basil' }
+  ];
+
   // Call the function to populate footer links  
   showLinks();

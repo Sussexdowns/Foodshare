@@ -444,7 +444,7 @@ function addMarker(location) {
       <div class="popup-actions" data-id="${location.id}">
         <button class="like-btn" title="Like"><i class="fa fa-thumbs-up"></i> <span>${location.likes}</span></button>
         <button class="dislike-btn" title="Dislike"><i class="fa fa-thumbs-down"></i> <span>${location.dislikes}</span></button>
-        <button class="flag-btn" title="Report"><i class="fa fa-flag"></i></button>
+        <button class="reports-btn" title="Report"><i class="fa fa-flag"></i></button>
       </div>
     </div>`);
 
@@ -528,7 +528,7 @@ function handlePopupOpen(e, location) {
 
     const likeBtn = container.querySelector('.like-btn');
     const dislikeBtn = container.querySelector('.dislike-btn');
-    const flagBtn = container.querySelector('.flag-btn');
+    const reportsBtn = container.querySelector('.reports-btn');
 
     // Check session storage and disable buttons if already submitted
     if (sessionStorage.getItem(`${locationId}-like`)) {
@@ -541,16 +541,16 @@ function handlePopupOpen(e, location) {
         dislikeBtn.style.opacity = '0.5';
         dislikeBtn.style.cursor = 'not-allowed';
     }
-    if (sessionStorage.getItem(`${locationId}-report`)) {
-        flagBtn.disabled = true;
-        flagBtn.style.opacity = '0.5';
-        flagBtn.style.cursor = 'not-allowed';
+    if (sessionStorage.getItem(`${locationId}-reports`)) {
+        reportsBtn.disabled = true;
+        reportsBtn.style.opacity = '0.5';
+        reportsBtn.style.cursor = 'not-allowed';
     }
 
     // Remove old listeners to prevent multiple bindings if popup is reopened
     const newLikeBtn = likeBtn.cloneNode(true);
     const newDislikeBtn = dislikeBtn.cloneNode(true);
-    const newFlagBtn = flagBtn.cloneNode(true);
+    const newReportsBtn = reportsBtn.cloneNode(true);
 
     // Preserve disabled state when cloning
     if (likeBtn.disabled) {
@@ -563,15 +563,15 @@ function handlePopupOpen(e, location) {
         newDislikeBtn.style.opacity = '0.5';
         newDislikeBtn.style.cursor = 'not-allowed';
     }
-    if (flagBtn.disabled) {
-        newFlagBtn.disabled = true;
-        newFlagBtn.style.opacity = '0.5';
-        newFlagBtn.style.cursor = 'not-allowed';
+    if (reportsBtn.disabled) {
+        newReportsBtn.disabled = true;
+        newReportsBtn.style.opacity = '0.5';
+        newReportsBtn.style.cursor = 'not-allowed';
     }
 
     likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
     dislikeBtn.parentNode.replaceChild(newDislikeBtn, dislikeBtn);
-    flagBtn.parentNode.replaceChild(newFlagBtn, flagBtn);
+    reportsBtn.parentNode.replaceChild(newReportsBtn, reportsBtn);
     
      // Add new listeners only if buttons are not disabled
     if (!newLikeBtn.disabled) {
@@ -580,8 +580,8 @@ function handlePopupOpen(e, location) {
     if (!newDislikeBtn.disabled) {
         newDislikeBtn.addEventListener('click', () => handleFeedbackClick('dislike', locationId, container));
     }
-    if (!newFlagBtn.disabled) {
-        newFlagBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
+    if (!newReportsBtn.disabled) {
+        newReportsBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
     }
   }
 
@@ -614,7 +614,7 @@ function submitFeedback(id, action) {
   const actionMapping = {
     'like': 'likes',
     'dislike': 'dislikes', 
-    'report': 'reports'  // This was missing - 'report' needs to map to 'reports'
+    'report': 'reports'  
   };
   
   const columnName = actionMapping[action] || action;
