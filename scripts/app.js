@@ -530,25 +530,60 @@ function handlePopupOpen(e, location) {
     const dislikeBtn = container.querySelector('.dislike-btn');
     const flagBtn = container.querySelector('.flag-btn');
 
-    // Disable buttons if already submitted in session
-    if (sessionStorage.getItem(`${locationId}-like`)) likeBtn.disabled = true;
-    if (sessionStorage.getItem(`${locationId}-dislike`)) dislikeBtn.disabled = true;
-    if (sessionStorage.getItem(`${locationId}-report`)) flagBtn.disabled = true;
+    // Check session storage and disable buttons if already submitted
+    if (sessionStorage.getItem(`${locationId}-like`)) {
+        likeBtn.disabled = true;
+        likeBtn.style.opacity = '0.5';
+        likeBtn.style.cursor = 'not-allowed';
+    }
+    if (sessionStorage.getItem(`${locationId}-dislike`)) {
+        dislikeBtn.disabled = true;
+        dislikeBtn.style.opacity = '0.5';
+        dislikeBtn.style.cursor = 'not-allowed';
+    }
+    if (sessionStorage.getItem(`${locationId}-report`)) {
+        flagBtn.disabled = true;
+        flagBtn.style.opacity = '0.5';
+        flagBtn.style.cursor = 'not-allowed';
+    }
 
     // Remove old listeners to prevent multiple bindings if popup is reopened
     const newLikeBtn = likeBtn.cloneNode(true);
     const newDislikeBtn = dislikeBtn.cloneNode(true);
     const newFlagBtn = flagBtn.cloneNode(true);
 
+    // Preserve disabled state when cloning
+    if (likeBtn.disabled) {
+        newLikeBtn.disabled = true;
+        newLikeBtn.style.opacity = '0.5';
+        newLikeBtn.style.cursor = 'not-allowed';
+    }
+    if (dislikeBtn.disabled) {
+        newDislikeBtn.disabled = true;
+        newDislikeBtn.style.opacity = '0.5';
+        newDislikeBtn.style.cursor = 'not-allowed';
+    }
+    if (flagBtn.disabled) {
+        newFlagBtn.disabled = true;
+        newFlagBtn.style.opacity = '0.5';
+        newFlagBtn.style.cursor = 'not-allowed';
+    }
+
     likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
     dislikeBtn.parentNode.replaceChild(newDislikeBtn, dislikeBtn);
     flagBtn.parentNode.replaceChild(newFlagBtn, flagBtn);
     
-    // Add new listeners
-    newLikeBtn.addEventListener('click', () => handleFeedbackClick('like', locationId, container));
-    newDislikeBtn.addEventListener('click', () => handleFeedbackClick('dislike', locationId, container));
-    newFlagBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
-}
+     // Add new listeners only if buttons are not disabled
+    if (!newLikeBtn.disabled) {
+        newLikeBtn.addEventListener('click', () => handleFeedbackClick('like', locationId, container));
+    }
+    if (!newDislikeBtn.disabled) {
+        newDislikeBtn.addEventListener('click', () => handleFeedbackClick('dislike', locationId, container));
+    }
+    if (!newFlagBtn.disabled) {
+        newFlagBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
+    }
+  }
 
 function handleFeedbackClick(action, id, container) {
     const key = `${id}-${action}`;
@@ -557,14 +592,21 @@ function handleFeedbackClick(action, id, container) {
         return; // Prevent multiple submissions
     }
 
+     // Disable button IMMEDIATELY when clicked to prevent double-clicking
+    const btn = container.querySelector(`.${action}-btn`);
+    if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.5'; // Visual feedback that it's disabled
+        btn.style.cursor = 'not-allowed';
+    }
+
     sessionStorage.setItem(key, 'true'); // Mark as submitted in session
     submitFeedback(id, action);
     updateButtonCount(`.${action}-btn`, container);
-
-    const btn = container.querySelector(`.${action}-btn`);
-    if (btn) btn.disabled = true; // Disable button immediately after click
+    
     addStatusMessage(`Submitted feedback: ${action} for ID ${id}.`, 'info');
 }
+
 
 function submitFeedback(id, action) {
   
