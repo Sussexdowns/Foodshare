@@ -54,14 +54,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (const category in itemsData) {
       const categoryHeader = document.createElement('h1');
-      categoryHeader.textContent = category;
+      categoryHeader.textContent = category.toUpperCase();
       container.appendChild(categoryHeader);
 
       const list = document.createElement('ul');
+        list.className = 'list-group mb-4';
 
       itemsData[category].forEach(item => {
         const listItem = document.createElement('li');
+        listItem.className = 'list-group-item';
         const link = document.createElement('a');
+        link.className = 'stretched-link';
         link.href = item.Link;
         link.textContent = item.Name;
         link.target = '_blank';

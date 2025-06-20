@@ -141,10 +141,12 @@ function processCSVData(csvData) {
         description: row.description ? row.description.trim() : '',
         short_description: row.short_description ? row.short_description.trim() : '',
         season: row.season ? parseSeasonData(row.season) : [],
-        link: row.link ? row.link.trim() : '',
+        // Ensure image and link are trimmed to avoid leading/trailing spaces
         image: row.image ? row.image.trim() : '',
         likes: row.likes,    // Initialize likes for new location
-        dislikes: row.dislikes  // Initialize dislikes for new location
+        dislikes: row.dislikes, // Initialize dislikes for new location
+        // Ensure link is trimmed to avoid leading/trailing spaces
+        link: row.link ? row.link.trim() : ''
       };
       locationMap.set(id, location);
       // console.log(`Added new location to map: ${id}`, location);
@@ -444,7 +446,7 @@ function addMarker(location) {
       <div class="popup-actions" data-id="${location.id}">
         <button class="like-btn" title="Like"><i class="fa fa-thumbs-up"></i> <span>${location.likes}</span></button>
         <button class="dislike-btn" title="Dislike"><i class="fa fa-thumbs-down"></i> <span>${location.dislikes}</span></button>
-        <button class="reports-btn" title="Report"><i class="fa fa-flag"></i></button>
+        <button class="report-btn" title="Report"><i class="fa fa-flag"></i></button>
       </div>
     </div>`);
 
@@ -528,7 +530,7 @@ function handlePopupOpen(e, location) {
 
     const likeBtn = container.querySelector('.like-btn');
     const dislikeBtn = container.querySelector('.dislike-btn');
-    const reportsBtn = container.querySelector('.reports-btn');
+    const reportBtn = container.querySelector('.report-btn');
 
     // Check session storage and disable buttons if already submitted
     if (sessionStorage.getItem(`${locationId}-like`)) {
@@ -541,16 +543,16 @@ function handlePopupOpen(e, location) {
         dislikeBtn.style.opacity = '0.5';
         dislikeBtn.style.cursor = 'not-allowed';
     }
-    if (sessionStorage.getItem(`${locationId}-reports`)) {
-        reportsBtn.disabled = true;
-        reportsBtn.style.opacity = '0.5';
-        reportsBtn.style.cursor = 'not-allowed';
+    if (sessionStorage.getItem(`${locationId}-report`)) {
+        reportBtn.disabled = true;
+        reportBtn.style.opacity = '0.5';
+        reportBtn.style.cursor = 'not-allowed';
     }
 
     // Remove old listeners to prevent multiple bindings if popup is reopened
     const newLikeBtn = likeBtn.cloneNode(true);
     const newDislikeBtn = dislikeBtn.cloneNode(true);
-    const newReportsBtn = reportsBtn.cloneNode(true);
+    const newReportBtn = reportBtn.cloneNode(true);
 
     // Preserve disabled state when cloning
     if (likeBtn.disabled) {
@@ -563,15 +565,15 @@ function handlePopupOpen(e, location) {
         newDislikeBtn.style.opacity = '0.5';
         newDislikeBtn.style.cursor = 'not-allowed';
     }
-    if (reportsBtn.disabled) {
-        newReportsBtn.disabled = true;
-        newReportsBtn.style.opacity = '0.5';
-        newReportsBtn.style.cursor = 'not-allowed';
+    if (reportBtn.disabled) {
+        newReportBtn.disabled = true;
+        newReportBtn.style.opacity = '0.5';
+        newReportBtn.style.cursor = 'not-allowed';
     }
 
     likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
     dislikeBtn.parentNode.replaceChild(newDislikeBtn, dislikeBtn);
-    reportsBtn.parentNode.replaceChild(newReportsBtn, reportsBtn);
+    reportBtn.parentNode.replaceChild(newReportBtn, reportBtn);
     
      // Add new listeners only if buttons are not disabled
     if (!newLikeBtn.disabled) {
@@ -580,8 +582,8 @@ function handlePopupOpen(e, location) {
     if (!newDislikeBtn.disabled) {
         newDislikeBtn.addEventListener('click', () => handleFeedbackClick('dislike', locationId, container));
     }
-    if (!newReportsBtn.disabled) {
-        newReportsBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
+    if (!newReportBtn.disabled) {
+        newReportBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
     }
   }
 
