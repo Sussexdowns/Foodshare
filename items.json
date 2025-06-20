@@ -1,50 +1,51 @@
-{
+
+  {
   "flowers": [
-    "Elderflower",
-    "Nasturtium",
-    "Violet",
-    "Dandelion",
-    "Hawthorn",
-    "Rose",
-    "Chamomile",
-    "Lavender",
-    "Borage",
-    "Calendula"
+    { "Name": "Elderflower", "Link": "https://en.wikipedia.org/wiki/Elderflower" },
+    { "Name": "Nasturtium", "Link": "https://en.wikipedia.org/wiki/Nasturtium" },
+    { "Name": "Violet", "Link": "https://en.wikipedia.org/wiki/Violet_(plant)" },
+    { "Name": "Dandelion", "Link": "https://en.wikipedia.org/wiki/Taraxacum" },
+    { "Name": "Hawthorn", "Link": "https://en.wikipedia.org/wiki/Hawthorn" },
+    { "Name": "Rose", "Link": "https://en.wikipedia.org/wiki/Rose" },
+    { "Name": "Chamomile", "Link": "https://en.wikipedia.org/wiki/Chamomile" },
+    { "Name": "Lavender", "Link": "https://en.wikipedia.org/wiki/Lavandula" },
+    { "Name": "Borage", "Link": "https://en.wikipedia.org/wiki/Borage" },
+    { "Name": "Calendula", "Link": "https://en.wikipedia.org/wiki/Calendula" }
   ],
   "fruits": [
-    "Apple",
-    "Blackberry",
-    "Raspberry",
-    "Strawberry",
-    "Cherry",
-    "Plum",
-    "Gooseberry",
-    "Blueberry",
-    "Redcurrant",
-    "Blackcurrant"
+    { "Name": "Apple", "Link": "https://en.wikipedia.org/wiki/Apple" },
+    { "Name": "Blackberry", "Link": "https://en.wikipedia.org/wiki/Blackberry" },
+    { "Name": "Raspberry", "Link": "https://en.wikipedia.org/wiki/Raspberry" },
+    { "Name": "Strawberry", "Link": "https://en.wikipedia.org/wiki/Strawberry" },
+    { "Name": "Cherry", "Link": "https://en.wikipedia.org/wiki/Cherry" },
+    { "Name": "Plum", "Link": "https://en.wikipedia.org/wiki/Plum" },
+    { "Name": "Gooseberry", "Link": "https://en.wikipedia.org/wiki/Gooseberry" },
+    { "Name": "Blueberry", "Link": "https://en.wikipedia.org/wiki/Blueberry" },
+    { "Name": "Redcurrant", "Link": "https://en.wikipedia.org/wiki/Redcurrant" },
+    { "Name": "Blackcurrant", "Link": "https://en.wikipedia.org/wiki/Blackcurrant" }
   ],
   "vegetables": [
-    "Carrot",
-    "Potato",
-    "Cabbage",
-    "Leek",
-    "Parsnip",
-    "Broccoli",
-    "Cauliflower",
-    "Pea",
-    "Onion",
-    "Swede"
+    { "Name": "Carrot", "Link": "https://en.wikipedia.org/wiki/Carrot" },
+    { "Name": "Potato", "Link": "https://en.wikipedia.org/wiki/Potato" },
+    { "Name": "Cabbage", "Link": "https://en.wikipedia.org/wiki/Cabbage" },
+    { "Name": "Leek", "Link": "https://en.wikipedia.org/wiki/Leek" },
+    { "Name": "Parsnip", "Link": "https://en.wikipedia.org/wiki/Parsnip" },
+    { "Name": "Broccoli", "Link": "https://en.wikipedia.org/wiki/Broccoli" },
+    { "Name": "Cauliflower", "Link": "https://en.wikipedia.org/wiki/Cauliflower" },
+    { "Name": "Pea", "Link": "https://en.wikipedia.org/wiki/Pea" },
+    { "Name": "Onion", "Link": "https://en.wikipedia.org/wiki/Onion" },
+    { "Name": "Swede", "Link": "https://en.wikipedia.org/wiki/Rutabaga" }
   ],
   "herbs": [
-    "Mint",
-    "Rosemary",
-    "Thyme",
-    "Parsley",
-    "Sage",
-    "Chives",
-    "Basil",
-    "Oregano",
-    "Wild Garlic",
-    "Coriander"
+    { "Name": "Mint", "Link": "https://en.wikipedia.org/wiki/Mint_(plant)" },
+    { "Name": "Rosemary", "Link": "https://en.wikipedia.org/wiki/Rosemary" },
+    { "Name": "Thyme", "Link": "https://en.wikipedia.org/wiki/Thyme" },
+    { "Name": "Parsley", "Link": "https://en.wikipedia.org/wiki/Parsley" },
+    { "Name": "Sage", "Link": "https://en.wikipedia.org/wiki/Salvia_officinalis" },
+    { "Name": "Chives", "Link": "https://en.wikipedia.org/wiki/Chives" },
+    { "Name": "Basil", "Link": "https://en.wikipedia.org/wiki/Basil" },
+    { "Name": "Oregano", "Link": "https://en.wikipedia.org/wiki/Oregano" },
+    { "Name": "Wild Garlic", "Link": "https://en.wikipedia.org/wiki/Allium_ursinum" },
+    { "Name": "Coriander", "Link": "https://en.wikipedia.org/wiki/Coriander" }
   ]
 }

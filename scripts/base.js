@@ -1,5 +1,10 @@
 
+
+
   $(document).ready(function () {
+
+
+
     // 1. Apply dark mode on page load if previously set
     const isDarkStored = localStorage.getItem('darkMode') === 'true';
     if (isDarkStored) {
@@ -48,3 +53,26 @@
   $( '#select-field' ).select2( {
     theme: 'bootstrap-5'
 } );
+
+  // show links in the footer
+  function showLinks() {
+    const footerLinks = $('#footer-link');
+    links.forEach(link => {
+      const listItem = $('<li></li>');
+      const anchor = $(`<a href="${link.url}" target="_blank">${link.name}</a>`);
+      listItem.append(anchor);
+      footerLinks.append(listItem);
+    });
+  }
+
+
+let links = [
+    { name: 'Lewes District Council', url: 'https://www.lewes-eastbourne.gov.uk/' },
+    { name: 'Sussex Wildlife Trust', url: 'https://sussexwildlifetrust.org.uk/' },
+    { name: 'Visit Lewes', url: 'https://www.visitlewes.co.uk/' },
+    { name: 'Lewes Farmers Market', url: 'https://www.lewesfarmersmarket.co.uk/' },
+    { name: 'Lewes Bonfire Society', url: 'https://www.lewesbonfirecelebrations.com/' }
+  ];  
+
+  // Call the function to populate footer links  
+  showLinks();

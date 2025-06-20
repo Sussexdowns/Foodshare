@@ -14,6 +14,8 @@ let markers = [];
 let footerTimeout;
 let useFontAwesome = true;
 
+
+
 // --- Configuration ---
 // Set to true to use JSON file, false to use CSV as primary data source
 const useJsonAsSource = false; // 👈 Change this to toggle between JSON and CSV
@@ -565,7 +567,16 @@ function handleFeedbackClick(action, id, container) {
 }
 
 function submitFeedback(id, action) {
-  // 🔽 REPLACE THIS URL with the one you copied from your script deployment.
+  
+   // Map the action to the correct column name in your spreadsheet
+  const actionMapping = {
+    'like': 'likes',
+    'dislike': 'dislikes', 
+    'report': 'reports'  // This was missing - 'report' needs to map to 'reports'
+  };
+  
+  const columnName = actionMapping[action] || action;
+
   const formURL = fileExec;
 
   fetch(formURL, {
@@ -574,7 +585,10 @@ function submitFeedback(id, action) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: new URLSearchParams({ id, action })
+     body: new URLSearchParams({ 
+      id: id, 
+      action: columnName  // Send the mapped column name instead of the raw action
+    })
   })
   .then(() => {
     console.log(`✅ Submission sent for action '${action}' on ID ${id}`);

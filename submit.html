@@ -170,6 +170,7 @@
         <li class="nav-item"><a href="credits.html" class="nav-link px-2 text-body-primary">Credits</a></li> 
         <li class="nav-item"><a href="contact.html" class="nav-link px-2 text-body-primary">Contact</a></li> 
         </ul> 
+        <p id="footer-link"></p>
     </footer>
 </div>
 
@@ -179,7 +180,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
-
+<script src="scripts/form.js"></script>
+<script src="scripts/base.js"></script>
 
 <script>
   let map = L.map('map').setView([50.873, 0.009], 14);
@@ -306,7 +308,8 @@ $(document).ready(function () {
       itemsData = data;
       // Sort all categories alphabetically
       for (const cat in itemsData) {
-        itemsData[cat].sort((a, b) => a.localeCompare(b));
+        itemsData[cat].sort((a, b) => a.Name.localeCompare(b.Name));
+
       }
 
       // Initialize items dropdown based on selected category in Select2
@@ -315,30 +318,34 @@ $(document).ready(function () {
     });
 
   // Populate items dropdown function
-  function populateItemsDropdown(categoryKey) {
-    const itemSelect = $('#item');
-    const newItemInput = $('#new-item');
+ function populateItemsDropdown(categoryKey) {
+  const itemSelect = $('#item');
+  const newItemInput = $('#new-item');
 
-    itemSelect.empty();
+  itemSelect.empty();
 
-    if (!itemsData[categoryKey]) {
-      newItemInput.removeClass('d-none');
-      newItemInput.val('');
-      return;
-    }
-
-    itemsData[categoryKey].forEach(item => {
-      const option = $('<option>').val(item.toLowerCase().replace(/\s+/g, '-')).text(item);
-      itemSelect.append(option);
-    });
-
-    newItemInput.addClass('d-none').val('');
+  if (!itemsData[categoryKey]) {
+    newItemInput.removeClass('d-none');
+    newItemInput.val('');
+    return;
   }
-});
+
+  itemsData[categoryKey].forEach(item => {
+    const option = $('<option>')
+      .val(item.Name.toLowerCase().replace(/\s+/g, '-'))
+      .text(item.Name)
+      .attr('data-link', item.Link);
+    itemSelect.append(option);
+  });
+
+  newItemInput.addClass('d-none').val('');
+}
+
+}
+
+);
 
 </script>
 
-<script src="scripts/form.js"></script>
-<script src="scripts/base.js"></script>
 </body>
 </html>
