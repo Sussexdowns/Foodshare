@@ -487,28 +487,33 @@ function showFooterDetails(location) {
   const footer = safeGet('footer-details');
   safeGet('footer-title').textContent = location.name;
   safeGet('footer-description').textContent = location.description || "No additional info.";
+  
+  // Handle existing link
   const link = safeGet('footer-link');
   if (location.link) {
     link.href = location.link;
-    link.style.display = 'inline';
-    link.textContent = 'Learn more about ' + location.name;
+    link.style.display = 'inline-block';
+    link.innerHTML = '<i class="fa fa-info-circle"></i> Learn more about ' + location.name;
+    link.title = `Learn more about ${location.name}`;
+    //link.textContent = 'Learn more about ' + location.name;
   } else {
     link.style.display = 'none';
   }
-  /*
-  if (location.likes != '' && location.dislikes != '') {
-      safeGet('footer-likes').innerHTML = `<i class="fa fa-thumbs-up"></i> <span>${location.likes}</span>`;
-      safeGet('footer-dislikes').innerHTML = `<i class="fa fa-thumbs-down"></i> <span>${location.dislikes}</span>`;
-      safeGet('footer-likes').style.display = 'inline';
-      safeGet('footer-dislikes').style.display = 'inline';
-      safeGet('footer-ratings').style.display = 'inline';
-    } else {
-      safeGet('footer-likes').style.display = 'none';
-      safeGet('footer-dislikes').style.display = 'none';
-      safeGet('footer-ratings').style.display = 'none';
-    }
-*/
 
+  // Handle Google Directions link
+  const directionsLink = safeGet('footer-directions');
+  if (directionsLink && location.lat && location.lng) {
+    // Create Google Maps directions URL
+    const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking`;
+    directionsLink.href = directionsURL;
+    directionsLink.style.display = 'inline-block';
+    directionsLink.innerHTML = '<i class="fa fa-map-marker-alt"></i> Get Directions';
+    directionsLink.title = `Get directions to ${location.name}`;
+  } else if (directionsLink) {
+    directionsLink.style.display = 'none';
+  }
+
+  // Handle image
   const image = safeGet('footer-image');
   if (location.image) {
     image.src = location.image;
@@ -516,13 +521,13 @@ function showFooterDetails(location) {
   } else {
     image.style.display = 'none';
   }
+  
   footer.classList.add('visible');
   clearTimeout(footerTimeout);
   footerTimeout = setTimeout(() => {
     if (!footer.matches(':hover')) footer.classList.remove('visible');
   }, 5000);
 }
-
 function handlePopupOpen(e, location) {
     const container = e.popup.getElement();
     if (!container) return;
