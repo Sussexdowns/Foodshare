@@ -115,28 +115,6 @@ main > .container {
  }
 
 
- /* Add this CSS to your style.css file */
-.directions-link {
-  background-color: #4285f4; /* Google blue */
-  color: white !important;
-  padding: 8px 12px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 14px;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-}
-
-.directions-link:hover {
-  background-color: #3367d6; /* Darker blue on hover */
-  text-decoration: none;
-}
-
-.directions-link i {
-  margin-right: 5px;
-}
-
-
 /* Dark Mode Styles */
 
 
