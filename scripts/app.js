@@ -143,8 +143,8 @@ function processCSVData(csvData) {
         season: row.season ? parseSeasonData(row.season) : [],
         // Ensure image and link are trimmed to avoid leading/trailing spaces
         image: row.image ? row.image.trim() : '',
-        likes: row.likes,    // Initialize likes for new location
-        dislikes: row.dislikes, // Initialize dislikes for new location
+        likes: 0,    // Initialize likes for new location
+        dislikes: 0, // Initialize dislikes for new location
         // Ensure link is trimmed to avoid leading/trailing spaces
         link: row.link ? row.link.trim() : ''
       };
@@ -191,6 +191,8 @@ function processJSONData(jsonData, feedbackRows) {
     loc.likes = loc.likes || 0;
     loc.dislikes = loc.dislikes || 0;
     loc.id = loc.id ? parseInt(loc.id) : 0; // Ensure ID is integer
+    loc.lat = loc.lat ? parseFloat(loc.lat) : 0; // Ensure lat is float
+    loc.lng = loc.lng ? parseFloat(loc.lng) : 0; // Ensure lng is float
     loc.season = loc.season ? parseSeasonData(loc.season) : []; // Parse seasons if present in JSON
 
     locationMap.set(String(loc.id), loc); // Use string ID for consistency
