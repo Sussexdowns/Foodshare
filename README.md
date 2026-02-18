@@ -84,7 +84,8 @@ Unity is being used to transform our 2D web demo into a high-performance, cross-
 
 - **Unity UI Toolkit** for responsive interface
 - **Addressables system** for offline data management
-- **2D spatial view** for easier identification of trees/bushes in complex urban parks
+- **3D spatial view** for easier identification of trees/bushes in complex urban parks
+- **AR Foundation** (planned) to overlay food location data onto camera feed
 
 ### Technical Challenges
 
@@ -108,7 +109,7 @@ Foodshare/
 
 ## 🔗 Links
 
-- **Live Demo:** [View Web Demo](https://sussexdowns.github.io/Foodshare/)
+- **Live Demo:** [https://sussexdowns.github.io/Foodshare/](https://sussexdowns.github.io/Foodshare/)
 - **Presentation:** [View Presentation](Presentation/index.html)
 
 ---

@@ -4,7 +4,6 @@ var fileExec = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg
 
 
 
-
 document.addEventListener('DOMContentLoaded', initApp);
 
 // --- Global Variables ---
@@ -16,7 +15,11 @@ let footerTimeout;
 let useFontAwesome = true;
 let footerDetailsLoaded = false;
 let itemsData = {}; // Store items from items.json
+let ukCounties = []; // Store UK counties data
+let loadedCounties = new Set(); // Track which county CSVs have been loaded
+let userLocation = null; // Store user's detected location
 const ZOOM_THRESHOLD = 13; // Show heatmap when zoomed out beyond this level
+const COUNTY_LOAD_ZOOM_THRESHOLD = 10; // Zoom level at which to load county data
 
 // Category to FontAwesome icon mapping for dropdowns
 const categoryIcons = {
@@ -57,21 +60,24 @@ function initApp() {
   addStatusMessage('🚀 Initializing application...', 'success');
   debugLibraries();
 
-  // Load categories.json and items.json in parallel
+  // Load categories.json, items.json, and uk_counties.json in parallel
   Promise.all([
     fetch('categories.json').then(res => res.json()).catch(() => null),
-    fetch('items.json').then(res => res.json()).catch(() => null)
+    fetch('items.json').then(res => res.json()).catch(() => null),
+    fetch('uk_counties.json').then(res => res.json()).catch(() => null)
   ])
-    .then(([categoriesData, itemsData]) => {
+    .then(([categoriesData, itemsData, countiesData]) => {
       window.categoriesData = categoriesData;
       window.itemsData = itemsData || {};
+      ukCounties = countiesData?.counties || [];
 
       console.log('Loaded items data:', window.itemsData);
+      console.log('Loaded UK counties:', ukCounties.length);
 
       // Continue with other initialization
       loadFooterDetailsTemplate().then(() => {
         initMap();
-        fetchData();
+        detectUserLocationAndLoadData();
       });
     })
     .catch(error => {
@@ -80,7 +86,7 @@ function initApp() {
       // Continue without config data
       loadFooterDetailsTemplate().then(() => {
         initMap();
-        fetchData();
+        fetchData(); // Fallback to default data loading
       });
     });
 }
@@ -314,6 +320,9 @@ function initMap() {
   // Add zoom event listener to toggle between markers and heatmap
   map.on('zoomend', handleZoomChange);
 
+  // Add moveend event listener to load counties when map moves
+  map.on('moveend', handleMapMove);
+
   // Listen for dark mode changes to switch tile layer
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
@@ -351,6 +360,248 @@ function centerMapOnUserLocation() {
   } else {
     // Default to Lewes
     map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+  }
+}
+
+/**
+ * Detects user location and loads appropriate county data
+ * Uses browser geolocation API if available, otherwise falls back to saved address
+ */
+function detectUserLocationAndLoadData() {
+  // First check if user has a saved address
+  const savedAddress = configUserAddress || localStorage.getItem('userAddress');
+
+  if (savedAddress && savedAddress.trim()) {
+    geocodeAddress(savedAddress)
+      .then(coords => {
+        if (coords) {
+          userLocation = coords;
+          map.setView(coords, 12);
+          addStatusMessage(`📍 Location detected from saved address: ${savedAddress}`, 'info');
+          loadCountiesForMapView();
+        } else {
+          tryBrowserGeolocation();
+        }
+      })
+      .catch(() => {
+        tryBrowserGeolocation();
+      });
+  } else {
+    tryBrowserGeolocation();
+  }
+}
+
+/**
+ * Attempts to get user location via browser geolocation API
+ */
+function tryBrowserGeolocation() {
+  if ('geolocation' in navigator) {
+    addStatusMessage('📍 Detecting your location...', 'info');
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        userLocation = [position.coords.latitude, position.coords.longitude];
+        map.setView(userLocation, 12);
+        addStatusMessage(`📍 Location detected via browser`, 'success');
+        loadCountiesForMapView();
+      },
+      (error) => {
+        console.log('Geolocation error:', error.message);
+        addStatusMessage('📍 Could not detect location, using default', 'warning');
+        map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+        loadCountiesForMapView();
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 5000,
+        maximumAge: 300000 // 5 minutes cache
+      }
+    );
+  } else {
+    addStatusMessage('📍 Geolocation not supported, using default', 'warning');
+    map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+    loadCountiesForMapView();
+  }
+}
+
+/**
+ * Handles map move events - loads county data when user pans/zooms
+ */
+function handleMapMove() {
+  const currentZoom = map.getZoom();
+
+  // Only load counties when zoomed in enough
+  if (currentZoom >= COUNTY_LOAD_ZOOM_THRESHOLD) {
+    loadCountiesForMapView();
+  }
+}
+
+/**
+ * Loads county CSV files for counties visible in the current map view
+ */
+function loadCountiesForMapView() {
+  if (ukCounties.length === 0) {
+    console.warn('No UK counties data loaded');
+    fetchData(); // Fallback to default data loading
+    return;
+  }
+
+  const bounds = map.getBounds();
+  const currentZoom = map.getZoom();
+  const countiesToLoad = [];
+
+  // Find counties that intersect with the current map view
+  ukCounties.forEach(county => {
+    // Check if county bounds intersect with map bounds
+    if (county.bounds) {
+      const countyBounds = county.bounds;
+      const countyNorth = countyBounds.north;
+      const countySouth = countyBounds.south;
+      const countyEast = countyBounds.east;
+      const countyWest = countyBounds.west;
+
+      // Check for intersection
+      const intersects = (
+        countyNorth >= bounds.getSouth() &&
+        countySouth <= bounds.getNorth() &&
+        countyEast >= bounds.getWest() &&
+        countyWest <= bounds.getEast()
+      );
+
+      if (intersects && county.csvFile && !loadedCounties.has(county.id)) {
+        countiesToLoad.push(county);
+      }
+    }
+  });
+
+  if (countiesToLoad.length > 0) {
+    addStatusMessage(`🗺️ Loading ${countiesToLoad.length} county dataset(s)...`, 'info');
+    loadCountyCSVFiles(countiesToLoad);
+  } else if (loadedCounties.size === 0) {
+    // No counties to load and none loaded yet - try to find nearest county with data
+    loadNearestCountyWithData();
+  }
+}
+
+/**
+ * Loads the nearest county with data based on map center
+ */
+function loadNearestCountyWithData() {
+  const center = map.getCenter();
+  let nearestCounty = null;
+  let minDistance = Infinity;
+
+  ukCounties.forEach(county => {
+    if (county.csvFile && county.center) {
+      const distance = Math.sqrt(
+        Math.pow(center.lat - county.center[0], 2) +
+        Math.pow(center.lng - county.center[1], 2)
+      );
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestCounty = county;
+      }
+    }
+  });
+
+  if (nearestCounty) {
+    addStatusMessage(`🗺️ Loading nearest county: ${nearestCounty.name}`, 'info');
+    loadCountyCSVFiles([nearestCounty]);
+  } else {
+    // No county data available, fallback to default
+    addStatusMessage('📍 No county data available for this area', 'warning');
+    fetchData();
+  }
+}
+
+/**
+ * Loads multiple county CSV files with graceful failure
+ * @param {Array} counties - Array of county objects to load
+ */
+async function loadCountyCSVFiles(counties) {
+  const loadPromises = counties.map(county =>
+    loadSingleCountyCSV(county)
+      .then(data => ({ county, data, success: true }))
+      .catch(error => ({ county, error, success: false }))
+  );
+
+  const results = await Promise.all(loadPromises);
+
+  let successCount = 0;
+  let failCount = 0;
+  const newLocations = [];
+
+  results.forEach(result => {
+    if (result.success && result.data) {
+      loadedCounties.add(result.county.id);
+      newLocations.push(...result.data);
+      successCount++;
+      console.log(`✅ Loaded ${result.county.name}: ${result.data.length} locations`);
+    } else {
+      failCount++;
+      console.warn(`❌ Failed to load ${result.county.name}:`, result.error);
+    }
+  });
+
+  if (newLocations.length > 0) {
+    // Merge with existing locations (avoid duplicates by ID)
+    const existingIds = new Set(allLocations.map(loc => loc.id));
+    const uniqueNewLocations = newLocations.filter(loc => !existingIds.has(loc.id));
+    allLocations = [...allLocations, ...uniqueNewLocations];
+
+    // Re-render markers (pass true for isAdditionalData to avoid resetting filters)
+    initializeAppData(allLocations, true);
+  }
+
+  if (successCount > 0) {
+    addStatusMessage(`✅ Loaded ${successCount} county dataset(s), ${newLocations.length} locations`, 'success');
+  }
+  if (failCount > 0) {
+    addStatusMessage(`⚠️ ${failCount} county dataset(s) not available yet`, 'warning');
+  }
+}
+
+/**
+ * Loads a single county CSV file with graceful error handling
+ * @param {Object} county - County object with csvFile property
+ * @returns {Promise<Array>} Array of location objects
+ */
+async function loadSingleCountyCSV(county) {
+  if (!county.csvFile) {
+    throw new Error(`No CSV file defined for ${county.name}`);
+  }
+
+  try {
+    const response = await fetch(county.csvFile);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const csvText = await response.text();
+
+    if (!csvText || csvText.trim().length === 0) {
+      throw new Error('Empty CSV file');
+    }
+
+    const parsedData = parseCSV(csvText);
+
+    if (parsedData.length === 0) {
+      throw new Error('No data rows in CSV');
+    }
+
+    const processedData = processCSVData(parsedData);
+
+    // Add county info to each location
+    return processedData.map(loc => ({
+      ...loc,
+      county: county.name,
+      countyId: county.id
+    }));
+  } catch (error) {
+    // Graceful failure - log but don't throw
+    console.warn(`Failed to load ${county.name} CSV:`, error.message);
+    throw error;
   }
 }
 
@@ -649,15 +900,22 @@ function parseSeasonData(seasonStr) {
 /**
  * Once all data is fetched and processed, this function populates the UI.
  * @param {Array} data - The final location data.
+ * @param {boolean} isAdditionalData - If true, data is being added to existing data
  */
-function initializeAppData(data) {
+function initializeAppData(data, isAdditionalData = false) {
   allLocations = data; // Ensure global variable is set
-  populateFilters();
-  addEventListeners();
+
+  if (!isAdditionalData) {
+    // Only reset filters and re-add event listeners on initial load
+    populateFilters();
+    addEventListeners();
+  }
+
   displayAllLocations();
 
   const dataSource = configUseJson ? 'JSON + CSV feedback' : 'CSV only';
-  addStatusMessage(`✅ App ready. Displaying ${allLocations.length} locations from ${dataSource}.`, 'success');
+  const countyInfo = loadedCounties.size > 0 ? ` from ${loadedCounties.size} count${loadedCounties.size === 1 ? 'y' : 'ies'}` : '';
+  addStatusMessage(`✅ App ready. Displaying ${allLocations.length} locations${countyInfo}.`, 'success');
 }
 
 /**
@@ -1361,9 +1619,11 @@ function displayAllLocations() {
   // Uncheck all month checkboxes
   document.querySelectorAll('.month-checkbox').forEach(cb => cb.checked = false);
 
-  if (allLocations.length > 0) {
+  // Only fit bounds if we have locations and this is initial load
+  // Don't auto-zoom when loading additional county data
+  if (allLocations.length > 0 && loadedCounties.size <= 1) {
     map.fitBounds(L.latLngBounds(allLocations.map(loc => [loc.lat, loc.lng])), { padding: [50, 50] });
-  } else {
+  } else if (allLocations.length === 0) {
     // If no locations, center on default view
     map.setView([50.873, 0.009], 14);
   }
