@@ -1,0 +1,204 @@
+
+<!-- Slide 1: Cover -->
+<div class="pt-page w-[1280px] h-[720px] relative bg-gray-900 text-white pt-page-current">
+    <div class="absolute inset-0">
+        <img src="735f03e4907b13df6a66a3a54a889ac9.webp" class="w-full h-full object-cover opacity-90">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80"></div>
+    </div>
+
+    <div class="relative z-10 w-full h-full flex flex-col justify-center items-center text-center p-12">
+        <img src="logo.png" class="w-20 h-20 mb-6">
+        <h1 class="text-7xl font-extrabold mb-4">
+            Lewes Food <span class="text-green-400">Sharing</span>
+        </h1>
+        <p class="text-xl max-w-3xl text-gray-200">
+            A community-powered map for discovering and sharing public food.
+        </p>
+    </div>
+</div>
+
+<!-- Slide 2: The Challenge -->
+<div class="pt-page w-[1280px] h-[720px] bg-white">
+    <div class="flex h-full">
+        <div class="w-2/5 relative">
+            <img src="3caa7e28b3a9cfdfd6ac52916503b877.webp" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/65"></div>
+            <div class="relative z-10 p-10 text-white">
+                <h2 class="text-4xl font-bold mb-4">Abundance without Access</h2>
+                <p class="text-lg">
+                    Valuable local food is wasted simply because people don’t know it exists.
+                </p>
+            </div>
+        </div>
+
+        <div class="w-3/5 p-12 flex flex-col justify-center space-y-6">
+            <h1 class="text-4xl font-extrabold text-gray-900">
+                The Hidden Cost of Local Disconnection
+            </h1>
+            <p class="text-gray-600">
+                Public fruit trees and edible plants are common in urban spaces, yet remain invisible
+                to the people who could use them.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: The Solution -->
+<div class="pt-page w-[1280px] h-[720px] bg-white">
+    <div class="flex h-full">
+        <div class="w-1/2 p-12 flex flex-col justify-center">
+            <span class="text-xs uppercase font-bold text-green-700 mb-4">The Solution</span>
+            <h1 class="text-5xl font-extrabold mb-6">
+                A Community-Managed Food Map
+            </h1>
+            <p class="text-lg text-gray-600 max-w-xl">
+                Foodshare is a platform that makes public food visible, usable, and shared.
+                It turns overlooked local produce into a collectively maintained resource.
+            </p>
+        </div>
+
+        <div class="w-1/2 bg-gray-50 flex items-center justify-center">
+            <!-- phone mockup unchanged -->
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Platform Capabilities -->
+<div class="pt-page w-[1280px] h-[720px] bg-white">
+    <div class="h-full flex flex-col justify-center items-center p-12">
+        <h1 class="text-5xl font-extrabold mb-10">
+            Platform Capabilities
+        </h1>
+
+        <div class="grid grid-cols-2 gap-8 max-w-5xl">
+            <div class="p-6 border rounded-xl">
+                <h3 class="text-xl font-bold mb-2">Interactive Map</h3>
+                <p class="text-gray-600">
+                    Visualizes public food sources with clear, category-based markers.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl">
+                <h3 class="text-xl font-bold mb-2">Seasonal Filtering</h3>
+                <p class="text-gray-600">
+                    Shows what food is currently available based on the time of year.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl">
+                <h3 class="text-xl font-bold mb-2">Precision Search</h3>
+                <p class="text-gray-600">
+                    Uses location tools like what3words to pinpoint hidden food sources.
+                </p>
+            </div>
+
+            <div class="p-6 border rounded-xl">
+                <h3 class="text-xl font-bold mb-2">Community Updates</h3>
+                <p class="text-gray-600">
+                    Allows users to report changes so the map stays accurate over time.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: How It Works -->
+<div class="pt-page w-[1280px] h-[720px] bg-green-50">
+    <div class="h-full flex flex-col justify-center items-center p-12">
+        <h1 class="text-5xl font-extrabold mb-10">How It Works</h1>
+
+        <div class="grid grid-cols-4 gap-6 max-w-6xl text-center">
+            <div>
+                <h3 class="font-bold">Submit</h3>
+                <p class="text-gray-600 text-sm">
+                    Users add new food locations through a structured form.
+                </p>
+            </div>
+            <div>
+                <h3 class="font-bold">Review</h3>
+                <p class="text-gray-600 text-sm">
+                    Trusted admins verify submissions before publishing.
+                </p>
+            </div>
+            <div>
+                <h3 class="font-bold">Maintain</h3>
+                <p class="text-gray-600 text-sm">
+                    Community reports keep information current.
+                </p>
+            </div>
+            <div>
+                <h3 class="font-bold">Scale</h3>
+                <p class="text-gray-600 text-sm">
+                    A streamlined data model supports growth.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Trust & Safety -->
+<div class="pt-page w-[1280px] h-[720px] bg-gray-50">
+    <div class="h-full flex flex-col justify-center items-center p-12">
+        <h1 class="text-5xl font-extrabold mb-6">
+            Built on Trust & Safety
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl text-center mb-10">
+            Foodshare is designed to protect people, places, and public resources
+            through clear governance and responsible use.
+        </p>
+
+        <div class="grid grid-cols-4 gap-6 max-w-6xl">
+            <div class="p-6 bg-white rounded-xl">
+                <h3 class="font-bold">Verified Identity</h3>
+                <p class="text-sm text-gray-600">
+                    Email verification ensures accountability.
+                </p>
+            </div>
+            <div class="p-6 bg-white rounded-xl">
+                <h3 class="font-bold">Admin Governance</h3>
+                <p class="text-sm text-gray-600">
+                    Moderation is handled by trusted local admins.
+                </p>
+            </div>
+            <div class="p-6 bg-white rounded-xl">
+                <h3 class="font-bold">Ethical Foraging</h3>
+                <p class="text-sm text-gray-600">
+                    Built-in guidance promotes respectful harvesting.
+                </p>
+            </div>
+            <div class="p-6 bg-white rounded-xl">
+                <h3 class="font-bold">Community Reporting</h3>
+                <p class="text-sm text-gray-600">
+                    One-click reporting flags issues quickly.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Impact -->
+<div class="pt-page w-[1280px] h-[720px] bg-gray-900 text-white">
+    <div class="h-full flex items-center justify-center p-12">
+        <div class="max-w-4xl">
+            <h1 class="text-5xl font-extrabold mb-6">
+                Proven Local Impact
+            </h1>
+            <p class="text-gray-300">
+                Early adoption shows strong community engagement and willingness to contribute.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: Why Support Us -->
+<div class="pt-page w-[1280px] h-[720px] bg-gradient-to-br from-green-900 to-gray-900 text-white">
+    <div class="h-full flex flex-col justify-center items-center p-12 text-center">
+        <h1 class="text-5xl font-extrabold mb-6">
+            Why Support This Project
+        </h1>
+        <p class="text-xl text-gray-300 max-w-3xl mb-10">
+            Your support helps scale a proven local model into a reusable framework
+            for communities everywhere.
+        </p>
+    </div>
+</div>

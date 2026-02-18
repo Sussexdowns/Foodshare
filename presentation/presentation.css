@@ -26,7 +26,8 @@ body {
 .pt-page {
     width: 100%;
     height: 100%;
-    position: absolute !important; /* !important prevents Tailwind's 'relative' class from overriding this */
+    position: absolute !important;
+    /* !important prevents Tailwind's 'relative' class from overriding this */
     top: 0;
     left: 0;
     visibility: hidden;
@@ -545,7 +546,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     height: 70px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
@@ -721,6 +722,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
