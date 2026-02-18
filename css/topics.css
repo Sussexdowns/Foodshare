@@ -1,0 +1,25 @@
+/* Topics page specific styles */
+/* See css/pages.css for shared component styles */
+
+/* Map container - 50vh for topics page */
+#map {
+  height: 50vh;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+/* Topic grid layout */
+#topics-grid .col-md-4 {
+  margin-bottom: 1rem;
+}
+
+/* Subcategory dropdown specific styles */
+#subcategory-filter {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+#subcategory-filter.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

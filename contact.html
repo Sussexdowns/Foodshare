@@ -1,33 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Contact Us</title>
 
- <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- CSS & Icons -->  
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <script src="https://kit.fontawesome.com/f90ec7d4eb.js" crossorigin="anonymous"></script>
 
-  <!-- Leaflet / font Awesome CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
-
   <!-- Styles -->
-  <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 
-
-
   <style>
-    #map { height: 100vh; width: 100%; }
+    body { font-family: 'Raleway', sans-serif; }
+    
+    /* Custom validation feedback styles */
+    .was-validated .form-control:invalid,
+    .was-validated .form-control:valid {
+      background-position: right calc(0.375em + 0.1875rem) center;
+    }
   </style>
+
   <!-- Favicons & Manifest -->
-  <link rel="icon" type="image/png" href="havicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
   <link rel="shortcut icon" href="favicon/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
@@ -36,67 +40,166 @@
 </head>
 <body class="p-4">
 
+  <!-- Header placeholder - loaded via JavaScript -->
+  <div id="header-placeholder" class="fixed-top"></div>
+
   <!-- Begin page content -->
-<main class="flex-shrink-0">
+  <main class="flex-shrink-0">
 
-  <!-- Navbar -->
-    <div class=" fixed-top">
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      🌿 Map Menu
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="topics.html">📌 Topics</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.html">🗺️ Search Map</a></li>
-        <li class="nav-item"><a class="nav-link" href="submit.html">✏️ Submit Content</a></li>
-        <li class="nav-item"><a class="nav-link" href="credits.html">📜 Credits</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">💬 Contact Us</a></li>
-      </ul>
+    <!-- Page Heading -->
+    <div class="container my-4 text-center">
+      <h1 class="d-flex align-items-center justify-content-center">
+       <img src="assets/logo.png" alt="Logo" class="logo" />
+       Contact Us
+      </h1>
     </div>
-  </div>
-</nav>
-</div>
-<!-- Page Heading -->
-<div class="container my-4 text-center">
-  <h1 class="d-flex align-items-center justify-content-center">
-    💬 Contact Us
-  </h1>
-</div>
 
-<p>
-  contact form
-</p>
-
-
+    <div class="container mb-4">
+      <div class="form-section">
+        <div id="contact-alert" class="alert alert-info d-none"></div>
+        
+        <!-- Google Forms Contact Form with Bootstrap Validation -->
+        <form id="contact-form" class="card p-4 shadow-sm border-0 needs-validation" 
+              action="https://docs.google.com/forms/d/e/1FAIpQLSeP0P8rpROjIDR7myzFO4NpwzgEBGdfmd-AbSGR6Mkg6GK23Q/formResponse" 
+              method="POST" 
+              target="_blank" 
+              novalidate>
+          <input type="hidden" name="fbzx" id="fbzx" value="-123456789">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="entry.2107060613" class="form-label">Name <span class="text-danger">*</span></label>
+              <input type="text" id="entry.2107060613" name="entry.2107060613" class="form-control" required minlength="2" maxlength="100">
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please enter your name (at least 2 characters).</div>
+            </div>
+            <div class="col-md-6">
+              <label for="entry.413525859" class="form-label">Email <span class="text-danger">*</span></label>
+              <input type="email" id="entry.413525859" name="entry.413525859" class="form-control" required placeholder="you@example.com">
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="col-12">
+              <label for="entry.1834693471" class="form-label">Message <span class="text-danger">*</span></label>
+              <textarea id="entry.1834693471" name="entry.1834693471" class="form-control" rows="5" required minlength="10" maxlength="2000" placeholder="How can we help you?"></textarea>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please enter your message (at least 10 characters).</div>
+            </div>
+            <div class="col-12 d-flex gap-2">
+              <button type="submit" class="btn btn-primary" id="submit-btn">Send Message</button>
+              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
   </main>
-<div class="fixed-bottom">
-  <footer class="bg-light p-3 d-flex flex-wrap justify-content-between align-items-center py-4 border-top"> 
-    <p class="col-md-6 text-body-secondary"> 2025 Pixelagent. All rights reserved.</p>
-      <ul class=" nav col-md-6 justify-content-end"> 
-        <li class="nav-item"><a href="credits.html" class="nav-link px-2 text-body-primary">Credits</a></li> 
-        <li class="nav-item"><a href="contact.html" class="nav-link px-2 text-body-primary">Contact</a></li> 
-        </ul> 
-        <p id="links"></p>
-    </footer>
+
+<!-- Settings Modal - loaded dynamically -->
+<div id="settingsModal" class="modal hidden">
+   <!-- Content loaded from settings_modal.html -->
+
 </div>
 
+<!-- Footer placeholder - loaded via JavaScript -->
+<div id="footer-placeholder" class="fixed-bottom"></div>
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
 <script src="scripts/base.js"></script>
-<script src="scripts/form.js"></script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const alertDiv = document.getElementById('contact-alert');
+    
+    if (contactForm) {
+      // Bootstrap 5 validation
+      contactForm.addEventListener('submit', function(event) {
+        // Check form validity
+        if (!contactForm.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          // Form is valid, proceed with submission
+          event.preventDefault();
+          
+          // Show submitting message
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+          
+          // Create form data
+          const formData = new FormData(contactForm);
+          
+          // Submit using fetch with no-cors mode for Google Forms
+          fetch(contactForm.action, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+          })
+          .then(function() {
+            // Show success message
+            alertDiv.classList.remove('d-none');
+            alertDiv.className = 'alert alert-success';
+            alertDiv.innerHTML = '<strong>Success!</strong> Thank you! Your message has been sent successfully.';
+            
+            // Reset form and validation state
+            contactForm.reset();
+            contactForm.classList.remove('was-validated');
+          })
+          .catch(function(error) {
+            // Even on error, Google Forms may have received the submission
+            alertDiv.classList.remove('d-none');
+            alertDiv.className = 'alert alert-success';
+            alertDiv.innerHTML = '<strong>Sent!</strong> Thank you! Your message has been sent.';
+            
+            contactForm.reset();
+            contactForm.classList.remove('was-validated');
+          })
+          .finally(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
+            
+            // Hide alert after 5 seconds
+            setTimeout(function() {
+              alertDiv.classList.add('d-none');
+            }, 5000);
+          });
+        }
+        
+        // Add validation class for styling
+        contactForm.classList.add('was-validated');
+      });
+      
+      // Real-time validation feedback
+      const inputs = contactForm.querySelectorAll('.form-control');
+      inputs.forEach(function(input) {
+        input.addEventListener('input', function() {
+          if (this.checkValidity()) {
+            this.classList.add('is-valid');
+            this.classList.remove('is-invalid');
+          } else {
+            this.classList.add('is-invalid');
+            this.classList.remove('is-valid');
+          }
+        });
+        
+        input.addEventListener('blur', function() {
+          if (this.checkValidity()) {
+            this.classList.add('is-valid');
+            this.classList.remove('is-invalid');
+          } else if (this.value.length > 0) {
+            this.classList.add('is-invalid');
+            this.classList.remove('is-valid');
+          }
+        });
+      });
+    }
+  });
+</script>
 
 </body>
 </html>

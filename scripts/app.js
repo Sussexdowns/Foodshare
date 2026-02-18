@@ -11,82 +11,463 @@ document.addEventListener('DOMContentLoaded', initApp);
 let map;
 let allLocations = [];
 let markers = [];
+let heatLayer = null;
 let footerTimeout;
 let useFontAwesome = true;
+let footerDetailsLoaded = false;
+let itemsData = {}; // Store items from items.json
+const ZOOM_THRESHOLD = 13; // Show heatmap when zoomed out beyond this level
+
+// Category to FontAwesome icon mapping for dropdowns
+const categoryIcons = {
+  'fruits': '🍎',
+  'vegetables': '🥕',
+  'flowers': '🌸',
+  'herbs': '🌿',
+  'mushrooms': '🍄',
+  'other': '⬤'
+};
 
 
 
 // --- Configuration ---
-// Set to true to use JSON file, false to use CSV as primary data source
-const useJsonAsSource = false; // 👈 Change this to toggle between JSON and CSV
+// Check localStorage for saved settings, otherwise use default
+const configUseJson = localStorage.getItem('useJsonAsSource');
+const configSheetURL = localStorage.getItem('sheetURL');
+const configUserAddress = localStorage.getItem('userAddress');
+
+// Use local CSV file for test data
+const useLocalCSV = true;
+const localCSVFile = 'data/sussex_free_food_locations.csv';
+
+// Default center - Lewes, East Sussex, UK
+const DEFAULT_CENTER = [50.873, 0.009];
+const DEFAULT_ZOOM = 12;
+
+// Nominatim API for geocoding
+const NOMINATIM_API = 'https://nominatim.openstreetmap.org/search';
 
 // --- IMPORTANT: Paste your published Google Sheet CSV URL here ---
-const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_-5xXDk3-S1VfgYvEABOXgGD0zC1WbaGs2PZIQ5Cph3ndo0FNq5KpDRcr0PwUxfLsdwpwf_JeFzrn/pub?output=csv'; // 👈 PASTE YOUR URL HERE
+// Use saved URL from localStorage if available, otherwise use default
+const sheetURL = configSheetURL || 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_-5xXDk3-S1VfgYvEABOXgGD0zC1WbaGs2PZIQ5Cph3ndo0FNq5KpDRcr0PwUxfLsdwpwf_JeFzrn/pub?output=csv'; // 👈 PASTE YOUR URL HERE
 const jsonfile = 'locations.json'; // Assume this JSON file exists with base location data
 
 // --- Initialization ---
 function initApp() {
   addStatusMessage('🚀 Initializing application...', 'success');
   debugLibraries();
-  initMap();
-  fetchData();
+
+  // Load categories.json and items.json in parallel
+  Promise.all([
+    fetch('categories.json').then(res => res.json()).catch(() => null),
+    fetch('items.json').then(res => res.json()).catch(() => null)
+  ])
+    .then(([categoriesData, itemsData]) => {
+      window.categoriesData = categoriesData;
+      window.itemsData = itemsData || {};
+
+      console.log('Loaded items data:', window.itemsData);
+
+      // Continue with other initialization
+      loadFooterDetailsTemplate().then(() => {
+        initMap();
+        fetchData();
+      });
+    })
+    .catch(error => {
+      console.error('Error loading config files:', error);
+      window.itemsData = {};
+      // Continue without config data
+      loadFooterDetailsTemplate().then(() => {
+        initMap();
+        fetchData();
+      });
+    });
+}
+
+/**
+ * Loads the footer-details.html template
+ */
+function loadFooterDetailsTemplate() {
+  return fetch('footer-details.html')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.text();
+    })
+    .then(html => {
+      const container = document.getElementById('footer-details-container');
+      if (container) {
+        // Extract the HTML content (without the script tag)
+        const htmlWithoutScript = html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gm, '');
+        container.innerHTML = htmlWithoutScript;
+        footerDetailsLoaded = true;
+        console.log('Footer details template loaded');
+
+        // Attach close button event listener
+        attachFooterDetailsCloseListener();
+      }
+    })
+    .catch(error => {
+      console.error('Error loading footer-details template:', error);
+      // Create fallback template
+      createFallbackFooterTemplate();
+    });
+}
+
+/**
+ * Attaches close button listener for footer details
+ */
+function attachFooterDetailsCloseListener() {
+  const closeBtn = document.getElementById('footer-close');
+  const footer = document.getElementById('footer-details');
+
+  if (closeBtn && footer) {
+    closeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      footer.classList.remove('open');
+    });
+  }
+
+  // Also attach click-to-open handler
+  const overlay = document.getElementById('footer-closed-overlay');
+  if (overlay) {
+    overlay.addEventListener('click', function () {
+      footer.classList.add('open');
+    });
+  }
+}
+
+/**
+ * Creates a fallback footer template if the file can't be loaded
+ */
+function createFallbackFooterTemplate() {
+  const container = document.getElementById('footer-details-container');
+  if (container) {
+    container.innerHTML = `
+      <div id="footer-details">
+        <button type="button" id="footer-close" class="footer-close-btn" aria-label="Close" title="Close details">
+          <i class="fas fa-times"></i>
+        </button>
+        
+        <!-- Click to open overlay -->
+        <div id="footer-closed-overlay" class="footer-overlay">
+          <span><i class="fa fa-info-circle"></i> Click to see location details</span>
+        </div>
+        
+        <img id="footer-image" src="" alt="Location Image" style="display: none; max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 8px; flex-shrink: 0;">
+        <div class="footer-content" style="flex: 1;">
+          <div class="d-flex align-items-center mb-2 flex-wrap gap-2">
+            <h5 id="footer-title" class="mb-0 me-2">Click on a pin to see details</h5>
+            <span id="footer-category" class="badge bg-secondary">Other</span>
+          </div>
+          <p id="footer-description" class="mb-2 text-muted"></p>
+          <div id="footer-actions" class="footer-actions" data-id="" style="display: none; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <button class="footer-like-btn btn btn-sm btn-outline-success" title="Like">
+              <i class="fa fa-thumbs-up"></i> <span>0</span>
+            </button>
+            <button class="footer-dislike-btn btn btn-sm btn-outline-danger" title="Dislike">
+              <i class="fa fa-thumbs-down"></i> <span>0</span>
+            </button>
+            <button class="footer-report-btn btn btn-sm btn-outline-warning" title="Report">
+              <i class="fa fa-flag"></i>
+            </button>
+          </div>
+          <div class="footer-links" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <a id="footer-directions" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="display: none;">
+              <i class="fa fa-map-marker-alt"></i> Get Directions
+            </a>
+            <a id="footer-link" href="#" class="btn btn-sm btn-outline-primary" target="_blank" style="display: none;">
+              <i class="fa fa-info-circle"></i> Learn more
+            </a>
+          </div>
+        </div>
+      </div>
+      <style>
+        .footer-close-btn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 1000;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: 2px solid #6c757d;
+          background-color: rgba(255, 255, 255, 0.95);
+          color: #6c757d;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          font-size: 16px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .footer-close-btn:hover {
+          background-color: #dc3545;
+          border-color: #dc3545;
+          color: white;
+          box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        }
+        .footer-close-btn:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4);
+          border-color: #dc3545;
+        }
+        .footer-close-btn:active {
+          transform: scale(0.95);
+        }
+        
+        /* Footer overlay when closed */
+        .footer-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.9);
+          cursor: pointer;
+          z-index: 10;
+          transition: background-color 0.2s ease;
+        }
+
+        .footer-overlay:hover {
+          background: rgba(230, 230, 230, 0.95);
+        }
+
+        .footer-overlay span {
+          font-size: 14px;
+          color: #6c757d;
+          pointer-events: none;
+        }
+
+        /* Footer open state */
+        #footer-details {
+          visibility: hidden;
+          opacity: 0;
+        }
+
+        #footer-details.open {
+          visibility: visible;
+          opacity: 1;
+        }
+
+        #footer-details.open .footer-overlay {
+          display: none;
+        }
+
+        #footer-details.open #footer-actions {
+          display: flex !important;
+        }
+      </style>
+    `;
+    footerDetailsLoaded = true;
+    console.log('Fallback footer template created');
+
+    // Attach close button event listener
+    attachFooterDetailsCloseListener();
+
+    // Attach click-to-open handler
+    const footer = document.getElementById('footer-details');
+    const overlay = document.getElementById('footer-closed-overlay');
+    if (footer && overlay) {
+      overlay.addEventListener('click', function () {
+        footer.classList.add('open');
+      });
+    }
+  }
 }
 
 function initMap() {
   const lewes = [50.873, 0.009];
-  map = L.map('map').setView(lewes, 14);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+  // Check if dark mode is enabled
+  const isDarkMode = document.body.classList.contains('dark-mode');
+
+  // Choose tile layer based on dark mode
+  const tileUrl = isDarkMode
+    ? 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+  // Use CartoDB Dark Matter for dark mode, standard OSM for light mode
+  const darkTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  const lightTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+  map = L.map('map', {
+    fullscreenControl: true,
+    fullscreenControlOptions: {
+      position: 'topleft'
+    }
+  }).setView(lewes, 14);
+
+  // Add tile layer - use dark theme in dark mode
+  const currentTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
+  L.tileLayer(currentTileUrl, {
     maxZoom: 19,
-    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(map);
+
+  // Add zoom event listener to toggle between markers and heatmap
+  map.on('zoomend', handleZoomChange);
+
+  // Listen for dark mode changes to switch tile layer
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        updateMapTheme();
+      }
+    });
+  });
+  observer.observe(document.body, { attributes: true });
+
+  // Center map on user's location if set
+  centerMapOnUserLocation();
+}
+
+/**
+ * Centers the map on the user's saved location or defaults to Lewes
+ */
+function centerMapOnUserLocation() {
+  const userAddress = configUserAddress || localStorage.getItem('userAddress');
+
+  if (userAddress && userAddress.trim()) {
+    geocodeAddress(userAddress)
+      .then(coords => {
+        if (coords) {
+          map.setView(coords, 12);
+          addStatusMessage(`📍 Map centered on: ${userAddress}`, 'info');
+        } else {
+          // Fallback to default if geocoding fails
+          map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+        }
+      })
+      .catch(() => {
+        map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+      });
+  } else {
+    // Default to Lewes
+    map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+  }
+}
+
+/**
+ * Geocodes an address using Nominatim API
+ * @param {string} address - The address to geocode
+ * @returns {Promise<[number, number]|null>} - Returns [lat, lng] or null if not found
+ */
+async function geocodeAddress(address) {
+  try {
+    const encodedAddress = encodeURIComponent(address);
+    const url = `${NOMINATIM_API}?q=${encodedAddress}&format=json&limit=1&countrycodes=gb`;
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Geocoding request failed');
+    }
+
+    const data = await response.json();
+
+    if (data && data.length > 0) {
+      const result = data[0];
+      return [parseFloat(result.lat), parseFloat(result.lon)];
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Geocoding error:', error);
+    return null;
+  }
+}
+
+/**
+ * Updates the map tile layer based on dark mode state
+ */
+function updateMapTheme() {
+  const isDarkMode = document.body.classList.contains('dark-mode');
+  const darkTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+  const lightTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  const newTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
+
+  // Remove existing tile layer and add new one
+  map.eachLayer((layer) => {
+    if (layer instanceof L.TileLayer) {
+      map.removeLayer(layer);
+      L.tileLayer(newTileUrl, {
+        maxZoom: 19,
+        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
+      }).addTo(map);
+    }
+  });
+
+  addStatusMessage(isDarkMode ? '🌙 Dark mode: Using dark map theme' : '☀️ Light mode: Using light map theme', 'info');
 }
 
 // --- Data Fetching and Processing ---
 
 /**
  * Fetches location data based on the useJsonAsSource configuration.
+ * If useLocalCSV is true, loads from local CSV file.
  * If useJsonAsSource is true, loads from JSON and merges feedback from CSV.
  * If useJsonAsSource is false, loads all data from CSV.
  */
 function fetchData() {
+  if (useLocalCSV) {
+    // Load from local CSV file
+    addStatusMessage('Loading data from local CSV file...', 'info');
+    fetch(localCSVFile)
+      .then(res => res.text())
+      .then(csvData => {
+        const parsedData = parseCSV(csvData);
+        const processedData = processCSVData(parsedData);
+        allLocations = processedData;
+        initializeAppData(allLocations);
+      })
+      .catch(handleFetchError);
+    return;
+  }
+
   if (!sheetURL || sheetURL === 'YOUR_PUBLISHED_GOOGLE_SHEET_CSV_URL') {
     console.error('Error: Google Sheet URL is not set. Please update the `sheetURL` variable in app.js.');
     alert('Application is not configured correctly. The Google Sheet URL is missing.');
 
     // Fallback to JSON if available (but now with feedback from the sheet if possible)
-    if (useJsonAsSource) {
+    if (configUseJson) {
       Promise.all([
         fetch(jsonfile).then(res => res.json()),
         fetch(sheetURL).then(res => res.text()).catch(() => '') // Fetch sheet data, but don't fail if sheet is unreachable for feedback
       ])
+        .then(([locationsData, csvData]) => {
+          const feedbackRows = csvData ? parseCSV(csvData) : [];
+          const processedData = processJSONData(locationsData, feedbackRows); // Use new processJSONData
+          allLocations = processedData;
+          initializeAppData(allLocations);
+        })
+        .catch(handleFetchError);
+    }
+    return;
+  }
+
+  if (configUseJson) {
+    // Behavior: JSON as primary source, CSV for feedback
+    addStatusMessage('Loading data from JSON with CSV feedback...', 'info');
+    Promise.all([
+      fetch(jsonfile).then(res => res.json()),
+      fetch(sheetURL).then(res => res.text()) // Always try to get CSV feedback
+    ])
       .then(([locationsData, csvData]) => {
-        const feedbackRows = csvData ? parseCSV(csvData) : [];
+        const feedbackRows = parseCSV(csvData);
         const processedData = processJSONData(locationsData, feedbackRows); // Use new processJSONData
         allLocations = processedData;
         initializeAppData(allLocations);
       })
       .catch(handleFetchError);
-    }
-    return;
-  }
-
-  if (useJsonAsSource) {
-    // Behavior: JSON as primary source, CSV for feedback
-    addStatusMessage('📊 Loading data from JSON with CSV feedback...', 'info');
-    Promise.all([
-      fetch(jsonfile).then(res => res.json()),
-      fetch(sheetURL).then(res => res.text()) // Always try to get CSV feedback
-    ])
-    .then(([locationsData, csvData]) => {
-      const feedbackRows = parseCSV(csvData);
-      const processedData = processJSONData(locationsData, feedbackRows); // Use new processJSONData
-      allLocations = processedData;
-      initializeAppData(allLocations);
-    })
-    .catch(handleFetchError);
   } else {
     // Behavior: CSV as primary source (current working mode)
-    addStatusMessage('📊 Loading all data from CSV...', 'info');
+    addStatusMessage('Loading all data from CSV...', 'info');
     fetch(sheetURL)
       .then(res => res.text())
       .then(csvData => {
@@ -132,29 +513,54 @@ function processCSVData(csvData) {
         return; // Skip this row if core location data is invalid for a new location
       }
 
+      // Map CSV columns to app format:
+      // - category (CSV) -> food category (fruits, vegetables, herbs) for app category
+      // - sub-category -> item name for filtering
+      // - type -> stored as originalType for reference
+      // - name -> locationName for display
+      // Handle both hyphenated (sub-category) and underscore (sub_category) column names
+      const subCategoryValue = row.sub_category || row['sub-category'] || '';
+      const foodCategory = row.category ? row.category.trim() : 'other';
+
       location = {
         id: parseInt(id), // Store ID as integer in the object
-        name: row.name ? row.name.trim() : `Location ${id}`,
+        name: subCategoryValue || foodCategory, // Use sub-category or food category as name
+        locationName: row.name ? row.name.trim() : `Location ${id}`, // Store location name separately
         lat: lat,
         lng: lng,
-        category: row.category ? row.category.trim() : 'Other',
+        category: foodCategory, // Use food category (fruits, vegetables, herbs)
+        originalType: row.type ? row.type.trim() : '', // Store original type for reference
         description: row.description ? row.description.trim() : '',
-        short_description: row.short_description ? row.short_description.trim() : '',
-        season: row.season ? parseSeasonData(row.season) : [],
+        short_description: row.short_description ? row.short_description.trim() : (row.short_description ? row.short_description.trim() : ''),
+        season: parseSeasonData(row.months || row.season), // Parse months column (supports both formats)
         // Ensure image and link are trimmed to avoid leading/trailing spaces
         image: row.image ? row.image.trim() : '',
-        likes: row.likes,    // Initialize likes for new location
-        dislikes: row.dislikes, // Initialize dislikes for new location
+        likes: parseInt(row.likes) || 0,    // Initialize likes for new location
+        dislikes: parseInt(row.dislikes) || 0, // Initialize dislikes for new location
         // Ensure link is trimmed to avoid leading/trailing spaces
-        link: row.link ? row.link.trim() : ''
+        link: row.link ? row.link.trim() : '',
+        // Additional fields from CSV
+        town: row.town ? row.town.trim() : '',
+        county: row.county ? row.county.trim() : '',
+        postcode: row.postcode ? row.postcode.trim() : '',
+        address: row.address ? row.address.trim() : '',
+        tags: row.tags ? row.tags.trim() : ''
       };
+
+      // Use short_description from CSV if available
+      if (row.short_description) {
+        location.short_description = row.short_description.trim();
+      }
+
       locationMap.set(id, location);
       // console.log(`Added new location to map: ${id}`, location);
     }
 
     // Now, process feedback for this row and add to the *existing* or *newly created* location object
     // This logic allows for feedback to be aggregated even if location details are defined in a different row
-    if (row.Approved && row.Approved.trim().toUpperCase() === 'TRUE') {
+    // Handle both 'approved' (lowercase from local CSV) and 'Approved' (from Google Sheets)
+    const approvedValue = row.approved || row.Approved;
+    if (approvedValue && approvedValue.trim().toUpperCase() === 'TRUE') {
       const likesToAdd = parseInt(row.likes, 10) || 0;
       const dislikesToAdd = parseInt(row.dislikes, 10) || 0;
 
@@ -162,8 +568,8 @@ function processCSVData(csvData) {
       location.dislikes += dislikesToAdd;
 
       // console.log(`Updated location ${id}: likes=${location.likes}, dislikes=${location.dislikes}`);
-    } // else if (row.Approved) {
-      // console.log(`Feedback for ID ${id} not approved: Approved=${row.Approved}`);
+    } // else if (approvedValue) {
+    // console.log(`Feedback for ID ${id} not approved: approved=${approvedValue}`);
     // }
   });
 
@@ -204,7 +610,7 @@ function processJSONData(jsonData, feedbackRows) {
 
 
 /**
- * Parses season data from CSV format (e.g., "1,2,3" or "January,February,March")
+ * Parses season data from CSV format (e.g., "1,2,3" or "January,February,March" or "7;8;9")
  * @param {string} seasonStr - The season string from CSV
  * @returns {Array<number>} Array of month numbers (1-12)
  */
@@ -212,9 +618,9 @@ function parseSeasonData(seasonStr) {
   if (!seasonStr) return [];
 
   const months = ["january", "february", "march", "april", "may", "june",
-                 "july", "august", "september", "october", "november", "december"];
+    "july", "august", "september", "october", "november", "december"];
 
-  return seasonStr.split(',')
+  return seasonStr.split(/[,;]/)  // Support both comma and semicolon separators
     .map(s => s.trim().toLowerCase())
     .map(s => {
       // Try parsing as number first
@@ -250,7 +656,7 @@ function initializeAppData(data) {
   addEventListeners();
   displayAllLocations();
 
-  const dataSource = useJsonAsSource ? 'JSON + CSV feedback' : 'CSV only';
+  const dataSource = configUseJson ? 'JSON + CSV feedback' : 'CSV only';
   addStatusMessage(`✅ App ready. Displaying ${allLocations.length} locations from ${dataSource}.`, 'success');
 }
 
@@ -260,8 +666,27 @@ function initializeAppData(data) {
  */
 function handleFetchError(error) {
   console.error('Error loading data:', error);
-  alert('Could not load location data. Please check the console for more details.');
-  addStatusMessage('❌ Failed to load data. Check console.', 'error');
+
+  // If JSON fetch failed and we were using JSON, try fallback to CSV
+  if (configUseJson && error.message && error.message.includes('Failed to fetch')) {
+    addStatusMessage('⚠️ JSON load failed, falling back to CSV...', 'warning');
+    // Force CSV mode
+    fetch(sheetURL)
+      .then(res => res.text())
+      .then(csvData => {
+        const parsedData = parseCSV(csvData);
+        const processedData = processCSVData(parsedData);
+        allLocations = processedData;
+        initializeAppData(allLocations);
+      })
+      .catch(csvError => {
+        alert('Could not load location data from either JSON or CSV.');
+        addStatusMessage('❌ Failed to load data from both JSON and CSV.', 'error');
+      });
+  } else {
+    alert('Could not load location data. Please check the console for more details.');
+    addStatusMessage('❌ Failed to load data. Check console.', 'error');
+  }
 }
 
 /**
@@ -340,42 +765,59 @@ function parseCSVLine(line) {
   return result;
 }
 
-// --- UI and Map Functions (Mostly Unchanged) ---
+// --- UI and Map Functions ---
 
 function populateFilters() {
   const categorySelect = safeGet('category');
   const itemSelect = safeGet('item');
-  const monthSelect = safeGet('month');
 
-  // Clear existing options before populating
-  categorySelect.innerHTML = '<option value="all">All Categories</option>';
-  itemSelect.innerHTML = '<option value="all">All Items</option>';
-  monthSelect.innerHTML = '<option value="all">All Months</option>';
+  // Check if category dropdown already has options
+  // If it does, don't overwrite it
+  if (categorySelect.options.length <= 1) {
+    // Populate categories from items.json if available
+    if (window.itemsData && Object.keys(window.itemsData).length > 0) {
+      categorySelect.innerHTML = '<option value="all">All Categories</option>';
 
+      // Add categories from items.json in a consistent order
+      const categoryOrder = ['fruits', 'vegetables', 'flowers', 'herbs', 'mushrooms', 'other'];
+      const categories = categoryOrder.filter(cat => window.itemsData[cat] && window.itemsData[cat].length > 0);
 
-  const categories = [...new Set(allLocations.map(loc => loc.category))].sort();
-  const items = [...new Set(allLocations.map(loc => loc.name))].sort();
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      categories.forEach(categoryKey => {
+        const displayName = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
+        const icon = categoryIcons[categoryKey] || '⬤';
+        categorySelect.add(new Option(`${icon} ${displayName}`, categoryKey));
+      });
+    } else {
+      // Fallback: populate from location data
+      categorySelect.innerHTML = '<option value="all">All Categories</option>';
+      const categories = [...new Set(allLocations.map(loc => loc.category))].sort();
 
-  categories.forEach(category => {
-    if (category && category !== 'Other') categorySelect.add(new Option(category, category));
-  });
-  // Add 'Other' last if it exists
-  if (categories.includes('Other')) {
-    categorySelect.add(new Option('Other', 'Other'));
+      categories.forEach(category => {
+        if (category && category !== 'Other') categorySelect.add(new Option(category, category));
+      });
+      if (categories.includes('Other')) {
+        categorySelect.add(new Option('Other', 'Other'));
+      }
+    }
   }
 
-
-  items.forEach(item => {
-    if (item) itemSelect.add(new Option(item, item));
-  });
-  months.forEach((month, index) => monthSelect.add(new Option(month, index + 1)));
+  // Item dropdown starts with "All Items"
+  itemSelect.innerHTML = '<option value="all">All Items</option>';
 }
 
 function addEventListeners() {
-  safeGet('category').addEventListener('change', filterLocations);
-  safeGet('item').addEventListener('change', filterLocations);
-  safeGet('month').addEventListener('change', filterLocations);
+  const categorySelect = safeGet('category');
+  const itemSelect = safeGet('item');
+
+  // Category change listener - populate items from items.json
+  categorySelect.addEventListener('change', function () {
+    populateItemsForCategory(this.value);
+    filterLocations();
+  });
+
+  itemSelect.addEventListener('change', filterLocations);
+
+  // Month filter is handled by the custom month picker in index.html
   safeGet('toggle-icon-style').addEventListener('change', (e) => {
     useFontAwesome = e.target.checked;
     // Re-render markers to apply new icon style
@@ -383,17 +825,243 @@ function addEventListeners() {
   });
 }
 
+/**
+ * Populates the item dropdown based on the selected category
+ * Uses items.json to get all items for the category
+ * Disables items that don't exist in the location data
+ * Shows items in optgroups by category
+ */
+function populateItemsForCategory(categoryId) {
+  const itemSelect = safeGet('item');
+
+  // Clear existing options except first
+  itemSelect.innerHTML = '<option value="all">All Items</option>';
+
+  // If "all" is selected, show all items in optgroups
+  if (!categoryId || categoryId === 'all') {
+    populateAllItemsWithOptgroups();
+    return;
+  }
+
+  // Get items from items.json for this category
+  const items = window.itemsData?.[categoryId] || [];
+
+  if (items.length === 0) {
+    // No items found for this category, fall back to location data
+    populateItemsFromLocationData(categoryId);
+    return;
+  }
+
+  // Get items that exist in location data for this category
+  const existingItems = new Set();
+  allLocations.forEach(loc => {
+    if (loc.category && loc.category.toLowerCase() === categoryId.toLowerCase() && loc.name) {
+      existingItems.add(loc.name.toLowerCase());
+    }
+  });
+
+  // Create optgroup for this category
+  const optgroup = document.createElement('optgroup');
+  const displayName = categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
+  const icon = categoryIcons[categoryId.toLowerCase()] || '⬤';
+  optgroup.label = `${icon} ${displayName}`;
+
+  // Add items to optgroup
+  items.forEach(item => {
+    const option = document.createElement('option');
+    option.value = item.name;
+    option.textContent = item.name;
+
+    // Check if item exists in database (case-insensitive)
+    const exists = existingItems.has(item.name.toLowerCase());
+
+    if (!exists) {
+      option.disabled = true;
+      option.textContent = `${item.name}`;
+    }
+
+    optgroup.appendChild(option);
+  });
+
+  itemSelect.appendChild(optgroup);
+}
+
+/**
+ * Populates all items from all categories with optgroups
+ * Called when "All Categories" is selected
+ */
+function populateAllItemsWithOptgroups() {
+  const itemSelect = safeGet('item');
+
+  // Clear existing options
+  itemSelect.innerHTML = '<option value="all">All Items</option>';
+
+  if (!window.itemsData || Object.keys(window.itemsData).length === 0) {
+    return;
+  }
+
+  // Get all items from all categories
+  const categoryOrder = ['fruits', 'vegetables', 'flowers', 'herbs', 'mushrooms', 'other'];
+
+  // Get items that exist in location data
+  const existingItems = new Set();
+  allLocations.forEach(loc => {
+    if (loc.name) {
+      existingItems.add(loc.name.toLowerCase());
+    }
+  });
+
+  categoryOrder.forEach(categoryKey => {
+    const items = window.itemsData[categoryKey] || [];
+
+    if (items.length === 0) return;
+
+    // Create optgroup for this category
+    const optgroup = document.createElement('optgroup');
+    const displayName = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
+    const icon = categoryIcons[categoryKey] || '⬤';
+    optgroup.label = `${icon} ${displayName}`;
+
+    // Add items to optgroup
+    items.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.name;
+      option.textContent = item.name;
+
+      // Check if item exists in database
+      const exists = existingItems.has(item.name.toLowerCase());
+
+      if (!exists) {
+        option.disabled = true;
+        option.textContent = `${item.name}`;
+      }
+
+      optgroup.appendChild(option);
+    });
+
+    itemSelect.appendChild(optgroup);
+  });
+}
+
+/**
+ * Fallback: populate items from location data when items.json doesn't have data for category
+ */
+function populateItemsFromLocationData(categoryId) {
+  const itemSelect = safeGet('item');
+
+  // Map category keys to display names for matching
+  const categoryDisplayNames = {
+    'fruits': 'Fruit',
+    'vegetables': 'Vegetable',
+    'flowers': 'Flower',
+    'herbs': 'Herb',
+    'mushrooms': 'Mushroom',
+    'other': 'Other'
+  };
+
+  const displayName = categoryDisplayNames[categoryId.toLowerCase()] || categoryId;
+
+  // Get items from location data for this category
+  const items = [...new Set(allLocations
+    .filter(loc => {
+      const locCat = loc.category ? loc.category.toLowerCase() : '';
+      return locCat === categoryId.toLowerCase() || locCat === displayName.toLowerCase();
+    })
+    .map(loc => loc.name)
+  )].sort();
+
+  // Create optgroup
+  const optgroup = document.createElement('optgroup');
+  const icon = categoryIcons[categoryId.toLowerCase()] || '⬤';
+  optgroup.label = `${icon} ${displayName}`;
+
+  items.forEach(item => {
+    if (item) {
+      const option = document.createElement('option');
+      option.value = item;
+      option.textContent = item;
+      optgroup.appendChild(option);
+    }
+  });
+
+  itemSelect.appendChild(optgroup);
+}
+
+// Global month filter function called by the custom month picker
+window.updateMonthFilter = function (months) {
+  filterLocationsByMonths(months);
+};
+
 function filterLocations() {
   const category = safeGet('category').value;
   const item = safeGet('item').value;
-  const month = parseInt(safeGet('month').value, 10);
 
   let filtered = allLocations;
 
-  if (category !== 'all') filtered = filtered.filter(loc => loc.category === category);
+  if (category !== 'all') {
+    // Map dropdown category keys to display names used in location data
+    const categoryDisplayNames = {
+      'fruits': 'Fruit',
+      'vegetables': 'Vegetable',
+      'flowers': 'Flower',
+      'herbs': 'Herb',
+      'mushrooms': 'Mushroom',
+      'other': 'Other'
+    };
+    const displayName = categoryDisplayNames[category.toLowerCase()] || category;
+    filtered = filtered.filter(loc => loc.category === displayName || loc.category === category);
+  }
+
   if (item !== 'all') filtered = filtered.filter(loc => loc.name === item);
-  // Ensure season data is an array before checking includes
-  if (!isNaN(month)) filtered = filtered.filter(loc => loc.season && Array.isArray(loc.season) && loc.season.includes(month));
+
+  // Get selected months from the custom month picker
+  const monthSelect = safeGet('month');
+  const month = monthSelect ? parseInt(monthSelect.value, 10) : null;
+
+  // If using the old month dropdown, handle it
+  if (monthSelect && month > 0) {
+    filtered = filtered.filter(loc => loc.season && Array.isArray(loc.season) && loc.season.includes(month));
+  }
+
+  displayFilteredLocations(filtered);
+  addStatusMessage(`🔍 Filtered to ${filtered.length} locations`, 'success');
+}
+
+function filterLocationsByMonths(months) {
+  const category = safeGet('category').value;
+  const item = safeGet('item').value;
+
+  let filtered = allLocations;
+
+  if (category !== 'all') {
+    // Map dropdown category keys to display names used in location data
+    const categoryDisplayNames = {
+      'fruits': 'Fruit',
+      'vegetables': 'Vegetable',
+      'flowers': 'Flower',
+      'herbs': 'Herb',
+      'mushrooms': 'Mushroom',
+      'other': 'Other'
+    };
+    const displayName = categoryDisplayNames[category.toLowerCase()] || category;
+    filtered = filtered.filter(loc => loc.category === displayName || loc.category === category);
+  }
+
+  if (item !== 'all') filtered = filtered.filter(loc => loc.name === item);
+
+  // Filter by selected months
+  if (months && months.length > 0) {
+    const monthMap = {
+      'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+      'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+    };
+    const selectedMonthNumbers = months.map(m => monthMap[m]).filter(m => m);
+
+    filtered = filtered.filter(loc =>
+      loc.season && Array.isArray(loc.season) &&
+      loc.season.some(s => selectedMonthNumbers.includes(s))
+    );
+  }
 
   displayFilteredLocations(filtered);
   addStatusMessage(`🔍 Filtered to ${filtered.length} locations`, 'success');
@@ -404,9 +1072,122 @@ function clearMarkers() {
   markers = [];
 }
 
+/**
+ * Creates a heatmap layer from the given locations
+ * @param {Array} locations - Array of location objects
+ */
+function createHeatmap(locations) {
+  if (!L.heatLayer) {
+    console.warn('Leaflet.heat plugin not loaded');
+    return null;
+  }
+
+  // Create heat data array: [lat, lng, intensity]
+  const heatData = locations.map(loc => [loc.lat, loc.lng, 0.5]);
+
+  // Create heat layer with custom options
+  const heat = L.heatLayer(heatData, {
+    radius: 25,
+    blur: 15,
+    maxZoom: ZOOM_THRESHOLD - 1,
+    gradient: {
+      0.2: '#00ff00',  // Green (low)
+      0.5: '#ffff00',  // Yellow (medium)
+      0.8: '#ff0000',  // Red (high)
+      1.0: '#800080'   // Purple (very high)
+    }
+  });
+
+  return heat;
+}
+
+/**
+ * Handles zoom changes to switch between markers and heatmap
+ */
+function handleZoomChange() {
+  const currentZoom = map.getZoom();
+
+  if (currentZoom <= ZOOM_THRESHOLD) {
+    // Zoomed out - show heatmap, hide markers
+    showHeatmap();
+  } else {
+    // Zoomed in - show markers, hide heatmap
+    showMarkers();
+  }
+}
+
+/**
+ * Switches to heatmap view (hides markers, shows heat layer)
+ */
+function showHeatmap() {
+  // Only show heatmap if we have locations
+  if (allLocations.length === 0) return;
+
+  // Hide markers
+  clearMarkers();
+
+  // Remove existing heat layer if any
+  if (heatLayer) {
+    map.removeLayer(heatLayer);
+  }
+
+  // Create and add new heat layer
+  heatLayer = createHeatmap(allLocations);
+  if (heatLayer) {
+    heatLayer.addTo(map);
+    addStatusMessage('🗺️ Switched to heatmap view (zoom in to see markers)', 'info');
+  }
+}
+
+/**
+ * Switches to marker view (hides heatmap, shows markers)
+ */
+function showMarkers() {
+  // Remove heat layer
+  if (heatLayer) {
+    map.removeLayer(heatLayer);
+    heatLayer = null;
+  }
+
+  // Show markers
+  allLocations.forEach(addMarker);
+  addStatusMessage(`📍 Showing ${markers.length} markers (zoom out for heatmap)`, 'info');
+}
+
+/**
+ * Updates the heatmap with filtered locations
+ * @param {Array} filteredLocations - Array of filtered location objects
+ */
+function updateHeatmap(filteredLocations) {
+  if (heatLayer) {
+    map.removeLayer(heatLayer);
+  }
+
+  if (filteredLocations.length > 0) {
+    heatLayer = createHeatmap(filteredLocations);
+    if (heatLayer) {
+      heatLayer.addTo(map);
+    }
+  }
+}
+
 function addMarker(location) {
-  const categoryColors = { "Fruit": "red", "Vegetable": "green", "Flower": "purple", "Herb": "blue", "Other": "gray" }; // Added 'Other'
-  const categoryIcons = { "Fruit": "apple-whole", "Vegetable": "carrot", "Flower": "seedling", "Herb": "leaf", "Other": "map-marker-alt" }; // Added 'Other'
+  const categoryColors = {
+    "Fruit": "red",
+    "Vegetable": "green",
+    "Flower": "purple",
+    "Herb": "blue",
+    "Mushroom": "orange",
+    "Other": "gray"
+  };
+  const categoryIcons = {
+    "Fruit": "apple-whole",
+    "Vegetable": "carrot",
+    "Flower": "seedling",
+    "Herb": "leaf",
+    "Mushroom": "mushroom",
+    "Other": "map-marker-alt"
+  };
 
   const color = categoryColors[location.category] || "purple";
   const iconName = categoryIcons[location.category] || "location-dot";
@@ -417,44 +1198,148 @@ function addMarker(location) {
     markerIcon = L.divIcon({
       className: 'custom-div-icon',
       html: `<div style="background-color:${color};" class="marker-pin"></div><i class="fa fa-${iconName} fa-lg" style="color:white;text-shadow: 1px 1px 2px rgba(0,0,0,0.5);"></i>`,
-      iconSize: [30, 42], // size of the icon
-      iconAnchor: [15, 42], // point of the icon which will correspond to marker's location
-      popupAnchor: [0, -35] // point from which the popup should open relative to the iconAnchor
+      iconSize: [30, 42],
+      iconAnchor: [15, 42],
+      popupAnchor: [0, -35]
     });
   } else {
-    // Fallback to L.AwesomeMarkers.icon if not using custom div icons
     markerIcon = L.AwesomeMarkers.icon({ icon: iconName, prefix: 'fa', markerColor: color });
   }
 
   const marker = L.marker([location.lat, location.lng], { icon: markerIcon }).addTo(map);
 
-  // Initialize likes/dislikes to 0 if they don't exist (though processed data should have them)
-
-
-  
+  // Initialize likes/dislikes
   location.likes = location.likes || 0;
   location.dislikes = location.dislikes || 0;
 
-  
+  // Store location data on marker for easy access
+  marker.locationData = location;
 
-  console.log(`Creating marker for ${location.name} (ID: ${location.id}) with ${location.likes} likes, ${location.dislikes} dislikes`);
+  // Click handler - show details in footer AND popup
+  marker.on('click', () => {
+    showFooterDetails(location);
 
-  marker.bindPopup(`
-    <div class="popup-content">
-      <h3>${location.name}</h3>
-      <p>${location.short_description || "No description."}</p>
-      <div class="popup-actions" data-id="${location.id}">
-        <button class="like-btn" title="Like"><i class="fa fa-thumbs-up"></i> <span>${location.likes}</span></button>
-        <button class="dislike-btn" title="Dislike"><i class="fa fa-thumbs-down"></i> <span>${location.dislikes}</span></button>
-        <button class="report-btn" title="Report"><i class="fa fa-flag"></i></button>
-      </div>
-    </div>`);
+    // Check if map is in fullscreen mode
+    const isFullscreen = document.fullscreenElement !== null ||
+      document.webkitFullscreenElement !== null ||
+      map.isFullscreen === true;
 
-  marker.on('popupopen', (e) => handlePopupOpen(e, location));
-  marker.on('click', () => showFooterDetails(location));
-  marker.on('mouseover', () => showFooterDetails(location));
+    // Check if images should be shown
+    const showImages = localStorage.getItem('showImages') !== 'false';
+
+    // Build popup content based on fullscreen state
+    let popupContent;
+
+    if (isFullscreen) {
+      // Enhanced popup for fullscreen mode with image, category badge, and links
+      const imageHtml = showImages ? `
+        <div style="margin-bottom: 8px;">
+          <img src="${location.image || 'images/Image-not-found.png'}" 
+               alt="Location" 
+               style="max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px;"
+               onerror="this.src='images/Image-not-found.png'">
+        </div>
+      ` : '';
+
+      const categoryBadge = `
+        <span class="badge bg-${getCategoryColor(location.category)}" style="margin-bottom: 8px;">
+          ${location.originalType || location.category || 'Other'}
+        </span>
+      `;
+
+      const directionsHtml = location.lat && location.lng ? `
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking" 
+           target="_blank" 
+           class="btn btn-sm btn-outline-primary"
+           style="text-decoration: none; margin-right: 5px;">
+          <i class="fa fa-map-marker-alt"></i> Get Directions
+        </a>
+      ` : '';
+
+      const linkHtml = location.link ? `
+        <a href="${location.link}" target="_blank" class="btn btn-sm btn-outline-primary" style="text-decoration: none;">
+          <i class="fa fa-info-circle"></i> Learn more
+        </a>
+      ` : '';
+
+      popupContent = `
+        <div class="leaflet-popup-content" style="max-width: 280px;">
+          ${imageHtml}
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <strong>${location.locationName || location.name}</strong>
+            ${categoryBadge}
+          </div>
+          <small style="display: block; margin-bottom: 8px;">${location.short_description || location.description || ''}</small>
+          <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px;">
+            ${directionsHtml}
+            ${linkHtml}
+          </div>
+          <div class="popup-buttons" style="display: flex; gap: 5px;">
+            <button class="btn btn-sm btn-outline-success popup-like" data-id="${location.id}" title="Like">
+              <i class="fas fa-thumbs-up"></i> <span>${location.likes || 0}</span>
+            </button>
+            <button class="btn btn-sm btn-outline-danger popup-dislike" data-id="${location.id}" title="Dislike">
+              <i class="fas fa-thumbs-down"></i> <span>${location.dislikes || 0}</span>
+            </button>
+            <button class="btn btn-sm btn-outline-warning popup-flag" data-id="${location.id}" title="Report">
+              <i class="fas fa-flag"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    } else {
+      // Simple popup for normal mode
+      popupContent = `
+        <div class="leaflet-popup-content">
+          <strong>${location.locationName || location.name}</strong><br>
+          <small>${location.short_description || location.description || ''}</small>
+          <div class="popup-buttons" style="margin-top: 8px; display: flex; gap: 5px;">
+            <button class="btn btn-sm btn-outline-success popup-like" data-id="${location.id}" title="Like">
+              <i class="fas fa-thumbs-up"></i> <span>${location.likes || 0}</span>
+            </button>
+            <button class="btn btn-sm btn-outline-danger popup-dislike" data-id="${location.id}" title="Dislike">
+              <i class="fas fa-thumbs-down"></i> <span>${location.dislikes || 0}</span>
+            </button>
+            <button class="btn btn-sm btn-outline-warning popup-flag" data-id="${location.id}" title="Report">
+              <i class="fas fa-flag"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    marker.bindPopup(popupContent).openPopup();
+  });
+
+  // Hover handler - also show details on hover
+  marker.on('mouseover', () => {
+    showFooterDetails(location);
+  });
+
   markers.push(marker);
 }
+
+// Event delegation for popup buttons (using document because popups are dynamically created)
+document.addEventListener('click', function (e) {
+  // Handle popup like button
+  if (e.target.closest('.popup-like')) {
+    const btn = e.target.closest('.popup-like');
+    const id = btn.dataset.id;
+    handleFeedbackClick('like', id, btn.closest('.leaflet-popup-content'));
+  }
+  // Handle popup dislike button
+  if (e.target.closest('.popup-dislike')) {
+    const btn = e.target.closest('.popup-dislike');
+    const id = btn.dataset.id;
+    handleFeedbackClick('dislike', id, btn.closest('.leaflet-popup-content'));
+  }
+  // Handle popup flag button
+  if (e.target.closest('.popup-flag')) {
+    const btn = e.target.closest('.popup-flag');
+    const id = btn.dataset.id;
+    handleFeedbackClick('report', id, btn.closest('.leaflet-popup-content'));
+  }
+});
 
 function displayAllLocations() {
   clearMarkers();
@@ -462,7 +1347,20 @@ function displayAllLocations() {
   // Reset filters to "all" when displaying all locations
   safeGet('category').value = 'all';
   safeGet('item').value = 'all';
-  safeGet('month').value = 'all';
+
+  // Reset the custom month picker
+  const monthPickerInput = safeGet('month-picker-input');
+  const selectedMonthsDisplay = safeGet('selected-months-display');
+  if (monthPickerInput) {
+    monthPickerInput.value = '';
+    monthPickerInput.placeholder = 'Select months...';
+  }
+  if (selectedMonthsDisplay) {
+    selectedMonthsDisplay.textContent = '';
+  }
+  // Uncheck all month checkboxes
+  document.querySelectorAll('.month-checkbox').forEach(cb => cb.checked = false);
+
   if (allLocations.length > 0) {
     map.fitBounds(L.latLngBounds(allLocations.map(loc => [loc.lat, loc.lng])), { padding: [50, 50] });
   } else {
@@ -473,7 +1371,21 @@ function displayAllLocations() {
 
 function displayFilteredLocations(locations) {
   clearMarkers();
-  locations.forEach(addMarker);
+
+  const currentZoom = map.getZoom();
+
+  if (currentZoom <= ZOOM_THRESHOLD && locations.length > 0) {
+    // Show heatmap when zoomed out
+    updateHeatmap(locations);
+  } else {
+    // Show markers when zoomed in
+    if (heatLayer) {
+      map.removeLayer(heatLayer);
+      heatLayer = null;
+    }
+    locations.forEach(addMarker);
+  }
+
   if (locations.length > 0) {
     map.fitBounds(L.latLngBounds(locations.map(loc => [loc.lat, loc.lng])), { padding: [50, 50] });
   } else {
@@ -484,146 +1396,281 @@ function displayFilteredLocations(locations) {
 }
 
 function showFooterDetails(location) {
-  const footer = safeGet('footer-details');
-  safeGet('footer-title').textContent = location.name;
-  safeGet('footer-description').textContent = location.description || "No additional info.";
-  
-  // Handle existing link
-  const link = safeGet('footer-link');
-  if (location.link) {
-    link.href = location.link;
-    link.style.display = 'inline-block';
-    link.innerHTML = '<i class="fa fa-info-circle"></i> Learn more about ' + location.name;
-    link.title = `Learn more about ${location.name}`;
-    //link.textContent = 'Learn more about ' + location.name;
-  } else {
-    link.style.display = 'none';
+  // Wait for footer template to be loaded
+  if (!footerDetailsLoaded) {
+    // Retry after a short delay
+    setTimeout(() => showFooterDetails(location), 100);
+    return;
   }
 
-  // Handle Google Directions link
-  const directionsLink = safeGet('footer-directions');
+  const footerContainer = document.getElementById('footer-details-container');
+  if (!footerContainer) return;
+
+  const footer = footerContainer.querySelector('#footer-details');
+  if (!footer) return;
+
+  // Update content
+  const title = footer.querySelector('#footer-title');
+  const description = footer.querySelector('#footer-description');
+  const categoryBadge = footer.querySelector('#footer-category');
+  const directionsLink = footer.querySelector('#footer-directions');
+  const link = footer.querySelector('#footer-link');
+  const image = footer.querySelector('#footer-image');
+  const footerActions = footer.querySelector('#footer-actions');
+  const closeBtn = footer.querySelector('#footer-close');
+
+  // Update title - show location name and item name
+  if (title) {
+    const locationName = location.locationName || location.name;
+    const itemName = location.name && location.name !== locationName ? location.name : '';
+    if (itemName) {
+      title.textContent = `${locationName} - ${itemName}`;
+    } else {
+      title.textContent = locationName;
+    }
+  }
+
+  if (description) {
+    description.textContent = location.description || location.short_description || "No additional info.";
+  }
+
+  // Update category badge
+  if (categoryBadge) {
+    // Use originalType if available, otherwise use category
+    const categoryText = location.originalType || location.category || 'Other';
+    categoryBadge.textContent = categoryText;
+    categoryBadge.className = `badge bg-${getCategoryColor(location.category)}`;
+  }
+
+  // Handle "Get Directions" link visibility based on coordinates
   if (directionsLink && location.lat && location.lng) {
-    // Create Google Maps directions URL
     const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking`;
     directionsLink.href = directionsURL;
     directionsLink.style.display = 'inline-block';
     directionsLink.innerHTML = '<i class="fa fa-map-marker-alt"></i> Get Directions';
-    directionsLink.title = `Get directions to ${location.name}`;
+    directionsLink.title = `Get directions to ${location.locationName || location.name}`;
   } else if (directionsLink) {
     directionsLink.style.display = 'none';
   }
 
-  // Handle image
-  const image = safeGet('footer-image');
-  if (location.image) {
-    image.src = location.image;
-    image.style.display = 'block';
-  } else {
-    image.style.display = 'none';
+  // Handle "Learn more" link visibility based on link presence
+  if (link) {
+    if (location.link) {
+      link.href = location.link;
+      link.style.display = 'inline-block';
+      link.innerHTML = '<i class="fa fa-info-circle"></i> Learn more';
+      link.title = `Learn more about ${location.locationName || location.name}`;
+    } else {
+      link.style.display = 'none';
+    }
   }
-  
-  footer.classList.add('visible');
-  clearTimeout(footerTimeout);
-  footerTimeout = setTimeout(() => {
-    if (!footer.matches(':hover')) footer.classList.remove('visible');
-  }, 5000);
-}
-function handlePopupOpen(e, location) {
-    const container = e.popup.getElement();
-    if (!container) return;
-    const locationId = location.id;
 
-    const likeBtn = container.querySelector('.like-btn');
-    const dislikeBtn = container.querySelector('.dislike-btn');
-    const reportBtn = container.querySelector('.report-btn');
+  // Handle image - show image from CSV or fallback to Image-not-found.png
+  // Respect the showImages setting
+  const showImages = localStorage.getItem('showImages') !== 'false';
+
+  if (image) {
+    if (showImages) {
+      if (location.image && location.image.trim() !== '') {
+        image.src = location.image;
+        image.onerror = function () {
+          // If image fails to load, show fallback
+          this.src = 'images/Image-not-found.png';
+        };
+        image.style.display = 'block';
+      } else {
+        // No image in CSV, show fallback image
+        image.src = 'images/Image-not-found.png';
+        image.style.display = 'block';
+      }
+    } else {
+      // Images disabled in settings
+      image.style.display = 'none';
+    }
+  }
+
+  // Update footer actions with location ID
+  if (footerActions) {
+    footerActions.setAttribute('data-id', location.id);
+    footerActions.style.display = 'flex';
+
+    // Update button counts
+    const likeCount = footerActions.querySelector('.footer-like-btn span');
+    const dislikeCount = footerActions.querySelector('.footer-dislike-btn span');
+    if (likeCount) likeCount.textContent = location.likes || 0;
+    if (dislikeCount) dislikeCount.textContent = location.dislikes || 0;
 
     // Check session storage and disable buttons if already submitted
+    const locationId = location.id;
+    const footerLikeBtn = footerActions.querySelector('.footer-like-btn');
+    const footerDislikeBtn = footerActions.querySelector('.footer-dislike-btn');
+    const footerReportBtn = footerActions.querySelector('.footer-report-btn');
+
     if (sessionStorage.getItem(`${locationId}-like`)) {
-        likeBtn.disabled = true;
-        likeBtn.style.opacity = '0.5';
-        likeBtn.style.cursor = 'not-allowed';
+      footerLikeBtn.disabled = true;
+      footerLikeBtn.style.opacity = '0.5';
     }
     if (sessionStorage.getItem(`${locationId}-dislike`)) {
-        dislikeBtn.disabled = true;
-        dislikeBtn.style.opacity = '0.5';
-        dislikeBtn.style.cursor = 'not-allowed';
+      footerDislikeBtn.disabled = true;
+      footerDislikeBtn.style.opacity = '0.5';
     }
     if (sessionStorage.getItem(`${locationId}-report`)) {
-        reportBtn.disabled = true;
-        reportBtn.style.opacity = '0.5';
-        reportBtn.style.cursor = 'not-allowed';
-    }
-
-    // Remove old listeners to prevent multiple bindings if popup is reopened
-    const newLikeBtn = likeBtn.cloneNode(true);
-    const newDislikeBtn = dislikeBtn.cloneNode(true);
-    const newReportBtn = reportBtn.cloneNode(true);
-
-    // Preserve disabled state when cloning
-    if (likeBtn.disabled) {
-        newLikeBtn.disabled = true;
-        newLikeBtn.style.opacity = '0.5';
-        newLikeBtn.style.cursor = 'not-allowed';
-    }
-    if (dislikeBtn.disabled) {
-        newDislikeBtn.disabled = true;
-        newDislikeBtn.style.opacity = '0.5';
-        newDislikeBtn.style.cursor = 'not-allowed';
-    }
-    if (reportBtn.disabled) {
-        newReportBtn.disabled = true;
-        newReportBtn.style.opacity = '0.5';
-        newReportBtn.style.cursor = 'not-allowed';
-    }
-
-    likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
-    dislikeBtn.parentNode.replaceChild(newDislikeBtn, dislikeBtn);
-    reportBtn.parentNode.replaceChild(newReportBtn, reportBtn);
-    
-     // Add new listeners only if buttons are not disabled
-    if (!newLikeBtn.disabled) {
-        newLikeBtn.addEventListener('click', () => handleFeedbackClick('like', locationId, container));
-    }
-    if (!newDislikeBtn.disabled) {
-        newDislikeBtn.addEventListener('click', () => handleFeedbackClick('dislike', locationId, container));
-    }
-    if (!newReportBtn.disabled) {
-        newReportBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
+      footerReportBtn.disabled = true;
+      footerReportBtn.style.opacity = '0.5';
     }
   }
 
+  // Show the footer when user clicks on it (add 'open' class)
+  footer.classList.add('open');
+
+  // Add close button handler
+  if (closeBtn) {
+    closeBtn.onclick = function (e) {
+      e.stopPropagation();
+      footer.classList.remove('open');
+    };
+  }
+
+  // Auto-hide after 10 seconds (only if footer is still open)
+  clearTimeout(footerTimeout);
+  footerTimeout = setTimeout(() => {
+    if (footer.classList.contains('open') && !footer.matches(':hover')) {
+      footer.classList.remove('open');
+    }
+  }, 10000);
+}
+
+/**
+ * Get category color class
+ */
+function getCategoryColor(category) {
+  const colors = {
+    "Fruit": "danger",
+    "Vegetable": "success",
+    "Flower": "primary",
+    "Herb": "info",
+    "Mushroom": "warning",
+    "Other": "secondary"
+  };
+  return colors[category] || 'secondary';
+}
+
+/**
+ * Handle footer action button clicks
+ */
+function handleFooterActionClick(action, locationId) {
+  const key = `${locationId}-${action}`;
+  if (sessionStorage.getItem(key)) {
+    addStatusMessage(`Already submitted ${action} for this location.`, 'warning');
+    return;
+  }
+
+  const btn = document.querySelector(`.footer-${action}-btn`);
+  if (btn) {
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+  }
+
+  sessionStorage.setItem(key, 'true');
+  submitFeedback(locationId, action);
+  addStatusMessage(`Submitted ${action} for location ID ${locationId}.`, 'info');
+}
+function handlePopupOpen(e, location) {
+  const container = e.popup.getElement();
+  if (!container) return;
+  const locationId = location.id;
+
+  const likeBtn = container.querySelector('.like-btn');
+  const dislikeBtn = container.querySelector('.dislike-btn');
+  const reportBtn = container.querySelector('.report-btn');
+
+  // Check session storage and disable buttons if already submitted
+  if (sessionStorage.getItem(`${locationId}-like`)) {
+    likeBtn.disabled = true;
+    likeBtn.style.opacity = '0.5';
+    likeBtn.style.cursor = 'not-allowed';
+  }
+  if (sessionStorage.getItem(`${locationId}-dislike`)) {
+    dislikeBtn.disabled = true;
+    dislikeBtn.style.opacity = '0.5';
+    dislikeBtn.style.cursor = 'not-allowed';
+  }
+  if (sessionStorage.getItem(`${locationId}-report`)) {
+    reportBtn.disabled = true;
+    reportBtn.style.opacity = '0.5';
+    reportBtn.style.cursor = 'not-allowed';
+  }
+
+  // Remove old listeners to prevent multiple bindings if popup is reopened
+  const newLikeBtn = likeBtn.cloneNode(true);
+  const newDislikeBtn = dislikeBtn.cloneNode(true);
+  const newReportBtn = reportBtn.cloneNode(true);
+
+  // Preserve disabled state when cloning
+  if (likeBtn.disabled) {
+    newLikeBtn.disabled = true;
+    newLikeBtn.style.opacity = '0.5';
+    newLikeBtn.style.cursor = 'not-allowed';
+  }
+  if (dislikeBtn.disabled) {
+    newDislikeBtn.disabled = true;
+    newDislikeBtn.style.opacity = '0.5';
+    newDislikeBtn.style.cursor = 'not-allowed';
+  }
+  if (reportBtn.disabled) {
+    newReportBtn.disabled = true;
+    newReportBtn.style.opacity = '0.5';
+    newReportBtn.style.cursor = 'not-allowed';
+  }
+
+  likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
+  dislikeBtn.parentNode.replaceChild(newDislikeBtn, dislikeBtn);
+  reportBtn.parentNode.replaceChild(newReportBtn, reportBtn);
+
+  // Add new listeners only if buttons are not disabled
+  if (!newLikeBtn.disabled) {
+    newLikeBtn.addEventListener('click', () => handleFeedbackClick('like', locationId, container));
+  }
+  if (!newDislikeBtn.disabled) {
+    newDislikeBtn.addEventListener('click', () => handleFeedbackClick('dislike', locationId, container));
+  }
+  if (!newReportBtn.disabled) {
+    newReportBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
+  }
+}
+
 function handleFeedbackClick(action, id, container) {
-    const key = `${id}-${action}`;
-    if (sessionStorage.getItem(key)) {
-        addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
-        return; // Prevent multiple submissions
-    }
+  const key = `${id}-${action}`;
+  if (sessionStorage.getItem(key)) {
+    addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
+    return; // Prevent multiple submissions
+  }
 
-     // Disable button IMMEDIATELY when clicked to prevent double-clicking
-    const btn = container.querySelector(`.${action}-btn`);
-    if (btn) {
-        btn.disabled = true;
-        btn.style.opacity = '0.5'; // Visual feedback that it's disabled
-        btn.style.cursor = 'not-allowed';
-    }
+  // Disable button IMMEDIATELY when clicked to prevent double-clicking
+  const btn = container.querySelector(`.${action}-btn`);
+  if (btn) {
+    btn.disabled = true;
+    btn.style.opacity = '0.5'; // Visual feedback that it's disabled
+    btn.style.cursor = 'not-allowed';
+  }
 
-    sessionStorage.setItem(key, 'true'); // Mark as submitted in session
-    submitFeedback(id, action);
-    updateButtonCount(`.${action}-btn`, container);
-    
-    addStatusMessage(`Submitted feedback: ${action} for ID ${id}.`, 'info');
+  sessionStorage.setItem(key, 'true'); // Mark as submitted in session
+  submitFeedback(id, action);
+  updateButtonCount(`.${action}-btn`, container);
+
+  addStatusMessage(`Submitted feedback: ${action} for ID ${id}.`, 'info');
 }
 
 
 function submitFeedback(id, action) {
-  
-   // Map the action to the correct column name in your spreadsheet
+
+  // Map the action to the correct column name in your spreadsheet
   const actionMapping = {
     'like': 'likes',
-    'dislike': 'dislikes', 
-    'report': 'reports'  
+    'dislike': 'dislikes',
+    'report': 'reports'
   };
-  
+
   const columnName = actionMapping[action] || action;
 
   const formURL = fileExec;
@@ -634,20 +1681,20 @@ function submitFeedback(id, action) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-     body: new URLSearchParams({ 
-      id: id, 
+    body: new URLSearchParams({
+      id: id,
       action: columnName  // Send the mapped column name instead of the raw action
     })
   })
-  .then(() => {
-    console.log(`✅ Submission sent for action '${action}' on ID ${id}`);
-    // Note: We cannot read the response from the server in 'no-cors' mode,
-    // but the data will be sent successfully.
-  })
-  .catch(err => {
-    console.error('❌ Submission error:', err);
-    addStatusMessage('❌ Failed to submit feedback.', 'error');
-  });
+    .then(() => {
+      console.log(`✅ Submission sent for action '${action}' on ID ${id}`);
+      // Note: We cannot read the response from the server in 'no-cors' mode,
+      // but the data will be sent successfully.
+    })
+    .catch(err => {
+      console.error('❌ Submission error:', err);
+      addStatusMessage('❌ Failed to submit feedback.', 'error');
+    });
 }
 
 function updateButtonCount(buttonSelector, popupEl) {
@@ -661,7 +1708,7 @@ function safeGet(id) {
   const element = document.getElementById(id);
   if (!element) {
     console.warn(`Element with ID '${id}' not found. Returning a mock object.`);
-    return { addEventListener: () => {}, value: '', style: {}, textContent: '', innerHTML: '', add: () => {}, cloneNode: () => ({ addEventListener: () => {} }), parentNode: { replaceChild: () => {} } };
+    return { addEventListener: () => { }, value: '', style: {}, textContent: '', innerHTML: '', add: () => { }, cloneNode: () => ({ addEventListener: () => { } }), parentNode: { replaceChild: () => { } } };
   }
   return element;
 }
@@ -684,7 +1731,10 @@ function debugLibraries() {
   console.log('=== Library Debug Info ===');
   console.log('Leaflet loaded:', typeof L !== 'undefined');
   console.log('AwesomeMarkers loaded:', typeof L.AwesomeMarkers !== 'undefined');
-  console.log('Data source:', useJsonAsSource ? 'JSON + CSV feedback' : 'CSV only');
+  console.log('Heat plugin loaded:', typeof L.heatLayer !== 'undefined');
+  console.log('Fullscreen plugin loaded:', typeof L.Control.FullScreen !== 'undefined');
+  console.log('Data source:', configUseJson ? 'JSON + CSV feedback' : 'CSV only');
+  console.log('Zoom threshold for heatmap:', ZOOM_THRESHOLD);
   console.log('=== End Debug Info ===');
 }
 
@@ -715,6 +1765,62 @@ styleSheet.innerText = `
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
+}
+
+/* Heatmap styles */
+.leaflet-heat-layer {
+  pointer-events: none;
+}
+
+/* Status message styles */
+.status-message {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 300px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.status-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.status-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+.status-message.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+.status-message.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+/* Footer details styles */
+#footer-details {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#footer-details.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+#footer-details.open .footer-overlay {
+  display: none !important;
+}
+
+#footer-details.open #footer-actions {
+  display: flex !important;
 }
 `;
 document.head.appendChild(styleSheet);

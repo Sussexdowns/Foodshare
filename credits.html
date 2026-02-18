@@ -8,6 +8,10 @@
 
   <!-- CSS & Icons -->  
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <script src="https://kit.fontawesome.com/f90ec7d4eb.js" crossorigin="anonymous"></script>
 
@@ -21,13 +25,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 
-
-
-  <style>
-    #map { height: 100vh; width: 100%; }
-  </style>
   <!-- Favicons & Manifest -->
-  <link rel="icon" type="image/png" href="havicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
   <link rel="shortcut icon" href="favicon/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
@@ -37,63 +36,52 @@
 
 <body class="p-4">
 
+  <!-- Header placeholder - loaded via JavaScript -->
+  <div id="header-placeholder" class="fixed-top"></div>
+
 <!-- Begin page content -->
 <main class="flex-shrink-0">
-
-    <!-- Navbar -->
-      <div class=" fixed-top">
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      🌿 Map Menu
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="topics.html">📌 Topics</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.html">🗺️ Search Map</a></li>
-        <li class="nav-item"><a class="nav-link" href="submit.html">✏️ Submit Content</a></li>
-        <li class="nav-item"><a class="nav-link" href="credits.html">📜 Credits</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">💬 Contact Us</a></li>
-
-      </ul>
-    </div>
-  </div>
-</nav>
-</div>
-
 
 <!-- Page Heading -->
 <div class="container my-4 text-center">
   <h1 class="d-flex align-items-center justify-content-center">
-   📜 Credits
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+    Credits
   </h1>
 </div>
 
-
-  <p>This map was created to support community food sharing and urban gardening. Contributions come from volunteers, local groups, and open data sources.</p>
-
-</main>
-<div class="fixed-bottom">
-  <footer class="bg-light p-3 d-flex flex-wrap justify-content-between align-items-center py-4 border-top"> 
-    <p class="col-md-6 text-body-secondary"> 2025 Pixelagent. All rights reserved.</p>
-      <ul class=" nav col-md-6 justify-content-end"> 
-        <li class="nav-item"><a href="credits.html" class="nav-link px-2 text-body-primary">Credits</a></li> 
-        <li class="nav-item"><a href="contact.html" class="nav-link px-2 text-body-primary">Contact</a></li> 
-        </ul> 
-        <p id="links"></p>
-    </footer>
+<div class="container mb-4">
+  <div class="form-section">
+    <p>This map was created to support community food sharing and urban gardening. Contributions come from volunteers, local groups, and open data sources.</p>
+    
+    <h3 class="mt-4"><i class="fas fa-code me-2"></i>Development</h3>
+    <p>Built with open-source technologies including Leaflet.js and Bootstrap.</p>
+    
+    <h3 class="mt-4"><i class="fas fa-leaf me-2"></i>Data Sources</h3>
+    <p>Location data sourced from community contributions and open databases.</p>
+    
+    <h3 class="mt-4"><i class="fas fa-images me-2"></i>Images</h3>
+    <p>Item images sourced from Wikimedia Commons under Creative Commons licenses.</p>
+  </div>
 </div>
 
+</main>
+
+<!-- Settings Modal - loaded dynamically -->
+<div id="settingsModal" class="modal hidden">
+   <!-- Content loaded from settings_modal.html -->
+</div>
+
+<!-- Footer placeholder - loaded via JavaScript -->
+<div id="footer-placeholder" class="fixed-bottom"></div>
+
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
 <script src="scripts/base.js"></script>
+
 </body>
 </html>

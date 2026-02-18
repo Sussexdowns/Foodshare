@@ -1,92 +1,323 @@
 
+// Footer links data
+const footerLinksData = [
+  { name: 'Lewes District Council', url: 'https://www.lewes-eastbourne.gov.uk/' },
+  { name: 'Sussex Wildlife Trust', url: 'https://sussexwildlifetrust.org.uk/' },
+  { name: 'Visit Lewes', url: 'https://www.visitlewes.co.uk/' },
+  { name: 'Lewes Farmers Market', url: 'https://www.lewesfarmersmarket.co.uk/' },
+  { name: 'Lewes Bonfire Society', url: 'https://www.lewesbonfirecelebrations.com/' }
+];
 
-
-  $(document).ready(function () {
-
-
-
-    // 1. Apply dark mode on page load if previously set
-    const isDarkStored = localStorage.getItem('darkMode') === 'true';
-    if (isDarkStored) {
-      applyDarkMode(true);
-      $('#darkModeToggle').prop('checked', true);
-    }
-
-    // 2. Toggle dark mode when user interacts with checkbox
-    $('#darkModeToggle').on('change', function () {
-      const isDark = $(this).is(':checked');
-      applyDarkMode(isDark);
-      localStorage.setItem('darkMode', isDark);
+// Show links in the footer
+function showFooterLinks() {
+  const footerLinksList = document.getElementById('footer-links-list');
+  if (footerLinksList) {
+    footerLinksList.innerHTML = '';
+    footerLinksData.forEach(link => {
+      const li = document.createElement('li');
+      li.innerHTML = '<a href="' + link.url + '" target="_blank">' + link.name + '</a>';
+      footerLinksList.appendChild(li);
     });
+  }
+}
 
-    // 3. Dark mode toggling logic
-    function applyDarkMode(enable) {
-      $('body').toggleClass('dark-mode', enable);
-      $('nav').toggleClass('navbar-dark bg-dark', enable);
-      $('button.btn-close').toggleClass('btn-close-white', enable);
-    }
+/**
+ * Load HTML fragment into a placeholder element
+ * @param {string} placeholderId - ID of the placeholder element
+ * @param {string} fragmentUrl - URL of the HTML fragment to load
+ * @param {function} callback - Optional callback after loading
+ */
+function loadFragment(placeholderId, fragmentUrl, callback) {
+  const placeholder = document.getElementById(placeholderId);
+  if (!placeholder) {
+    console.warn(`Placeholder #${placeholderId} not found`);
+    if (callback) callback(null);
+    return;
+  }
 
-    // 4. Select2 with icons for category dropdown
-    function formatOptionWithIcon(state) {
-      if (!state.id) return state.text;
-
-      const iconMap = {
-        "Fruit": "fa-apple-whole",
-        "Vegetable": "fa-carrot",
-        "Flower": "fa-seedling",
-        "Herb": "fa-leaf"
-      };
-
-      const iconClass = iconMap[state.text] || "fa-tag";
-      return $(`<span><i class="fa-solid ${iconClass} me-2"></i>${state.text}</span>`);
-    }
-
-    $('#category').select2({
-      width: '100%',
-      templateResult: formatOptionWithIcon,
-      templateSelection: formatOptionWithIcon,
-      minimumResultsForSearch: Infinity
+  fetch(fragmentUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(html => {
+      placeholder.innerHTML = html;
+      console.log(`Loaded ${fragmentUrl} into #${placeholderId}`);
+      if (callback) callback(placeholder);
+    })
+    .catch(error => {
+      console.error(`Error loading ${fragmentUrl}:`, error);
+      if (callback) callback(null);
     });
+}
+
+/**
+ * Load header and footer into the page
+ */
+function loadHeaderFooter() {
+  // Load header
+  loadFragment('header-placeholder', 'header.html', () => {
+    // Initialize Bootstrap collapse after header loads
+    if (typeof bootstrap !== 'undefined') {
+      const navbarToggler = document.querySelector('.navbar-toggler');
+      const navbarMenu = document.getElementById('navbarMenu');
+      if (navbarToggler && navbarMenu) {
+        navbarToggler.addEventListener('click', () => {
+          navbarMenu.classList.toggle('show');
+        });
+      }
+    }
   });
 
+  // Load footer
+  loadFragment('footer-placeholder', 'footer.html', () => {
+    showFooterLinks();
+    applyDarkModeFromStorage();
+    attachFooterEventListeners();
+  });
 
-  $( '#select-field' ).select2( {
-    theme: 'bootstrap-5'
-} );
+  // Load settings modal content directly into settingsModal
+  loadSettingsModal();
+}
 
-  // show links in the footer
-  function showLinks() {
-    const footerLinks = $('#footer-link');
-    links.forEach(link => {
-      const listItem = $('<li></li>');
-      const anchor = $(`<a href="${link.url}" target="_blank">${link.name}</a>`);
-      listItem.append(anchor);
-      footerLinks.append(listItem);
+/**
+ * Load settings modal content
+ */
+function loadSettingsModal() {
+  const settingsModal = document.getElementById('settingsModal');
+  if (!settingsModal) return;
+
+  fetch('settings_modal.html')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('HTTP error! status: ' + response.status);
+      }
+      return response.text();
+    })
+    .then(html => {
+      settingsModal.innerHTML = html;
+      console.log('Loaded settings_modal.html into #settingsModal');
+      // Attach event listeners for settings modal buttons after content loads
+      attachSettingsModalEventListeners();
+    })
+    .catch(error => {
+      console.error('Error loading settings_modal.html:', error);
+    });
+}
+
+/**
+ * Attach event listeners for settings modal
+ */
+function attachSettingsModalEventListeners() {
+  const closeSettingsBtn = document.getElementById('closeSettings');
+  if (closeSettingsBtn && !closeSettingsBtn.hasAttribute('data-listener-attached')) {
+    closeSettingsBtn.addEventListener('click', closeSettings);
+    closeSettingsBtn.setAttribute('data-listener-attached', 'true');
+  }
+
+  const cancelSettingsBtn = document.getElementById('cancelSettings');
+  if (cancelSettingsBtn && !cancelSettingsBtn.hasAttribute('data-listener-attached')) {
+    cancelSettingsBtn.addEventListener('click', closeSettings);
+    cancelSettingsBtn.setAttribute('data-listener-attached', 'true');
+  }
+
+  const saveSettingsBtn = document.getElementById('saveSettings');
+  if (saveSettingsBtn && !saveSettingsBtn.hasAttribute('data-listener-attached')) {
+    saveSettingsBtn.addEventListener('click', saveSettings);
+    saveSettingsBtn.setAttribute('data-listener-attached', 'true');
+  }
+}
+
+/**
+ * Save settings to localStorage
+ */
+function saveSettings() {
+  // Save user address
+  const userAddressInput = document.getElementById('userAddress');
+  if (userAddressInput) {
+    localStorage.setItem('userAddress', userAddressInput.value.trim());
+  }
+
+  // Save JSON source preference
+  const useJsonAsSourceInput = document.getElementById('useJsonAsSource');
+  if (useJsonAsSourceInput) {
+    localStorage.setItem('useJsonAsSource', useJsonAsSourceInput.checked);
+  }
+
+  // Save sheet URL
+  const sheetURLInput = document.getElementById('sheetURL');
+  if (sheetURLInput) {
+    localStorage.setItem('sheetURL', sheetURLInput.value.trim());
+  }
+
+  // Save icon style preference
+  const toggleIconStyleInput = document.getElementById('toggle-icon-style');
+  if (toggleIconStyleInput) {
+    localStorage.setItem('useFontAwesome', toggleIconStyleInput.checked);
+  }
+
+  // Save show images preference
+  const showImagesInput = document.getElementById('show-images');
+  if (showImagesInput) {
+    localStorage.setItem('showImages', showImagesInput.checked);
+  }
+
+  // Close modal
+  closeSettings();
+
+  // Reload page to apply changes
+  location.reload();
+}
+
+// Dark mode toggle function - exposed globally
+function toggleDarkMode() {
+  const body = document.body;
+  const isDark = body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+
+  // Update button icon
+  const darkModeBtn = document.getElementById('darkModeToggle');
+  if (darkModeBtn) {
+    const icon = darkModeBtn.querySelector('i');
+    if (icon) {
+      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+  }
+
+  // Call shared update function if available
+  if (typeof window.updateDarkModeIcon === 'function') {
+    window.updateDarkModeIcon();
+  }
+
+  return isDark;
+}
+
+// Settings modal functions - exposed globally
+function openSettings() {
+  const modal = document.getElementById('settingsModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('visible');
+
+    // Populate fields with saved values
+    const userAddressInput = document.getElementById('userAddress');
+    if (userAddressInput) {
+      userAddressInput.value = localStorage.getItem('userAddress') || '';
+    }
+
+    const useJsonAsSourceInput = document.getElementById('useJsonAsSource');
+    if (useJsonAsSourceInput) {
+      useJsonAsSourceInput.checked = localStorage.getItem('useJsonAsSource') !== 'false';
+    }
+
+    const sheetURLInput = document.getElementById('sheetURL');
+    if (sheetURLInput) {
+      sheetURLInput.value = localStorage.getItem('sheetURL') || '';
+    }
+
+    const toggleIconStyleInput = document.getElementById('toggle-icon-style');
+    if (toggleIconStyleInput) {
+      toggleIconStyleInput.checked = localStorage.getItem('useFontAwesome') !== 'false';
+    }
+
+    const showImagesInput = document.getElementById('show-images');
+    if (showImagesInput) {
+      showImagesInput.checked = localStorage.getItem('showImages') !== 'false';
+    }
+  }
+}
+
+function closeSettings() {
+  const modal = document.getElementById('settingsModal');
+  if (modal) {
+    modal.classList.remove('visible');
+    modal.classList.add('hidden');
+  }
+}
+
+// Footer details panel functions - exposed globally
+function openFooterDetails() {
+  const panel = document.getElementById('footer-details-panel');
+  if (panel) {
+    panel.classList.add('visible');
+  }
+}
+
+function closeFooterDetails() {
+  const panel = document.getElementById('footer-details-panel');
+  if (panel) {
+    panel.classList.remove('visible');
+  }
+}
+
+// Apply dark mode on page load
+function applyDarkModeFromStorage() {
+  const isDarkStored = localStorage.getItem('darkMode') === 'enabled';
+  if (isDarkStored) {
+    document.body.classList.add('dark-mode');
+  }
+
+  // Update button icon
+  const darkModeBtn = document.getElementById('darkModeToggle');
+  if (darkModeBtn) {
+    const icon = darkModeBtn.querySelector('i');
+    if (icon) {
+      icon.className = isDarkStored ? 'fas fa-sun' : 'fas fa-moon';
+    }
+  }
+}
+
+// Attach event listeners for footer buttons
+function attachFooterEventListeners() {
+  const darkModeBtn = document.getElementById('darkModeToggle');
+  if (darkModeBtn && !darkModeBtn.hasAttribute('data-listener-attached')) {
+    darkModeBtn.addEventListener('click', toggleDarkMode);
+    darkModeBtn.setAttribute('data-listener-attached', 'true');
+  }
+
+  const settingsBtn = document.getElementById('settingsBtn');
+  if (settingsBtn && !settingsBtn.hasAttribute('data-listener-attached')) {
+    settingsBtn.addEventListener('click', openSettings);
+    settingsBtn.setAttribute('data-listener-attached', 'true');
+  }
+
+  const footerDetailsBtn = document.getElementById('footerDetailsBtn');
+  if (footerDetailsBtn && !footerDetailsBtn.hasAttribute('data-listener-attached')) {
+    footerDetailsBtn.addEventListener('click', openFooterDetails);
+    footerDetailsBtn.setAttribute('data-listener-attached', 'true');
+  }
+
+  const footerClose = document.getElementById('footer-close');
+  if (footerClose && !footerClose.hasAttribute('data-listener-attached')) {
+    footerClose.addEventListener('click', closeFooterDetails);
+    footerClose.setAttribute('data-listener-attached', 'true');
+  }
+
+  // Close modal when clicking outside
+  const settingsModal = document.getElementById('settingsModal');
+  if (settingsModal) {
+    settingsModal.addEventListener('click', function (e) {
+      if (e.target === settingsModal) {
+        closeSettings();
+      }
     });
   }
 
+  // Close footer details when clicking outside
+  const footerDetailsPanel = document.getElementById('footer-details-panel');
+  if (footerDetailsPanel) {
+    footerDetailsPanel.addEventListener('click', function (e) {
+      if (e.target === footerDetailsPanel) {
+        closeFooterDetails();
+      }
+    });
+  }
+}
 
-let links = [
-    { name: 'Lewes District Council', url: 'https://www.lewes-eastbourne.gov.uk/' },
-    { name: 'Sussex Wildlife Trust', url: 'https://sussexwildlifetrust.org.uk/' },
-    { name: 'Visit Lewes', url: 'https://www.visitlewes.co.uk/' },
-    { name: 'Lewes Farmers Market', url: 'https://www.lewesfarmersmarket.co.uk/' },
-    { name: 'Lewes Bonfire Society', url: 'https://www.lewesbonfirecelebrations.com/' }
-  ];  
-
-  let categorylinks = [
-    { name: 'Fruit', url: 'https://example.com/fruit' },
-    { name: 'Vegetable', url: 'https://example.com/vegetable' },
-    { name: 'Flower', url: 'https://example.com/flower' },
-    { name: 'Herb', url: 'https://example.com/herb' }
-  ];
-
-  let itemLinks = [
-    { name: 'Apple', url: 'https://example.com/apple' },
-    { name: 'Carrot', url: 'https://example.com/carrot' },
-    { name: 'Rose', url: 'https://example.com/rose' },
-    { name: 'Basil', url: 'https://example.com/basil' }
-  ];
-
-  // Call the function to populate footer links  
-  showLinks();
+// Initialize everything on DOM ready
+document.addEventListener('DOMContentLoaded', function () {
+  // Load header and footer
+  loadHeaderFooter();
+});

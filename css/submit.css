@@ -1,0 +1,26 @@
+/* Submit page specific styles */
+/* See css/pages.css for shared component styles */
+
+/* Ensure full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  height: 400px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+}
+
+/* Subcategory dropdown specific styles */
+#subcategory {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+#subcategory.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

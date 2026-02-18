@@ -1,0 +1,475 @@
+/* Index page specific styles */
+/* See css/pages.css for shared component styles */
+
+/* Map container - relative positioning for overlay elements */
+.map-container {
+  position: relative;
+  height: calc(100vh + 200px);
+  min-height: 400px;
+  max-height: 600px;
+  margin-bottom: 200px;
+  /* Extra space for scrolling */
+  padding-bottom: 0;
+  z-index: 1;
+}
+
+/* Map takes full container height */
+#map {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Subcategory dropdown specific styles */
+#subcategory {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+#subcategory.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Footer Details Panel - Full screen overlay */
+.footer-details-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.footer-details-panel.visible {
+  display: flex;
+  opacity: 1;
+}
+
+.footer-details-content {
+  background: var(--cream-bg);
+  padding: 3rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.footer-details-content h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.footer-details-content h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-details-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-details-content li {
+  margin: 0.5rem 0;
+}
+
+.footer-details-content a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.footer-details-content a:hover {
+  text-decoration: underline;
+}
+
+.footer-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.footer-close:hover {
+  opacity: 1;
+  background: #e0e0e0;
+  transform: scale(1.1);
+}
+
+.dark-mode .footer-details-content,
+.dark-mode .bg-light {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.dark-mode .footer-close {
+  background: #444;
+  border-color: #555;
+  color: white;
+}
+
+.dark-mode .footer-close:hover {
+  background: #555;
+}
+
+.dark-mode .footer-details-content a {
+  color: #6cb2eb;
+}
+
+/* Footer Details Container - holds the loaded template */
+#footer-details-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 9998;
+  /* Below footer-details but above map */
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  /* Allow clicks to pass through */
+}
+
+/* Footer Details Panel - Compact sliding panel */
+#footer-details {
+  border-radius: 25px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: var(--cream-bg);
+  padding: 40px 25px 40px;
+  z-index: 9999;
+  max-width: 100%;
+  max-height: 300px;
+  width: 100%;
+  visibility: hidden;
+  /* Hidden but still positioned for overlay clicks */
+  opacity: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px;
+  pointer-events: none;
+  /* Disable clicks when hidden */
+  transform: translateY(100%);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s;
+  overflow-y: auto;
+}
+
+#footer-details.open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Footer thumbnail image */
+.footer-thumbnail {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* Footer image in details panel */
+#footer-image {
+  max-width: 120px;
+  max-height: 120px;
+  min-width: 80px;
+  min-height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+/* Footer content area */
+.footer-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.footer-content h5 {
+  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+}
+
+.footer-content p {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Close button - Full screen mode */
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  z-index: 10;
+}
+
+.modal-close-btn:hover {
+  opacity: 1;
+  background: #e0e0e0;
+  transform: scale(1.1);
+}
+
+.dark-mode .modal-close-btn {
+  background: #444;
+  border-color: #555;
+  color: white;
+}
+
+.dark-mode .modal-close-btn:hover {
+  background: #555;
+}
+
+/* Settings Modal - Full Screen Overlay - Same style as footer-details-panel */
+#settingsModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+#settingsModal.visible {
+  display: flex;
+  opacity: 1;
+}
+
+#settingsModal .modal-content {
+  background: var(--cream-bg);
+  padding: 3rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+#settingsModal h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+#settingsModal h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#settingsModal .settings-section {
+  margin-bottom: 1rem;
+}
+
+#settingsModal .btn-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+#settingsModal .btn-close:hover {
+  opacity: 1;
+  background: #e0e0e0;
+  transform: scale(1.1);
+}
+
+#settingsModal .btn-primary,
+#settingsModal .btn-secondary {
+  margin-top: 1rem;
+}
+
+.dark-mode #settingsModal .modal-content {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.dark-mode #settingsModal .btn-close {
+  background: #444;
+  border-color: #555;
+  color: white;
+}
+
+.dark-mode #settingsModal .btn-close:hover {
+  background: #555;
+}
+
+.dark-mode #settingsModal p {
+  color: #ddd;
+}
+
+.dark-mode #settingsModal label {
+  color: #fff;
+}
+
+/* Map Legend - Overlay on map */
+#map-legend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 400;
+}
+
+.map-legend {
+  background: white;
+  padding: 12px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+}
+
+.map-legend h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+  color: #555;
+}
+
+.legend-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.dark-mode .map-legend {
+  background: #333;
+  color: #fff;
+}
+
+.dark-mode .map-legend h4 {
+  color: #fff;
+}
+
+.dark-mode .legend-item {
+  color: #ddd;
+}
+
+/* Footer styles */
+footer.bg-light.fixed-bottom {
+  background: #f8f9fa !important;
+  border-top: 1px solid #e9ecef;
+  position: relative;
+  z-index: 10001;
+  /* Above footer-details */
+}
+
+/* Form select background matching month-picker-input */
+.form-select {
+  background-color: var(--cream-bg) !important;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-nav {
+  flex: 1;
+  justify-content: center;
+}
+
+.footer-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+body.dark-mode footer.bg-light.fixed-bottom {
+  background: #2a2a2a !important;
+  border-top-color: #444;
+}
+
+.dark-mode .text-body-secondary {
+  color: #adb5bd !important;
+}
+
+.dark-mode .nav-link {
+  color: #dee2e6 !important;
+}
+
+.dark-mode .nav-link:hover {
+  color: #fff !important;
+}

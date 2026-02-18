@@ -1,0 +1,137 @@
+<!-- Footer Details -->
+<div id="footer-details">
+  <!-- Close Button -->
+  <button type="button" id="footer-close" class="footer-close-btn" aria-label="Close" title="Close details">
+    <i class="fas fa-times"></i>
+  </button>
+
+  <!-- Click to open overlay -->
+  <div id="footer-closed-overlay" class="footer-overlay">
+    <span><i class="fa fa-info-circle"></i> Click to see location details</span>
+  </div>
+
+  <img id="footer-image" src="" alt="Location Image"
+    style="display: none; max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 8px; flex-shrink: 0;">
+
+  <div class="footer-content" style="flex: 1;">
+    <div class="d-flex align-items-center mb-2 flex-wrap gap-2">
+      <h5 id="footer-title" class="mb-0 me-2">Click on a pin to see details</h5>
+      <span id="footer-category" class="badge bg-secondary">Other</span>
+    </div>
+    <p id="footer-description" class="mb-2 text-muted"></p>
+
+    <!-- Footer Actions -->
+    <div id="footer-actions" class="footer-actions" data-id=""
+      style="display: none; gap: 0.5rem; margin-bottom: 0.5rem;">
+      <button class="footer-like-btn btn btn-sm btn-outline-success" title="Like">
+        <i class="fa fa-thumbs-up"></i> <span>0</span>
+      </button>
+      <button class="footer-dislike-btn btn btn-sm btn-outline-danger" title="Dislike">
+        <i class="fa fa-thumbs-down"></i> <span>0</span>
+      </button>
+      <button class="footer-report-btn btn btn-sm btn-outline-warning" title="Report">
+        <i class="fa fa-flag"></i>
+      </button>
+    </div>
+
+    <!-- Action Links -->
+    <div class="footer-links" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <a id="footer-directions" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="display: none;">
+        <i class="fa fa-map-marker-alt"></i> Get Directions
+      </a>
+      <a id="footer-link" href="#" class="btn btn-sm btn-outline-primary" target="_blank" style="display: none;">
+        <i class="fa fa-info-circle"></i> Learn more
+      </a>
+    </div>
+  </div>
+
+  <style>
+    .footer-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      z-index: 1000;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #6c757d;
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #6c757d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .footer-close-btn:hover {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: white;
+      box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+    }
+
+    .footer-close-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4);
+      border-color: #dc3545;
+    }
+
+    .footer-close-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Footer overlay when closed */
+    .footer-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.2s ease;
+    }
+
+    .footer-overlay:hover {
+      background: rgba(230, 230, 230, 0.95);
+    }
+
+    .footer-overlay span {
+      font-size: 14px;
+      color: #6c757d;
+      pointer-events: none;
+    }
+
+    /* Dark mode support */
+    body.dark-mode .footer-close-btn {
+      background-color: rgba(37, 37, 64, 0.95);
+      border-color: #adb5bd;
+      color: #adb5bd;
+    }
+
+    body.dark-mode .footer-close-btn:hover {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: white;
+    }
+
+    body.dark-mode .footer-overlay {
+      background: rgba(37, 37, 64, 0.9);
+    }
+
+    body.dark-mode .footer-overlay span {
+      color: #adb5bd;
+    }
+
+    body.dark-mode .footer-overlay:hover {
+      background: rgba(50, 50, 80, 0.95);
+    }
+  </style>
+</div>
