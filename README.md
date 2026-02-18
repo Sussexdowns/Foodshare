@@ -35,8 +35,6 @@ Foodshare aligns with the following UN SDGs:
 |-----------|---------|
 | **Project Medium** | Game - Mobile, Interactive Design, AR (Future) |
 | **Current Stage** | Production (Migrating from Web Demo to Unity) |
-| **Anticipated Completion** | December 2026 |
-| **Project Budget** | £20,000 |
 | **Target Reach** | United Kingdom (initial), Global (via open-source scaling) |
 
 ## 👤 Creator Information
@@ -49,7 +47,7 @@ Foodshare aligns with the following UN SDGs:
 
 ### Biography
 
-I am the founder of Foodshare and an educator with eight years of experience teaching Unity at East Sussex College Group (ESCG), Lewes. Combining a background in web development with a passion for sustainability, I created the Foodshare prototype to bridge the gap between urban food waste and food insecurity. My role involves overseeing the technical architecture and Firebase integration while leading the transition from a web demo to a high-performance Unity application.
+I am the founder of Foodshare and an educator with eight years of experience teaching Unity at East Sussex College Group (ESCG), Lewes. Combining a background in web development with a passion for sustainability, I created the Foodshare prototype to bridge the gap between urban food waste and food insecurity. My role involves overseeing the technical architecture and Firebase integration while leading the transition from a web demo to a high-performance Unity application. The project is currently in production and part of a work experience programme for my students.
 
 ## 💡 Impact Summary
 
