@@ -10,7 +10,7 @@ Foodshare addresses the paradox of urban food waste: while food insecurity rises
 
 ## 📽️ Presentation
 
-**[View the Full Presentation →](Presentation/index.html)**
+**[View the Full Presentation →](https://sussexdowns.github.io/Foodshare/presentation/index.html)**
 
 ### Presentation Preview
 
