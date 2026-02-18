@@ -84,8 +84,7 @@ Unity is being used to transform our 2D web demo into a high-performance, cross-
 
 - **Unity UI Toolkit** for responsive interface
 - **Addressables system** for offline data management
-- **3D spatial view** for easier identification of trees/bushes in complex urban parks
-- **AR Foundation** (planned) to overlay food location data onto camera feed
+- **2D spatial view** for easier identification of trees/bushes in complex urban parks
 
 ### Technical Challenges
 
