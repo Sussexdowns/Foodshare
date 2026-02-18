@@ -108,7 +108,7 @@ Foodshare/
 
 ## 🔗 Links
 
-- **Live Demo:** [https://sussexdowns.github.io/Foodshare/](https://sussexdowns.github.io/Foodshare/)
+- **Live Demo:** [View Web Demo](https://sussexdowns.github.io/Foodshare/)
 - **Presentation:** [View Presentation](Presentation/index.html)
 
 ---
