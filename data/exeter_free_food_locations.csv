@@ -1,0 +1,16 @@
+approved,id,name,type,category,sub-category,lat,lng,description,town,county,postcode,season
+True,1,St Thomas Community Orchard,Community Orchard,fruits,tree-fruits,50.715,-3.542,Located at Cowick Barton Playing Fields. Features heritage Devon apple varieties and pears.,Exeter,Devon,EX4 1DQ,8;9;10
+True,2,Incredible Edible Exeter (St Sidwell’s),Urban Foraging,vegetables,street-planters,50.728,-3.522,"Planters at St Sidwell’s Community Centre with free herbs, salads, and seasonal vegetables.",Exeter,Devon,EX4 6NN,8;9;10
+True,3,Exwick Hams Foraging,Public Path,wild,river-forage,50.728,-3.545,"Floodplain meadows along the River Exe. Abundant wild garlic (spring), elderberries, and blackberries.",Exeter,Devon,EX4 2BQ,8;9;10
+True,4,Ludwell Valley Park Orchard,Community Orchard,fruits,tree-fruits,50.712,-3.505,A working 'cherry orchard' and traditional apple trees managed for the public within a large country park.,Exeter,Devon,EX2 6NF,8;9;10
+True,5,University of Exeter (Streatham Campus),Urban Foraging,wild,mixed-forage,50.735,-3.535,"Award-winning botanical grounds. Features edible hedging, walnuts, and chestnuts across the estate.",Exeter,Devon,EX4 4QJ,8;9;10
+True,6,Belmont Park Edible Border,Public Park,vegetables,street-planters,50.725,-3.518,Community-led edible planting featuring herbs and soft fruits along the park boundaries.,Exeter,Devon,EX1 2DH,8;9;10
+True,7,Exeter Quay & Canal Banks,Public Path,wild,hedgerow,50.718,-3.528,"Towpath stretches offering sloes, elderberries, and blackberries leading towards Double Locks.",Exeter,Devon,EX2 4AP,8;9;10
+True,8,Mincinglake Valley Park,Nature Reserve,wild,woodland,50.742,-3.512,"Former landfill turned lush valley. Abundant hazelnuts, blackberries, and rosehips.",Exeter,Devon,EX4 7DR,8;9;10
+True,9,Incredible Edible Exeter (Heavitree),Urban Foraging,vegetables,street-planters,50.722,-3.502,Raised beds near Heavitree Pleasure Ground with free culinary herbs and perennial veg.,Exeter,Devon,EX1 3DN,8;9;10
+True,10,Pinces Gardens Orchard,Community Orchard,fruits,tree-fruits,50.712,-3.538,Historic nursery site featuring mature fruit trees and a wisteria walk.,Exeter,Devon,EX2 9EE,8;9;10
+True,11,Double Locks Canal Path,Public Path,wild,hedgerow,50.702,-3.515,Rich canal-side hedgerows with heavy crops of blackberries and elderberries.,Exeter,Devon,EX2 6LT,8;9;10
+True,12,Barley Valley Park,Nature Reserve,wild,mixed-forage,50.715,-3.555,"Steep valley paths offering sloes, hawthorn berries, and hazelnuts.",Exeter,Devon,EX4 1PT,8;9;10
+True,13,Topsham Coastal Edges,Coastal Foraging,wild,coastal,50.682,-3.465,"Estuary paths offering sea beet, maritime wild radish, and elderberries.",Topsham,Devon,EX3 0JJ,8;9;10
+True,14,Incredible Edible Exeter (Wonford),Urban Foraging,vegetables,street-planters,50.712,-3.502,Community planters at Wonford Community Centre featuring herbs and greens.,Exeter,Devon,EX2 6NF,8;9;10
+True,15,Haldon Forest Edges (Rural Fringe),Woodland,wild,woodland,50.665,-3.552,Public boundary paths offering wild bilberries (autumn) and hazelnuts.,Exeter,Devon,EX6 7XR,8;9;10

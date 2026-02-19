@@ -1,0 +1,48 @@
+type User @table {
+  displayName: String!
+  email: String!
+  createdAt: Timestamp!
+  userType: String!
+  phoneNumber: String
+  address: String
+  bio: String
+  profilePictureUrl: String
+}
+
+type FoodItem @table {
+  name: String!
+  description: String!
+  quantity: Int!
+  createdAt: Timestamp!
+  status: String!
+  postedBy: User
+  category: String
+  expirationDate: Date
+  pickupInstructions: String
+  imageUrl: String
+}
+
+type Request @table {
+  requestedBy: User
+  foodItem: FoodItem
+  createdAt: Timestamp!
+  status: String!
+  messageToDonor: String
+}
+
+type Community @table {
+  name: String!
+  location: String!
+  createdAt: Timestamp!
+  description: String
+  moderator: User
+}
+
+type Review @table {
+  reviewer: User
+  reviewedUser: User
+  request: Request
+  rating: Int!
+  createdAt: Timestamp!
+  comment: String
+}

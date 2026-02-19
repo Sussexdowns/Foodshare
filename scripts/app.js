@@ -16,10 +16,19 @@ let useFontAwesome = true;
 let footerDetailsLoaded = false;
 let itemsData = {}; // Store items from items.json
 let ukCounties = []; // Store UK counties data
+let ukTowns = []; // Store UK towns data for city-level loading
 let loadedCounties = new Set(); // Track which county CSVs have been loaded
+let loadedTowns = new Set(); // Track which town CSVs have been loaded
 let userLocation = null; // Store user's detected location
+let currentTier = null; // Track current zoom tier ('national', 'county', 'city')
+
+// Tiered loading zoom thresholds
+const ZOOM_TIER_NATIONAL_MAX = 7; // Zoom 1-7: National view (heatmap only)
+const ZOOM_TIER_COUNTY_MAX = 10; // Zoom 8-10: County view (load county CSVs)
+// Zoom 11+: City/Town view (load specific town CSVs)
+
+// Legacy threshold for heatmap/marker toggle
 const ZOOM_THRESHOLD = 13; // Show heatmap when zoomed out beyond this level
-const COUNTY_LOAD_ZOOM_THRESHOLD = 10; // Zoom level at which to load county data
 
 // Category to FontAwesome icon mapping for dropdowns
 const categoryIcons = {
@@ -60,19 +69,22 @@ function initApp() {
   addStatusMessage('🚀 Initializing application...', 'success');
   debugLibraries();
 
-  // Load categories.json, items.json, and uk_counties.json in parallel
+  // Load categories.json, items.json, uk_counties.json, and uk_towns.json in parallel
   Promise.all([
     fetch('categories.json').then(res => res.json()).catch(() => null),
     fetch('items.json').then(res => res.json()).catch(() => null),
-    fetch('uk_counties.json').then(res => res.json()).catch(() => null)
+    fetch('uk_counties.json').then(res => res.json()).catch(() => null),
+    fetch('uk_towns.json').then(res => res.json()).catch(() => null)
   ])
-    .then(([categoriesData, itemsData, countiesData]) => {
+    .then(([categoriesData, itemsData, countiesData, townsData]) => {
       window.categoriesData = categoriesData;
       window.itemsData = itemsData || {};
       ukCounties = countiesData?.counties || [];
+      ukTowns = townsData?.towns || [];
 
       console.log('Loaded items data:', window.itemsData);
       console.log('Loaded UK counties:', ukCounties.length);
+      console.log('Loaded UK towns:', ukTowns.length);
 
       // Continue with other initialization
       loadFooterDetailsTemplate().then(() => {
@@ -368,6 +380,9 @@ function centerMapOnUserLocation() {
  * Uses browser geolocation API if available, otherwise falls back to saved address
  */
 function detectUserLocationAndLoadData() {
+  // Initialize the current tier based on default zoom
+  currentTier = getTierForZoom(map.getZoom());
+
   // First check if user has a saved address
   const savedAddress = configUserAddress || localStorage.getItem('userAddress');
 
@@ -378,7 +393,8 @@ function detectUserLocationAndLoadData() {
           userLocation = coords;
           map.setView(coords, 12);
           addStatusMessage(`📍 Location detected from saved address: ${savedAddress}`, 'info');
-          loadCountiesForMapView();
+          // Load data based on current tier
+          handleInitialDataLoad();
         } else {
           tryBrowserGeolocation();
         }
@@ -388,6 +404,26 @@ function detectUserLocationAndLoadData() {
       });
   } else {
     tryBrowserGeolocation();
+  }
+}
+
+/**
+ * Handles initial data loading based on current zoom tier
+ */
+function handleInitialDataLoad() {
+  const tier = getTierForZoom(map.getZoom());
+  currentTier = tier;
+
+  if (tier === 'national') {
+    // National view - show heatmap
+    showHeatmap();
+    addStatusMessage('🗺️ National view: Pan/zoom in to see locations', 'info');
+  } else if (tier === 'county') {
+    // County view - load county data
+    loadCountiesForMapView();
+  } else if (tier === 'city') {
+    // City view - load town data
+    loadTownForMapView();
   }
 }
 
@@ -403,13 +439,13 @@ function tryBrowserGeolocation() {
         userLocation = [position.coords.latitude, position.coords.longitude];
         map.setView(userLocation, 12);
         addStatusMessage(`📍 Location detected via browser`, 'success');
-        loadCountiesForMapView();
+        handleInitialDataLoad();
       },
       (error) => {
         console.log('Geolocation error:', error.message);
         addStatusMessage('📍 Could not detect location, using default', 'warning');
         map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
-        loadCountiesForMapView();
+        handleInitialDataLoad();
       },
       {
         enableHighAccuracy: false,
@@ -420,7 +456,7 @@ function tryBrowserGeolocation() {
   } else {
     addStatusMessage('📍 Geolocation not supported, using default', 'warning');
     map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
-    loadCountiesForMapView();
+    handleInitialDataLoad();
   }
 }
 
@@ -429,9 +465,197 @@ function tryBrowserGeolocation() {
  */
 function handleMapMove() {
   const currentZoom = map.getZoom();
+  const newTier = getTierForZoom(currentZoom);
 
-  // Only load counties when zoomed in enough
-  if (currentZoom >= COUNTY_LOAD_ZOOM_THRESHOLD) {
+  // Handle tier transitions
+  if (newTier !== currentTier) {
+    handleTierChange(newTier);
+  }
+
+  // Load data based on current tier
+  if (newTier === 'county') {
+    loadCountiesForMapView();
+  } else if (newTier === 'city') {
+    loadTownForMapView();
+  }
+}
+
+/**
+ * Determines the tier based on zoom level
+ * @param {number} zoom - Current zoom level
+ * @returns {string} - 'national', 'county', or 'city'
+ */
+function getTierForZoom(zoom) {
+  if (zoom <= ZOOM_TIER_NATIONAL_MAX) {
+    return 'national';
+  } else if (zoom <= ZOOM_TIER_COUNTY_MAX) {
+    return 'county';
+  } else {
+    return 'city';
+  }
+}
+
+/**
+ * Handles transitions between zoom tiers
+ * @param {string} newTier - The new tier ('national', 'county', or 'city')
+ */
+function handleTierChange(newTier) {
+  const previousTier = currentTier;
+  currentTier = newTier;
+
+  console.log(`Tier change: ${previousTier} -> ${newTier}`);
+
+  if (newTier === 'national') {
+    // National view: show heatmap only, clear markers
+    addStatusMessage('🗺️ National view: Showing heatmap density', 'info');
+    showHeatmap();
+  } else if (newTier === 'county') {
+    // County view: clear town data, show county markers
+    if (previousTier === 'city') {
+      clearTownData();
+    }
+    addStatusMessage('🗺️ County view: Loading county data', 'info');
+    showMarkers();
+  } else if (newTier === 'city') {
+    // City view: clear county data, load specific town
+    addStatusMessage('🏙️ City view: Loading detailed town data', 'info');
+    clearCountyData();
+    showMarkers();
+  }
+}
+
+/**
+ * Clears all loaded county data and markers
+ */
+function clearCountyData() {
+  // Remove markers for county locations
+  clearMarkers();
+
+  // Clear county locations from allLocations
+  allLocations = allLocations.filter(loc => !loc.countyId || loadedTowns.has(loc.townId));
+
+  // Clear loaded counties set
+  loadedCounties.clear();
+
+  // Clear heatmap
+  if (heatLayer) {
+    map.removeLayer(heatLayer);
+    heatLayer = null;
+  }
+
+  console.log('Cleared county data');
+}
+
+/**
+ * Clears all loaded town data and markers
+ */
+function clearTownData() {
+  // Remove markers for town locations
+  clearMarkers();
+
+  // Clear town locations from allLocations
+  allLocations = allLocations.filter(loc => !loc.townId || loadedCounties.has(loc.countyId));
+
+  // Clear loaded towns set
+  loadedTowns.clear();
+
+  console.log('Cleared town data');
+}
+
+/**
+ * Loads town data for the current map view
+ * Identifies which town bounds the map center falls within
+ */
+function loadTownForMapView() {
+  if (ukTowns.length === 0) {
+    console.warn('No UK towns data loaded');
+    return;
+  }
+
+  const center = map.getCenter();
+  const town = findTownForLocation(center.lat, center.lng);
+
+  if (town && !loadedTowns.has(town.id)) {
+    loadTownCSV(town);
+  }
+}
+
+/**
+ * Finds which town contains the given coordinates
+ * @param {number} lat - Latitude
+ * @param {number} lng - Longitude
+ * @returns {Object|null} - Town object or null if not found
+ */
+function findTownForLocation(lat, lng) {
+  for (const town of ukTowns) {
+    if (town.bounds) {
+      const { north, south, east, west } = town.bounds;
+
+      // Check if coordinates fall within town bounds
+      if (lat >= south && lat <= north && lng >= west && lng <= east) {
+        return town;
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Loads a single town CSV file
+ * @param {Object} town - Town object with csvFile property
+ */
+async function loadTownCSV(town) {
+  if (!town.csvFile) {
+    console.warn(`No CSV file defined for ${town.name}`);
+    return;
+  }
+
+  try {
+    addStatusMessage(`🏙️ Loading ${town.name} data...`, 'info');
+
+    const response = await fetch(town.csvFile);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const csvText = await response.text();
+
+    if (!csvText || csvText.trim().length === 0) {
+      throw new Error('Empty CSV file');
+    }
+
+    const parsedData = parseCSV(csvText);
+
+    if (parsedData.length === 0) {
+      throw new Error('No data rows in CSV');
+    }
+
+    const processedData = processCSVData(parsedData);
+
+    // Add town info to each location
+    const townLocations = processedData.map(loc => ({
+      ...loc,
+      town: town.name,
+      townId: town.id
+    }));
+
+    // Clear existing markers and data
+    clearMarkers();
+    allLocations = townLocations;
+    loadedTowns.add(town.id);
+
+    // Display the locations
+    displayAllLocations();
+
+    addStatusMessage(`✅ Loaded ${town.name}: ${townLocations.length} locations`, 'success');
+    console.log(`✅ Loaded town ${town.name}: ${townLocations.length} locations`);
+
+  } catch (error) {
+    console.warn(`Failed to load ${town.name} CSV:`, error.message);
+    addStatusMessage(`⚠️ Could not load ${town.name} data`, 'warning');
+
+    // Fallback to county data if town load fails
     loadCountiesForMapView();
   }
 }
@@ -914,8 +1138,10 @@ function initializeAppData(data, isAdditionalData = false) {
   displayAllLocations();
 
   const dataSource = configUseJson ? 'JSON + CSV feedback' : 'CSV only';
+  const tierInfo = currentTier ? ` (${currentTier} view)` : '';
   const countyInfo = loadedCounties.size > 0 ? ` from ${loadedCounties.size} count${loadedCounties.size === 1 ? 'y' : 'ies'}` : '';
-  addStatusMessage(`✅ App ready. Displaying ${allLocations.length} locations${countyInfo}.`, 'success');
+  const townInfo = loadedTowns.size > 0 ? ` from ${loadedTowns.size} town${loadedTowns.size === 1 ? '' : 's'}` : '';
+  addStatusMessage(`✅ App ready. Displaying ${allLocations.length} locations${countyInfo}${townInfo}${tierInfo}.`, 'success');
 }
 
 /**
@@ -1361,16 +1587,28 @@ function createHeatmap(locations) {
 
 /**
  * Handles zoom changes to switch between markers and heatmap
+ * Also handles tiered loading transitions
  */
 function handleZoomChange() {
   const currentZoom = map.getZoom();
+  const newTier = getTierForZoom(currentZoom);
 
-  if (currentZoom <= ZOOM_THRESHOLD) {
-    // Zoomed out - show heatmap, hide markers
+  // Handle tier transitions
+  if (newTier !== currentTier) {
+    handleTierChange(newTier);
+  }
+
+  // Legacy: toggle between heatmap and markers based on zoom
+  // This is now handled by tier changes, but kept for compatibility
+  if (currentZoom <= ZOOM_THRESHOLD && newTier === 'national') {
+    // Only show heatmap at national tier
     showHeatmap();
-  } else {
-    // Zoomed in - show markers, hide heatmap
-    showMarkers();
+  } else if (currentZoom > ZOOM_THRESHOLD) {
+    // Show markers at county and city tiers
+    if (heatLayer) {
+      map.removeLayer(heatLayer);
+      heatLayer = null;
+    }
   }
 }
 
@@ -1995,6 +2233,12 @@ function debugLibraries() {
   console.log('Fullscreen plugin loaded:', typeof L.Control.FullScreen !== 'undefined');
   console.log('Data source:', configUseJson ? 'JSON + CSV feedback' : 'CSV only');
   console.log('Zoom threshold for heatmap:', ZOOM_THRESHOLD);
+  console.log('=== Tiered Loading Config ===');
+  console.log('National tier (heatmap): zoom 1-' + ZOOM_TIER_NATIONAL_MAX);
+  console.log('County tier: zoom ' + (ZOOM_TIER_NATIONAL_MAX + 1) + '-' + ZOOM_TIER_COUNTY_MAX);
+  console.log('City tier: zoom ' + (ZOOM_TIER_COUNTY_MAX + 1) + '+');
+  console.log('UK Counties loaded:', ukCounties.length);
+  console.log('UK Towns loaded:', ukTowns.length);
   console.log('=== End Debug Info ===');
 }
 

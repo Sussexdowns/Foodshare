@@ -1,0 +1,1129 @@
+{
+  "towns": [
+    {
+      "id": "aberdeen",
+      "name": "Aberdeen",
+      "center": [
+        57.1497,
+        -2.0943
+      ],
+      "bounds": {
+        "north": 57.25,
+        "south": 57.05,
+        "east": -2.0,
+        "west": -2.25
+      },
+      "csvFile": "data/aberdeen_free_food_locations.csv"
+    },
+    {
+      "id": "basildon",
+      "name": "Basildon",
+      "center": [
+        51.5761,
+        0.4887
+      ],
+      "bounds": {
+        "north": 51.62,
+        "south": 51.52,
+        "east": 0.55,
+        "west": 0.4
+      },
+      "csvFile": "data/basildon_free_food_locations.csv"
+    },
+    {
+      "id": "bath",
+      "name": "Bath",
+      "center": [
+        51.3811,
+        -2.359
+      ],
+      "bounds": {
+        "north": 51.42,
+        "south": 51.34,
+        "east": -2.3,
+        "west": -2.45
+      },
+      "csvFile": "data/bath_free_food_locations.csv"
+    },
+    {
+      "id": "belfast",
+      "name": "Belfast",
+      "center": [
+        54.5973,
+        -5.9301
+      ],
+      "bounds": {
+        "north": 54.7,
+        "south": 54.5,
+        "east": -5.8,
+        "west": -6.1
+      },
+      "csvFile": "data/belfast_free_food_locations.csv"
+    },
+    {
+      "id": "birmingham",
+      "name": "Birmingham",
+      "center": [
+        52.4862,
+        -1.8904
+      ],
+      "bounds": {
+        "north": 52.6,
+        "south": 52.3,
+        "east": -1.7,
+        "west": -2.1
+      },
+      "csvFile": "data/birmingham_free_food_locations.csv"
+    },
+    {
+      "id": "blackburn",
+      "name": "Blackburn",
+      "center": [
+        53.748,
+        -2.482
+      ],
+      "bounds": {
+        "north": 53.8,
+        "south": 53.7,
+        "east": -2.4,
+        "west": -2.6
+      },
+      "csvFile": "data/blackburn_free_food_locations.csv"
+    },
+    {
+      "id": "blackpool",
+      "name": "Blackpool",
+      "center": [
+        53.8175,
+        -3.0357
+      ],
+      "bounds": {
+        "north": 53.86,
+        "south": 53.77,
+        "east": -2.95,
+        "west": -3.1
+      },
+      "csvFile": "data/blackpool_free_food_locations.csv"
+    },
+    {
+      "id": "bolton",
+      "name": "Bolton",
+      "center": [
+        53.5815,
+        -2.4282
+      ],
+      "bounds": {
+        "north": 53.63,
+        "south": 53.53,
+        "east": -2.35,
+        "west": -2.55
+      },
+      "csvFile": "data/bolton_free_food_locations.csv"
+    },
+    {
+      "id": "bournemouth",
+      "name": "Bournemouth",
+      "center": [
+        50.7192,
+        -1.8808
+      ],
+      "bounds": {
+        "north": 50.77,
+        "south": 50.68,
+        "east": -1.8,
+        "west": -2.0
+      },
+      "csvFile": "data/bournemouth_free_food_locations.csv"
+    },
+    {
+      "id": "bradford",
+      "name": "Bradford",
+      "center": [
+        53.7938,
+        -1.7515
+      ],
+      "bounds": {
+        "north": 53.85,
+        "south": 53.7,
+        "east": -1.6,
+        "west": -1.9
+      },
+      "csvFile": "data/bradford_free_food_locations.csv"
+    },
+    {
+      "id": "brighton",
+      "name": "Brighton and Hove",
+      "center": [
+        50.8225,
+        -0.1372
+      ],
+      "bounds": {
+        "north": 50.87,
+        "south": 50.78,
+        "east": -0.05,
+        "west": -0.25
+      },
+      "csvFile": "data/brighton_free_food_locations.csv"
+    },
+    {
+      "id": "bristol",
+      "name": "Bristol",
+      "center": [
+        51.4545,
+        -2.5879
+      ],
+      "bounds": {
+        "north": 51.55,
+        "south": 51.35,
+        "east": -2.45,
+        "west": -2.75
+      },
+      "csvFile": "data/bristol_free_food_locations.csv"
+    },
+    {
+      "id": "cambridge",
+      "name": "Cambridge",
+      "center": [
+        52.2053,
+        0.1218
+      ],
+      "bounds": {
+        "north": 52.3,
+        "south": 52.1,
+        "east": 0.2,
+        "west": 0.0
+      },
+      "csvFile": "data/cambridge_free_food_locations.csv"
+    },
+    {
+      "id": "canterbury",
+      "name": "Canterbury",
+      "center": [
+        51.2802,
+        1.0789
+      ],
+      "bounds": {
+        "north": 51.35,
+        "south": 51.2,
+        "east": 1.15,
+        "west": 1.0
+      },
+      "csvFile": "data/canterbury_free_food_locations.csv"
+    },
+    {
+      "id": "cardiff",
+      "name": "Cardiff",
+      "center": [
+        51.4816,
+        -3.1791
+      ],
+      "bounds": {
+        "north": 51.58,
+        "south": 51.43,
+        "east": -3.05,
+        "west": -3.35
+      },
+      "csvFile": "data/cardiff_free_food_locations.csv"
+    },
+    {
+      "id": "chelmsford",
+      "name": "Chelmsford",
+      "center": [
+        51.7356,
+        0.4688
+      ],
+      "bounds": {
+        "north": 51.8,
+        "south": 51.65,
+        "east": 0.55,
+        "west": 0.35
+      },
+      "csvFile": "data/chelmsford_free_food_locations.csv"
+    },
+    {
+      "id": "cheltenham",
+      "name": "Cheltenham",
+      "center": [
+        51.8995,
+        -2.0711
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.85,
+        "east": -1.95,
+        "west": -2.15
+      },
+      "csvFile": "data/cheltenham_free_food_locations.csv"
+    },
+    {
+      "id": "colchester",
+      "name": "Colchester",
+      "center": [
+        51.8959,
+        0.8919
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.85,
+        "east": 1.0,
+        "west": 0.8
+      },
+      "csvFile": "data/colchester_free_food_locations.csv"
+    },
+    {
+      "id": "coventry",
+      "name": "Coventry",
+      "center": [
+        52.4068,
+        -1.5197
+      ],
+      "bounds": {
+        "north": 52.5,
+        "south": 52.3,
+        "east": -1.4,
+        "west": -1.6
+      },
+      "csvFile": "data/coventry_free_food_locations.csv"
+    },
+    {
+      "id": "crawley",
+      "name": "Crawley",
+      "center": [
+        51.1132,
+        -0.1831
+      ],
+      "bounds": {
+        "north": 51.16,
+        "south": 51.08,
+        "east": -0.12,
+        "west": -0.26
+      },
+      "csvFile": "data/crawley_free_food_locations.csv"
+    },
+    {
+      "id": "derby",
+      "name": "Derby",
+      "center": [
+        52.9225,
+        -1.4746
+      ],
+      "bounds": {
+        "north": 53.0,
+        "south": 52.85,
+        "east": -1.35,
+        "west": -1.6
+      },
+      "csvFile": "data/derby_free_food_locations.csv"
+    },
+    {
+      "id": "dudley",
+      "name": "Dudley",
+      "center": [
+        52.5123,
+        -2.0811
+      ],
+      "bounds": {
+        "north": 52.55,
+        "south": 52.45,
+        "east": -2.0,
+        "west": -2.2
+      },
+      "csvFile": "data/dudley_free_food_locations.csv"
+    },
+    {
+      "id": "dundee",
+      "name": "Dundee",
+      "center": [
+        56.462,
+        -2.9707
+      ],
+      "bounds": {
+        "north": 56.55,
+        "south": 56.4,
+        "east": -2.85,
+        "west": -3.1
+      },
+      "csvFile": "data/dundee_free_food_locations.csv"
+    },
+    {
+      "id": "eastbourne",
+      "name": "Eastbourne",
+      "center": [
+        50.7676,
+        0.2821
+      ],
+      "bounds": {
+        "north": 50.82,
+        "south": 50.72,
+        "east": 0.35,
+        "west": 0.2
+      },
+      "csvFile": "data/eastbourne_free_food_locations.csv"
+    },
+    {
+      "id": "edinburgh",
+      "name": "Edinburgh",
+      "center": [
+        55.9533,
+        -3.1883
+      ],
+      "bounds": {
+        "north": 56.05,
+        "south": 55.85,
+        "east": -3.05,
+        "west": -3.35
+      },
+      "csvFile": "data/edinburgh_free_food_locations.csv"
+    },
+    {
+      "id": "exeter",
+      "name": "Exeter",
+      "center": [
+        50.719,
+        -3.533
+      ],
+      "bounds": {
+        "north": 50.75,
+        "south": 50.68,
+        "east": -3.45,
+        "west": -3.6
+      },
+      "csvFile": "data/exeter_free_food_locations.csv"
+    },
+    {
+      "id": "glasgow",
+      "name": "Glasgow",
+      "center": [
+        55.8642,
+        -4.2518
+      ],
+      "bounds": {
+        "north": 55.95,
+        "south": 55.75,
+        "east": -4.1,
+        "west": -4.4
+      },
+      "csvFile": "data/glasgow_free_food_locations.csv"
+    },
+    {
+      "id": "gloucester",
+      "name": "Gloucester",
+      "center": [
+        51.8642,
+        -2.2448
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.75,
+        "east": -2.15,
+        "west": -2.35
+      },
+      "csvFile": "data/gloucester_free_food_locations.csv"
+    },
+    {
+      "id": "guildford",
+      "name": "Guildford",
+      "center": [
+        51.2362,
+        -0.5704
+      ],
+      "bounds": {
+        "north": 51.28,
+        "south": 51.18,
+        "east": -0.5,
+        "west": -0.65
+      },
+      "csvFile": "data/guildford_free_food_locations.csv"
+    },
+    {
+      "id": "hastings",
+      "name": "Hastings",
+      "center": [
+        50.8542,
+        0.5735
+      ],
+      "bounds": {
+        "north": 50.91,
+        "south": 50.82,
+        "east": 0.67,
+        "west": 0.47
+      },
+      "csvFile": "data/hastings_free_food_locations.csv"
+    },
+    {
+      "id": "huddersfield",
+      "name": "Huddersfield",
+      "center": [
+        53.6458,
+        -1.785
+      ],
+      "bounds": {
+        "north": 53.7,
+        "south": 53.6,
+        "east": -1.7,
+        "west": -1.9
+      },
+      "csvFile": "data/huddersfield_free_food_locations.csv"
+    },
+    {
+      "id": "ipswich",
+      "name": "Ipswich",
+      "center": [
+        52.0567,
+        1.1482
+      ],
+      "bounds": {
+        "north": 52.1,
+        "south": 52.0,
+        "east": 1.25,
+        "west": 1.05
+      },
+      "csvFile": "data/ipswich_free_food_locations.csv"
+    },
+    {
+      "id": "hull",
+      "name": "Kingston upon Hull",
+      "center": [
+        53.7443,
+        -0.3325
+      ],
+      "bounds": {
+        "north": 53.8,
+        "south": 53.7,
+        "east": -0.2,
+        "west": -0.4
+      },
+      "csvFile": "data/hull_free_food_locations.csv"
+    },
+    {
+      "id": "leeds",
+      "name": "Leeds",
+      "center": [
+        53.8008,
+        -1.5491
+      ],
+      "bounds": {
+        "north": 53.9,
+        "south": 53.7,
+        "east": -1.4,
+        "west": -1.7
+      },
+      "csvFile": "data/leeds_free_food_locations.csv"
+    },
+    {
+      "id": "leicester",
+      "name": "Leicester",
+      "center": [
+        52.6369,
+        -1.1398
+      ],
+      "bounds": {
+        "north": 52.7,
+        "south": 52.55,
+        "east": -1.0,
+        "west": -1.3
+      },
+      "csvFile": "data/leicester_free_food_locations.csv"
+    },
+    {
+      "id": "lewes",
+      "name": "Lewes",
+      "center": [
+        50.8744,
+        0.0122
+      ],
+      "bounds": {
+        "north": 50.92,
+        "south": 50.83,
+        "east": 0.08,
+        "west": -0.05
+      },
+      "csvFile": "data/lewes_free_food_locations.csv"
+    },
+    {
+      "id": "liverpool",
+      "name": "Liverpool",
+      "center": [
+        53.4084,
+        -2.9916
+      ],
+      "bounds": {
+        "north": 53.5,
+        "south": 53.32,
+        "east": -2.85,
+        "west": -3.15
+      },
+      "csvFile": "data/liverpool_free_food_locations.csv"
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "center": [
+        51.5074,
+        -0.1278
+      ],
+      "bounds": {
+        "north": 51.7,
+        "south": 51.3,
+        "east": 0.3,
+        "west": -0.5
+      },
+      "csvFile": "data/london_free_food_locations.csv"
+    },
+    {
+      "id": "luton",
+      "name": "Luton",
+      "center": [
+        51.8787,
+        -0.42
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.8,
+        "east": -0.35,
+        "west": -0.5
+      },
+      "csvFile": "data/luton_free_food_locations.csv"
+    },
+    {
+      "id": "maidstone",
+      "name": "Maidstone",
+      "center": [
+        51.2725,
+        0.5233
+      ],
+      "bounds": {
+        "north": 51.32,
+        "south": 51.22,
+        "east": 0.6,
+        "west": 0.45
+      },
+      "csvFile": "data/maidstone_free_food_locations.csv"
+    },
+    {
+      "id": "manchester",
+      "name": "Manchester",
+      "center": [
+        53.4808,
+        -2.2426
+      ],
+      "bounds": {
+        "north": 53.6,
+        "south": 53.3,
+        "east": -2.0,
+        "west": -2.5
+      },
+      "csvFile": "data/manchester_free_food_locations.csv"
+    },
+    {
+      "id": "mansfield",
+      "name": "Mansfield",
+      "center": [
+        53.144,
+        -1.198
+      ],
+      "bounds": {
+        "north": 53.2,
+        "south": 53.1,
+        "east": -1.1,
+        "west": -1.3
+      },
+      "csvFile": "data/mansfield_free_food_locations.csv"
+    },
+    {
+      "id": "middlesbrough",
+      "name": "Middlesbrough",
+      "center": [
+        54.5762,
+        -1.2348
+      ],
+      "bounds": {
+        "north": 54.62,
+        "south": 54.52,
+        "east": -1.15,
+        "west": -1.35
+      },
+      "csvFile": "data/middlesbrough_free_food_locations.csv"
+    },
+    {
+      "id": "milton_keynes",
+      "name": "Milton Keynes",
+      "center": [
+        52.0406,
+        -0.7594
+      ],
+      "bounds": {
+        "north": 52.1,
+        "south": 51.95,
+        "east": -0.65,
+        "west": -0.85
+      },
+      "csvFile": "data/milton_keynes_free_food_locations.csv"
+    },
+    {
+      "id": "newcastle",
+      "name": "Newcastle upon Tyne",
+      "center": [
+        54.9783,
+        -1.6178
+      ],
+      "bounds": {
+        "north": 55.05,
+        "south": 54.9,
+        "east": -1.5,
+        "west": -1.75
+      },
+      "csvFile": "data/newcastle_free_food_locations.csv"
+    },
+    {
+      "id": "newport",
+      "name": "Newport",
+      "center": [
+        51.5886,
+        -2.9975
+      ],
+      "bounds": {
+        "north": 51.65,
+        "south": 51.5,
+        "east": -2.9,
+        "west": -3.15
+      },
+      "csvFile": "data/newport_free_food_locations.csv"
+    },
+    {
+      "id": "northampton",
+      "name": "Northampton",
+      "center": [
+        52.2405,
+        -0.9027
+      ],
+      "bounds": {
+        "north": 52.3,
+        "south": 52.15,
+        "east": -0.8,
+        "west": -1.0
+      },
+      "csvFile": "data/northampton_free_food_locations.csv"
+    },
+    {
+      "id": "norwich",
+      "name": "Norwich",
+      "center": [
+        52.6309,
+        1.2974
+      ],
+      "bounds": {
+        "north": 52.7,
+        "south": 52.55,
+        "east": 1.4,
+        "west": 1.2
+      },
+      "csvFile": "data/norwich_free_food_locations.csv"
+    },
+    {
+      "id": "nottingham",
+      "name": "Nottingham",
+      "center": [
+        52.9548,
+        -1.1581
+      ],
+      "bounds": {
+        "north": 53.05,
+        "south": 52.85,
+        "east": -1.0,
+        "west": -1.3
+      },
+      "csvFile": "data/nottingham_free_food_locations.csv"
+    },
+    {
+      "id": "oxford",
+      "name": "Oxford",
+      "center": [
+        51.752,
+        -1.2577
+      ],
+      "bounds": {
+        "north": 51.85,
+        "south": 51.7,
+        "east": -1.15,
+        "west": -1.35
+      },
+      "csvFile": "data/oxford_free_food_locations.csv"
+    },
+    {
+      "id": "peterborough",
+      "name": "Peterborough",
+      "center": [
+        52.5695,
+        -0.2405
+      ],
+      "bounds": {
+        "north": 52.62,
+        "south": 52.5,
+        "east": -0.15,
+        "west": -0.35
+      },
+      "csvFile": "data/peterborough_free_food_locations.csv"
+    },
+    {
+      "id": "plymouth",
+      "name": "Plymouth",
+      "center": [
+        50.3755,
+        -4.1427
+      ],
+      "bounds": {
+        "north": 50.46,
+        "south": 50.33,
+        "east": -4.0,
+        "west": -4.25
+      },
+      "csvFile": "data/plymouth_free_food_locations.csv"
+    },
+    {
+      "id": "portsmouth",
+      "name": "Portsmouth",
+      "center": [
+        50.8198,
+        -1.088
+      ],
+      "bounds": {
+        "north": 50.88,
+        "south": 50.77,
+        "east": -1.0,
+        "west": -1.15
+      },
+      "csvFile": "data/portsmouth_free_food_locations.csv"
+    },
+    {
+      "id": "preston",
+      "name": "Preston",
+      "center": [
+        53.7609,
+        -2.7033
+      ],
+      "bounds": {
+        "north": 53.82,
+        "south": 53.7,
+        "east": -2.6,
+        "west": -2.8
+      },
+      "csvFile": "data/preston_free_food_locations.csv"
+    },
+    {
+      "id": "reading",
+      "name": "Reading",
+      "center": [
+        51.4543,
+        -0.9701
+      ],
+      "bounds": {
+        "north": 51.52,
+        "south": 51.4,
+        "east": -0.88,
+        "west": -1.08
+      },
+      "csvFile": "data/reading_free_food_locations.csv"
+    },
+    {
+      "id": "rotherham",
+      "name": "Rotherham",
+      "center": [
+        53.43,
+        -1.3568
+      ],
+      "bounds": {
+        "north": 53.48,
+        "south": 53.38,
+        "east": -1.25,
+        "west": -1.45
+      },
+      "csvFile": "data/rotherham_free_food_locations.csv"
+    },
+    {
+      "id": "sheffield",
+      "name": "Sheffield",
+      "center": [
+        53.3811,
+        -1.4701
+      ],
+      "bounds": {
+        "north": 53.5,
+        "south": 53.2,
+        "east": -1.3,
+        "west": -1.6
+      },
+      "csvFile": "data/sheffield_free_food_locations.csv"
+    },
+    {
+      "id": "slough",
+      "name": "Slough",
+      "center": [
+        51.5085,
+        -0.5916
+      ],
+      "bounds": {
+        "north": 51.55,
+        "south": 51.45,
+        "east": -0.5,
+        "west": -0.7
+      },
+      "csvFile": "data/slough_free_food_locations.csv"
+    },
+    {
+      "id": "southampton",
+      "name": "Southampton",
+      "center": [
+        50.9097,
+        -1.4044
+      ],
+      "bounds": {
+        "north": 50.98,
+        "south": 50.85,
+        "east": -1.3,
+        "west": -1.55
+      },
+      "csvFile": "data/southampton_free_food_locations.csv"
+    },
+    {
+      "id": "southend",
+      "name": "Southend-on-Sea",
+      "center": [
+        51.5413,
+        0.7132
+      ],
+      "bounds": {
+        "north": 51.58,
+        "south": 51.5,
+        "east": 0.8,
+        "west": 0.6
+      },
+      "csvFile": "data/southend_free_food_locations.csv"
+    },
+    {
+      "id": "st_albans",
+      "name": "St Albans",
+      "center": [
+        51.7527,
+        -0.3394
+      ],
+      "bounds": {
+        "north": 51.8,
+        "south": 51.7,
+        "east": -0.25,
+        "west": -0.45
+      },
+      "csvFile": "data/st_albans_free_food_locations.csv"
+    },
+    {
+      "id": "stevenage",
+      "name": "Stevenage",
+      "center": [
+        51.9023,
+        -0.2026
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.85,
+        "east": -0.15,
+        "west": -0.25
+      },
+      "csvFile": "data/stevenage_free_food_locations.csv"
+    },
+    {
+      "id": "stockport",
+      "name": "Stockport",
+      "center": [
+        53.4083,
+        -2.1494
+      ],
+      "bounds": {
+        "north": 53.45,
+        "south": 53.35,
+        "east": -2.05,
+        "west": -2.25
+      },
+      "csvFile": "data/stockport_free_food_locations.csv"
+    },
+    {
+      "id": "stoke_on_trent",
+      "name": "Stoke-on-Trent",
+      "center": [
+        53.002,
+        -2.185
+      ],
+      "bounds": {
+        "north": 53.1,
+        "south": 52.9,
+        "east": -2.1,
+        "west": -2.3
+      },
+      "csvFile": "data/stoke_on_trent_free_food_locations.csv"
+    },
+    {
+      "id": "sunderland",
+      "name": "Sunderland",
+      "center": [
+        54.9069,
+        -1.3838
+      ],
+      "bounds": {
+        "north": 54.95,
+        "south": 54.85,
+        "east": -1.3,
+        "west": -1.45
+      },
+      "csvFile": "data/sunderland_free_food_locations.csv"
+    },
+    {
+      "id": "swansea",
+      "name": "Swansea",
+      "center": [
+        51.6214,
+        -3.9436
+      ],
+      "bounds": {
+        "north": 51.7,
+        "south": 51.55,
+        "east": -3.8,
+        "west": -4.1
+      },
+      "csvFile": "data/swansea_free_food_locations.csv"
+    },
+    {
+      "id": "swindon",
+      "name": "Swindon",
+      "center": [
+        51.5558,
+        -1.7797
+      ],
+      "bounds": {
+        "north": 51.65,
+        "south": 51.45,
+        "east": -1.65,
+        "west": -1.9
+      },
+      "csvFile": "data/swindon_free_food_locations.csv"
+    },
+    {
+      "id": "telford",
+      "name": "Telford",
+      "center": [
+        52.6784,
+        -2.4453
+      ],
+      "bounds": {
+        "north": 52.75,
+        "south": 52.6,
+        "east": -2.3,
+        "west": -2.6
+      },
+      "csvFile": "data/telford_free_food_locations.csv"
+    },
+    {
+      "id": "walsall",
+      "name": "Walsall",
+      "center": [
+        52.5844,
+        -1.9783
+      ],
+      "bounds": {
+        "north": 52.65,
+        "south": 52.55,
+        "east": -1.8,
+        "west": -2.1
+      },
+      "csvFile": "data/walsall_free_food_locations.csv"
+    },
+    {
+      "id": "watford",
+      "name": "Watford",
+      "center": [
+        51.6565,
+        -0.3903
+      ],
+      "bounds": {
+        "north": 51.7,
+        "south": 51.6,
+        "east": -0.3,
+        "west": -0.5
+      },
+      "csvFile": "data/watford_free_food_locations.csv"
+    },
+    {
+      "id": "winchester",
+      "name": "Winchester",
+      "center": [
+        51.0632,
+        -1.308
+      ],
+      "bounds": {
+        "north": 51.12,
+        "south": 51.01,
+        "east": -1.25,
+        "west": -1.4
+      },
+      "csvFile": "data/winchester_free_food_locations.csv"
+    },
+    {
+      "id": "wolverhampton",
+      "name": "Wolverhampton",
+      "center": [
+        52.5862,
+        -2.1288
+      ],
+      "bounds": {
+        "north": 52.65,
+        "south": 52.5,
+        "east": -2.0,
+        "west": -2.25
+      },
+      "csvFile": "data/wolverhampton_free_food_locations.csv"
+    },
+    {
+      "id": "worcester",
+      "name": "Worcester",
+      "center": [
+        52.1936,
+        -2.2215
+      ],
+      "bounds": {
+        "north": 52.25,
+        "south": 52.15,
+        "east": -2.1,
+        "west": -2.3
+      },
+      "csvFile": "data/worcester_free_food_locations.csv"
+    },
+    {
+      "id": "worthing",
+      "name": "Worthing",
+      "center": [
+        50.8175,
+        -0.3711
+      ],
+      "bounds": {
+        "north": 50.87,
+        "south": 50.77,
+        "east": -0.3,
+        "west": -0.45
+      },
+      "csvFile": "data/worthing_free_food_locations.csv"
+    },
+    {
+      "id": "york",
+      "name": "York",
+      "center": [
+        53.9591,
+        -1.0815
+      ],
+      "bounds": {
+        "north": 54.0,
+        "south": 53.9,
+        "east": -1.0,
+        "west": -1.2
+      },
+      "csvFile": "data/york_free_food_locations.csv"
+    }
+  ]
+}
