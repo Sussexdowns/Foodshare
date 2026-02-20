@@ -85,6 +85,11 @@ function initApp() {
       console.log('Loaded UK counties:', ukCounties.length);
       console.log('Loaded UK towns:', ukTowns.length);
 
+      // Populate filters immediately after loading categories data
+      // This ensures the dropdowns are populated even if data loading fails later
+      populateFilters();
+      addEventListeners();
+
       // Continue with other initialization
       loadFooterDetailsTemplate().then(() => {
         initMap();
@@ -1145,11 +1150,8 @@ function parseSeasonData(seasonStr) {
 function initializeAppData(data, isAdditionalData = false) {
   allLocations = data; // Ensure global variable is set
 
-  if (!isAdditionalData) {
-    // Only reset filters and re-add event listeners on initial load
-    populateFilters();
-    addEventListeners();
-  }
+  // Note: populateFilters() and addEventListeners() are now called in initApp()
+  // after categories.json is loaded, so they're not called here anymore
 
   displayAllLocations();
 
@@ -1271,44 +1273,57 @@ function populateFilters() {
   const categorySelect = safeGet('category');
   const itemSelect = safeGet('item');
 
-  // Check if category dropdown already has options
-  // If it does, don't overwrite it
-  if (categorySelect.options.length <= 1) {
-    // Populate categories from categoriesData (loaded from categories.json)
-    if (window.categoriesData && window.categoriesData.categories) {
-      categorySelect.innerHTML = '<option value="all">All Categories</option>';
-
-      // Add categories from categories.json
-      window.categoriesData.categories.forEach(cat => {
-        const icon = cat.icon || '';
-        const displayText = icon ? `${cat.name}` : cat.name;
-        categorySelect.add(new Option(displayText, cat.id));
+  // Helper that fills the category dropdown once we have data
+  function fillCategoryDropdown(categoriesData) {
+    categorySelect.innerHTML = '<option value="all">All Categories</option>';
+    if (categoriesData && categoriesData.categories) {
+      categoriesData.categories.forEach(cat => {
+        categorySelect.add(new Option(cat.name, cat.id));
       });
+      console.log('Categories populated from categories.json:', categoriesData.categories.length);
     } else if (window.itemsData && Object.keys(window.itemsData).length > 0) {
-      // Fallback: populate from items.json if available
-      categorySelect.innerHTML = '<option value="all">All Categories</option>';
-
-      // Add categories from items.json in a consistent order
+      // Fallback: populate from items.json
       const categoryOrder = ['fruits', 'vegetables', 'flowers', 'herbs', 'mushrooms', 'other'];
       const categories = categoryOrder.filter(cat => window.itemsData[cat] && window.itemsData[cat].length > 0);
-
       categories.forEach(categoryKey => {
         const displayName = categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
         const icon = categoryIcons[categoryKey] || '⬤';
         categorySelect.add(new Option(`${icon} ${displayName}`, categoryKey));
       });
+      console.log('Categories populated from items.json fallback');
     } else {
-      // Fallback: populate from location data
-      categorySelect.innerHTML = '<option value="all">All Categories</option>';
+      // Last resort: populate from already-loaded location data
       const categories = [...new Set(allLocations.map(loc => loc.category))].sort();
-
       categories.forEach(category => {
         if (category && category !== 'Other') categorySelect.add(new Option(category, category));
       });
       if (categories.includes('Other')) {
         categorySelect.add(new Option('Other', 'Other'));
       }
+      console.log('Categories populated from location data fallback');
     }
+  }
+
+  // If window.categoriesData is already available, use it immediately
+  if (window.categoriesData) {
+    fillCategoryDropdown(window.categoriesData);
+  } else {
+    // categories.json fetch failed silently in initApp — retry it directly here
+    console.warn('window.categoriesData is null, retrying fetch of categories.json...');
+    fetch(window.BASE_PATH + 'categories.json')
+      .then(res => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(data => {
+        window.categoriesData = data;
+        fillCategoryDropdown(data);
+      })
+      .catch(err => {
+        console.error('Failed to load categories.json:', err);
+        // Still attempt to fill from itemsData or locations
+        fillCategoryDropdown(null);
+      });
   }
 
   // Item dropdown starts with "All Items"
@@ -2233,7 +2248,17 @@ function safeGet(id) {
   const element = document.getElementById(id);
   if (!element) {
     console.warn(`Element with ID '${id}' not found. Returning a mock object.`);
-    return { addEventListener: () => { }, value: '', style: {}, textContent: '', innerHTML: '', add: () => { }, cloneNode: () => ({ addEventListener: () => { } }), parentNode: { replaceChild: () => { } } };
+    return {
+      addEventListener: () => { },
+      value: '',
+      style: {},
+      textContent: '',
+      innerHTML: '',
+      add: () => { },
+      cloneNode: () => ({ addEventListener: () => { } }),
+      parentNode: { replaceChild: () => { } },
+      options: { length: 0 }
+    };
   }
   return element;
 }

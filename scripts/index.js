@@ -1,64 +1,11 @@
-// Global data
-let categoriesData = [];
-let locationData = [];
-let allItems = [];
-
-// Load categories and items data
-async function loadData() {
-  try {
-    // Load categories and locations in parallel
-    const [categoriesResponse, locationsResponse] = await Promise.all([
-      fetch(window.BASE_PATH + 'categories.json'),
-      fetch(window.BASE_PATH + 'locations.json').catch(() => null)
-    ]);
-
-    if (categoriesResponse.ok) {
-      categoriesData = await categoriesResponse.json();
-    }
-
-    if (locationsResponse && locationsResponse.ok) {
-      locationData = await locationsResponse.json();
-    }
-
-    // Load items from items.json for item mapping
-    const itemsResponse = await fetch(window.BASE_PATH + 'items.json');
-    if (itemsResponse.ok) {
-      const itemsJson = await itemsResponse.json();
-      allItems = itemsJson;
-    }
-
-  } catch (error) {
-    console.error('Error loading data:', error);
-  }
-}
+// Note: Data loading (categoriesData, locationData, allItems) is handled by app.js
+// This file handles month picker and settings modal UI only
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function () {
-  loadData();
-
-  const categorySelect = document.getElementById('category');
-  const itemSelect = document.getElementById('item');
-
-  // Both dropdowns are simple native selects - no Select2 needed
-  if (categorySelect) {
-    // Category change listener - populate items and filter
-    categorySelect.addEventListener('change', function () {
-      if (typeof populateItemsForCategory === 'function') {
-        populateItemsForCategory(this.value);
-      }
-      if (typeof filterLocations === 'function') {
-        filterLocations();
-      }
-    });
-  }
-
-  if (itemSelect) {
-    itemSelect.addEventListener('change', function () {
-      if (typeof filterLocations === 'function') {
-        filterLocations();
-      }
-    });
-  }
+  // Note: loadData() is now handled by app.js which sets window.categoriesData
+  // Event listeners for category/item selects are also handled by app.js addEventListeners()
+  // This file now only handles month picker and settings modal UI
 });
 
 // Month picker functionality
