@@ -1,7 +1,8 @@
 // --- app.js ---
 var fileExec = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
 
-
+// Base path for GitHub Pages deployment
+const BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
 
 document.addEventListener('DOMContentLoaded', initApp);
 
@@ -26,8 +27,8 @@ const ZOOM_TIER_NATIONAL_MAX = 7; // Zoom 1-7: National view (heatmap only)
 const ZOOM_TIER_COUNTY_MAX = 10; // Zoom 8-10: County view (load county CSVs)
 // Zoom 11+: City/Town view (load specific town CSVs)
 
-// Legacy threshold for heatmap/marker toggle
-const ZOOM_THRESHOLD = 13; // Show heatmap when zoomed out beyond this level
+// Legacy threshold for heatmap/marker toggle - only show heatmap at very zoomed out levels
+const ZOOM_THRESHOLD = 7; // Show heatmap only when zoomed out to national view (zoom <= 7)
 
 // Category to FontAwesome icon mapping for dropdowns
 const categoryIcons = {
@@ -50,7 +51,7 @@ const configUserAddress = localStorage.getItem('userAddress');
 
 // Use local CSV file for test data
 const useLocalCSV = true;
-const localCSVFile = 'data/sussex_free_food_locations.csv';
+const localCSVFile = BASE_PATH + 'data/sussex_free_food_locations.csv';
 
 // Default center - Lewes, East Sussex, UK
 const DEFAULT_CENTER = [50.873, 0.009];
@@ -71,10 +72,10 @@ function initApp() {
 
   // Load categories.json, items.json, uk_counties.json, and uk_towns.json in parallel
   Promise.all([
-    fetch('categories.json').then(res => res.json()).catch(() => null),
-    fetch('items.json').then(res => res.json()).catch(() => null),
-    fetch('uk_counties.json').then(res => res.json()).catch(() => null),
-    fetch('uk_towns.json').then(res => res.json()).catch(() => null)
+    fetch(BASE_PATH + 'categories.json').then(res => res.json()).catch(() => null),
+    fetch(BASE_PATH + 'items.json').then(res => res.json()).catch(() => null),
+    fetch(BASE_PATH + 'uk_counties.json').then(res => res.json()).catch(() => null),
+    fetch(BASE_PATH + 'uk_towns.json').then(res => res.json()).catch(() => null)
   ])
     .then(([categoriesData, itemsData, countiesData, townsData]) => {
       window.categoriesData = categoriesData;
@@ -107,7 +108,7 @@ function initApp() {
  * Loads the footer-details.html template
  */
 function loadFooterDetailsTemplate() {
-  return fetch('footer-details.html')
+  return fetch(BASE_PATH + 'footer-details.html')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
