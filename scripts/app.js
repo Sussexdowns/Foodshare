@@ -63,7 +63,7 @@ const NOMINATIM_API = 'https://nominatim.openstreetmap.org/search';
 // --- IMPORTANT: Paste your published Google Sheet CSV URL here ---
 // Use saved URL from localStorage if available, otherwise use default
 const sheetURL = configSheetURL || 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_-5xXDk3-S1VfgYvEABOXgGD0zC1WbaGs2PZIQ5Cph3ndo0FNq5KpDRcr0PwUxfLsdwpwf_JeFzrn/pub?output=csv'; // 👈 PASTE YOUR URL HERE
-const jsonfile = 'locations.json'; // Assume this JSON file exists with base location data
+const jsonfile = BASE_PATH + 'locations.json'; // Assume this JSON file exists with base location data
 
 // --- Initialization ---
 function initApp() {
