@@ -9,31 +9,59 @@
           "id": "berries",
           "name": "Berries",
           "icon": "fa-solid fa-seedling",
-          "items": ["Blackberry", "Raspberry", "Strawberry", "Blueberry", "Redcurrant", "Blackcurrant", "Whitecurrant", "Sea Buckthorn"]
+          "items": [
+            "Blackberry",
+            "Raspberry",
+            "Strawberry",
+            "Blueberry",
+            "Redcurrant",
+            "Blackcurrant",
+            "Whitecurrant",
+            "Sea Buckthorn"
+          ]
         },
         {
           "id": "stone-fruits",
           "name": "Stone Fruits",
           "icon": "fa-solid fa-lemon",
-          "items": ["Cherry", "Plum", "Bullace", "Sloe"]
+          "items": [
+            "Cherry",
+            "Plum",
+            "Bullace",
+            "Sloe"
+          ]
         },
         {
           "id": "tree-fruits",
           "name": "Tree Fruits",
           "icon": "fa-solid fa-tree",
-          "items": ["Apple", "Pear", "Medlar", "Quince"]
+          "items": [
+            "Apple",
+            "Pear",
+            "Medlar",
+            "Quince"
+          ]
         },
         {
           "id": "hedgerow",
           "name": "Hedgerow Fruits",
           "icon": "fa-solid fa-leaf",
-          "items": ["Hawthorn", "Rose Hip", "Elderberry", "Rowan", "Hazelnut"]
+          "items": [
+            "Hawthorn",
+            "Rose Hip",
+            "Elderberry",
+            "Rowan",
+            "Hazelnut"
+          ]
         },
         {
           "id": "other-fruits",
           "name": "Other Fruits",
           "icon": "fa-solid fa-apple-whole",
-          "items": ["Wild Cherry", "Gooseberry"]
+          "items": [
+            "Wild Cherry",
+            "Gooseberry"
+          ]
         }
       ]
     },
@@ -46,31 +74,60 @@
           "id": "root-vegetables",
           "name": "Root Vegetables",
           "icon": "fa-solid fa-carrot",
-          "items": ["Carrot", "Parsnip", "Swede", "Turnip", "Beetroot", "Jerusalem Artichoke", "Salsify", "Scorzonera"]
+          "items": [
+            "Carrot",
+            "Parsnip",
+            "Swede",
+            "Turnip",
+            "Beetroot",
+            "Jerusalem Artichoke",
+            "Salsify",
+            "Scorzonera"
+          ]
         },
         {
           "id": "leafy-greens",
           "name": "Leafy Greens",
           "icon": "fa-solid fa-leaf",
-          "items": ["Kale", "Spinach", "Chard", "Lovage", "Rhubarb"]
+          "items": [
+            "Kale",
+            "Spinach",
+            "Chard",
+            "Lovage",
+            "Rhubarb"
+          ]
         },
         {
           "id": "cruciferous",
           "name": "Cruciferous",
           "icon": "fa-solid fa-seedling",
-          "items": ["Cabbage", "Broccoli", "Cauliflower", "Brussels Sprout"]
+          "items": [
+            "Cabbage",
+            "Broccoli",
+            "Cauliflower",
+            "Brussels Sprout"
+          ]
         },
         {
           "id": "alliums",
           "name": "Alliums",
           "icon": "fa-solid fa-pepper-hot",
-          "items": ["Onion", "Leek", "Garlic", "Chives"]
+          "items": [
+            "Onion",
+            "Leek",
+            "Garlic",
+            "Chives"
+          ]
         },
         {
           "id": "other-vegetables",
           "name": "Other Vegetables",
           "icon": "fa-solid fa-bowl-food",
-          "items": ["Pea", "Potato", "Asparagus"]
+          "items": [
+            "Pea",
+            "Potato",
+            "Asparagus"
+          ]
         }
       ]
     },
@@ -83,19 +140,40 @@
           "id": "edible-flowers",
           "name": "Edible Flowers",
           "icon": "fa-solid fa-flower-tulip",
-          "items": ["Nasturtium", "Violet", "Rose", "Chamomile", "Lavender", "Calendula", "Mallow", "Chickweed"]
+          "items": [
+            "Nasturtium",
+            "Violet",
+            "Rose",
+            "Chamomile",
+            "Lavender",
+            "Calendula",
+            "Mallow",
+            "Chickweed"
+          ]
         },
         {
           "id": "medicinal-flowers",
           "name": "Medicinal Flowers",
           "icon": "fa-solid fa-mortar-pestle",
-          "items": ["Elderflower", "Dandelion", "Honeysuckle", "Primrose", "Cowslip", "Red Clover"]
+          "items": [
+            "Elderflower",
+            "Dandelion",
+            "Honeysuckle",
+            "Primrose",
+            "Cowslip",
+            "Red Clover"
+          ]
         },
         {
           "id": "wildflowers",
           "name": "Wildflowers",
           "icon": "fa-solid fa-clover",
-          "items": ["Wild Garlic", "Sorrel", "Jack-by-the-Hedge", "Hairy Bittercress"]
+          "items": [
+            "Wild Garlic",
+            "Sorrel",
+            "Jack-by-the-Hedge",
+            "Hairy Bittercress"
+          ]
         }
       ]
     },
@@ -108,19 +186,46 @@
           "id": "culinary-herbs",
           "name": "Culinary Herbs",
           "icon": "fa-solid fa-utensils",
-          "items": ["Mint", "Rosemary", "Thyme", "Parsley", "Sage", "Chives", "Basil", "Oregano", "Coriander", "Dill", "Fennel", "Chervil", "Tarragon", "Marjoram"]
+          "items": [
+            "Mint",
+            "Rosemary",
+            "Thyme",
+            "Parsley",
+            "Sage",
+            "Chives",
+            "Basil",
+            "Oregano",
+            "Coriander",
+            "Dill",
+            "Fennel",
+            "Chervil",
+            "Tarragon",
+            "Marjoram"
+          ]
         },
         {
           "id": "medicinal-herbs",
           "name": "Medicinal Herbs",
           "icon": "fa-solid fa-pills",
-          "items": ["Lemon Balm", "Stinging Nettle", "Plantain", "Yarrow", "Selfheal", "Comfrey"]
+          "items": [
+            "Lemon Balm",
+            "Stinging Nettle",
+            "Plantain",
+            "Yarrow",
+            "Selfheal",
+            "Comfrey"
+          ]
         },
         {
           "id": "tea-herbs",
           "name": "Tea Herbs",
           "icon": "fa-solid fa-mug-hot",
-          "items": ["Chamomile", "Lavender", "Lemon Balm", "Mint"]
+          "items": [
+            "Chamomile",
+            "Lavender",
+            "Lemon Balm",
+            "Mint"
+          ]
         }
       ]
     },
@@ -133,13 +238,84 @@
           "id": "edible-mushrooms",
           "name": "Edible Mushrooms",
           "icon": "fa-solid fa-plate-wheat",
-          "items": ["Chanterelle", "Porcini", "Chicken of the Woods", "Lawyer's Wig"]
+          "items": [
+            "Chanterelle",
+            "Porcini",
+            "Chicken of the Woods",
+            "Lawyer's Wig"
+          ]
         },
         {
           "id": "medicinal-mushrooms",
           "name": "Medicinal Mushrooms",
           "icon": "fa-solid fa-kit-medical",
-          "items": ["Reishi", "Turkey Tail"]
+          "items": [
+            "Reishi",
+            "Turkey Tail"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nuts",
+      "name": "Nuts",
+      "icon": "fa-solid fa-seedling",
+      "subcategories": [
+        {
+          "id": "tree-nuts",
+          "name": "Tree Nuts",
+          "icon": "fa-solid fa-tree",
+          "items": [
+            "Hazelnut",
+            "Walnut",
+            "Chestnut",
+            "Beech Nut"
+          ]
+        },
+        {
+          "id": "wild-nuts",
+          "name": "Wild Nuts",
+          "icon": "fa-solid fa-leaf",
+          "items": [
+            "Acorn",
+            "Sweet Chestnut"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "other",
+      "name": "Other",
+      "icon": "fa-solid fa-ellipsis",
+      "subcategories": [
+        {
+          "id": "wild-foods",
+          "name": "Wild Foods",
+          "icon": "fa-solid fa-leaf",
+          "items": [
+            "Seaweed",
+            "Watercress",
+            "Wild Garlic",
+            "Nettle"
+          ]
+        },
+        {
+          "id": "community-resources",
+          "name": "Community Resources",
+          "icon": "fa-solid fa-hand-holding-heart",
+          "items": [
+            "Food Bank",
+            "Community Fridge",
+            "Food Sharing"
+          ]
+        },
+        {
+          "id": "miscellaneous",
+          "name": "Miscellaneous",
+          "icon": "fa-solid fa-question",
+          "items": [
+            "Other"
+          ]
         }
       ]
     }
