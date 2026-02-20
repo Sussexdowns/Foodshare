@@ -1,5 +1,4 @@
 // --- app.js ---
-var fileCsv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_-5xXDk3-S1VfgYvEABOXgGD0zC1WbaGs2PZIQ5Cph3ndo0FNq5KpDRcr0PwUxfLsdwpwf_JeFzrn/pub?output=csv';
 var fileExec = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
 
 
@@ -37,6 +36,7 @@ const categoryIcons = {
   'flowers': '🌸',
   'herbs': '🌿',
   'mushrooms': '🍄',
+  'nuts': '🌰',
   'other': '⬤'
 };
 
@@ -1669,20 +1669,22 @@ function updateHeatmap(filteredLocations) {
 
 function addMarker(location) {
   const categoryColors = {
-    "Fruit": "red",
-    "Vegetable": "green",
-    "Flower": "purple",
-    "Herb": "blue",
-    "Mushroom": "orange",
-    "Other": "gray"
+    "fruits": "red",
+    "vegetables": "green",
+    "flowers": "purple",
+    "herbs": "blue",
+    "mushrooms": "orange",
+    "nuts": "orange",
+    "other": "gray"
   };
   const categoryIcons = {
-    "Fruit": "apple-whole",
-    "Vegetable": "carrot",
-    "Flower": "seedling",
-    "Herb": "leaf",
-    "Mushroom": "mushroom",
-    "Other": "map-marker-alt"
+    "fruits": "apple-whole",
+    "vegetables": "carrot",
+    "flowers": "seedling",
+    "herbs": "leaf",
+    "mushrooms": "cloud",      // Free icon (mushroom cap shape)
+    "nuts": "circle",          // Free icon (round nut shape)
+    "other": "map-marker-alt"
   };
 
   const color = categoryColors[location.category] || "purple";
@@ -2043,12 +2045,13 @@ function showFooterDetails(location) {
  */
 function getCategoryColor(category) {
   const colors = {
-    "Fruit": "danger",
-    "Vegetable": "success",
-    "Flower": "primary",
-    "Herb": "info",
-    "Mushroom": "warning",
-    "Other": "secondary"
+    "fruits": "danger",
+    "vegetables": "success",
+    "flowers": "primary",
+    "herbs": "info",
+    "mushrooms": "warning",
+    "nuts": "warning",
+    "other": "secondary"
   };
   return colors[category] || 'secondary';
 }

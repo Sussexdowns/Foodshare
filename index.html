@@ -3,10 +3,10 @@
 
 <head>
   <title>Lewes Food Sharing Map</title>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- CSS & Icons -->  
+  <!-- CSS & Icons -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/pages.css">
   <link rel="stylesheet" href="css/index.css">
@@ -19,13 +19,14 @@
   <!-- Leaflet / font Awesome CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.css" />
 
   <!-- Styles -->
-  <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-       
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
   <!-- Favicons & Manifest -->
   <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
@@ -34,139 +35,150 @@
   <meta name="apple-mobile-web-app-title" content="Foodshare" />
   <link rel="manifest" href="site.webmanifest" />
 </head>
+
 <body class="p-4">
 
   <!-- Header placeholder - loaded via JavaScript -->
   <div id="header-placeholder" class="fixed-top"></div>
 
   <!-- Begin page content -->
-<main class="flex-shrink-0">
+  <main class="flex-shrink-0">
 
-<!-- Page Heading -->
-<div class="container my-4 text-center">
-  <h1 class="d-flex align-items-center justify-content-center">
-    <img src="assets/logo.png" alt="Logo" class="logo" />
-    Lewes Food Sharing
-  </h1>
-</div>
+    <!-- Page Heading -->
+    <div class="container my-4 text-center">
+      <h1 class="d-flex align-items-center justify-content-center">
+        <img src="assets/logo.png" alt="Logo" class="logo" />
+        Lewes Food Sharing
+      </h1>
+    </div>
 
-  <div id="status-message" class="status-message alert alert-primary" role="alert"></div> 
+    <div id="status-message" class="status-message alert alert-primary" role="alert"></div>
 
-<!-- Controls -->
-<div class="container mb-3">
-  <div class="row g-2 align-items-end">
+    <!-- Controls -->
+    <div class="container mb-3">
+      <div class="row g-2 align-items-end">
 
-     <div class="col-md-3">
-    <label for="category" class="form-label">Category</label>
-    <select id="category" class="form-select">
-       <option value="all">All Categories</option>
-    </select>
-  </div>
+        <div class="col-md-3">
+          <label for="category" class="form-label">Category</label>
+          <select id="category" class="form-select">
+            <option value="all">All Categories</option>
+          </select>
+        </div>
 
-  <div class="col-md-3">
-    <label for="item" class="form-label">Items</label>
-    <select id="item" class="form-select">
-       <option value="all">All Items</option>
-    </select>
-    <input type="text" id="new-item" class="form-control mt-2 d-none" placeholder="Enter new item name" />
-  </div>
+        <div class="col-md-3">
+          <label for="item" class="form-label">Items</label>
+          <select id="item" class="form-select">
+            <option value="all">All Items</option>
+          </select>
+          <input type="text" id="new-item" class="form-control mt-2 d-none" placeholder="Enter new item name" />
+        </div>
 
-    <div class="col-md-3">
-      <label for="month-picker" class="form-label">Month</label>
-      <div class="month-picker-container">
-        <input type="text" id="month-picker-input" class="month-picker-input" placeholder="Select months..." readonly>
-        <div id="month-picker-dropdown" class="month-picker-dropdown">
-          <div class="month-picker-grid">
-            <input type="checkbox" id="month-0" class="month-checkbox" value="Jan">
-            <label for="month-0" class="month-label">Jan</label>
-            
-            <input type="checkbox" id="month-1" class="month-checkbox" value="Feb">
-            <label for="month-1" class="month-label">Feb</label>
-            
-            <input type="checkbox" id="month-2" class="month-checkbox" value="Mar">
-            <label for="month-2" class="month-label">Mar</label>
-            
-            <input type="checkbox" id="month-3" class="month-checkbox" value="Apr">
-            <label for="month-3" class="month-label">Apr</label>
-            
-            <input type="checkbox" id="month-4" class="month-checkbox" value="May">
-            <label for="month-4" class="month-label">May</label>
-            
-            <input type="checkbox" id="month-5" class="month-checkbox" value="Jun">
-            <label for="month-5" class="month-label">Jun</label>
-            
-            <input type="checkbox" id="month-6" class="month-checkbox" value="Jul">
-            <label for="month-6" class="month-label">Jul</label>
-            
-            <input type="checkbox" id="month-7" class="month-checkbox" value="Aug">
-            <label for="month-7" class="month-label">Aug</label>
-            
-            <input type="checkbox" id="month-8" class="month-checkbox" value="Sep">
-            <label for="month-8" class="month-label">Sep</label>
-            
-            <input type="checkbox" id="month-9" class="month-checkbox" value="Oct">
-            <label for="month-9" class="month-label">Oct</label>
-            
-            <input type="checkbox" id="month-10" class="month-checkbox" value="Nov">
-            <label for="month-10" class="month-label">Nov</label>
-            
-            <input type="checkbox" id="month-11" class="month-checkbox" value="Dec">
-            <label for="month-11" class="month-label">Dec</label>
+        <div class="col-md-3">
+          <label for="month-picker" class="form-label">Month</label>
+          <div class="month-picker-container">
+            <input type="text" id="month-picker-input" class="month-picker-input" placeholder="Select months..."
+              readonly>
+            <div id="month-picker-dropdown" class="month-picker-dropdown">
+              <div class="month-picker-grid">
+                <input type="checkbox" id="month-0" class="month-checkbox" value="Jan">
+                <label for="month-0" class="month-label">Jan</label>
+
+                <input type="checkbox" id="month-1" class="month-checkbox" value="Feb">
+                <label for="month-1" class="month-label">Feb</label>
+
+                <input type="checkbox" id="month-2" class="month-checkbox" value="Mar">
+                <label for="month-2" class="month-label">Mar</label>
+
+                <input type="checkbox" id="month-3" class="month-checkbox" value="Apr">
+                <label for="month-3" class="month-label">Apr</label>
+
+                <input type="checkbox" id="month-4" class="month-checkbox" value="May">
+                <label for="month-4" class="month-label">May</label>
+
+                <input type="checkbox" id="month-5" class="month-checkbox" value="Jun">
+                <label for="month-5" class="month-label">Jun</label>
+
+                <input type="checkbox" id="month-6" class="month-checkbox" value="Jul">
+                <label for="month-6" class="month-label">Jul</label>
+
+                <input type="checkbox" id="month-7" class="month-checkbox" value="Aug">
+                <label for="month-7" class="month-label">Aug</label>
+
+                <input type="checkbox" id="month-8" class="month-checkbox" value="Sep">
+                <label for="month-8" class="month-label">Sep</label>
+
+                <input type="checkbox" id="month-9" class="month-checkbox" value="Oct">
+                <label for="month-9" class="month-label">Oct</label>
+
+                <input type="checkbox" id="month-10" class="month-checkbox" value="Nov">
+                <label for="month-10" class="month-label">Nov</label>
+
+                <input type="checkbox" id="month-11" class="month-checkbox" value="Dec">
+                <label for="month-11" class="month-label">Dec</label>
+              </div>
+            </div>
+            <div id="selected-months-display" class="selected-months-display"></div>
           </div>
         </div>
-        <div id="selected-months-display" class="selected-months-display"></div>
+        <div class="col-md-3 d-grid">
+          <button onclick="displayAllLocations()" class="btn btn-primary btn-sm">Show All</button>
+        </div>
       </div>
     </div>
-    <div class="col-md-3 d-grid"> 
-      <button onclick="displayAllLocations()" class="btn btn-primary btn-sm">Show All</button>
+
+    <!-- Map Container with Legend Overlay -->
+    <div class="map-container">
+      <div id="map"></div>
+
+      <!-- Legend overlay on map -->
+      <div id="map-legend">
+        <div class="map-legend">
+          <h4>Categories</h4>
+          <div class="legend-item"><span class="legend-icon" style="color: red;"><i
+                class="fas fa-apple-whole"></i></span> Fruit</div>
+          <div class="legend-item"><span class="legend-icon" style="color: green;"><i class="fas fa-carrot"></i></span>
+            Vegetable</div>
+          <div class="legend-item"><span class="legend-icon" style="color: purple;"><i
+                class="fas fa-seedling"></i></span> Flower</div>
+          <div class="legend-item"><span class="legend-icon" style="color: blue;"><i class="fas fa-leaf"></i></span>
+            Herb</div>
+          <div class="legend-item"><span class="legend-icon" style="color: orange;"><i class="fas fa-cloud"></i></span>
+            Mushroom</div>
+          <div class="legend-item"><span class="legend-icon" style="color: orange;"><i class="fas fa-circle"></i></span>
+            Nuts</div>
+          <div class="legend-item"><span class="legend-icon" style="color: gray;"><i
+                class="fas fa-map-marker-alt"></i></span> Other</div>
+        </div>
+      </div>
     </div>
+
+  </main>
+
+  <!-- Settings Modal - loaded dynamically -->
+  <div id="settingsModal" class="modal hidden">
+    <!-- Content loaded from settings_modal.html -->
+
   </div>
-</div>
 
-<!-- Map Container with Legend Overlay -->
-<div class="map-container">
-  <div id="map"></div>
-  
-  <!-- Legend overlay on map -->
-  <div id="map-legend">
-    <div class="map-legend">
-      <h4>Categories</h4>
-      <div class="legend-item"><span class="legend-icon" style="color: red;"><i class="fas fa-apple-whole"></i></span> Fruit</div>
-      <div class="legend-item"><span class="legend-icon" style="color: green;"><i class="fas fa-carrot"></i></span> Vegetable</div>
-      <div class="legend-item"><span class="legend-icon" style="color: purple;"><i class="fas fa-seedling"></i></span> Flower</div>
-      <div class="legend-item"><span class="legend-icon" style="color: blue;"><i class="fas fa-leaf"></i></span> Herb</div>
-      <div class="legend-item"><span class="legend-icon" style="color: orange;"><i class="fas fa-tree"></i></span> Mushroom</div>
-      <div class="legend-item"><span class="legend-icon" style="color: gray;"><i class="fas fa-map-marker-alt"></i></span> Other</div>
-    </div>
-  </div>
-</div>
+  <!-- Footer placeholder - loaded via JavaScript -->
+  <div id="footer-placeholder" class="fixed-bottom"></div>
 
-</main>
+  <!-- Footer details container - loaded via JavaScript -->
+  <div id="footer-details-container"></div>
 
-<!-- Settings Modal - loaded dynamically -->
-<div id="settingsModal" class="modal hidden">
-      <!-- Content loaded from settings_modal.html -->
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
 
-</div>
-
-<!-- Footer placeholder - loaded via JavaScript -->
-<div id="footer-placeholder" class="fixed-bottom"></div>
-
-<!-- Footer details container - loaded via JavaScript -->
-<div id="footer-details-container"></div>
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
-
-<script src="scripts/base.js"></script>
-<script src="scripts/app.js"></script>
-<script src="scripts/index.js"></script>
+  <script src="scripts/base.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/index.js"></script>
 
 </body>
+
 </html>
