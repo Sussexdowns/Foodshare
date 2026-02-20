@@ -1,78 +1,293 @@
-# Example queries for a simple movie app.
+# Foodshare queries for food items and locations
 
-# @auth() directives control who can call each operation.
-# Anyone should be able to list all movies, so the auth level is set to PUBLIC
-query ListMovies @auth(level: PUBLIC, insecureReason: "Anyone can list all movies.") {
-  movies {
+# List all food items - public access for browsing
+query ListFoodItems @auth(level: PUBLIC, insecureReason: "Anyone can browse available food items.") {
+  foodItems {
     id
-    title
+    name
+    description
+    quantity
+    createdAt
+    status
+    category
+    expirationDate
+    pickupInstructions
     imageUrl
-    genre
-  }
-}
-
-# List all users, only admins should be able to list all users, so we use NO_ACCESS
-query ListUsers @auth(level: NO_ACCESS) {
-  users {
-    id
-    username
-  }
-}
-
-# Logged in users can list all their reviews and movie titles associated with the review
-# Since the query uses the uid of the current authenticated user, we set auth level to USER
-query ListUserReviews @auth(level: USER) {
-  user(key: { id_expr: "auth.uid" }) {
-    id
-    username
-    # <field>_on_<foreign_key_field> makes it easy to grab info from another table
-    # Here, we use it to grab all the reviews written by the user.
-    reviews: reviews_on_user {
-      rating
-      reviewDate
-      reviewText
-      movie {
-        id
-        title
-      }
+    # Location fields
+    lat
+    lng
+    address
+    town
+    county
+    postcode
+    # Additional fields
+    season
+    originalType
+    link
+    likes
+    dislikes
+    postedBy {
+      id
+      displayName
     }
   }
 }
 
-# Get movie by id
-query GetMovieById($id: UUID!) @auth(level: PUBLIC, insecureReason: "Anyone can get a movie by id.") {
-  movie(id: $id) {
+# Get a single food item by ID
+query GetFoodItemById($id: UUID!) @auth(level: PUBLIC, insecureReason: "Anyone can view food item details.") {
+  foodItem(id: $id) {
     id
-    title
+    name
+    description
+    quantity
+    createdAt
+    status
+    category
+    expirationDate
+    pickupInstructions
     imageUrl
-    genre
-    metadata: movieMetadata_on_movie {
-      rating
-      releaseYear
-      description
-    }
-    reviews: reviews_on_movie {
-      reviewText
-      reviewDate
-      rating
-      user {
-        id
-        username
-      }
+    lat
+    lng
+    address
+    town
+    county
+    postcode
+    season
+    originalType
+    link
+    likes
+    dislikes
+    postedBy {
+      id
+      displayName
+      email
     }
   }
 }
 
-# Search for movies, actors, and reviews
-query SearchMovie($titleInput: String, $genre: String) @auth(level: PUBLIC, insecureReason: "Anyone can search for movies.") {
-  movies(
+# Search food items by category and/or name
+query SearchFoodItems($category: String, $name: String, $status: String) 
+@auth(level: PUBLIC, insecureReason: "Anyone can search for food items.") {
+  foodItems(
     where: {
-      _and: [{ genre: { eq: $genre } }, { title: { contains: $titleInput } }]
+      _and: [
+        { category: { eq: $category } },
+        { name: { contains: $name } },
+        { status: { eq: $status } }
+      ]
     }
   ) {
     id
-    title
-    genre
+    name
+    description
+    quantity
+    category
+    status
+    expirationDate
     imageUrl
+    pickupInstructions
+    lat
+    lng
+    address
+    town
+    county
+    season
+    originalType
+    link
+    likes
+    dislikes
+    postedBy {
+      id
+      displayName
+    }
+  }
+}
+
+# List food items by category
+query ListFoodItemsByCategory($category: String!) @auth(level: PUBLIC, insecureReason: "Anyone can browse food items by category.") {
+  foodItems(where: { category: { eq: $category } }) {
+    id
+    name
+    description
+    quantity
+    status
+    expirationDate
+    imageUrl
+    pickupInstructions
+    lat
+    lng
+    address
+    town
+    county
+    season
+    likes
+    dislikes
+  }
+}
+
+# List food items by location (town or county)
+query ListFoodItemsByLocation($town: String, $county: String) @auth(level: PUBLIC, insecureReason: "Anyone can browse food items by location.") {
+  foodItems(
+    where: {
+      _or: [
+        { town: { eq: $town } },
+        { county: { eq: $county } }
+      ]
+    }
+  ) {
+    id
+    name
+    description
+    quantity
+    status
+    category
+    expirationDate
+    imageUrl
+    pickupInstructions
+    lat
+    lng
+    address
+    town
+    county
+    season
+    likes
+    dislikes
+    postedBy {
+      id
+      displayName
+    }
+  }
+}
+
+# List food items within a bounding box (for map view)
+query ListFoodItemsInBounds($minLat: Float!, $maxLat: Float!, $minLng: Float!, $maxLng: Float!) 
+@auth(level: PUBLIC, insecureReason: "Anyone can browse food items in an area.") {
+  foodItems(
+    where: {
+      _and: [
+        { lat: { ge: $minLat } },
+        { lat: { le: $maxLat } },
+        { lng: { ge: $minLng } },
+        { lng: { le: $maxLng } }
+      ]
+    }
+  ) {
+    id
+    name
+    description
+    quantity
+    status
+    category
+    lat
+    lng
+    address
+    town
+    county
+    imageUrl
+    season
+    likes
+    dislikes
+    postedBy {
+      id
+      displayName
+    }
+  }
+}
+
+# List food items posted by the current user
+query ListMyFoodItems @auth(level: USER) {
+  user(key: { id_expr: "auth.uid" }) {
+    id
+    displayName
+    foodItems: foodItems_on_postedBy {
+      id
+      name
+      description
+      quantity
+      status
+      category
+      expirationDate
+      imageUrl
+      createdAt
+      lat
+      lng
+      address
+      town
+      county
+      season
+      likes
+      dislikes
+    }
+  }
+}
+
+# List all communities
+query ListCommunities @auth(level: PUBLIC, insecureReason: "Anyone can view communities.") {
+  communities {
+    id
+    name
+    location
+    description
+    createdAt
+    moderator {
+      id
+      displayName
+    }
+  }
+}
+
+# Get community by ID with related food items
+query GetCommunityById($id: UUID!) @auth(level: PUBLIC, insecureReason: "Anyone can view community details.") {
+  community(id: $id) {
+    id
+    name
+    location
+    description
+    createdAt
+    moderator {
+      id
+      displayName
+    }
+  }
+}
+
+# List requests made by the current user
+query ListMyRequests @auth(level: USER) {
+  user(key: { id_expr: "auth.uid" }) {
+    id
+    displayName
+    requests: requests_on_requestedBy {
+      id
+      status
+      messageToDonor
+      createdAt
+      foodItem {
+        id
+        name
+        description
+        imageUrl
+        lat
+        lng
+        address
+        postedBy {
+          id
+          displayName
+        }
+      }
+    }
+  }
+}
+
+# List reviews for a user
+query ListUserReviews($userId: UUID!) @auth(level: PUBLIC, insecureReason: "Reviews are public.") {
+  reviews(where: { reviewedUserId: { eq: $userId } }) {
+    id
+    rating
+    comment
+    createdAt
+    reviewer {
+      id
+      displayName
+    }
   }
 }

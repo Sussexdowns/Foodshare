@@ -20,6 +20,22 @@ type FoodItem @table {
   expirationDate: Date
   pickupInstructions: String
   imageUrl: String
+  # Location fields for map display
+  lat: Float
+  lng: Float
+  address: String
+  town: String
+  county: String
+  postcode: String
+  # Season availability (array of month numbers 1-12)
+  season: String
+  # Original type for display
+  originalType: String
+  # Link to more info
+  link: String
+  # Feedback counts
+  likes: Int
+  dislikes: Int
 }
 
 type Request @table {
