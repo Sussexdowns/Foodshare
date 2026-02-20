@@ -1,9 +1,7 @@
 // --- app.js ---
 var fileExec = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
 
-// Base path for GitHub Pages deployment
-const BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
-
+// Base path will be set by base.js - use window.BASE_PATH directly
 document.addEventListener('DOMContentLoaded', initApp);
 
 // --- Global Variables ---
@@ -51,7 +49,7 @@ const configUserAddress = localStorage.getItem('userAddress');
 
 // Use local CSV file for test data
 const useLocalCSV = true;
-const localCSVFile = BASE_PATH + 'data/sussex_free_food_locations.csv';
+const localCSVFile = window.BASE_PATH + 'data/sussex_free_food_locations.csv';
 
 // Default center - Lewes, East Sussex, UK
 const DEFAULT_CENTER = [50.873, 0.009];
@@ -63,7 +61,7 @@ const NOMINATIM_API = 'https://nominatim.openstreetmap.org/search';
 // --- IMPORTANT: Paste your published Google Sheet CSV URL here ---
 // Use saved URL from localStorage if available, otherwise use default
 const sheetURL = configSheetURL || 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_-5xXDk3-S1VfgYvEABOXgGD0zC1WbaGs2PZIQ5Cph3ndo0FNq5KpDRcr0PwUxfLsdwpwf_JeFzrn/pub?output=csv'; // 👈 PASTE YOUR URL HERE
-const jsonfile = BASE_PATH + 'locations.json'; // Assume this JSON file exists with base location data
+const jsonfile = window.BASE_PATH + 'locations.json'; // Assume this JSON file exists with base location data
 
 // --- Initialization ---
 function initApp() {
@@ -72,10 +70,10 @@ function initApp() {
 
   // Load categories.json, items.json, uk_counties.json, and uk_towns.json in parallel
   Promise.all([
-    fetch(BASE_PATH + 'categories.json').then(res => res.json()).catch(() => null),
-    fetch(BASE_PATH + 'items.json').then(res => res.json()).catch(() => null),
-    fetch(BASE_PATH + 'uk_counties.json').then(res => res.json()).catch(() => null),
-    fetch(BASE_PATH + 'uk_towns.json').then(res => res.json()).catch(() => null)
+    fetch(window.BASE_PATH + 'categories.json').then(res => res.json()).catch(() => null),
+    fetch(window.BASE_PATH + 'items.json').then(res => res.json()).catch(() => null),
+    fetch(window.BASE_PATH + 'uk_counties.json').then(res => res.json()).catch(() => null),
+    fetch(window.BASE_PATH + 'uk_towns.json').then(res => res.json()).catch(() => null)
   ])
     .then(([categoriesData, itemsData, countiesData, townsData]) => {
       window.categoriesData = categoriesData;
@@ -108,7 +106,7 @@ function initApp() {
  * Loads the footer-details.html template
  */
 function loadFooterDetailsTemplate() {
-  return fetch(BASE_PATH + 'footer-details.html')
+  return fetch(window.BASE_PATH + 'footer-details.html')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -516,11 +514,21 @@ function handleTierChange(newTier) {
       clearTownData();
     }
     addStatusMessage('🗺️ County view: Loading county data', 'info');
+    // Remove heatmap and show markers
+    if (heatLayer) {
+      map.removeLayer(heatLayer);
+      heatLayer = null;
+    }
     showMarkers();
   } else if (newTier === 'city') {
     // City view: clear county data, load specific town
     addStatusMessage('🏙️ City view: Loading detailed town data', 'info');
     clearCountyData();
+    // Remove heatmap and show markers
+    if (heatLayer) {
+      map.removeLayer(heatLayer);
+      heatLayer = null;
+    }
     showMarkers();
   }
 }
@@ -879,8 +887,15 @@ function updateMapTheme() {
     }
   });
 
-  addStatusMessage(isDarkMode ? '🌙 Dark mode: Using dark map theme' : '☀️ Light mode: Using light map theme', 'info');
+  // Only show the theme message once per session
+  if (!mapThemeMessageShown) {
+    addStatusMessage(isDarkMode ? '🌙 Dark mode: Using dark map theme' : '☀️ Light mode: Using light map theme', 'info');
+    mapThemeMessageShown = true;
+  }
 }
+
+// Suppress the map theme message on subsequent toggles
+let mapThemeMessageShown = false;
 
 // --- Data Fetching and Processing ---
 
@@ -1259,8 +1274,18 @@ function populateFilters() {
   // Check if category dropdown already has options
   // If it does, don't overwrite it
   if (categorySelect.options.length <= 1) {
-    // Populate categories from items.json if available
-    if (window.itemsData && Object.keys(window.itemsData).length > 0) {
+    // Populate categories from categoriesData (loaded from categories.json)
+    if (window.categoriesData && window.categoriesData.categories) {
+      categorySelect.innerHTML = '<option value="all">All Categories</option>';
+
+      // Add categories from categories.json
+      window.categoriesData.categories.forEach(cat => {
+        const icon = cat.icon || '';
+        const displayText = icon ? `${cat.name}` : cat.name;
+        categorySelect.add(new Option(displayText, cat.id));
+      });
+    } else if (window.itemsData && Object.keys(window.itemsData).length > 0) {
+      // Fallback: populate from items.json if available
       categorySelect.innerHTML = '<option value="all">All Categories</option>';
 
       // Add categories from items.json in a consistent order
@@ -1312,9 +1337,7 @@ function addEventListeners() {
 
 /**
  * Populates the item dropdown based on the selected category
- * Uses items.json to get all items for the category
- * Disables items that don't exist in the location data
- * Shows items in optgroups by category
+ * Uses categories.json to get subcategories and items
  */
 function populateItemsForCategory(categoryId) {
   const itemSelect = safeGet('item');
@@ -1328,47 +1351,34 @@ function populateItemsForCategory(categoryId) {
     return;
   }
 
-  // Get items from items.json for this category
-  const items = window.itemsData?.[categoryId] || [];
+  // Get category from categoriesData
+  const category = window.categoriesData?.categories?.find(c => c.id === categoryId);
 
-  if (items.length === 0) {
-    // No items found for this category, fall back to location data
-    populateItemsFromLocationData(categoryId);
-    return;
+  if (!category || !category.subcategories) {
+    // No subcategories found, fall back to items.json
+    const items = window.itemsData?.[categoryId] || [];
+    if (items.length === 0) {
+      populateItemsFromLocationData(categoryId);
+      return;
+    }
   }
 
-  // Get items that exist in location data for this category
-  const existingItems = new Set();
-  allLocations.forEach(loc => {
-    if (loc.category && loc.category.toLowerCase() === categoryId.toLowerCase() && loc.name) {
-      existingItems.add(loc.name.toLowerCase());
-    }
-  });
+  // Create optgroups for each subcategory
+  if (category && category.subcategories) {
+    category.subcategories.forEach(subcat => {
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = subcat.name;
 
-  // Create optgroup for this category
-  const optgroup = document.createElement('optgroup');
-  const displayName = categoryId.charAt(0).toUpperCase() + categoryId.slice(1);
-  const icon = categoryIcons[categoryId.toLowerCase()] || '⬤';
-  optgroup.label = `${icon} ${displayName}`;
+      subcat.items.forEach(itemName => {
+        const option = document.createElement('option');
+        option.value = itemName.toLowerCase();
+        option.textContent = itemName;
+        optgroup.appendChild(option);
+      });
 
-  // Add items to optgroup
-  items.forEach(item => {
-    const option = document.createElement('option');
-    option.value = item.name;
-    option.textContent = item.name;
-
-    // Check if item exists in database (case-insensitive)
-    const exists = existingItems.has(item.name.toLowerCase());
-
-    if (!exists) {
-      option.disabled = true;
-      option.textContent = `${item.name}`;
-    }
-
-    optgroup.appendChild(option);
-  });
-
-  itemSelect.appendChild(optgroup);
+      itemSelect.appendChild(optgroup);
+    });
+  }
 }
 
 /**
@@ -1381,20 +1391,36 @@ function populateAllItemsWithOptgroups() {
   // Clear existing options
   itemSelect.innerHTML = '<option value="all">All Items</option>';
 
+  // Use categoriesData if available
+  if (window.categoriesData && window.categoriesData.categories) {
+    window.categoriesData.categories.forEach(category => {
+      if (!category.subcategories) return;
+
+      // Create optgroup for each subcategory
+      category.subcategories.forEach(subcat => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = `${category.name} - ${subcat.name}`;
+
+        subcat.items.forEach(itemName => {
+          const option = document.createElement('option');
+          option.value = itemName.toLowerCase();
+          option.textContent = itemName;
+          optgroup.appendChild(option);
+        });
+
+        itemSelect.appendChild(optgroup);
+      });
+    });
+    return;
+  }
+
+  // Fallback to items.json
   if (!window.itemsData || Object.keys(window.itemsData).length === 0) {
     return;
   }
 
   // Get all items from all categories
   const categoryOrder = ['fruits', 'vegetables', 'flowers', 'herbs', 'mushrooms', 'other'];
-
-  // Get items that exist in location data
-  const existingItems = new Set();
-  allLocations.forEach(loc => {
-    if (loc.name) {
-      existingItems.add(loc.name.toLowerCase());
-    }
-  });
 
   categoryOrder.forEach(categoryKey => {
     const items = window.itemsData[categoryKey] || [];
@@ -1412,15 +1438,6 @@ function populateAllItemsWithOptgroups() {
       const option = document.createElement('option');
       option.value = item.name;
       option.textContent = item.name;
-
-      // Check if item exists in database
-      const exists = existingItems.has(item.name.toLowerCase());
-
-      if (!exists) {
-        option.disabled = true;
-        option.textContent = `${item.name}`;
-      }
-
       optgroup.appendChild(option);
     });
 
@@ -1599,16 +1616,20 @@ function handleZoomChange() {
     handleTierChange(newTier);
   }
 
-  // Legacy: toggle between heatmap and markers based on zoom
-  // This is now handled by tier changes, but kept for compatibility
-  if (currentZoom <= ZOOM_THRESHOLD && newTier === 'national') {
-    // Only show heatmap at national tier
+  // Only show heatmap at national tier (very zoomed out)
+  // Markers should always be visible at county and city tiers
+  if (currentZoom <= ZOOM_TIER_NATIONAL_MAX) {
+    // National view - show heatmap only
     showHeatmap();
-  } else if (currentZoom > ZOOM_THRESHOLD) {
-    // Show markers at county and city tiers
+  } else {
+    // County or city view - always show markers, remove heatmap
     if (heatLayer) {
       map.removeLayer(heatLayer);
       heatLayer = null;
+    }
+    // Make sure markers are visible
+    if (markers.length === 0 && allLocations.length > 0) {
+      displayAllLocations();
     }
   }
 }
@@ -1875,11 +1896,13 @@ function displayFilteredLocations(locations) {
 
   const currentZoom = map.getZoom();
 
-  if (currentZoom <= ZOOM_THRESHOLD && locations.length > 0) {
-    // Show heatmap when zoomed out
+  // Only show heatmap at national tier (very zoomed out)
+  // Always show markers at county and city tiers
+  if (currentZoom <= ZOOM_TIER_NATIONAL_MAX && locations.length > 0) {
+    // Show heatmap only at national view
     updateHeatmap(locations);
   } else {
-    // Show markers when zoomed in
+    // Show markers at county and city view
     if (heatLayer) {
       map.removeLayer(heatLayer);
       heatLayer = null;

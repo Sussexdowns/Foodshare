@@ -3,7 +3,7 @@
 let itemsData = {};
 
 // Load JSON data from items.json
-fetch('items.json')
+fetch(window.BASE_PATH + 'items.json')
   .then(response => {
     if (!response.ok) throw new Error('Failed to load items.json');
     return response.json();
@@ -67,7 +67,7 @@ function populateItemsDropdown(categoryKey) {
     newItemInput.classList.add('d-none');
     newItemInput.value = '';
   }
-  
+
   // Hide item details
   if (itemDetailsContainer) {
     itemDetailsContainer.style.display = 'none';
@@ -77,16 +77,16 @@ function populateItemsDropdown(categoryKey) {
 // Show item details when an item is selected
 function showItemDetails(itemData) {
   if (!itemDetailsContainer) return;
-  
+
   const imageEl = document.getElementById('item-image');
   const nameEl = document.getElementById('item-name');
   const descEl = document.getElementById('item-desc');
   const linkEl = document.getElementById('item-link');
-  
+
   if (itemData && itemData.link) {
     // Show item details container
     itemDetailsContainer.style.display = 'block';
-    
+
     // Update image
     if (imageEl && itemData.image) {
       imageEl.src = itemData.image;
@@ -95,17 +95,17 @@ function showItemDetails(itemData) {
     } else if (imageEl) {
       imageEl.style.display = 'none';
     }
-    
+
     // Update name
     if (nameEl) {
       nameEl.textContent = itemData.name || '';
     }
-    
+
     // Update description
     if (descEl) {
       descEl.textContent = itemData.desc || '';
     }
-    
+
     // Update link
     if (linkEl && itemData.link) {
       linkEl.href = itemData.link;
@@ -140,7 +140,7 @@ if (categorySelect) {
 if (itemSelect) {
   itemSelect.addEventListener('change', () => {
     const selectedOption = itemSelect.options[itemSelect.selectedIndex];
-    
+
     if (selectedOption && selectedOption.value) {
       const itemData = {
         name: selectedOption.getAttribute('data-name') || '',
@@ -149,26 +149,26 @@ if (itemSelect) {
         desc: selectedOption.getAttribute('data-desc') || ''
       };
       showItemDetails(itemData);
-      
+
       // Auto-fill the location name if it's empty
       const nameInput = document.getElementById('name');
       if (nameInput && !nameInput.value) {
         nameInput.value = itemData.name;
       }
-      
+
       // Auto-fill short description if it's empty
       const shortDescInput = document.getElementById('shortDesc');
       if (shortDescInput && !shortDescInput.value && itemData.desc) {
         // Truncate description for short description
         shortDescInput.value = itemData.desc.length > 100 ? itemData.desc.substring(0, 97) + '...' : itemData.desc;
       }
-      
+
       // Auto-fill link if empty
       const linksInput = document.getElementById('links');
       if (linksInput && !linksInput.value && itemData.link) {
         linksInput.value = itemData.link;
       }
-      
+
       // Auto-fill image if empty
       const imageInput = document.getElementById('image');
       if (imageInput && !imageInput.value && itemData.image) {

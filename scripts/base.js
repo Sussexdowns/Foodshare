@@ -1,4 +1,9 @@
 
+// Base path for GitHub Pages deployment (globally accessible)
+var BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
+// Make it globally accessible
+window.BASE_PATH = BASE_PATH;
+
 // Footer links data
 const footerLinksData = [
   { name: 'Lewes District Council', url: 'https://www.lewes-eastbourne.gov.uk/' },
@@ -58,7 +63,7 @@ function loadFragment(placeholderId, fragmentUrl, callback) {
  */
 function loadHeaderFooter() {
   // Load header
-  loadFragment('header-placeholder', 'header.html', () => {
+  loadFragment('header-placeholder', BASE_PATH + 'header.html', () => {
     // Initialize Bootstrap collapse after header loads
     if (typeof bootstrap !== 'undefined') {
       const navbarToggler = document.querySelector('.navbar-toggler');
@@ -72,7 +77,7 @@ function loadHeaderFooter() {
   });
 
   // Load footer
-  loadFragment('footer-placeholder', 'footer.html', () => {
+  loadFragment('footer-placeholder', BASE_PATH + 'footer.html', () => {
     showFooterLinks();
     applyDarkModeFromStorage();
     attachFooterEventListeners();
@@ -89,7 +94,7 @@ function loadSettingsModal() {
   const settingsModal = document.getElementById('settingsModal');
   if (!settingsModal) return;
 
-  fetch('settings_modal.html')
+  fetch(BASE_PATH + 'settings_modal.html')
     .then(response => {
       if (!response.ok) {
         throw new Error('HTTP error! status: ' + response.status);

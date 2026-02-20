@@ -3,16 +3,13 @@ let categoriesData = [];
 let locationData = [];
 let allItems = [];
 
-// Base path for GitHub Pages deployment
-const BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
-
 // Load categories and items data
 async function loadData() {
   try {
     // Load categories and locations in parallel
     const [categoriesResponse, locationsResponse] = await Promise.all([
-      fetch(BASE_PATH + 'categories.json'),
-      fetch(BASE_PATH + 'locations.json').catch(() => null)
+      fetch(window.BASE_PATH + 'categories.json'),
+      fetch(window.BASE_PATH + 'locations.json').catch(() => null)
     ]);
 
     if (categoriesResponse.ok) {
@@ -24,7 +21,7 @@ async function loadData() {
     }
 
     // Load items from items.json for item mapping
-    const itemsResponse = await fetch(BASE_PATH + 'items.json');
+    const itemsResponse = await fetch(window.BASE_PATH + 'items.json');
     if (itemsResponse.ok) {
       const itemsJson = await itemsResponse.json();
       allItems = itemsJson;
@@ -199,7 +196,7 @@ if (saveSettingsBtn && useJsonAsSourceCheckbox && sheetURLInput) {
 // Register service worker for offline support
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('sw.js').then(function (reg) {
+    navigator.serviceWorker.register(window.BASE_PATH + 'sw.js').then(function (reg) {
       console.log('ServiceWorker registration successful with scope: ', reg.scope);
     }).catch(function (err) {
       console.warn('ServiceWorker registration failed: ', err);

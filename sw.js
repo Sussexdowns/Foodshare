@@ -1,7 +1,8 @@
 // Service Worker — precaches app shell and assets for offline use
-const CACHE_VERSION = 'v2::foodshare';
+const CACHE_VERSION = 'v3::foodshare';
 const BASE_PATH = '/Foodshare/';
 
+// Essential assets to cache - only include files that definitely exist
 const CACHE_ASSETS = [
   BASE_PATH,
   BASE_PATH + 'index.html',
@@ -9,58 +10,40 @@ const CACHE_ASSETS = [
   BASE_PATH + 'credits.html',
   BASE_PATH + 'submit.html',
   BASE_PATH + 'topics.html',
-  BASE_PATH + 'header.html',
-  BASE_PATH + 'footer.html',
-  BASE_PATH + 'footer-details.html',
-  BASE_PATH + 'settings_modal.html',
   // CSS files
   BASE_PATH + 'css/style.css',
   BASE_PATH + 'css/index.css',
   BASE_PATH + 'css/pages.css',
-  BASE_PATH + 'css/submit.css',
-  BASE_PATH + 'css/topics.css',
-  BASE_PATH + 'css/select2-bootstrap.css',
   // JavaScript files
   BASE_PATH + 'scripts/app.js',
   BASE_PATH + 'scripts/base.js',
-  BASE_PATH + 'scripts/form.js',
   BASE_PATH + 'scripts/index.js',
-  BASE_PATH + 'scripts/submit.js',
-  BASE_PATH + 'scripts/topic.js',
-  BASE_PATH + 'scripts/topics.js',
   // JSON data files
   BASE_PATH + 'items.json',
   BASE_PATH + 'locations.json',
   BASE_PATH + 'categories.json',
-  BASE_PATH + 'uk_counties.json',
-  BASE_PATH + 'uk_towns.json',
   // Favicon files
   BASE_PATH + 'favicon/favicon.ico',
   BASE_PATH + 'favicon/favicon.svg',
   BASE_PATH + 'favicon/apple-touch-icon.png',
-  BASE_PATH + 'favicon/web-app-manifest-192x192.png',
-  BASE_PATH + 'favicon/web-app-manifest-512x512.png',
   // App manifest
   BASE_PATH + 'site.webmanifest',
   // Logo assets
   BASE_PATH + 'assets/logo.png',
-  BASE_PATH + 'assets/logo_dark.png',
-  // Fonts
-  BASE_PATH + 'fonts/Sarina-Regular.ttf',
-  BASE_PATH + 'fonts/inter-normal.woff2',
-  BASE_PATH + 'fonts/inter-bold.woff2',
-  BASE_PATH + 'fonts/Raleway/Raleway-VariableFont_wght.ttf',
-  // Font Awesome
-  BASE_PATH + 'fonts/fontawesome-free-6.5.0/css/all.min.css',
-  BASE_PATH + 'fonts/fontawesome-free-6.5.0/webfonts/fa-brands-400.woff2',
-  BASE_PATH + 'fonts/fontawesome-free-6.5.0/webfonts/fa-regular-400.woff2',
-  BASE_PATH + 'fonts/fontawesome-free-6.5.0/webfonts/fa-solid-900.woff2'
+  BASE_PATH + 'assets/logo_dark.png'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_VERSION).then(cache => {
-      return cache.addAll(CACHE_ASSETS);
+      // Cache files individually to handle failures gracefully
+      return Promise.all(
+        CACHE_ASSETS.map(url => {
+          return cache.add(url).catch(err => {
+            console.warn('Failed to cache:', url, err);
+          });
+        })
+      );
     }).then(() => self.skipWaiting())
   );
 });
