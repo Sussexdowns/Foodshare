@@ -2,31 +2,31 @@
   "name": "Lewes Foodshare",
   "short_name": "Foodshare",
   "description": "Find and share free food in Lewes and surrounding areas",
-  "start_url": "/index.html",
-  "scope": "/",
+  "start_url": "/Foodshare/index.html",
+  "scope": "/Foodshare/",
   "display": "standalone",
   "orientation": "any",
   "icons": [
     {
-      "src": "favicon/web-app-manifest-192x192.png",
+      "src": "/Foodshare/favicon/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "favicon/web-app-manifest-512x512.png",
+      "src": "/Foodshare/favicon/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "favicon/web-app-manifest-192x192.png",
+      "src": "/Foodshare/favicon/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "favicon/web-app-manifest-512x512.png",
+      "src": "/Foodshare/favicon/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -45,10 +45,10 @@
       "name": "View Map",
       "short_name": "Map",
       "description": "View the food sharing map",
-      "url": "/index.html",
+      "url": "/Foodshare/index.html",
       "icons": [
         {
-          "src": "favicon/favicon-96x96.png",
+          "src": "/Foodshare/favicon/favicon-96x96.png",
           "sizes": "96x96"
         }
       ]
@@ -57,10 +57,10 @@
       "name": "Submit Location",
       "short_name": "Submit",
       "description": "Submit a new food location",
-      "url": "/submit.html",
+      "url": "/Foodshare/submit.html",
       "icons": [
         {
-          "src": "favicon/favicon-96x96.png",
+          "src": "/Foodshare/favicon/favicon-96x96.png",
           "sizes": "96x96"
         }
       ]

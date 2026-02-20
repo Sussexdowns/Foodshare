@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Submit Content</title>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- CSS & Icons -->  
+  <!-- CSS & Icons -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/pages.css">
   <link rel="stylesheet" href="css/index.css">
@@ -19,20 +20,25 @@
   <!-- Leaflet / font Awesome CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.css" />
 
   <!-- Styles -->
-  <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-       
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
   <!-- Favicons & Manifest -->
   <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
   <link rel="shortcut icon" href="favicon/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="Foodshare" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#2e7d32" />
 </head>
 
 <body class="p-4 submit-page">
@@ -41,308 +47,327 @@
   <div id="header-placeholder" class="fixed-top"></div>
 
   <!-- Begin page content -->
-<main class="flex-shrink-0">
+  <main class="flex-shrink-0">
 
-<!-- Page Heading -->
-<div class="container my-4 text-center">
-   <h1 class="d-flex align-items-center justify-content-center">
-    <img src="assets/logo.png" alt="Logo" class="logo" />
-    Submit Content
-  </h1>
-</div>
+    <!-- Page Heading -->
+    <div class="container my-4 text-center">
+      <h1 class="d-flex align-items-center justify-content-center">
+        <img src="assets/logo.png" alt="Logo" class="logo" />
+        Submit Content
+      </h1>
+    </div>
 
-  <form name="submitForm" id="submitForm" class="container mb-4">
+    <form name="submitForm" id="submitForm" class="container mb-4">
 
-    <input type="hidden" id="lat" name="lat">
-    <input type="hidden" id="lng" name="lng">
+      <input type="hidden" id="lat" name="lat">
+      <input type="hidden" id="lng" name="lng">
 
-    <div class="form-section">
-      <h3><i class="fas fa-tag me-2"></i>Basic Information</h3>
-      
-      <div class="mb-3">
-        <label for="category" class="form-label">Category</label>
-        <select id="category" class="form-select">
-          <option value="">Loading categories...</option>
-        </select>
-      </div>
-      
-      <div class="mb-3">
-        <label for="item" class="form-label">Item</label>
-        <select id="item" class="form-select">
-          <option value="">-- Select a category first --</option>
-        </select>
-        <input type="text" id="new-item" class="form-control mt-2 d-none" placeholder="Enter new item name" />
-      </div>
-      
-      <!-- Item Details Display -->
-      <div id="item-details" style="display: none;">
-        <img id="item-image" src="" alt="Item Image" style="display: none;">
-        <h5 id="item-name"></h5>
-        <p id="item-desc"></p>
-        <a id="item-link" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="display: none;">
-          <i class="fas fa-external-link-alt me-1"></i> Learn More
-        </a>
-      </div>
-      
-      <!-- Custom Month Picker (same as index.html) -->
-      <div class="mb-3 mt-3">
-        <label for="month-picker" class="form-label">Month</label>
-        <div class="month-picker-container">
-          <input type="text" id="month-picker-input" class="month-picker-input" placeholder="Select months..." readonly>
-          <div id="month-picker-dropdown" class="month-picker-dropdown">
-            <div class="month-picker-grid">
-              <input type="checkbox" id="month-0" class="month-checkbox" value="Jan">
-              <label for="month-0" class="month-label">Jan</label>
-              
-              <input type="checkbox" id="month-1" class="month-checkbox" value="Feb">
-              <label for="month-1" class="month-label">Feb</label>
-              
-              <input type="checkbox" id="month-2" class="month-checkbox" value="Mar">
-              <label for="month-2" class="month-label">Mar</label>
-              
-              <input type="checkbox" id="month-3" class="month-checkbox" value="Apr">
-              <label for="month-3" class="month-label">Apr</label>
-              
-              <input type="checkbox" id="month-4" class="month-checkbox" value="May">
-              <label for="month-4" class="month-label">May</label>
-              
-              <input type="checkbox" id="month-5" class="month-checkbox" value="Jun">
-              <label for="month-5" class="month-label">Jun</label>
-              
-              <input type="checkbox" id="month-6" class="month-checkbox" value="Jul">
-              <label for="month-6" class="month-label">Jul</label>
-              
-              <input type="checkbox" id="month-7" class="month-checkbox" value="Aug">
-              <label for="month-7" class="month-label">Aug</label>
-              
-              <input type="checkbox" id="month-8" class="month-checkbox" value="Sep">
-              <label for="month-8" class="month-label">Sep</label>
-              
-              <input type="checkbox" id="month-9" class="month-checkbox" value="Oct">
-              <label for="month-9" class="month-label">Oct</label>
-              
-              <input type="checkbox" id="month-10" class="month-checkbox" value="Nov">
-              <label for="month-10" class="month-label">Nov</label>
-              
-              <input type="checkbox" id="month-11" class="month-checkbox" value="Dec">
-              <label for="month-11" class="month-label">Dec</label>
+      <div class="form-section">
+        <h3><i class="fas fa-tag me-2"></i>Basic Information</h3>
+
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select id="category" class="form-select">
+            <option value="">Loading categories...</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="item" class="form-label">Item</label>
+          <select id="item" class="form-select">
+            <option value="">-- Select a category first --</option>
+          </select>
+          <input type="text" id="new-item" class="form-control mt-2 d-none" placeholder="Enter new item name" />
+        </div>
+
+        <!-- Item Details Display -->
+        <div id="item-details" style="display: none;">
+          <img id="item-image" src="" alt="Item Image" style="display: none;">
+          <h5 id="item-name"></h5>
+          <p id="item-desc"></p>
+          <a id="item-link" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="display: none;">
+            <i class="fas fa-external-link-alt me-1"></i> Learn More
+          </a>
+        </div>
+
+        <!-- Custom Month Picker (same as index.html) -->
+        <div class="mb-3 mt-3">
+          <label for="month-picker" class="form-label">Month</label>
+          <div class="month-picker-container">
+            <input type="text" id="month-picker-input" class="month-picker-input" placeholder="Select months..."
+              readonly>
+            <div id="month-picker-dropdown" class="month-picker-dropdown">
+              <div class="month-picker-grid">
+                <input type="checkbox" id="month-0" class="month-checkbox" value="Jan">
+                <label for="month-0" class="month-label">Jan</label>
+
+                <input type="checkbox" id="month-1" class="month-checkbox" value="Feb">
+                <label for="month-1" class="month-label">Feb</label>
+
+                <input type="checkbox" id="month-2" class="month-checkbox" value="Mar">
+                <label for="month-2" class="month-label">Mar</label>
+
+                <input type="checkbox" id="month-3" class="month-checkbox" value="Apr">
+                <label for="month-3" class="month-label">Apr</label>
+
+                <input type="checkbox" id="month-4" class="month-checkbox" value="May">
+                <label for="month-4" class="month-label">May</label>
+
+                <input type="checkbox" id="month-5" class="month-checkbox" value="Jun">
+                <label for="month-5" class="month-label">Jun</label>
+
+                <input type="checkbox" id="month-6" class="month-checkbox" value="Jul">
+                <label for="month-6" class="month-label">Jul</label>
+
+                <input type="checkbox" id="month-7" class="month-checkbox" value="Aug">
+                <label for="month-7" class="month-label">Aug</label>
+
+                <input type="checkbox" id="month-8" class="month-checkbox" value="Sep">
+                <label for="month-8" class="month-label">Sep</label>
+
+                <input type="checkbox" id="month-9" class="month-checkbox" value="Oct">
+                <label for="month-9" class="month-label">Oct</label>
+
+                <input type="checkbox" id="month-10" class="month-checkbox" value="Nov">
+                <label for="month-10" class="month-label">Nov</label>
+
+                <input type="checkbox" id="month-11" class="month-checkbox" value="Dec">
+                <label for="month-11" class="month-label">Dec</label>
+              </div>
             </div>
+            <div id="selected-months-display" class="selected-months-display"></div>
           </div>
-          <div id="selected-months-display" class="selected-months-display"></div>
         </div>
       </div>
+
+      <div class="form-section">
+        <h3><i class="fas fa-info-circle me-2"></i>Description</h3>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Location Name</label>
+          <input type="text" id="name" class="form-control" placeholder="e.g., Apple tree near the park">
+        </div>
+        <div class="mb-3">
+          <label for="shortDesc" class="form-label">Short Description</label>
+          <input type="text" id="shortDesc" class="form-control" placeholder="Brief description (shown on map)">
+        </div>
+        <div class="mb-3">
+          <label for="desc" class="form-label">Full Description</label>
+          <textarea id="desc" class="form-control" rows="4"
+            placeholder="Detailed information about this location..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3><i class="fas fa-link me-2"></i>Additional Details</h3>
+
+        <div class="mb-3">
+          <label for="links" class="form-label">Links (optional)</label>
+          <input type="text" id="links" class="form-control" placeholder="https://example.com">
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Image URL (optional)</label>
+          <input type="url" id="image" class="form-control" placeholder="https://example.com/image.jpg">
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-paper-plane me-1"></i> Submit
+        </button>
+        <button type="reset" class="btn btn-secondary">
+          <i class="fas fa-undo me-1"></i> Reset
+        </button>
+      </div>
+    </form>
+
+    <div class="container mb-4">
+      <div class="form-section">
+        <h3><i class="fas fa-map-marker-alt me-2"></i>Location on Map</h3>
+
+        <p class="text-muted mb-3">
+          <i class="fas fa-info-circle me-1"></i> Click on the map to set the pin location. You can also drag the pin to
+          adjust.
+        </p>
+
+        <div id="map"></div>
+      </div>
+
+      <div class="d-flex align-items-center flex-wrap gap-3 mt-3">
+        <div>
+          <strong><i class="fas fa-crosshairs me-1"></i> Selected Coordinates:</strong>
+          <span id="coord-display" class="badge bg-secondary">None</span>
+        </div>
+        <button type="button" class="btn btn-outline-primary btn-sm" id="preview-location-btn">
+          <i class="fas fa-search me-1"></i> Preview Pin Location
+        </button>
+      </div>
     </div>
 
-    <div class="form-section">
-      <h3><i class="fas fa-info-circle me-2"></i>Description</h3>
-      
-      <div class="mb-3">
-        <label for="name" class="form-label">Location Name</label>
-        <input type="text" id="name" class="form-control" placeholder="e.g., Apple tree near the park">
-      </div>
-      <div class="mb-3">
-        <label for="shortDesc" class="form-label">Short Description</label>
-        <input type="text" id="shortDesc" class="form-control" placeholder="Brief description (shown on map)">
-      </div>
-      <div class="mb-3">
-        <label for="desc" class="form-label">Full Description</label>
-        <textarea id="desc" class="form-control" rows="4" placeholder="Detailed information about this location..."></textarea>
-      </div>
-    </div>
+  </main>
 
-    <div class="form-section">
-      <h3><i class="fas fa-link me-2"></i>Additional Details</h3>
-      
-      <div class="mb-3">
-        <label for="links" class="form-label">Links (optional)</label>
-        <input type="text" id="links" class="form-control" placeholder="https://example.com">
-      </div>
-      <div class="mb-3">
-        <label for="image" class="form-label">Image URL (optional)</label>
-        <input type="url" id="image" class="form-control" placeholder="https://example.com/image.jpg">
-      </div>
-    </div>
-
-    <div class="d-flex gap-2">
-      <button type="submit" class="btn btn-primary">
-        <i class="fas fa-paper-plane me-1"></i> Submit
-      </button>
-      <button type="reset" class="btn btn-secondary">
-        <i class="fas fa-undo me-1"></i> Reset
-      </button>
-    </div>
-  </form>
-
-  <div class="container mb-4">
-    <div class="form-section">
-      <h3><i class="fas fa-map-marker-alt me-2"></i>Location on Map</h3>
-      
-      <p class="text-muted mb-3">
-        <i class="fas fa-info-circle me-1"></i> Click on the map to set the pin location. You can also drag the pin to adjust.
-      </p>
-      
-      <div id="map"></div>
-    </div>
-
-    <div class="d-flex align-items-center flex-wrap gap-3 mt-3">
-      <div>
-        <strong><i class="fas fa-crosshairs me-1"></i> Selected Coordinates:</strong>
-        <span id="coord-display" class="badge bg-secondary">None</span>
-      </div>
-      <button type="button" class="btn btn-outline-primary btn-sm" id="preview-location-btn">
-        <i class="fas fa-search me-1"></i> Preview Pin Location
-      </button>
-    </div>
-  </div>
-
-</main>
-
-<!-- Settings Modal - loaded dynamically -->
-<div id="settingsModal" class="modal hidden">
+  <!-- Settings Modal - loaded dynamically -->
+  <div id="settingsModal" class="modal hidden">
     <!-- Content loaded from settings_modal.html -->
 
-</div>
+  </div>
 
-<!-- Footer placeholder - loaded via JavaScript -->
-<div id="footer-placeholder" class="fixed-bottom"></div>
+  <!-- Footer placeholder - loaded via JavaScript -->
+  <div id="footer-placeholder" class="fixed-bottom"></div>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
-<script src="scripts/form.js"></script>
-<script src="scripts/base.js"></script>
-<script src="scripts/submit.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
+  <script src="scripts/form.js"></script>
+  <script src="scripts/base.js"></script>
+  <script src="scripts/submit.js"></script>
 
-<script>
-  // Initialize map with fullscreen control
-  let map = L.map('map', {
-    fullscreenControl: true,
-    fullscreenControlOptions: {
-      position: 'topleft'
+  <!-- Register Service Worker for PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/Foodshare/sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registered:', registration.scope);
+          })
+          .catch(error => {
+            console.log('ServiceWorker registration failed:', error);
+          });
+      });
     }
-  }).setView([50.873, 0.009], 14);
-  
-  let marker = null;
-  let userLocationMarker = null;
+  </script>
 
-  // Check dark mode for tile layer
-  const isDarkMode = document.body.classList.contains('dark-mode');
-  const darkTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-  const lightTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  const tileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
-
-  L.tileLayer(tileUrl, {
-    maxZoom: 19,
-    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
-  }).addTo(map);
-
-  // Listen for dark mode changes to switch tile layer
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.attributeName === 'class') {
-        updateMapTheme();
+  <script>
+    // Initialize map with fullscreen control
+    let map = L.map('map', {
+      fullscreenControl: true,
+      fullscreenControlOptions: {
+        position: 'topleft'
       }
-    });
-  });
-  observer.observe(document.body, { attributes: true });
+    }).setView([50.873, 0.009], 14);
 
-  function updateMapTheme() {
+    let marker = null;
+    let userLocationMarker = null;
+
+    // Check dark mode for tile layer
     const isDarkMode = document.body.classList.contains('dark-mode');
-    const newTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
-    
-    // Remove existing tile layer and add new one
-    map.eachLayer((layer) => {
-      if (layer instanceof L.TileLayer) {
-        map.removeLayer(layer);
-        L.tileLayer(newTileUrl, {
-          maxZoom: 19,
-          attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
-        }).addTo(map);
-      }
-    });
-  }
+    const darkTileUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+    const lightTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const tileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
 
-  map.on('click', function(e) {
-    const { lat, lng } = e.latlng;
-    updateMarker(lat, lng);
-  });
-
-  function updateMarker(lat, lng) {
-    if (marker) map.removeLayer(marker);
-
-    marker = L.marker([lat, lng], {
-      draggable: true,
-      icon: L.AwesomeMarkers.icon({
-        icon: 'map-pin',
-        markerColor: 'red',
-        prefix: 'fa'
-      })
+    L.tileLayer(tileUrl, {
+      maxZoom: 19,
+      attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    // Set initial coordinate values
-    updateLatLngInputs(lat, lng);
-
-    // Update coordinates when the marker is dragged
-    marker.on('dragend', function (e) {
-      const position = marker.getLatLng();
-      updateLatLngInputs(position.lat, position.lng);
-    });
-  }
-
-  function updateLatLngInputs(lat, lng) {
-    document.getElementById('lat').value = lat.toFixed(6);
-    document.getElementById('lng').value = lng.toFixed(6);
-    document.getElementById('coord-display').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-    document.getElementById('coord-display').classList.remove('bg-secondary');
-    document.getElementById('coord-display').classList.add('bg-success');
-  }
-
-  // Preview button functionality
-  document.getElementById('preview-location-btn').addEventListener('click', () => {
-    const lat = parseFloat(document.getElementById('lat').value);
-    const lng = parseFloat(document.getElementById('lng').value);
-
-    if (!isNaN(lat) && !isNaN(lng)) {
-      map.setView([lat, lng], 16);
-      updateMarker(lat, lng);
-    } else {
-      alert("Please select a location by clicking on the map first.");
-    }
-  });
-
-  // Try to center map on user's current location
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        map.setView([latitude, longitude], 16);
-
-        // Remove existing user location marker if any
-        if (userLocationMarker) {
-          map.removeLayer(userLocationMarker);
+    // Listen for dark mode changes to switch tile layer
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          updateMapTheme();
         }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
 
-        // Add "You are here" marker
-        userLocationMarker = L.marker([latitude, longitude], {
-          icon: L.AwesomeMarkers.icon({
-            icon: 'user',
-            markerColor: 'green',
-            prefix: 'fa'
-          })
-        }).addTo(map);
-        
-        userLocationMarker.bindPopup("<div style='text-align: center;'><i class='fas fa-user me-1'></i><br><strong>You are here</strong></div>").openPopup();
-      },
-      (error) => {
-        console.warn("Geolocation failed:", error.message);
+    function updateMapTheme() {
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      const newTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
+
+      // Remove existing tile layer and add new one
+      map.eachLayer((layer) => {
+        if (layer instanceof L.TileLayer) {
+          map.removeLayer(layer);
+          L.tileLayer(newTileUrl, {
+            maxZoom: 19,
+            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
+          }).addTo(map);
+        }
+      });
+    }
+
+    map.on('click', function (e) {
+      const { lat, lng } = e.latlng;
+      updateMarker(lat, lng);
+    });
+
+    function updateMarker(lat, lng) {
+      if (marker) map.removeLayer(marker);
+
+      marker = L.marker([lat, lng], {
+        draggable: true,
+        icon: L.AwesomeMarkers.icon({
+          icon: 'map-pin',
+          markerColor: 'red',
+          prefix: 'fa'
+        })
+      }).addTo(map);
+
+      // Set initial coordinate values
+      updateLatLngInputs(lat, lng);
+
+      // Update coordinates when the marker is dragged
+      marker.on('dragend', function (e) {
+        const position = marker.getLatLng();
+        updateLatLngInputs(position.lat, position.lng);
+      });
+    }
+
+    function updateLatLngInputs(lat, lng) {
+      document.getElementById('lat').value = lat.toFixed(6);
+      document.getElementById('lng').value = lng.toFixed(6);
+      document.getElementById('coord-display').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+      document.getElementById('coord-display').classList.remove('bg-secondary');
+      document.getElementById('coord-display').classList.add('bg-success');
+    }
+
+    // Preview button functionality
+    document.getElementById('preview-location-btn').addEventListener('click', () => {
+      const lat = parseFloat(document.getElementById('lat').value);
+      const lng = parseFloat(document.getElementById('lng').value);
+
+      if (!isNaN(lat) && !isNaN(lng)) {
+        map.setView([lat, lng], 16);
+        updateMarker(lat, lng);
+      } else {
+        alert("Please select a location by clicking on the map first.");
       }
-    );
-  } else {
-    console.warn("Geolocation not supported by this browser.");
-  }
-</script>
+    });
+
+    // Try to center map on user's current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          map.setView([latitude, longitude], 16);
+
+          // Remove existing user location marker if any
+          if (userLocationMarker) {
+            map.removeLayer(userLocationMarker);
+          }
+
+          // Add "You are here" marker
+          userLocationMarker = L.marker([latitude, longitude], {
+            icon: L.AwesomeMarkers.icon({
+              icon: 'user',
+              markerColor: 'green',
+              prefix: 'fa'
+            })
+          }).addTo(map);
+
+          userLocationMarker.bindPopup("<div style='text-align: center;'><i class='fas fa-user me-1'></i><br><strong>You are here</strong></div>").openPopup();
+        },
+        (error) => {
+          console.warn("Geolocation failed:", error.message);
+        }
+      );
+    } else {
+      console.warn("Geolocation not supported by this browser.");
+    }
+  </script>
 
 </body>
+
 </html>
