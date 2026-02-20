@@ -3,46 +3,49 @@ let categoriesData = [];
 let locationData = [];
 let allItems = [];
 
+// Base path for GitHub Pages deployment
+const BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
+
 // Load categories and items data
 async function loadData() {
   try {
     // Load categories and locations in parallel
     const [categoriesResponse, locationsResponse] = await Promise.all([
-      fetch('categories.json'),
-      fetch('locations.json').catch(() => null)
+      fetch(BASE_PATH + 'categories.json'),
+      fetch(BASE_PATH + 'locations.json').catch(() => null)
     ]);
-    
+
     if (categoriesResponse.ok) {
       categoriesData = await categoriesResponse.json();
     }
-    
+
     if (locationsResponse && locationsResponse.ok) {
       locationData = await locationsResponse.json();
     }
-    
+
     // Load items from items.json for item mapping
-    const itemsResponse = await fetch('items.json');
+    const itemsResponse = await fetch(BASE_PATH + 'items.json');
     if (itemsResponse.ok) {
       const itemsJson = await itemsResponse.json();
       allItems = itemsJson;
     }
-    
+
   } catch (error) {
     console.error('Error loading data:', error);
   }
 }
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   loadData();
-  
+
   const categorySelect = document.getElementById('category');
   const itemSelect = document.getElementById('item');
-  
+
   // Both dropdowns are simple native selects - no Select2 needed
   if (categorySelect) {
     // Category change listener - populate items and filter
-    categorySelect.addEventListener('change', function() {
+    categorySelect.addEventListener('change', function () {
       if (typeof populateItemsForCategory === 'function') {
         populateItemsForCategory(this.value);
       }
@@ -51,9 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-  
+
   if (itemSelect) {
-    itemSelect.addEventListener('change', function() {
+    itemSelect.addEventListener('change', function () {
       if (typeof filterLocations === 'function') {
         filterLocations();
       }
@@ -91,7 +94,7 @@ function updateSelectedMonths() {
   selectedMonths = Array.from(monthCheckboxes)
     .filter(cb => cb.checked)
     .map(cb => cb.value);
-  
+
   if (selectedMonths.length === 0) {
     monthPickerInput.placeholder = 'Select months...';
     selectedMonthsDisplay.textContent = '';
@@ -102,7 +105,7 @@ function updateSelectedMonths() {
     monthPickerInput.value = `${selectedMonths.length} months selected`;
     selectedMonthsDisplay.textContent = `${selectedMonths.length} months selected`;
   }
-  
+
   // Trigger filter update - call the global function from app.js
   if (typeof window.updateMonthFilter === 'function') {
     window.updateMonthFilter(selectedMonths);
@@ -114,7 +117,7 @@ const footer = safeGet('footer-details');
 const closefooter = safeGet('footer-close');
 
 if (closefooter && footer) {
-  closefooter.addEventListener('click', function() {
+  closefooter.addEventListener('click', function () {
     footer.classList.remove('visible');
   });
 }
@@ -145,7 +148,7 @@ if (modalSheetURL && sheetURLInput) {
 
 // Open settings modal
 if (settingsBtn && settingsModal) {
-  settingsBtn.addEventListener('click', function() {
+  settingsBtn.addEventListener('click', function () {
     settingsModal.classList.remove('hidden');
     settingsModal.style.display = 'flex';
   });
@@ -153,14 +156,14 @@ if (settingsBtn && settingsModal) {
 
 // Close settings modal
 if (closeSettingsBtn && settingsModal) {
-  closeSettingsBtn.addEventListener('click', function() {
+  closeSettingsBtn.addEventListener('click', function () {
     settingsModal.classList.add('hidden');
     settingsModal.style.display = 'none';
   });
 }
 
 if (cancelSettingsBtn && settingsModal) {
-  cancelSettingsBtn.addEventListener('click', function() {
+  cancelSettingsBtn.addEventListener('click', function () {
     settingsModal.classList.add('hidden');
     settingsModal.style.display = 'none';
   });
@@ -168,7 +171,7 @@ if (cancelSettingsBtn && settingsModal) {
 
 // Close modal when clicking outside
 if (settingsModal) {
-  settingsModal.addEventListener('click', function(e) {
+  settingsModal.addEventListener('click', function (e) {
     if (e.target === settingsModal) {
       settingsModal.classList.add('hidden');
       settingsModal.style.display = 'none';
@@ -178,13 +181,13 @@ if (settingsModal) {
 
 // Save settings
 if (saveSettingsBtn && useJsonAsSourceCheckbox && sheetURLInput) {
-  saveSettingsBtn.addEventListener('click', function() {
+  saveSettingsBtn.addEventListener('click', function () {
     localStorage.setItem('useJsonAsSource', useJsonAsSourceCheckbox.checked);
     localStorage.setItem('sheetURL', sheetURLInput.value);
-    
+
     settingsModal.classList.add('hidden');
     settingsModal.style.display = 'none';
-    
+
     // Reload page to apply new settings
     addStatusMessage('Settings saved. Reloading to apply changes...', 'info');
     setTimeout(() => {
@@ -195,10 +198,10 @@ if (saveSettingsBtn && useJsonAsSourceCheckbox && sheetURLInput) {
 
 // Register service worker for offline support
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js').then(function(reg) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
       console.log('ServiceWorker registration successful with scope: ', reg.scope);
-    }).catch(function(err) {
+    }).catch(function (err) {
       console.warn('ServiceWorker registration failed: ', err);
     });
   });
