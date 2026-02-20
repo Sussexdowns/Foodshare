@@ -82,6 +82,8 @@ Foodshare is built for the community, by the community. We recognise that those 
 
 Unity is being used to transform our 2D web demo into a high-performance, cross-platform mobile application:
 
+
+- **Demo:** [https://github.com/Sussexdowns/Foodshare_Unity](https://github.com/Sussexdowns/Foodshare_Unity)
 - **Unity UI Toolkit** for responsive interface
 - **Addressables system** for offline data management
 - **3D spatial view** for easier identification of trees/bushes in complex urban parks
