@@ -206,14 +206,14 @@ function renderTopics(filteredData = allTopics) {
     col.className = 'col-md-4 col-lg-3';
     
     // Use image from items.json or fallback
-    const imageUrl = topic.Image || 'https://placehold.co/300x200/e8f5e9/1b5e20?text=' + encodeURIComponent(topic.Name);
+    const imageUrl = topic.Image || 'https://placehold.co/300x200/1b5e20/e8f5e9?text=' + encodeURIComponent(topic.Name);
     
     col.innerHTML = `
       <div class="topic-card ${hasLocation ? 'has-location' : 'no-location'}" 
            data-name="${(topic.Name || '').toLowerCase()}" 
            data-category="${(topic.category || '').toLowerCase()}"
            data-has-location="${hasLocation}">
-        <img src="${imageUrl}" alt="${topic.Name}" class="topic-img" onerror="this.src='https://placehold.co/300x200/e8f5e9/1b5e20?text=${encodeURIComponent(topic.Name || 'Topic')}'">
+        <img src="${imageUrl}" alt="${topic.Name}" class="topic-img" onerror="this.src='https://placehold.co/300x200/1b5e20/e8f5e9?text=${encodeURIComponent(topic.Name || 'Topic')}'">
         <div class="topic-body">
           <h4 class="topic-title">${topic.Name || 'Unknown'}</h4>
           <p class="topic-desc">${topic.Desc || 'No description available.'}</p>
