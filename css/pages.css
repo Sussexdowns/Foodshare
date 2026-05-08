@@ -30,6 +30,11 @@
    FORM SECTIONS - Submit page specific
    -------------------------------------------------------------------------- */
 
+body.dark-mode .form-section {
+  background: #252540;
+  border-color: #3A3A5A;
+}
+
 .submit-page .form-section {
   background: #fff;
   border-radius: 16px;
@@ -54,7 +59,7 @@ body.dark-mode .submit-page .form-section {
 
 .submit-page .form-section .form-label {
   font-weight: 500;
-  color: var(--cream-text-primary);
+  color: var(--cream-text);
 }
 
 body.dark-mode .submit-page .form-section h3 {

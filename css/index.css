@@ -441,6 +441,18 @@ footer.bg-light.fixed-bottom {
   background-color: var(--cream-bg) !important;
 }
 
+/* Dark mode override for form-select */
+body.dark-mode .form-select {
+  background-color: #252540 !important;
+  color: #E8E8E8 !important;
+}
+
+/* Dark mode override for form-select */
+body.dark-mode .form-select {
+  background-color: #252540 !important;
+  color: #E8E8E8 !important;
+}
+
 .footer-left {
   flex: 1;
 }
