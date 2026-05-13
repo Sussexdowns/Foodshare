@@ -2202,10 +2202,14 @@ function getCategoryColor(category) {
  * Check if user is signed in with Google (non-anonymous)
  */
 function isUserAuthenticated() {
-  return typeof firebase !== 'undefined'
-    && firebase.auth
-    && firebase.auth().currentUser
-    && firebase.auth().currentUser.providerData.some(p => p.providerId === 'google.com');
+  try {
+    return typeof firebase !== 'undefined'
+      && firebase.auth
+      && firebase.auth().currentUser
+      && firebase.auth().currentUser.providerData.some(p => p.providerId === 'google.com');
+  } catch (e) {
+    return false;
+  }
 }
 
 /**
@@ -2213,8 +2217,8 @@ function isUserAuthenticated() {
  * Returns a promise that resolves to true if sign-in successful
  */
 async function signInWithGoogle() {
-  if (typeof firebase === 'undefined' || typeof firebase.auth === 'undefined') {
-    console.error('Firebase Auth not available');
+  if (typeof firebase === 'undefined' || typeof firebase.auth === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
+    console.error('Firebase Auth not available or not initialized');
     addStatusMessage('Firebase not loaded. Please refresh.', 'error');
     return false;
   }
@@ -2272,24 +2276,24 @@ async function signInWithGoogle() {
 }
 
 function handleFeedbackClick(action, id, container) {
-  // Require Google authentication
-  if (!isUserAuthenticated()) {
-    addStatusMessage('Please sign in with Google to give feedback.', 'warning');
-    signInWithGoogle();
-    return;
-  }
+   // If action is 'report', open the modal first (auth checked on submit)
+   if (action === 'report') {
+     openReportModal(id, container);
+     return;
+   }
 
-  const key = `${id}-${action}`;
-  if (sessionStorage.getItem(key)) {
-    addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
-    return;
-  }
+   // Require Google authentication for other actions
+   if (!isUserAuthenticated()) {
+     addStatusMessage('Please sign in with Google to give feedback.', 'warning');
+     signInWithGoogle();
+     return;
+   }
 
-  // If action is 'report', open the modal instead of immediate submit
-  if (action === 'report') {
-    openReportModal(id, container);
-    return;
-  }
+   const key = `${id}-${action}`;
+   if (sessionStorage.getItem(key)) {
+     addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
+     return;
+   }
 
   // Disable button IMMEDIATELY when clicked to prevent double-clicking
   const btn = container.querySelector(`.${action}-btn`);
@@ -2310,17 +2314,6 @@ function handleFeedbackClick(action, id, container) {
  * Open the report modal for a specific location
  */
 function openReportModal(sourceId, container) {
-   // Ensure user is authenticated
-   if (!isUserAuthenticated()) {
-     addStatusMessage('Please sign in with Google to report a location.', 'warning');
-     signInWithGoogle().then(signedIn => {
-       if (signedIn) {
-         openReportModal(sourceId, container);
-       }
-     });
-     return;
-   }
-
    const modalEl = document.getElementById('reportModal');
    if (!modalEl) return;
 
@@ -2331,18 +2324,43 @@ function openReportModal(sourceId, container) {
    const reasonSelect = document.getElementById('report-reason');
    const detailsTextarea = document.getElementById('report-details');
    const alertDiv = document.getElementById('report-alert');
+   const signinBtn = document.getElementById('report-signin');
+   const submitBtn = document.getElementById('report-submit');
 
    reasonSelect.value = '';
    reasonSelect.classList.remove('is-invalid');
    detailsTextarea.value = '';
    alertDiv.classList.add('d-none');
+   alertDiv.className = 'alert alert-info d-none';
 
    // Store container reference for updating after submit
    modalEl.dataset.containerId = container ? 'popup' : 'footer';
 
+   // Check auth state and show/hide sign-in button
+   if (isUserAuthenticated()) {
+     signinBtn.style.display = 'none';
+     submitBtn.style.display = 'inline-block';
+   } else {
+     signinBtn.style.display = 'inline-block';
+     submitBtn.style.display = 'none';
+   }
+
    // Show modal using Bootstrap 5 API
    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
    modal.show();
+}
+
+/**
+ * Handle sign-in from report modal
+ */
+async function handleReportSignin() {
+   const success = await signInWithGoogle();
+   if (success) {
+     const signinBtn = document.getElementById('report-signin');
+     const submitBtn = document.getElementById('report-submit');
+     signinBtn.style.display = 'none';
+     submitBtn.style.display = 'inline-block';
+   }
 }
 
 
@@ -2359,120 +2377,121 @@ function submitReport() {
    const alertDiv = document.getElementById('report-alert');
    const reasonSelect = document.getElementById('report-reason');
 
-   // Reset alert
-   alertDiv.classList.add('d-none');
-   reasonSelect.classList.remove('is-invalid');
+// Reset alert
+    alertDiv.classList.add('d-none');
+    reasonSelect.classList.remove('is-invalid');
 
-   // Validation
-   if (!reason) {
-     reasonSelect.classList.add('is-invalid');
-     alertDiv.classList.remove('d-none');
-     alertDiv.className = 'alert alert-danger';
-     alertDiv.innerHTML = '<strong>Please select a reason for the report.</strong>';
-     return;
-   }
+    // Validation
+    if (!reason) {
+      reasonSelect.classList.add('is-invalid');
+      alertDiv.classList.remove('d-none');
+      alertDiv.className = 'alert alert-danger';
+      alertDiv.innerHTML = '<strong>Please select a reason for the report.</strong>';
+      return;
+    }
 
-   if (!sourceId) {
-     alertDiv.classList.remove('d-none');
-     alertDiv.className = 'alert alert-danger';
-     alertDiv.innerHTML = '<strong>Error:</strong> Source ID missing. Please try again.';
-     return;
-   }
+    if (!sourceId) {
+      alertDiv.classList.remove('d-none');
+      alertDiv.className = 'alert alert-danger';
+      alertDiv.innerHTML = '<strong>Error:</strong> Source ID missing. Please try again.';
+      return;
+    }
 
-   const user = firebase.auth().currentUser;
-   if (!user) {
-     alertDiv.classList.remove('d-none');
-     alertDiv.className = 'alert alert-danger';
-     alertDiv.innerHTML = '<strong>Error:</strong> You must be signed in to submit a report.';
-     return;
-   }
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      alertDiv.classList.remove('d-none');
+      alertDiv.className = 'alert alert-danger';
+      alertDiv.innerHTML = '<strong>Error:</strong> You must be signed in to submit a report.';
+      return;
+    }
 
-   const reportData = {
-     sourceId: sourceId,
-     reason: reason,
-     details: details || '',
-     userId: user.uid,
-     userEmail: user.email || '',
-     name: reason,
-     status: 'pending',
-     adminNote: '',
-     createdAt: firebase.firestore.FieldValue.serverTimestamp()
-   };
+    const reportData = {
+      sourceId: sourceId,
+      reason: reason,
+      details: details || '',
+      userId: user.uid,
+      userEmail: user.email || '',
+      name: reason,
+      status: 'pending',
+      adminNote: '',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
 
-   const submitBtn = document.getElementById('report-submit');
-   if (submitBtn) {
-     submitBtn.disabled = true;
-     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
-   }
+    const submitBtn = document.getElementById('report-submit');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
+    }
 
-   // Submit to Firestore reports collection
-   const db = firebase.firestore();
-   db.collection('reports').add(reportData)
-     .then(docRef => {
-       console.log('Report submitted with ID:', docRef.id);
-       addStatusMessage('Report submitted successfully. Thank you.', 'success');
+    // Submit to Firestore reports collection
+    const db = firebase.firestore();
+    db.collection('reports').add(reportData)
+      .then(docRef => {
+        console.log('Report submitted with ID:', docRef.id);
+        addStatusMessage('Report submitted successfully. Thank you.', 'success');
 
-       // Hide modal
-       const modalEl = document.getElementById('reportModal');
-       const modal = bootstrap.Modal.getInstance(modalEl);
-       if (modal) modal.hide();
+        // Hide modal
+        const modalEl = document.getElementById('reportModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
 
-// Also submit feedback via Apps Script to increment report count on source
+        // Also submit feedback via Apps Script to increment report count on source
         submitFeedback(sourceId, 'report');
 
         // Submit to Google Form for approval workflow
         fetch(fileExec, {
-         method: 'POST',
-         mode: 'no-cors',
-         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-         body: new URLSearchParams({
-           sourceId: sourceId,
-           reason: reason,
-           details: details,
-           postedByEmail: user.email || ''
-         })
-       }).catch(() => {});
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            sourceId: sourceId,
+            reason: reason,
+            details: details,
+            postedByEmail: user.email || ''
+          })
+}).catch(() => {});
 
-       // Mark as reported in session storage
-       sessionStorage.setItem(`${sourceId}-report`, 'true');
-     })
-     .catch(err => {
-       console.error('Error submitting report:', err);
-       if (err.code === 'permission-denied') {
-         alertDiv.classList.remove('d-none');
-         alertDiv.className = 'alert alert-danger';
-         alertDiv.innerHTML = '<strong>Permission denied.</strong> You must be signed in with Google to submit a report.';
-       } else {
-         alertDiv.classList.remove('d-none');
-         alertDiv.className = 'alert alert-danger';
-         alertDiv.innerHTML = '<strong>Failed to submit report.</strong> Please try again.';
-       }
-     })
-     .finally(() => {
-       if (submitBtn) {
-         submitBtn.disabled = false;
-         submitBtn.innerHTML = 'Submit Report';
-       }
-     });
+        // Mark as reported in session storage
+        sessionStorage.setItem(`${sourceId}-report`, 'true');
+      })
+      .catch(err => {
+        console.error('Error submitting report:', err);
+        if (err.code === 'permission-denied') {
+          alertDiv.classList.remove('d-none');
+          alertDiv.className = 'alert alert-danger';
+          alertDiv.innerHTML = '<strong>Permission denied.</strong> You must be signed in with Google to submit a report.';
+        } else {
+          alertDiv.classList.remove('d-none');
+          alertDiv.className = 'alert alert-danger';
+          alertDiv.innerHTML = '<strong>Failed to submit report.</strong> Please try again.';
+        }
+      })
+      .finally(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Submit Report';
+        }
+      });
 }
 
 /**
  * Handle footer action button clicks (like/dislike/report from footer panel)
  */
 function handleFooterActionClick(action, locationId) {
-  // Require Google authentication
-  if (!isUserAuthenticated()) {
-    addStatusMessage('Please sign in with Google to give feedback.', 'warning');
-    signInWithGoogle();
-    return;
-  }
+   // For report, open modal first (auth checked on submit)
+   if (action === 'report') {
+     openReportModal(locationId, 'footer');
+     return;
+   }
 
-  if (action === 'report') {
-    openReportModal(locationId, 'footer');
-    return;
-  }
+   // Require Google authentication for other actions
+   if (!isUserAuthenticated()) {
+     addStatusMessage('Please sign in with Google to give feedback.', 'warning');
+     signInWithGoogle();
+     return;
+   }
 
-  const key = `${locationId}-${action}`;
+   const key = `${locationId}-${action}`;
   if (sessionStorage.getItem(key)) {
     addStatusMessage(`Already submitted ${action} for this location.`, 'warning');
     return;
@@ -2535,6 +2554,12 @@ function updateButtonCount(buttonSelector, popupEl) {
 const reportSubmitBtn = document.getElementById('report-submit');
 if (reportSubmitBtn) {
   reportSubmitBtn.addEventListener('click', submitReport);
+}
+
+// Report modal sign-in button
+const reportSigninBtn = document.getElementById('report-signin');
+if (reportSigninBtn) {
+  reportSigninBtn.addEventListener('click', handleReportSignin);
 }
 
 // --- Utilities ---

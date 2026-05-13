@@ -12,10 +12,14 @@ const ADMIN_EMAILS = ['fluphbusiness@gmail.com']; // Keep in sync with app.js
  * Check if user is signed in with Google (non-anonymous)
  */
 function isUserAuthenticated() {
-  return typeof firebase !== 'undefined'
-    && firebase.auth
-    && firebase.auth().currentUser
-    && firebase.auth().currentUser.providerData.some(p => p.providerId === 'google.com');
+  try {
+    return typeof firebase !== 'undefined'
+      && firebase.auth
+      && firebase.auth().currentUser
+      && firebase.auth().currentUser.providerData.some(p => p.providerId === 'google.com');
+  } catch (e) {
+    return false;
+  }
 }
 
 /**
@@ -23,8 +27,8 @@ function isUserAuthenticated() {
  * Returns a promise that resolves to true if sign-in successful
  */
 async function signInWithGoogle() {
-  if (typeof firebase === 'undefined' || typeof firebase.auth === 'undefined') {
-    console.error('Firebase Auth not available');
+  if (typeof firebase === 'undefined' || typeof firebase.auth === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
+    console.error('Firebase Auth not available or not initialized');
     if (typeof addStatusMessage === 'function') {
       addStatusMessage('Firebase not loaded. Please refresh.', 'error');
     }

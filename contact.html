@@ -104,10 +104,13 @@
               <div class="valid-feedback">Looks good!</div>
               <div class="invalid-feedback">Please enter your message (at least 10 characters).</div>
             </div>
-            <div class="col-12 d-flex gap-2">
-              <button type="submit" class="btn btn-primary" id="submit-btn">Send Message</button>
-              <button type="reset" class="btn btn-outline-secondary">Reset</button>
-            </div>
+<div class="col-12 d-flex gap-2">
+                <button type="button" class="btn btn-outline-primary" id="contact-signin">
+                  <i class="fab fa-google"></i> Sign in with Google
+                </button>
+                <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">Send Message</button>
+                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+              </div>
           </div>
         </form>
       </div>
@@ -139,53 +142,88 @@
 
     <script src="scripts/base.js"></script>
 
-   <script>
-     document.addEventListener('DOMContentLoaded', function () {
-      const contactForm = document.getElementById('contact-form');
-      const submitBtn = document.getElementById('submit-btn');
-      const alertDiv = document.getElementById('contact-alert');
+<script>
+      document.addEventListener('DOMContentLoaded', function () {
+       const contactForm = document.getElementById('contact-form');
+       const submitBtn = document.getElementById('submit-btn');
+       const signinBtn = document.getElementById('contact-signin');
+       const alertDiv = document.getElementById('contact-alert');
+
+// Check auth state on page load and show appropriate button
+        function updateAuthButtons() {
+          if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+            if (isUserAuthenticated()) {
+              signinBtn.style.display = 'none';
+              submitBtn.style.display = 'inline-block';
+            } else {
+              signinBtn.style.display = 'inline-block';
+              submitBtn.style.display = 'none';
+            }
+          }
+        }
+
+        // Auth state observer - only after Firebase is initialized
+        if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0 && firebase.auth) {
+          firebase.auth().onAuthStateChanged(function() {
+            updateAuthButtons();
+          });
+        }
+
+        // Initial check after a delay for Firebase to initialize
+        setTimeout(updateAuthButtons, 1000);
+
+       // Sign-in button handler
+       if (signinBtn) {
+         signinBtn.addEventListener('click', async function() {
+           const signedIn = await signInWithGoogle();
+           if (signedIn) {
+             signinBtn.style.display = 'none';
+             submitBtn.style.display = 'inline-block';
+           }
+         });
+       }
 
 if (contactForm) {
-         // Bootstrap 5 validation
-          contactForm.addEventListener('submit', async function (event) {
-            // Check form validity
-            if (!contactForm.checkValidity()) {
-              event.preventDefault();
-              event.stopPropagation();
-              contactForm.classList.add('was-validated');
-              
-              // Show validation errors in alert panel
-              const invalidFields = [];
-              contactForm.querySelectorAll(':invalid').forEach(field => {
-                const label = contactForm.querySelector(`label[for="${field.id}"]`);
-                invalidFields.push(label ? label.textContent.replace('*','').trim() : field.name);
-              });
-              alertDiv.classList.remove('d-none');
-              alertDiv.className = 'alert alert-danger';
-              alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
-                invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
-              return;
-            } else {
-              // Form is valid, require Google authentication
-              event.preventDefault();
+          // Bootstrap 5 validation
+           contactForm.addEventListener('submit', async function (event) {
+             // Check form validity
+             if (!contactForm.checkValidity()) {
+               event.preventDefault();
+               event.stopPropagation();
+               contactForm.classList.add('was-validated');
+               
+               // Show validation errors in alert panel
+               const invalidFields = [];
+               contactForm.querySelectorAll(':invalid').forEach(field => {
+                 const label = contactForm.querySelector(`label[for="${field.id}"]`);
+                 invalidFields.push(label ? label.textContent.replace('*','').trim() : field.name);
+               });
+               alertDiv.classList.remove('d-none');
+               alertDiv.className = 'alert alert-danger';
+               alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
+                 invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
+               return;
+             } else {
+               // Form is valid, require Google authentication
+               event.preventDefault();
 
-              // Ensure user is signed in with Google
-              if (!isUserAuthenticated()) {
-                alert('Please sign in with Google to send a message.');
-                const signedIn = await signInWithGoogle();
-                if (!signedIn) return;
-              }
-
-// Verify provider (defense in depth)
-               const user = firebase.auth().currentUser;
-               if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
+               // Ensure user is signed in with Google
+               if (!isUserAuthenticated()) {
                  alert('Please sign in with Google to send a message.');
                  const signedIn = await signInWithGoogle();
                  if (!signedIn) return;
                }
 
-             // Sanitize inputs before submission
-             const nameInput = document.getElementById('entry.2107060613');
+// Verify provider (defense in depth)
+                const user = firebase.auth().currentUser;
+                if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
+                  alert('Please sign in with Google to send a message.');
+                  const signedIn = await signInWithGoogle();
+                  if (!signedIn) return;
+                }
+
+              // Sanitize inputs before submission
+              const nameInput = document.getElementById('entry.2107060613');
              const emailInput = document.getElementById('entry.413525859');
              const messageInput = document.getElementById('entry.1834693471');
 

@@ -205,14 +205,17 @@
         </div>
       </div>
 
-      <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-paper-plane me-1"></i> Submit
-        </button>
-        <button type="reset" class="btn btn-secondary">
-          <i class="fas fa-undo me-1"></i> Reset
-        </button>
-      </div>
+<div class="d-flex gap-2">
+          <button type="button" class="btn btn-outline-primary" id="submit-signin">
+            <i class="fab fa-google"></i> Sign in with Google
+          </button>
+          <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">
+            <i class="fas fa-paper-plane me-1"></i> Submit
+          </button>
+         <button type="reset" class="btn btn-secondary">
+           <i class="fas fa-undo me-1"></i> Reset
+         </button>
+       </div>
     </form>
 
     <div class="container mb-4">
@@ -271,52 +274,87 @@
    <script src="scripts/submit.js"></script>
 
 <script>
-      // Form submission handler - posts to Firebase 'sources' collection
-      document.addEventListener('DOMContentLoaded', function () {
-        // Set CSRF token on page load
-        const csrfInput = document.getElementById('csrf_token');
-        if (csrfInput) {
-          csrfInput.value = SecurityUtils.getCsrfToken();
-        }
+       // Form submission handler - posts to Firebase 'sources' collection
+       document.addEventListener('DOMContentLoaded', function () {
+         // Set CSRF token on page load
+         const csrfInput = document.getElementById('csrf_token');
+         if (csrfInput) {
+           csrfInput.value = SecurityUtils.getCsrfToken();
+         }
 
-        const form = document.getElementById('submitForm');
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const alertDiv = document.getElementById('submit-alert');
+         const form = document.getElementById('submitForm');
+         const submitBtn = document.getElementById('submit-btn');
+         const signinBtn = document.getElementById('submit-signin');
+         const alertDiv = document.getElementById('submit-alert');
 
-        if (form) {
-          form.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Reset feedback panel
-            alertDiv.className = 'alert d-none mb-3';
-
-            // HTML5 validation check
-            if (!form.checkValidity()) {
-              e.stopPropagation();
-              form.classList.add('was-validated');
-              
-              // Explicit check for map location (hidden fields may not trigger validation)
-              const lat = document.getElementById('lat').value;
-              const lng = document.getElementById('lng').value;
-              const selectedMonths = document.querySelectorAll('.month-checkbox:checked');
-              const invalidFields = [];
-              
-              if (!lat || !lng) {
-                invalidFields.push('Location on map (click to select)');
+// Check auth state on page load and show appropriate button
+          function updateAuthButtons() {
+            if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+              if (isUserAuthenticated()) {
+                signinBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+              } else {
+                signinBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
               }
+            }
+          }
+
+          // Auth state observer - only after Firebase is initialized
+          if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0 && firebase.auth) {
+            firebase.auth().onAuthStateChanged(function() {
+              updateAuthButtons();
+            });
+          }
+
+          // Initial check after a delay for Firebase to initialize
+          setTimeout(updateAuthButtons, 1000);
+
+         // Sign-in button handler
+         if (signinBtn) {
+           signinBtn.addEventListener('click', async function() {
+             const signedIn = await signInWithGoogle();
+             if (signedIn) {
+               signinBtn.style.display = 'none';
+               submitBtn.style.display = 'inline-block';
+             }
+           });
+         }
+
+         if (form) {
+           form.addEventListener('submit', async function (e) {
+             e.preventDefault();
+
+             // Reset feedback panel
+             alertDiv.className = 'alert d-none mb-3';
+
+             // HTML5 validation check
+             if (!form.checkValidity()) {
+               e.stopPropagation();
+               form.classList.add('was-validated');
               
-              if (selectedMonths.length === 0) {
-                invalidFields.push('Month (select at least one)');
-              }
+               // Explicit check for map location (hidden fields may not trigger validation)
+               const lat = document.getElementById('lat').value;
+               const lng = document.getElementById('lng').value;
+               const selectedMonths = document.querySelectorAll('.month-checkbox:checked');
+               const invalidFields = [];
               
-              form.querySelectorAll(':invalid').forEach(field => {
-                const label = form.querySelector(`label[for="${field.id}"]`);
-                if (field.id !== 'lat' && field.id !== 'lng' && label) {
-                  invalidFields.push(label.textContent.replace('*','').trim());
-                }
-              });
+               if (!lat || !lng) {
+                 invalidFields.push('Location on map (click to select)');
+               }
               
-              alertDiv.classList.remove('d-none');
+               if (selectedMonths.length === 0) {
+                 invalidFields.push('Month (select at least one)');
+               }
+              
+               form.querySelectorAll(':invalid').forEach(field => {
+                 const label = form.querySelector(`label[for="${field.id}"]`);
+                 if (field.id !== 'lat' && field.id !== 'lng' && label) {
+                   invalidFields.push(label.textContent.replace('*','').trim());
+                 }
+               });
+              
+               alertDiv.classList.remove('d-none');
               alertDiv.className = 'alert alert-danger mb-3';
               alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
                 invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
