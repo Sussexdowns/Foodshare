@@ -11,3 +11,8 @@ window.__FIREBASE_CONFIG__ = {
   appId: "1:143975249437:web:05ffd1cf48cdaddc2338f4",
   measurementId: "G-HZN4Q1DMFY"
 };
+
+// Initialize Firebase app (compat SDK) — guard against double-init
+if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length === 0) {
+  firebase.initializeApp(window.__FIREBASE_CONFIG__);
+}
