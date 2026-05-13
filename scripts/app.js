@@ -36,7 +36,7 @@ let heatLayer = null;
 let footerTimeout;
 let useFontAwesome = true;
 let footerDetailsLoaded = false;
-let itemsData = {}; // Store items from items.json
+window.itemsData = window.itemsData || {}; // Store items from items.json (shared with form.js)
 let ukCounties = []; // Store UK counties data
 let ukTowns = []; // Store UK towns data for city-level loading
 let loadedCounties = new Set(); // Track which county CSVs have been loaded
@@ -1996,9 +1996,12 @@ function displayAllLocations() {
 }
 
 function displayFilteredLocations(locations) {
-  clearMarkers();
+   clearMarkers();
 
-  const currentZoom = map.getZoom();
+   // Skip on submit page where map doesn't exist
+   if (!map) return;
+
+   const currentZoom = map.getZoom();
 
   // Only show heatmap at national tier (very zoomed out)
   // Always show markers at county and city tiers

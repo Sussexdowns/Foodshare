@@ -219,3 +219,7 @@ window.SecurityUtils = {
   checkRateLimit,
   recordRateLimitCall
 };
+
+// Export auth helpers to window for cross-script access
+window.isUserAuthenticated = isUserAuthenticated;
+window.signInWithGoogle = signInWithGoogle;

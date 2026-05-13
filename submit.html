@@ -7,15 +7,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
    <!-- Content Security Policy -->
-   <meta http-equiv="Content-Security-Policy" content="
-     default-src 'self';
-      script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline';
-     style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
-      font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://ka-f.fontawesome.com https://fonts.gstatic.com;
-     img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co https://cdn.jsdelivr.net https://commons.wikimedia.org https://*.wikimedia.org;
-      connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com https://ka-f.fontawesome.com https://cdn.jsdelivr.net;
-     frame-src 'self';
-   ">
+<meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+       script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline';
+      style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
+       font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://ka-f.fontawesome.com https://fonts.gstatic.com;
+      img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co https://cdn.jsdelivr.net https://commons.wikimedia.org https://*.wikimedia.org;
+       connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com https://script.google.com https://ka-f.fontawesome.com https://cdn.jsdelivr.net;
+      frame-src 'self' https://script.google.com;
+    ">
 
   <!-- CSS & Icons -->
   <link rel="stylesheet" href="css/style.css">
@@ -66,29 +66,43 @@
       </h1>
     </div>
 
-     <form name="submitForm" id="submitForm" class="container mb-4">
+<form name="submitForm" id="submitForm" class="container mb-4 needs-validation" novalidate>
 
-       <input type="hidden" id="lat" name="lat">
-       <input type="hidden" id="lng" name="lng">
-       <input type="hidden" id="csrf_token" name="csrf_token" value="">
+        <!-- Feedback Panel -->
+        <div id="submit-alert" class="alert d-none mb-3"></div>
 
-       <div class="form-section">
-        <h3><i class="fas fa-tag me-2"></i>Basic Information</h3>
+        <input type="hidden" id="lat" name="lat" required>
+        <input type="hidden" id="lng" name="lng" required>
+        <input type="hidden" id="csrf_token" name="csrf_token" value="">
 
-        <div class="mb-3">
-          <label for="category" class="form-label">Category</label>
-          <select id="category" class="form-select">
-            <option value="">Loading categories...</option>
-          </select>
-        </div>
+        <div class="form-section">
+          <h3><i class="fas fa-tag me-2"></i>Basic Information</h3>
 
-        <div class="mb-3">
-          <label for="item" class="form-label">Item</label>
-          <select id="item" class="form-select">
-            <option value="">-- Select a category first --</option>
-          </select>
-          <input type="text" id="new-item" class="form-control mt-2 d-none" placeholder="Enter new item name" />
-        </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
+            <select id="category" name="category" class="form-select" required>
+              <option value="">Select a category...</option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please select a category.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="item" class="form-label">Item <span class="text-danger">*</span></label>
+            <select id="item" name="item" class="form-select" required>
+              <option value="">-- Select an item --</option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please select an item.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Location Name <span class="text-danger">*</span></label>
+            <input type="text" id="name" name="name" class="form-control" required
+              minlength="2" maxlength="200" placeholder="e.g., Apple tree near the park">
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please enter a location name (2-200 characters).</div>
+          </div>
 
         <!-- Item Details Display -->
         <div id="item-details" style="display: none;">
@@ -102,10 +116,11 @@
 
         <!-- Custom Month Picker (same as index.html) -->
         <div class="mb-3 mt-3">
-          <label for="month-picker" class="form-label">Month</label>
+          <label for="month-picker" class="form-label">Month <span class="text-danger">*</span></label>
           <div class="month-picker-container">
             <input type="text" id="month-picker-input" class="month-picker-input" placeholder="Select months..."
               readonly>
+            <input type="hidden" id="months-required" name="months" required>
             <div id="month-picker-dropdown" class="month-picker-dropdown">
               <div class="month-picker-grid">
                 <input type="checkbox" id="month-0" class="month-checkbox" value="Jan">
@@ -146,6 +161,8 @@
               </div>
             </div>
             <div id="selected-months-display" class="selected-months-display"></div>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please select at least one month.</div>
           </div>
         </div>
       </div>
@@ -154,17 +171,18 @@
         <h3><i class="fas fa-info-circle me-2"></i>Description</h3>
 
         <div class="mb-3">
-          <label for="name" class="form-label">Location Name</label>
-          <input type="text" id="name" class="form-control" placeholder="e.g., Apple tree near the park">
+          <label for="shortDesc" class="form-label">Short Description <span class="text-danger">*</span></label>
+          <input type="text" id="shortDesc" name="shortDesc" class="form-control" required
+            minlength="10" maxlength="500" placeholder="Brief description (shown on map)">
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a brief description (10-500 characters).</div>
         </div>
         <div class="mb-3">
-          <label for="shortDesc" class="form-label">Short Description</label>
-          <input type="text" id="shortDesc" class="form-control" placeholder="Brief description (shown on map)">
-        </div>
-        <div class="mb-3">
-          <label for="desc" class="form-label">Full Description</label>
-          <textarea id="desc" class="form-control" rows="4"
-            placeholder="Detailed information about this location..."></textarea>
+          <label for="desc" class="form-label">Full Description <span class="text-danger">*</span></label>
+          <textarea id="desc" name="desc" class="form-control" rows="4" required
+            minlength="20" maxlength="2000" placeholder="Detailed information about this location..."></textarea>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a full description (20-2000 characters).</div>
         </div>
       </div>
 
@@ -173,11 +191,17 @@
 
         <div class="mb-3">
           <label for="links" class="form-label">Links (optional)</label>
-          <input type="text" id="links" class="form-control" placeholder="https://example.com">
+          <input type="url" id="links" name="links" class="form-control"
+            placeholder="https://example.com">
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a valid URL.</div>
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image URL (optional)</label>
-          <input type="url" id="image" class="form-control" placeholder="https://example.com/image.jpg">
+          <input type="url" id="image" name="image" class="form-control"
+            placeholder="https://example.com/image.jpg">
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a valid image URL.</div>
         </div>
       </div>
 
@@ -246,21 +270,58 @@
    <script src="scripts/form.js"></script>
    <script src="scripts/submit.js"></script>
 
-   <script>
-     // Form submission handler - posts to Firebase 'sources' collection
-     document.addEventListener('DOMContentLoaded', function () {
-       // Set CSRF token on page load
-       const csrfInput = document.getElementById('csrf_token');
-       if (csrfInput) {
-         csrfInput.value = SecurityUtils.getCsrfToken();
-       }
+<script>
+      // Form submission handler - posts to Firebase 'sources' collection
+      document.addEventListener('DOMContentLoaded', function () {
+        // Set CSRF token on page load
+        const csrfInput = document.getElementById('csrf_token');
+        if (csrfInput) {
+          csrfInput.value = SecurityUtils.getCsrfToken();
+        }
 
-       const form = document.getElementById('submitForm');
-       const submitBtn = form.querySelector('button[type="submit"]');
+        const form = document.getElementById('submitForm');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const alertDiv = document.getElementById('submit-alert');
 
         if (form) {
           form.addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            // Reset feedback panel
+            alertDiv.className = 'alert d-none mb-3';
+
+            // HTML5 validation check
+            if (!form.checkValidity()) {
+              e.stopPropagation();
+              form.classList.add('was-validated');
+              
+              // Explicit check for map location (hidden fields may not trigger validation)
+              const lat = document.getElementById('lat').value;
+              const lng = document.getElementById('lng').value;
+              const selectedMonths = document.querySelectorAll('.month-checkbox:checked');
+              const invalidFields = [];
+              
+              if (!lat || !lng) {
+                invalidFields.push('Location on map (click to select)');
+              }
+              
+              if (selectedMonths.length === 0) {
+                invalidFields.push('Month (select at least one)');
+              }
+              
+              form.querySelectorAll(':invalid').forEach(field => {
+                const label = form.querySelector(`label[for="${field.id}"]`);
+                if (field.id !== 'lat' && field.id !== 'lng' && label) {
+                  invalidFields.push(label.textContent.replace('*','').trim());
+                }
+              });
+              
+              alertDiv.classList.remove('d-none');
+              alertDiv.className = 'alert alert-danger mb-3';
+              alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
+                invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
+              return;
+            }
 
             // Check authentication - require Google login
             if (!isUserAuthenticated()) {
@@ -298,23 +359,39 @@
            const months = selectedMonths.map(m => monthsMap[m]).filter(Boolean);
 
 // Validation
-            if (!lat || !lng) {
-              alert('Please select a location on the map.');
-              return;
-            }
-            if (!name || name.trim().length < 2) {
-              alert('Please enter a location name (at least 2 characters).');
-              return;
-            }
+             if (!lat || !lng) {
+               alert('Please select a location on the map.');
+               return;
+             }
+             if (!name || name.trim().length < 2) {
+               alert('Please enter a location name (at least 2 characters).');
+               return;
+             }
+             if (!item || item.trim().length === 0) {
+               alert('Please select an item.');
+               return;
+             }
+             if (!shortDesc || shortDesc.trim().length < 10) {
+               alert('Please enter a brief description (at least 10 characters).');
+               return;
+             }
+if (!desc || desc.trim().length < 20) {
+                alert('Please enter a full description (at least 20 characters).');
+                return;
+              }
+              if (!selectedMonths || selectedMonths.length === 0) {
+                alert('Please select at least one month.');
+                return;
+              }
 
-            // Sanitize inputs
-            name = SecurityUtils.sanitizeHtml(name).substring(0, 200);
-            if (shortDesc) shortDesc = SecurityUtils.sanitizeHtml(shortDesc).substring(0, 500);
-            if (desc) desc = SecurityUtils.sanitizeHtml(desc).substring(0, 2000);
-            if (links) links = SecurityUtils.sanitizeUrl(links);
-            if (image) image = SecurityUtils.sanitizeUrl(image);
-            if (category) category = SecurityUtils.sanitizeHtml(category).substring(0, 100);
-            if (item) item = SecurityUtils.sanitizeHtml(item).substring(0, 100);
+// Sanitize inputs
+             name = SecurityUtils.sanitizeHtml(name).substring(0, 200);
+             shortDesc = SecurityUtils.sanitizeHtml(shortDesc).substring(0, 500);
+             desc = SecurityUtils.sanitizeHtml(desc).substring(0, 2000);
+             if (links) links = SecurityUtils.sanitizeUrl(links);
+             if (image) image = SecurityUtils.sanitizeUrl(image);
+             if (category) category = SecurityUtils.sanitizeHtml(category).substring(0, 100);
+             if (item) item = SecurityUtils.sanitizeHtml(item).substring(0, 100);
 
             // Disable button and show loading
             submitBtn.disabled = true;
@@ -404,15 +481,17 @@
             }
          });
 
-         // Reset button handler
-         const resetBtn = form.querySelector('button[type="reset"]');
-          if (resetBtn) {
-            resetBtn.addEventListener('click', function () {
-              if (submissionMarker) submissionMap.removeLayer(submissionMarker);
-              document.getElementById('coord-display').textContent = 'None';
-              document.getElementById('coord-display').className = 'badge bg-secondary';
-            });
-          }
+// Reset button handler
+          const resetBtn = form.querySelector('button[type="reset"]');
+           if (resetBtn) {
+             resetBtn.addEventListener('click', function () {
+               if (submissionMarker) submissionMap.removeLayer(submissionMarker);
+               document.getElementById('coord-display').textContent = 'None';
+               document.getElementById('coord-display').className = 'badge bg-secondary';
+               const monthsReq = document.getElementById('months-required');
+               if (monthsReq) monthsReq.value = '';
+             });
+           }
         }
       });
 

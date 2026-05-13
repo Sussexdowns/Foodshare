@@ -145,13 +145,26 @@
       const submitBtn = document.getElementById('submit-btn');
       const alertDiv = document.getElementById('contact-alert');
 
-      if (contactForm) {
+if (contactForm) {
          // Bootstrap 5 validation
           contactForm.addEventListener('submit', async function (event) {
             // Check form validity
             if (!contactForm.checkValidity()) {
               event.preventDefault();
               event.stopPropagation();
+              contactForm.classList.add('was-validated');
+              
+              // Show validation errors in alert panel
+              const invalidFields = [];
+              contactForm.querySelectorAll(':invalid').forEach(field => {
+                const label = contactForm.querySelector(`label[for="${field.id}"]`);
+                invalidFields.push(label ? label.textContent.replace('*','').trim() : field.name);
+              });
+              alertDiv.classList.remove('d-none');
+              alertDiv.className = 'alert alert-danger';
+              alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
+                invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
+              return;
             } else {
               // Form is valid, require Google authentication
               event.preventDefault();
@@ -163,21 +176,13 @@
                 if (!signedIn) return;
               }
 
-              // Verify provider (defense in depth)
-              const user = firebase.auth().currentUser;
-              if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
-                alert('Please sign in with Google to send a message.');
-                const signedIn = await signInWithGoogle();
-                if (!signedIn) return;
-              }
-
-              // Verify provider after sign-in (defense in depth)
-              const user = firebase.auth().currentUser;
-              if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
-                alert('Please sign in with Google to send a message.');
-                const signedIn = await signInWithGoogle();
-                if (!signedIn) return;
-              }
+// Verify provider (defense in depth)
+               const user = firebase.auth().currentUser;
+               if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
+                 alert('Please sign in with Google to send a message.');
+                 const signedIn = await signInWithGoogle();
+                 if (!signedIn) return;
+               }
 
              // Sanitize inputs before submission
              const nameInput = document.getElementById('entry.2107060613');
@@ -205,40 +210,27 @@
              // Create form data
              const formData = new FormData(contactForm);
 
-             // Submit using fetch with no-cors mode for Google Forms
-             fetch(contactForm.action, {
-               method: 'POST',
-               mode: 'no-cors',
-               body: formData
-             })
-               .then(function () {
-                 // Show success message
-                 alertDiv.classList.remove('d-none');
-                 alertDiv.className = 'alert alert-success';
-                 alertDiv.innerHTML = '<strong>Success!</strong> Thank you! Your message has been sent successfully.';
-
-                 // Reset form and validation state
-                 contactForm.reset();
-                 contactForm.classList.remove('was-validated');
-               })
-               .catch(function (error) {
-                 // Even on error, Google Forms may have received the submission
-                 alertDiv.classList.remove('d-none');
-                 alertDiv.className = 'alert alert-success';
-                 alertDiv.innerHTML = '<strong>Sent!</strong> Thank you! Your message has been sent.';
-
-                 contactForm.reset();
-                 contactForm.classList.remove('was-validated');
-               })
-               .finally(function () {
-                 submitBtn.disabled = false;
-                 submitBtn.textContent = 'Send Message';
-
-                 // Hide alert after 5 seconds
-                 setTimeout(function () {
-                   alertDiv.classList.add('d-none');
-                 }, 5000);
-               });
+// Submit using fetch with no-cors mode for Google Forms
+              fetch(contactForm.action, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+              })
+                .then(function () {
+                  // Hide the form
+                  contactForm.closest('.form-section').style.display = 'none';
+                  // Show success message
+                  alertDiv.classList.remove('d-none');
+                  alertDiv.className = 'alert alert-success';
+                  alertDiv.innerHTML = '<strong>Thank you!</strong> Your message has been sent successfully.';
+                })
+                .catch(function (error) {
+                  // Even on error, Google Forms may have received the submission
+                  contactForm.closest('.form-section').style.display = 'none';
+                  alertDiv.classList.remove('d-none');
+                  alertDiv.className = 'alert alert-success';
+                  alertDiv.innerHTML = '<strong>Thank you!</strong> Your message has been sent.';
+                })
            }
 
            // Add validation class for styling

@@ -196,6 +196,12 @@ function updateSelectedMonths() {
     .filter(cb => cb.checked)
     .map(cb => cb.value);
 
+  // Set hidden field for HTML5 validation
+  const monthsRequiredField = document.getElementById('months-required');
+  if (monthsRequiredField) {
+    monthsRequiredField.value = selectedMonths.length > 0 ? selectedMonths.join(',') : '';
+  }
+
   if (selectedMonths.length === 0) {
     monthPickerInput.placeholder = 'Select months...';
     selectedMonthsDisplay.textContent = '';

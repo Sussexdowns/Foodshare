@@ -1,6 +1,6 @@
 // form.js
 
-// window.itemsData is provided by app.js; no redeclaration
+// itemsData is stored on window for cross-script access
 
 // Check if JSON source is enabled (when disabled, use Firebase)
 const formUseJsonAsSource = localStorage.getItem('useJsonAsSource') !== 'false';
