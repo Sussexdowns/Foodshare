@@ -92,15 +92,15 @@ async function loadData() {
 function populateCategoryDropdown() {
   const categorySelect = document.getElementById('category');
 
-  // Clear existing options except first
-  while (categorySelect.options.length > 1) {
-    categorySelect.remove(1);
-  }
+  // Clear all existing options
+  categorySelect.innerHTML = '';
 
-  // Add "All" option at the top
+  // Add placeholder option - disabled so it can't be submitted
   const allOption = document.createElement('option');
-  allOption.value = 'all';
-  allOption.textContent = 'All Categories';
+  allOption.value = '';
+  allOption.textContent = 'Select a category...';
+  allOption.disabled = true;
+  allOption.selected = true;
   categorySelect.appendChild(allOption);
 
   if (categoriesData.categories) {
