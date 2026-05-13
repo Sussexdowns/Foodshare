@@ -847,12 +847,389 @@
         "west": -2.583
       },
       "sqlFile": "dataconnect/queries/county_worcestershire.sql"
+    },
+    {
+      "id": "gwynedd",
+      "name": "Gwynedd",
+      "csvFile": "data/gwynedd_free_food_locations.csv",
+      "center": [
+        52.9,
+        -4.2
+      ],
+      "bounds": {
+        "north": 53.4,
+        "south": 52.35,
+        "east": -3.7,
+        "west": -4.8
+      }
+    },
+    {
+      "id": "conwy",
+      "name": "Conwy",
+      "csvFile": "data/conwy_free_food_locations.csv",
+      "center": [
+        53.28,
+        -3.85
+      ],
+      "bounds": {
+        "north": 53.45,
+        "south": 53.1,
+        "east": -3.55,
+        "west": -4.1
+      }
+    },
+    {
+      "id": "denbighshire",
+      "name": "Denbighshire",
+      "csvFile": "data/denbighshire_free_food_locations.csv",
+      "center": [
+        53.15,
+        -3.35
+      ],
+      "bounds": {
+        "north": 53.35,
+        "south": 52.95,
+        "east": -3.1,
+        "west": -3.65
+      }
+    },
+    {
+      "id": "flintshire",
+      "name": "Flintshire",
+      "csvFile": "data/flintshire_free_food_locations.csv",
+      "center": [
+        53.25,
+        -3.1
+      ],
+      "bounds": {
+        "north": 53.45,
+        "south": 52.95,
+        "east": -2.85,
+        "west": -3.35
+      }
+    },
+    {
+      "id": "monmouthshire",
+      "name": "Monmouthshire",
+      "csvFile": "data/monmouthshire_free_food_locations.csv",
+      "center": [
+        51.8,
+        -2.95
+      ],
+      "bounds": {
+        "north": 52.15,
+        "south": 51.45,
+        "east": -2.75,
+        "west": -3.2
+      }
+    },
+    {
+      "id": "cardiff",
+      "name": "Cardiff",
+      "csvFile": "data/cardiff_free_food_locations.csv",
+      "center": [
+        51.48,
+        -3.18
+      ],
+      "bounds": {
+        "north": 51.62,
+        "south": 51.34,
+        "east": -3.05,
+        "west": -3.3
+      }
+    },
+    {
+      "id": "swansea",
+      "name": "Swansea",
+      "csvFile": "data/swansea_free_food_locations.csv",
+      "center": [
+        51.62,
+        -3.95
+      ],
+      "bounds": {
+        "north": 51.75,
+        "south": 51.48,
+        "east": -3.8,
+        "west": -4.1
+      }
+    },
+    {
+      "id": "carmarthenshire",
+      "name": "Carmarthenshire",
+      "csvFile": "data/carmarthenshire_free_food_locations.csv",
+      "center": [
+        51.9,
+        -4.3
+      ],
+      "bounds": {
+        "north": 52.3,
+        "south": 51.5,
+        "east": -3.85,
+        "west": -4.8
+      }
+    },
+    {
+      "id": "pembrokeshire",
+      "name": "Pembrokeshire",
+      "csvFile": "data/pembrokeshire_free_food_locations.csv",
+      "center": [
+        51.9,
+        -4.95
+      ],
+      "bounds": {
+        "north": 52.2,
+        "south": 51.6,
+        "east": -4.6,
+        "west": -5.3
+      }
+    },
+    {
+      "id": "powys",
+      "name": "Powys",
+      "csvFile": "data/powys_free_food_locations.csv",
+      "center": [
+        52.3,
+        -3.4
+      ],
+      "bounds": {
+        "north": 52.95,
+        "south": 51.85,
+        "east": -2.9,
+        "west": -3.95
+      }
+     },
+     {
+      "id": "highland",
+      "name": "Highland",
+      "csvFile": "data/highland_free_food_locations.csv",
+      "center": [
+        57.5,
+        -4.5
+      ],
+      "bounds": {
+        "north": 58.6,
+        "south": 56.7,
+        "east": -3.0,
+        "west": -6.2
+      }
+    },
+    {
+      "id": "aberdeenshire",
+      "name": "Aberdeenshire",
+      "csvFile": "data/aberdeenshire_free_food_locations.csv",
+      "center": [
+        57.3,
+        -2.4
+      ],
+      "bounds": {
+        "north": 58.0,
+        "south": 56.4,
+        "east": -1.5,
+        "west": -3.3
+      }
+    },
+    {
+      "id": "edinburgh",
+      "name": "City of Edinburgh",
+      "csvFile": "data/edinburgh_free_food_locations.csv",
+      "center": [
+        55.95,
+        -3.2
+      ],
+      "bounds": {
+        "north": 56.05,
+        "south": 55.85,
+        "east": -3.05,
+        "west": -3.35
+      }
+    },
+    {
+      "id": "glasgow",
+      "name": "Glasgow",
+      "csvFile": "data/glasgow_free_food_locations.csv",
+      "center": [
+        55.86,
+        -4.25
+      ],
+      "bounds": {
+        "north": 55.95,
+        "south": 55.75,
+        "east": -4.05,
+        "west": -4.45
+      }
+    },
+    {
+      "id": "fife",
+      "name": "Fife",
+      "csvFile": "data/fife_free_food_locations.csv",
+      "center": [
+        56.2,
+        -3.0
+      ],
+      "bounds": {
+        "north": 56.5,
+        "south": 55.9,
+        "east": -2.6,
+        "west": -3.5
+      }
+    },
+    {
+      "id": "dumfries_galloway",
+      "name": "Dumfries and Galloway",
+      "csvFile": "data/dumfries_galloway_free_food_locations.csv",
+      "center": [
+        55.1,
+        -3.7
+      ],
+      "bounds": {
+        "north": 55.9,
+        "south": 54.7,
+        "east": -2.8,
+        "west": -4.9
+      }
+    },
+    {
+      "id": "argyll_bute",
+      "name": "Argyll and Bute",
+      "csvFile": "data/argyll_bute_free_food_locations.csv",
+      "center": [
+        56.4,
+        -5.2
+      ],
+      "bounds": {
+        "north": 57.3,
+        "south": 55.5,
+        "east": -4.3,
+        "west": -6.2
+      }
+    },
+    {
+      "id": "perth_kinross",
+      "name": "Perth and Kinross",
+      "csvFile": "data/perth_kinross_free_food_locations.csv",
+      "center": [
+        56.6,
+        -3.7
+      ],
+      "bounds": {
+        "north": 57.1,
+        "south": 56.1,
+        "east": -3.1,
+        "west": -4.2
+      }
+     },
+     {
+      "id": "antrim",
+      "name": "County Antrim",
+      "csvFile": "data/antrim_free_food_locations.csv",
+      "center": [
+        54.85,
+        -6.2
+      ],
+      "bounds": {
+        "north": 55.2,
+        "south": 54.4,
+        "east": -5.7,
+        "west": -6.5
+      }
+    },
+    {
+      "id": "down",
+      "name": "County Down",
+      "csvFile": "data/down_free_food_locations.csv",
+      "center": [
+        54.4,
+        -5.7
+      ],
+      "bounds": {
+        "north": 54.8,
+        "south": 54.0,
+        "east": -5.4,
+        "west": -6.0
+      }
+    },
+    {
+      "id": "londonderry",
+      "name": "County Londonderry",
+      "csvFile": "data/londonderry_free_food_locations.csv",
+      "center": [
+        55.0,
+        -7.0
+      ],
+      "bounds": {
+        "north": 55.3,
+        "south": 54.7,
+        "east": -6.6,
+        "west": -7.4
+      }
+    },
+    {
+      "id": "tyrone",
+      "name": "County Tyrone",
+      "csvFile": "data/tyrone_free_food_locations.csv",
+      "center": [
+        54.6,
+        -7.0
+      ],
+      "bounds": {
+        "north": 55.0,
+        "south": 54.2,
+        "east": -6.6,
+        "west": -7.5
+      }
+    },
+    {
+      "id": "fermanagh",
+      "name": "County Fermanagh",
+      "csvFile": "data/fermanagh_free_food_locations.csv",
+      "center": [
+        54.4,
+        -7.7
+      ],
+      "bounds": {
+        "north": 54.8,
+        "south": 53.95,
+        "east": -7.2,
+        "west": -8.0
+      }
+    },
+    {
+      "id": "armagh",
+      "name": "County Armagh",
+      "csvFile": "data/armagh_free_food_locations.csv",
+      "center": [
+        54.35,
+        -6.65
+      ],
+      "bounds": {
+        "north": 54.7,
+        "south": 54.0,
+        "east": -6.3,
+        "west": -7.0
+      }
+    },
+    {
+      "id": "belfast",
+      "name": "Belfast",
+      "csvFile": "data/belfast_free_food_locations.csv",
+      "center": [
+        54.6,
+        -5.93
+      ],
+      "bounds": {
+        "north": 54.7,
+        "south": 54.5,
+        "east": -5.8,
+        "west": -6.05
+      }
     }
   ],
   "metadata": {
     "description": "UK Counties with CSV file references for food location data",
-    "version": "1.1.0",
-    "lastUpdated": "2026-02-18",
-    "notes": "csvFile is null for counties without data files yet. Bounds are approximate bounding boxes for map intersection detection. Historical counties like Cumberland, West Riding, and Middlesex are included for legacy data coverage."
+    "version": "1.2.0",
+    "lastUpdated": "2026-05-13",
+    "totalCounties": 78,
+    "recordsAdded": "Added Welsh (10), Scottish (8), and Northern Irish (7) counties",
+    "notes": "Bounds are approximate bounding boxes for map intersection detection. Historical counties like Cumberland, West Riding, and Middlesex are included for legacy data coverage. New counties added in v1.2.0."
   }
 }

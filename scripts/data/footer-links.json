@@ -1,0 +1,13 @@
+[
+  { "name": "The Trussell Trust", "url": "https://www.trusselltrust.org/" },
+  { "name": "UK Government - Benefits and Financial Support", "url": "https://www.gov.uk/browse/benefits" },
+  { "name": "Shelter - Housing Advice", "url": "https://england.shelter.org.uk/" },
+  { "name": "Crisis - Homelessness Support", "url": "https://www.crisis.org.uk/" },
+  { "name": "Food Foundation", "url": "https://foodfoundation.org.uk/" },
+  { "name": "FareShare", "url": "https://fareshare.org.uk/" },
+  { "name": "Turn2us - Benefit Calculator", "url": "https://www.turn2us.org.uk/" },
+  { "name": "Citizens Advice", "url": "https://www.citizensadvice.org.uk/" },
+  { "name": "The Salvation Army", "url": "https://www.salvationarmy.org.uk/" },
+  { "name": "St Mungo's - Homeless Charity", "url": "https://www.stmungo.org/" },
+  { "name": "Local Food Banks Map", "url": "https://www.trusselltrust.org/get-help/find-a-foodbank/" }
+]

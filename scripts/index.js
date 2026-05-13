@@ -57,14 +57,17 @@ function updateSelectedMonths() {
 }
 
 // Footer close button - footer is loaded asynchronously, so check if elements exist
-const footer = safeGet('footer-details');
-const closefooter = safeGet('footer-close');
+// Wait for DOM to be fully loaded before accessing footer elements
+document.addEventListener('DOMContentLoaded', function () {
+  const footer = safeGet('footer-details');
+  const closefooter = safeGet('footer-close');
 
-if (closefooter && footer) {
-  closefooter.addEventListener('click', function () {
-    footer.classList.remove('visible');
-  });
-}
+  if (closefooter && footer) {
+    closefooter.addEventListener('click', function () {
+      footer.classList.remove('visible');
+    });
+  }
+});
 
 // --- Dark Mode ---
 // Dark mode is handled by base.js which waits for footer to load

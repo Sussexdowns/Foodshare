@@ -5,16 +5,27 @@ var BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/'
 window.BASE_PATH = BASE_PATH;
 
 // Footer links data
-const footerLinksData = [
-  { name: 'Lewes District Council', url: 'https://www.lewes-eastbourne.gov.uk/' },
-  { name: 'Sussex Wildlife Trust', url: 'https://sussexwildlifetrust.org.uk/' },
-  { name: 'Visit Lewes', url: 'https://www.visitlewes.co.uk/' },
-  { name: 'Lewes Farmers Market', url: 'https://www.lewesfarmersmarket.co.uk/' },
-  { name: 'Lewes Bonfire Society', url: 'https://www.lewesbonfirecelebrations.com/' }
-];
+let footerLinksData = [];
 
-// Show links in the footer
-function showFooterLinks() {
+/**
+ * Load footer links from JSON file
+ */
+async function loadFooterLinks() {
+  try {
+    const response = await fetch(BASE_PATH + 'scripts/data/footer-links.json');
+    if (response.ok) {
+      footerLinksData = await response.json();
+    }
+  } catch (error) {
+    console.error('Error loading footer links:', error);
+  }
+}
+
+/**
+ * Load footer links from JSON file and render them in the footer
+ */
+async function showFooterLinks() {
+  await loadFooterLinks();
   const footerLinksList = document.getElementById('footer-links-list');
   if (footerLinksList) {
     footerLinksList.innerHTML = '';
@@ -77,8 +88,8 @@ function loadHeaderFooter() {
   });
 
   // Load footer
-  loadFragment('footer-placeholder', BASE_PATH + 'footer.html', () => {
-    showFooterLinks();
+  loadFragment('footer-placeholder', BASE_PATH + 'footer.html', async () => {
+    await showFooterLinks();
     applyDarkModeFromStorage();
     attachFooterEventListeners();
   });

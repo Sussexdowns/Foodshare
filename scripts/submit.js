@@ -9,7 +9,7 @@ let locationData = [];
 let allItems = [];
 
 // Check if JSON source is enabled
-const useJsonAsSource = localStorage.getItem('useJsonAsSource') !== 'false';
+const submitUseJsonAsSource = localStorage.getItem('useJsonAsSource') !== 'false';
 
 // Load items from Firebase
 async function loadItemsFromFirebase() {
@@ -58,7 +58,7 @@ async function loadData() {
     }
 
     // Load items from appropriate source
-    if (useJsonAsSource) {
+    if (submitUseJsonAsSource) {
       try {
         const itemsResponse = await fetch(window.BASE_PATH + 'items.json');
         if (itemsResponse.ok) {

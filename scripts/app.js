@@ -14,8 +14,8 @@ const firebaseConfig = window.__FIREBASE_CONFIG__ || {
   storageBucket: "foodshare-50695.firebasestorage.app",
   messagingSenderId: "143975249437",
   appId: "1:143975249437:web:05ffd1cf48cdaddc2338f4",
-  measurementId: "G-HZN4Q1DMFY"
-};
+   measurementId: "G-HZN4Q1DMFY"
+  };
 
 let firebaseApp;
 let db; // Firestore instance
@@ -116,9 +116,12 @@ function initApp() {
 
       // Continue with other initialization
       loadFooterDetailsTemplate().then(() => {
-        initMap();
-        initializeFirebase(); // Initialize Firebase after map
-        detectUserLocationAndLoadData();
+        // Skip map init and location detection on submit page (it has its own inline map)
+        if (!document.body.classList.contains('submit-page')) {
+          initMap();
+          detectUserLocationAndLoadData();
+        }
+        initializeFirebase(); // Initialize Firebase
       });
     })
     .catch(error => {
@@ -126,8 +129,12 @@ function initApp() {
       window.itemsData = {};
       // Continue without config data
       loadFooterDetailsTemplate().then(() => {
-        initMap();
-        initializeFirebase(); // Initialize Firebase after map
+        // Skip map init and location detection on submit page (it has its own inline map)
+        if (!document.body.classList.contains('submit-page')) {
+          initMap();
+          detectUserLocationAndLoadData();
+        }
+        initializeFirebase(); // Initialize Firebase
         fetchData(); // Fallback to default data loading
       });
     });
@@ -2228,6 +2235,7 @@ async function signInWithGoogle() {
     const user = firebase.auth().currentUser;
     if (user) {
       console.log('Signed in successfully:', user.uid, user.email);
+      await createOrUpdateUserProfile(user);
       addStatusMessage('✅ Signed in with Google', 'success');
       return true;
     } else {

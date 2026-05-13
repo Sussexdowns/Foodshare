@@ -6,16 +6,16 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net 'unsafe-inline';
-    style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
-    font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://fonts.gstatic.com;
-    img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co;
-    connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com;
-    frame-src 'self';
-  ">
+   <!-- Content Security Policy -->
+   <meta http-equiv="Content-Security-Policy" content="
+     default-src 'self';
+      script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline';
+     style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
+      font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://ka-f.fontawesome.com https://fonts.gstatic.com;
+     img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co https://cdn.jsdelivr.net https://commons.wikimedia.org https://*.wikimedia.org;
+      connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com https://ka-f.fontawesome.com https://cdn.jsdelivr.net;
+     frame-src 'self';
+   ">
 
   <!-- CSS & Icons -->
   <link rel="stylesheet" href="css/style.css">
@@ -231,33 +231,21 @@
    <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
 
-   <!-- Firebase config first -->
-   <script src="../config.js"></script>
-
-   <!-- Firebase SDKs -->
+   <!-- Firebase SDKs must load BEFORE config.js (which calls initializeApp) -->
    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-   <script src="scripts/sanitize.js"></script>
+   <!-- Firebase config (calls initializeApp - must come after SDK scripts) -->
+   <script src="config.js"></script>
 
-   <!-- Initialize Firebase Auth (before app.js) -->
-   <script>
-     document.addEventListener('DOMContentLoaded', function() {
-       if (typeof firebase !== 'undefined' && typeof firebase.auth !== 'undefined') {
-         if (!firebase.apps.length && window.__FIREBASE_CONFIG__) {
-           firebase.initializeApp(window.__FIREBASE_CONFIG__);
-         }
-         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-           .catch(function(err) { console.warn('Auth persistence error:', err); });
-       }
-     });
-   </script>
+   <script src="scripts/sanitize.js"></script>
 
    <script src="scripts/base.js"></script>
    <script src="scripts/app.js"></script>
    <script src="scripts/form.js"></script>
    <script src="scripts/submit.js"></script>
+
    <script>
      // Form submission handler - posts to Firebase 'sources' collection
      document.addEventListener('DOMContentLoaded', function () {
@@ -270,37 +258,24 @@
        const form = document.getElementById('submitForm');
        const submitBtn = form.querySelector('button[type="submit"]');
 
-       if (form) {
-         form.addEventListener('submit', async function (e) {
-           e.preventDefault();
+        if (form) {
+          form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-           // Check authentication - require Google login
-           if (typeof firebase === 'undefined' || !firebase.auth() || !firebase.auth().currentUser) {
-             alert('Please sign in with Google to submit a location.');
-             // Trigger Google sign-in
-             const provider = new firebase.auth.GoogleAuthProvider();
-             try {
-               await firebase.auth().signInWithPopup(provider);
-             } catch (err) {
-               console.error('Sign-in failed:', err);
-               alert('Sign-in was cancelled or failed. Please try again.');
-               return;
-             }
-           }
+            // Check authentication - require Google login
+            if (!isUserAuthenticated()) {
+              alert('Please sign in with Google to submit a location.');
+              const signedIn = await signInWithGoogle();
+              if (!signedIn) return;
+            }
 
-           // Verify it's a Google account (not anonymous)
-           const user = firebase.auth().currentUser;
-           const isGoogle = user.providerData.some(p => p.providerId === 'google.com');
-           if (!isGoogle) {
-             alert('Please sign in with Google to submit a location.');
-             const provider = new firebase.auth.GoogleAuthProvider();
-             try {
-               await firebase.auth().signInWithPopup(provider);
-             } catch (err) {
-               console.error('Sign-in failed:', err);
-               return;
-             }
-           }
+            // Verify it's a Google account (defense in depth)
+            const user = firebase.auth().currentUser;
+            if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
+              alert('Please sign in with Google to submit a location.');
+              const signedIn = await signInWithGoogle();
+              if (!signedIn) return;
+            }
 
            // Collect form data
            let category = document.getElementById('category').value;
@@ -387,10 +362,10 @@
              // Post to Firebase
              if (typeof firebase !== 'undefined' && firebase.firestore) {
                const db = firebase.firestore();
-               await db.collection('sources').doc(sourceId).set(sourceData);
-               alert('Thank you! Your submission has been received and will be reviewed.');
-               form.reset();
-               if (marker) map.removeLayer(marker);
+                await db.collection('sources').doc(sourceId).set(sourceData);
+                alert('Thank you! Your submission has been received and will be reviewed.');
+                form.reset();
+                if (submissionMarker) submissionMap.removeLayer(submissionMarker);
              } else {
                throw new Error('Firebase not initialized');
              }
@@ -409,39 +384,26 @@
 
          // Reset button handler
          const resetBtn = form.querySelector('button[type="reset"]');
-         if (resetBtn) {
-           resetBtn.addEventListener('click', function () {
-             if (marker) map.removeLayer(marker);
-             document.getElementById('coord-display').textContent = 'None';
-             document.getElementById('coord-display').className = 'badge bg-secondary';
-           });
-         }
-       }
-     });
+          if (resetBtn) {
+            resetBtn.addEventListener('click', function () {
+              if (submissionMarker) submissionMap.removeLayer(submissionMarker);
+              document.getElementById('coord-display').textContent = 'None';
+              document.getElementById('coord-display').className = 'badge bg-secondary';
+            });
+          }
+        }
+      });
 
-         // Reset button handler
-         const resetBtn = form.querySelector('button[type="reset"]');
-         if (resetBtn) {
-           resetBtn.addEventListener('click', function () {
-             if (marker) map.removeLayer(marker);
-             document.getElementById('coord-display').textContent = 'None';
-             document.getElementById('coord-display').className = 'badge bg-secondary';
-           });
-         }
-       }
-     });
+      // Initialize map with fullscreen control
+      let submissionMap = L.map('map', {
+        fullscreenControl: true,
+        fullscreenControlOptions: {
+          position: 'topleft'
+        }
+      }).setView([50.873, 0.009], 14);
 
-
-    // Initialize map with fullscreen control
-    let map = L.map('map', {
-      fullscreenControl: true,
-      fullscreenControlOptions: {
-        position: 'topleft'
-      }
-    }).setView([50.873, 0.009], 14);
-
-    let marker = null;
-    let userLocationMarker = null;
+      let submissionMarker = null;
+      let submissionUserLocationMarker = null;
 
     // Check dark mode for tile layer
     const isDarkMode = document.body.classList.contains('dark-mode');
@@ -449,116 +411,116 @@
     const lightTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
 
-    L.tileLayer(tileUrl, {
-      maxZoom: 19,
-      attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
-    }).addTo(map);
+     L.tileLayer(tileUrl, {
+       maxZoom: 19,
+       attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
+     }).addTo(submissionMap);
 
-    // Listen for dark mode changes to switch tile layer
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          updateMapTheme();
-        }
-      });
-    });
-    observer.observe(document.body, { attributes: true });
+     // Listen for dark mode changes to switch tile layer
+     const observer = new MutationObserver((mutations) => {
+       mutations.forEach((mutation) => {
+         if (mutation.attributeName === 'class') {
+           updateMapTheme();
+         }
+       });
+     });
+     observer.observe(document.body, { attributes: true });
 
-    function updateMapTheme() {
-      const isDarkMode = document.body.classList.contains('dark-mode');
-      const newTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
+     function updateMapTheme() {
+       const isDarkMode = document.body.classList.contains('dark-mode');
+       const newTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
 
-      // Remove existing tile layer and add new one
-      map.eachLayer((layer) => {
-        if (layer instanceof L.TileLayer) {
-          map.removeLayer(layer);
-          L.tileLayer(newTileUrl, {
-            maxZoom: 19,
-            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
-          }).addTo(map);
-        }
-      });
-    }
+       // Remove existing tile layer and add new one
+       submissionMap.eachLayer((layer) => {
+         if (layer instanceof L.TileLayer) {
+           submissionMap.removeLayer(layer);
+           L.tileLayer(newTileUrl, {
+             maxZoom: 19,
+             attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
+           }).addTo(submissionMap);
+         }
+       });
+     }
 
-    map.on('click', function (e) {
-      const { lat, lng } = e.latlng;
-      updateMarker(lat, lng);
-    });
+     submissionMap.on('click', function (e) {
+       const { lat, lng } = e.latlng;
+       updateMarker(lat, lng);
+     });
 
-    function updateMarker(lat, lng) {
-      if (marker) map.removeLayer(marker);
+     function updateMarker(lat, lng) {
+       if (submissionMarker) submissionMap.removeLayer(submissionMarker);
 
-      marker = L.marker([lat, lng], {
-        draggable: true,
-        icon: L.AwesomeMarkers.icon({
-          icon: 'map-pin',
-          markerColor: 'red',
-          prefix: 'fa'
-        })
-      }).addTo(map);
+       submissionMarker = L.marker([lat, lng], {
+         draggable: true,
+         icon: L.AwesomeMarkers.icon({
+           icon: 'map-pin',
+           markerColor: 'red',
+           prefix: 'fa'
+         })
+       }).addTo(submissionMap);
 
-      // Set initial coordinate values
-      updateLatLngInputs(lat, lng);
+       // Set initial coordinate values
+       updateLatLngInputs(lat, lng);
 
-      // Update coordinates when the marker is dragged
-      marker.on('dragend', function (e) {
-        const position = marker.getLatLng();
-        updateLatLngInputs(position.lat, position.lng);
-      });
-    }
+       // Update coordinates when the marker is dragged
+       submissionMarker.on('dragend', function (e) {
+         const position = submissionMarker.getLatLng();
+         updateLatLngInputs(position.lat, position.lng);
+       });
+     }
 
-    function updateLatLngInputs(lat, lng) {
-      document.getElementById('lat').value = lat.toFixed(6);
-      document.getElementById('lng').value = lng.toFixed(6);
-      document.getElementById('coord-display').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-      document.getElementById('coord-display').classList.remove('bg-secondary');
-      document.getElementById('coord-display').classList.add('bg-success');
-    }
+     function updateLatLngInputs(lat, lng) {
+       document.getElementById('lat').value = lat.toFixed(6);
+       document.getElementById('lng').value = lng.toFixed(6);
+       document.getElementById('coord-display').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+       document.getElementById('coord-display').classList.remove('bg-secondary');
+       document.getElementById('coord-display').classList.add('bg-success');
+     }
 
-    // Preview button functionality
-    document.getElementById('preview-location-btn').addEventListener('click', () => {
-      const lat = parseFloat(document.getElementById('lat').value);
-      const lng = parseFloat(document.getElementById('lng').value);
+     // Preview button functionality
+     document.getElementById('preview-location-btn').addEventListener('click', () => {
+       const lat = parseFloat(document.getElementById('lat').value);
+       const lng = parseFloat(document.getElementById('lng').value);
 
-      if (!isNaN(lat) && !isNaN(lng)) {
-        map.setView([lat, lng], 16);
-        updateMarker(lat, lng);
-      } else {
-        alert("Please select a location by clicking on the map first.");
-      }
-    });
+       if (!isNaN(lat) && !isNaN(lng)) {
+         submissionMap.setView([lat, lng], 16);
+         updateMarker(lat, lng);
+       } else {
+         alert("Please select a location by clicking on the map first.");
+       }
+     });
 
-    // Try to center map on user's current location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          map.setView([latitude, longitude], 16);
+     // Try to center map on user's current location
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            submissionMap.setView([latitude, longitude], 16);
 
-          // Remove existing user location marker if any
-          if (userLocationMarker) {
-            map.removeLayer(userLocationMarker);
+            // Remove existing user location marker if any
+            if (submissionUserLocationMarker) {
+              submissionMap.removeLayer(submissionUserLocationMarker);
+            }
+
+            // Add "You are here" marker
+            submissionUserLocationMarker = L.marker([latitude, longitude], {
+              icon: L.AwesomeMarkers.icon({
+                icon: 'user',
+                markerColor: 'green',
+                prefix: 'fa'
+              })
+            }).addTo(submissionMap);
+
+            submissionUserLocationMarker.bindPopup("<div style='text-align: center;'><i class='fas fa-user me-1'></i><br><strong>You are here</strong></div>").openPopup();
+          },
+          (error) => {
+            console.warn("Geolocation failed:", error.message);
           }
-
-          // Add "You are here" marker
-          userLocationMarker = L.marker([latitude, longitude], {
-            icon: L.AwesomeMarkers.icon({
-              icon: 'user',
-              markerColor: 'green',
-              prefix: 'fa'
-            })
-          }).addTo(map);
-
-          userLocationMarker.bindPopup("<div style='text-align: center;'><i class='fas fa-user me-1'></i><br><strong>You are here</strong></div>").openPopup();
-        },
-        (error) => {
-          console.warn("Geolocation failed:", error.message);
-        }
-      );
-    } else {
-      console.warn("Geolocation not supported by this browser.");
-    }
-  </script>
+        );
+      } else {
+        console.warn("Geolocation not supported by this browser.");
+      }
+    </script>
 
 </body>
 

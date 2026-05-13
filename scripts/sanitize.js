@@ -1,7 +1,104 @@
 /**
  * Security Utilities - sanitize.js
- * Provides XSS protection and input validation
+ * Provides XSS protection, input validation, and auth helpers
  */
+
+// --- Admin Configuration ---
+const ADMIN_EMAILS = ['fluphbusiness@gmail.com']; // Keep in sync with app.js
+
+// --- Authentication Helpers ---
+
+/**
+ * Check if user is signed in with Google (non-anonymous)
+ */
+function isUserAuthenticated() {
+  return typeof firebase !== 'undefined'
+    && firebase.auth
+    && firebase.auth().currentUser
+    && firebase.auth().currentUser.providerData.some(p => p.providerId === 'google.com');
+}
+
+/**
+ * Prompt user to sign in with Google
+ * Returns a promise that resolves to true if sign-in successful
+ */
+async function signInWithGoogle() {
+  if (typeof firebase === 'undefined' || typeof firebase.auth === 'undefined') {
+    console.error('Firebase Auth not available');
+    if (typeof addStatusMessage === 'function') {
+      addStatusMessage('Firebase not loaded. Please refresh.', 'error');
+    }
+    return false;
+  }
+
+  const provider = new firebase.auth.GoogleAuthProvider();
+  
+  try {
+    const result = await firebase.auth().signInWithPopup(provider);
+    const user = result.user;
+    
+    console.log('Signed in:', user.uid, user.email);
+    
+    // Create or update user profile in Firestore
+    await createOrUpdateUserProfile(user);
+    
+    if (typeof addStatusMessage === 'function') {
+      addStatusMessage('✅ Signed in with Google', 'success');
+    }
+    return true;
+  } catch (err) {
+    console.error('Google sign-in error:', err.code, err.message);
+    
+    if (err.code === 'auth/popup-blocked') {
+      if (typeof addStatusMessage === 'function') addStatusMessage('Popup blocked. Allow popups.', 'error');
+      alert('Popup blocked. Please allow popups for this site.');
+    } else if (err.code === 'auth/popup-closed-by-user') {
+      if (typeof addStatusMessage === 'function') addStatusMessage('Sign-in cancelled', 'info');
+    } else if (err.code === 'auth/internal-error') {
+      if (typeof addStatusMessage === 'function') addStatusMessage('Auth error. Check console.', 'error');
+      alert('Authentication error. Ensure Google sign-in is enabled in Firebase Console and third-party cookies are allowed.');
+    } else if (err.code === 'auth/network-request-failed') {
+      if (typeof addStatusMessage === 'function') addStatusMessage('Network error.', 'error');
+      alert('Network error.');
+    } else {
+      if (typeof addStatusMessage === 'function') addStatusMessage('Sign-in failed: ' + err.message, 'error');
+    }
+    return false;
+  }
+}
+
+/**
+ * Create or update user profile document in Firestore
+ */
+async function createOrUpdateUserProfile(user) {
+  if (!user || !user.uid) return;
+
+  try {
+    const db = firebase.firestore();
+    const userRef = db.collection('users').doc(user.uid);
+    const doc = await userRef.get();
+
+    const isAdmin = ADMIN_EMAILS.includes((user.email || '').toLowerCase());
+    const role = doc.exists ? (doc.data()?.role || (isAdmin ? 'admin' : 'user')) : (isAdmin ? 'admin' : 'user');
+
+    const userData = {
+      uid: user.uid,
+      email: user.email || '',
+      displayName: user.displayName || user.email?.split('@')[0] || 'Anonymous',
+      photoURL: user.photoURL || null,
+      role: role,
+      createdAt: doc.exists ? doc.data()?.createdAt : firebase.firestore.FieldValue.serverTimestamp(),
+      lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    await userRef.set(userData, { merge: true });
+    console.log('User profile ensured:', user.uid, 'role:', userData.role);
+  } catch (err) {
+    console.error('Error creating/updating user profile:', err);
+  }
+}
+
+// --- XSS Protection ---
 
 // Simple HTML escape function for text content
 function escapeHtml(text) {

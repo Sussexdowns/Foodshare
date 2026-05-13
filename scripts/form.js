@@ -1,18 +1,18 @@
 // form.js
 
-let itemsData = {};
+// window.itemsData is provided by app.js; no redeclaration
 
 // Check if JSON source is enabled (when disabled, use Firebase)
-const useJsonAsSource = localStorage.getItem('useJsonAsSource') !== 'false';
+const formUseJsonAsSource = localStorage.getItem('useJsonAsSource') !== 'false';
 
 // Load items data from appropriate source
 async function loadItemsData() {
-  if (useJsonAsSource) {
+  if (formUseJsonAsSource) {
     // Load from local items.json
     try {
       const response = await fetch(window.BASE_PATH + 'items.json');
       if (!response.ok) throw new Error('Failed to load items.json');
-      itemsData = await response.json();
+      window.itemsData = await response.json();
     } catch (err) {
       console.error('Error loading items.json:', err);
       // Fallback to Firebase if local JSON fails
@@ -32,9 +32,9 @@ async function loadItemsData() {
 
 // Process and sort items data (normalizes field names and sorts)
 function processAndSortItemsData() {
-  for (const category in itemsData) {
-    if (itemsData[category] && Array.isArray(itemsData[category])) {
-      itemsData[category].forEach(item => {
+  for (const category in window.itemsData) {
+    if (window.itemsData[category] && Array.isArray(window.itemsData[category])) {
+      window.itemsData[category].forEach(item => {
         // Normalize field names - ensure both Name and name are set
         if (item.name && !item.Name) item.Name = item.name;
         if (item.icon && !item.Icon) item.Icon = item.icon;
@@ -42,7 +42,7 @@ function processAndSortItemsData() {
         if (item.image && !item.Image) item.Image = item.image;
         if (item.desc && !item.Desc) item.Desc = item.desc;
       });
-      itemsData[category].sort((a, b) => {
+      window.itemsData[category].sort((a, b) => {
         const nameA = a && (a.Name || a.name) ? (a.Name || a.name) : '';
         const nameB = b && (b.Name || b.name) ? (b.Name || b.name) : '';
         return nameA.localeCompare(nameB);
@@ -64,11 +64,11 @@ function loadItemsFromFirebase() {
       snapshot.forEach(doc => {
         const item = doc.data();
         const category = item.category || 'other';
-        if (!itemsData[category]) {
-          itemsData[category] = [];
+        if (!window.itemsData[category]) {
+          window.itemsData[category] = [];
         }
         // Normalize Firebase field names to match items.json format
-        itemsData[category].push({
+        window.itemsData[category].push({
           Name: item.name || item.Name,
           Link: item.link || item.Link,
           Image: item.image || item.Image,
@@ -106,7 +106,7 @@ function populateItemsDropdown(categoryKey) {
   defaultOption.setAttribute('data-desc', '');
   itemSelect.appendChild(defaultOption);
 
-  const items = itemsData[categoryKey];
+  const items = window.itemsData[categoryKey];
   if (!items || !Array.isArray(items)) return;
 
   items.forEach(item => {
@@ -185,7 +185,7 @@ if (categorySelect) {
   categorySelect.addEventListener('change', () => {
     const selected = categorySelect.value;
 
-    if (itemsData[selected]) {
+    if (window.itemsData[selected]) {
       populateItemsDropdown(selected);
     } else {
       if (itemSelect) itemSelect.innerHTML = '';

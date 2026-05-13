@@ -1,129 +1,130 @@
-# Security Hardening Documentation — Google Authentication Requirement
-
-## Overview
-
-The Foodshare app now **requires Google sign-in** for all user-submitted content actions:
-- Submitting a new source/location
-- Liking / disliking a source
-- Reporting a source (via modal)
-- Sending a contact message
-
-Public read access to approved locations remains available without authentication.
-
----
-
-## Report Modal Implementation
-
-A Bootstrap 5 modal has been added for reporting locations. The modal includes:
-
-- **Reason dropdown**: incorrect, unsafe, duplicate, seasonal, other
-- **Details textarea**: optional context
-- **Submit button**: creates a document in the `reports` Firestore collection
-
-### Data Model
-
-```javascript
-{
-  sourceId: string,   // ID of reported source
-  reason: string,     // selected reason (e.g., 'duplicate')
-  details: string,    // optional free-text description
-  userId: string,     // Firebase UID of reporter
-  userEmail: string,  // Reporter's email
-  name: string,       // reason (mirrors your schema)
-  status: 'pending',  // initial status
-  adminNote: '',      // for admin use
-  createdAt: serverTimestamp
-}
-```
-
-### Firestore Rules for `/reports`
-
-```firestore
-match /reports/{reportId} {
-  // Admins can read, update, delete
-  allow read, update, delete: if request.auth != null
-    && request.auth.token.firebase.sign_in_provider == 'google.com'
-    && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-    && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-
-  // Authenticated Google users can create reports
-  allow create: if request.auth != null
-                && request.auth.token.firebase.sign_in_provider == 'google.com'
-                && request.resource.data.keys().hasAll(['sourceId', 'reason', 'userId', 'name'])
-                && request.resource.data.sourceId is string
-                && request.resource.data.reason is string
-                && request.resource.data.userId is string
-                && request.resource.data.name is string
-                && (request.resource.data.details is string || request.resource.data.details == null);
-}
-```
-
 ### Client-Side Flow
 
 1. User clicks flag icon on a location (popup or footer).
-2. If not signed in → prompt → Google sign-in popup → then modal opens.
-3. Modal opens, user selects reason and optional details.
+2. If not signed in → prompt → Google sign-in popup → after success, modal opens.
+3. Modal shows with reason dropdown and optional details textarea.
 4. On submit:
    - Validates required fields.
-   - Creates a new report document in `reports` collection.
+   - Creates a new report document in Firestore `reports` collection.
    - Closes modal.
-   - Also sends feedback to Apps Script to increment the source's `reports` counter (for display).
+   - Also sends feedback to Apps Script to increment the source's `reports` counter (for backwards compatibility with UI display).
    - Stores a session flag to prevent duplicate reports this session.
-5. Report button is disabled for the remainder of the session (sessionStorage).
-
-### Files Modified
-
-- `footer-details.html` — added report modal markup inside footer panel
-- `index.html` — added report modal markup (before scripts), ensuring Bootstrap modal component exists
-- `scripts/app.js` — added `openReportModal()`, `submitReport()`, updated `handleFeedbackClick` and `handleFooterActionClick` to route report action to modal, attached submit event listener (line ~2418)
+5. Report button is disabled for the remainder of the session.
 
 ---
 
-## Previously Completed Hardening (Recap)
+## Bugs Fixed (2026-05-13)
 
-[... previous sections remain ...]
-
----
-
-## Deployment Checklist (Updated)
-
-- [x] Deploy Firestore rules with `reports` collection (publish in Firebase Console)
-- [x] Add `firebase-auth-compat.js` to `index.html` (done)
-- [x] `submit.html` and `contact.html` load Firebase Auth and `config.js` (done)
-- [x] Deploy updated `scripts/app.js` to GitHub Pages
-- [ ] (Optional) Update Apps Script to verify Firebase ID token
-- [ ] Restrict Firebase API key to your domains in Google Cloud Console
+- **Duplicate `itemsData` declaration** — `form.js` was declaring `let itemsData = {}` which conflicted with global `itemsData` from `app.js`. Changed to use the global.
+- **Extra closing brace in submit.html** — Removed duplicate/incorrectly nested block causing `Unexpected token '}'` error at line 431.
+- **Firebase "No Firebase App" error** — Fixed script load order: `config.js` must load before Firebase SDKs. Corrected paths in `submit.html` (`../config.js` → `config.js`). Removed duplicate inline Firebase initialization that conflicted with `app.js`'s `initializeFirebase()`.
+- **Leaflet fullscreen icon CSP violation** — Added `cdn.jsdelivr.net` to `img-src` in CSP meta tags for pages using Leaflet fullscreen control (`index.html`, `submit.html`).
+- **Syntax/duplicate function definitions** — Cleaned up `app.js` after refactor: removed stray duplicate code blocks, ensured all functions defined once.
+- **Auth errors on report modal** — Added robust `signInWithGoogle()` with detailed error messages and proper timing. Ensured Firebase Auth is initialized before use.
 
 ---
 
-## Testing Report Flow
+## Deployment Checklist (Final)
 
-1. Open map in incognito (no auth).
-2. Click a location's flag → should prompt Google sign-in.
-3. After sign-in, modal opens.
-4. Select a reason, optionally add details, click Submit.
-5. Verify success message appears.
-6. Verify `reports` collection in Firestore gets a new document with correct fields.
-7. Verify source's report count increments via Apps Script (check Google Sheet or UI).
-8. Try reporting same location again → button disabled, sessionStorage prevents repeat.
+- [x] Firestore rules deployed with `reports` collection permissions
+- [x] All HTML pages include correct script order: `config.js` → Firebase SDKs → `sanitize.js` → `base.js` → `app.js` / page-specific scripts
+- [x] CSP updated on all pages to include necessary image sources
+- [x] Report modal present in `index.html` (or loaded via footer-details if using same modal globally)
+- [x] Google sign-in enabled in Firebase Console → Authentication → Sign-in method
+- [x] Authorized domains include `*.github.io` and any custom domain
+- [ ] (Optional) Restrict Firebase API key in Google Cloud Console to authorized referrers
+- [ ] (Optional) Update Apps Script to verify Firebase ID token for like/dislike/report actions
+- [ ] (Optional) Create admin dashboard to manage reports
 
 ---
 
-## Outstanding Risks & Future Work
+## Testing Steps
 
-### Apps Script Feedback Endpoint (Like/Dislike/Report)
-The Apps Script endpoint (`fileExec`) still does not verify Firebase ID tokens. For production-grade protection against API abuse, pass `firebase.auth().currentUser.getIdToken()` in the request and verify it server-side.
+### Authentication
+1. Open site in incognito.
+2. Click a Like button → should see "Please sign in with Google" status, then sign-in popup.
+3. Complete sign-in → success message, button count increments (if backend works).
+4. Sign out (clear session or add sign-out button if implemented).
 
-**Note**: The report modal writes directly to Firestore `reports` collection, which **does** enforce Google auth via security rules. The Apps Script increment for the report count is still used for backwards compatibility with existing sheet but is not the source of truth for report records.
+### Report Modal
+1. Click flag icon → if not signed in, sign in first.
+2. Modal opens; select a reason from dropdown, optionally add details.
+3. Click Submit → spinner → success → modal closes.
+4. Verify Firestore `reports` collection has a new document with correct fields (`sourceId`, `reason`, `userId`, `name`, `details`, `status: 'pending'`, `createdAt`).
+5. Try reporting same location again → button disabled, sessionStorage prevents duplicate.
+6. Check browser console for any errors.
 
-### Contact Form Verification
-The contact form posts to Google Forms; protection is client-side only. Consider routing through Apps Script with token validation.
+### Submit Form
+1. Navigate to Submit Content page.
+2. Click on map to set location, optionally drag to adjust.
+3. Fill form (category, item, name, description, etc.). Ensure name ≥ 2 chars.
+4. Submit → if not signed in, must sign in first.
+5. After auth, form submits to Firestore `sources` collection (approved=false).
+6. Verify success message and form reset.
 
-### Admin Interface
-You need an admin panel to view, update status (`pending`, `resolved_delete`, etc.), and add `adminNote` to reports. Create a simple protected page (admin-only) that queries `/reports` and allows updates.
+### Contact Form
+1. Navigate to Contact page.
+2. Fill name, email, message.
+3. Submit → if not signed in, must sign in first.
+4. After auth, form posts to Google Form.
+5. Verify success alert.
+
+### CSP & XSS
+- Open browser console → no CSP violations (Leaflet icon allowed, images allowed).
+- Try entering HTML tags in any text field → should be escaped (e.g., `<script>` appears as text, not executed).
+
+### Firestore Rules
+- Try writing directly to `sources` without auth or with missing fields → permission denied.
+- Try writing to `reports` as non-Google user → permission denied.
+- Admin can read/write reports; regular users can only create.
+
+---
+
+## Outstanding Issues
+
+### Report Count Increment
+Currently, `submitReport()` calls `submitFeedback(sourceId, 'report')` which POSTs to the Apps Script endpoint to increment the `reports` column in a Google Sheet. This is a separate backend from Firestore. For consistency, you may want to:
+- Update the source document's `reports` field directly in Firestore using a transaction in the `submitReport` function after adding the report.
+- Or rely solely on the `reports` collection and compute counts client-side by querying reports by sourceId.
+
+The current approach duplicates report data (one in Firestore reports, one count in Apps Script sheet). Choose one source of truth.
+
+### Admin Panel
+No UI exists to view or manage reports. Create an admin-only page that:
+- Lists all reports (query `reports` collection, ordered by `createdAt` desc)
+- Allows admin to update `status` (`pending`, `resolved_delete`, `resolved_fixed`, `dismissed`) and add `adminNote`.
+- Optionally delete the report or the associated source.
+
+Admin check: `request.auth.token.firebase.sign_in_provider == 'google.com' && get(.../users/...).data.role == 'admin'`.
 
 ### User Role Management
-The admin check relies on a `role` field in the user's Firestore document at `/users/{uid}`. Ensure this field is set to `'admin'` for admin accounts. You can manually set via Firebase Console or create a self-service admin grant (securely).
+Set admin role by manually updating a user's document in Firestore `users` collection: `{ role: 'admin', ... }`. Or create a self-serve admin grant (secure).
 
-### API Key Restrictions
-Restrict Firebase API key to authorized domains in Google Cloud Console.
+### reCAPTCHA on Submit Form
+Currently no CAPTCHA on the source submission form. Consider adding reCAPTCHA v2/v3 to prevent spam. The client check is not server-verified currently.
+
+### Contact Form Server Verification
+Contact messages go directly to Google Forms without server-side auth check. To enforce Google login server-side, route through Apps Script that verifies Firebase ID token before posting to Google Sheet/Form.
+
+---
+
+## File Change Summary
+
+**Modified:**
+- `firestore.rules` — cleaned, added `/reports` with proper rules
+- `index.html` — added report modal, updated CSP, fixed script order
+- `submit.html` — fixed config path, removed duplicate init, fixed syntax error, updated CSP
+- `contact.html` — cleaned script order, removed duplicate auth init
+- `scripts/app.js` — added `openReportModal`, `submitReport`, auth checks, `initializeFirebase` improvements
+- `scripts/form.js` — removed duplicate `itemsData` declaration
+- `scripts/sanitize.js` — new (XSS/CSRF utilities)
+- `SECURITY.md` — comprehensive documentation
+
+**New:**
+- Report modal in `index.html` (Bootstrap 5)
+- `apps-script-code.gs` (server-side rate limiting stub)
+
+---
+
+**Last updated:** 2026-05-13  
+**By:** Kilo Security Hardening & Report Feature Implementation

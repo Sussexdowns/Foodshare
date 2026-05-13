@@ -1,20 +1,1457 @@
 {
   "towns": [
     {
-      "id": "aberdeen",
-      "name": "Aberdeen",
+      "id": "avon",
+      "name": "Avon",
+      "countyId": "avon",
+      "csvFile": "data/avon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_avon.sql"
+    },
+    {
+      "id": "bedfordshire",
+      "name": "Bedfordshire",
+      "countyId": "bedfordshire",
+      "csvFile": "data/bedfordshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bedfordshire.sql"
+    },
+    {
+      "id": "luton",
+      "name": "Luton",
+      "countyId": "bedfordshire",
       "center": [
-        57.1497,
-        -2.0943
+        51.8787,
+        -0.42
       ],
       "bounds": {
-        "north": 57.25,
-        "south": 57.05,
+        "north": 51.95,
+        "south": 51.8,
+        "east": -0.35,
+        "west": -0.5
+      },
+      "csvFile": "data/luton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_luton.sql"
+    },
+    {
+      "id": "berkshire",
+      "name": "Berkshire",
+      "countyId": "berkshire",
+      "csvFile": "data/berkshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_berkshire.sql"
+    },
+    {
+      "id": "reading",
+      "name": "Reading",
+      "countyId": "berkshire",
+      "center": [
+        51.4543,
+        -0.9701
+      ],
+      "bounds": {
+        "north": 51.52,
+        "south": 51.4,
+        "east": -0.88,
+        "west": -1.08
+      },
+      "csvFile": "data/reading_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_reading.sql"
+    },
+    {
+      "id": "slough",
+      "name": "Slough",
+      "countyId": "berkshire",
+      "center": [
+        51.5085,
+        -0.5916
+      ],
+      "bounds": {
+        "north": 51.55,
+        "south": 51.45,
+        "east": -0.5,
+        "west": -0.7
+      },
+      "csvFile": "data/slough_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_slough.sql"
+    },
+    {
+      "id": "bristol",
+      "name": "Bristol",
+      "countyId": "bristol",
+      "csvFile": "data/bristol_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bristol.sql"
+    },
+    {
+      "id": "buckinghamshire",
+      "name": "Buckinghamshire",
+      "countyId": "buckinghamshire",
+      "csvFile": "data/buckinghamshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_buckinghamshire.sql"
+    },
+    {
+      "id": "milton_keynes",
+      "name": "Milton Keynes",
+      "countyId": "buckinghamshire",
+      "center": [
+        52.0406,
+        -0.7594
+      ],
+      "bounds": {
+        "north": 52.1,
+        "south": 51.95,
+        "east": -0.65,
+        "west": -0.85
+      },
+      "csvFile": "data/milton_keynes_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_milton_keynes.sql"
+    },
+    {
+      "id": "cambridgeshire",
+      "name": "Cambridgeshire",
+      "countyId": "cambridgeshire",
+      "csvFile": "data/cambridgeshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cambridgeshire.sql"
+    },
+    {
+      "id": "peterborough",
+      "name": "Peterborough",
+      "countyId": "cambridgeshire",
+      "center": [
+        52.5695,
+        -0.2405
+      ],
+      "bounds": {
+        "north": 52.62,
+        "south": 52.5,
+        "east": -0.15,
+        "west": -0.35
+      },
+      "csvFile": "data/peterborough_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_peterborough.sql"
+    },
+    {
+      "id": "cheshire",
+      "name": "Cheshire",
+      "countyId": "cheshire",
+      "csvFile": "data/cheshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cheshire.sql"
+    },
+    {
+      "id": "warrington",
+      "name": "Warrington",
+      "countyId": "cheshire",
+      "csvFile": "data/warrington_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_warrington.sql"
+    },
+    {
+      "id": "county_durham",
+      "name": "County Durham",
+      "countyId": "county_durham",
+      "csvFile": "data/county_durham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_county_durham.sql"
+    },
+    {
+      "id": "hartlepool",
+      "name": "Hartlepool",
+      "countyId": "county_durham",
+      "csvFile": "data/hartlepool_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hartlepool.sql"
+    },
+    {
+      "id": "cumberland",
+      "name": "Cumberland",
+      "countyId": "cumberland",
+      "csvFile": "data/cumberland_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cumberland.sql"
+    },
+    {
+      "id": "cumbria",
+      "name": "Cumbria",
+      "countyId": "cumbria",
+      "csvFile": "data/cumbria_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cumbria.sql"
+    },
+    {
+      "id": "derby",
+      "name": "Derby",
+      "countyId": "derbyshire",
+      "csvFile": "data/derby_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_derby.sql"
+    },
+    {
+      "id": "derbyshire",
+      "name": "Derbyshire",
+      "countyId": "derbyshire",
+      "csvFile": "data/derbyshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_derbyshire.sql"
+    },
+    {
+      "id": "devon",
+      "name": "Devon",
+      "countyId": "devon",
+      "csvFile": "data/devon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_devon.sql"
+    },
+    {
+      "id": "exeter",
+      "name": "Exeter",
+      "countyId": "devon",
+      "center": [
+        50.719,
+        -3.533
+      ],
+      "bounds": {
+        "north": 50.75,
+        "south": 50.68,
+        "east": -3.45,
+        "west": -3.6
+      },
+      "csvFile": "data/exeter_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_exeter.sql"
+    },
+    {
+      "id": "plymouth",
+      "name": "Plymouth",
+      "countyId": "devon",
+      "center": [
+        50.3755,
+        -4.1427
+      ],
+      "bounds": {
+        "north": 50.46,
+        "south": 50.33,
+        "east": -4.0,
+        "west": -4.25
+      },
+      "csvFile": "data/plymouth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_plymouth.sql"
+    },
+    {
+      "id": "dorchester",
+      "name": "Dorchester",
+      "countyId": "dorset",
+      "csvFile": "data/dorchester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dorchester.sql"
+    },
+    {
+      "id": "dorset",
+      "name": "Dorset",
+      "countyId": "dorset",
+      "csvFile": "data/dorset_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dorset.sql"
+    },
+    {
+      "id": "east_suffolk",
+      "name": "East Suffolk",
+      "countyId": "east_suffolk",
+      "csvFile": "data/east_suffolk_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_east_suffolk.sql"
+    },
+    {
+      "id": "brighton_hove",
+      "name": "Brighton Hove",
+      "countyId": "east_sussex",
+      "csvFile": "data/brighton_hove_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_brighton_hove.sql"
+    },
+    {
+      "id": "east_sussex",
+      "name": "East Sussex",
+      "countyId": "east_sussex",
+      "csvFile": "data/east_sussex_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_east_sussex.sql"
+    },
+    {
+      "id": "hastings",
+      "name": "Hastings",
+      "countyId": "east_sussex",
+      "center": [
+        50.8542,
+        0.5735
+      ],
+      "bounds": {
+        "north": 50.91,
+        "south": 50.82,
+        "east": 0.67,
+        "west": 0.47
+      },
+      "csvFile": "data/hastings_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hastings.sql"
+    },
+    {
+      "id": "lewes",
+      "name": "Lewes",
+      "countyId": "east_sussex",
+      "center": [
+        50.8744,
+        0.0122
+      ],
+      "bounds": {
+        "north": 50.92,
+        "south": 50.83,
+        "east": 0.08,
+        "west": -0.05
+      },
+      "csvFile": "data/lewes_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_lewes.sql"
+    },
+    {
+      "id": "brentwood",
+      "name": "Brentwood",
+      "countyId": "essex",
+      "csvFile": "data/brentwood_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_brentwood.sql"
+    },
+    {
+      "id": "chelmsford",
+      "name": "Chelmsford",
+      "countyId": "essex",
+      "center": [
+        51.7356,
+        0.4688
+      ],
+      "bounds": {
+        "north": 51.8,
+        "south": 51.65,
+        "east": 0.55,
+        "west": 0.35
+      },
+      "csvFile": "data/chelmsford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_chelmsford.sql"
+    },
+    {
+      "id": "colchester",
+      "name": "Colchester",
+      "countyId": "essex",
+      "center": [
+        51.8959,
+        0.8919
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.85,
+        "east": 1.0,
+        "west": 0.8
+      },
+      "csvFile": "data/colchester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_colchester.sql"
+    },
+    {
+      "id": "essex",
+      "name": "Essex",
+      "countyId": "essex",
+      "csvFile": "data/essex_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_essex.sql"
+    },
+    {
+      "id": "southend",
+      "name": "Southend",
+      "countyId": "essex",
+      "center": [
+        51.5413,
+        0.7132
+      ],
+      "bounds": {
+        "north": 51.58,
+        "south": 51.5,
+        "east": 0.8,
+        "west": 0.6
+      },
+      "csvFile": "data/southend_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_southend.sql"
+    },
+    {
+      "id": "cheltenham",
+      "name": "Cheltenham",
+      "countyId": "gloucestershire",
+      "center": [
+        51.8995,
+        -2.0711
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.85,
+        "east": -1.95,
+        "west": -2.15
+      },
+      "csvFile": "data/cheltenham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cheltenham.sql"
+    },
+    {
+      "id": "gloucester",
+      "name": "Gloucester",
+      "countyId": "gloucestershire",
+      "csvFile": "data/gloucester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_gloucester.sql"
+    },
+    {
+      "id": "gloucestershire",
+      "name": "Gloucestershire",
+      "countyId": "gloucestershire",
+      "csvFile": "data/gloucestershire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_gloucestershire.sql"
+    },
+    {
+      "id": "greater_london",
+      "name": "Greater London",
+      "countyId": "greater_london",
+      "csvFile": "data/greater_london_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_greater_london.sql"
+    },
+    {
+      "id": "greater_manchester",
+      "name": "Greater Manchester",
+      "countyId": "greater_manchester",
+      "csvFile": "data/greater_manchester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_greater_manchester.sql"
+    },
+    {
+      "id": "manchester",
+      "name": "Manchester",
+      "countyId": "greater_manchester",
+      "csvFile": "data/manchester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_manchester.sql"
+    },
+    {
+      "id": "salford",
+      "name": "Salford",
+      "countyId": "greater_manchester",
+      "csvFile": "data/salford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_salford.sql"
+    },
+    {
+      "id": "stockport",
+      "name": "Stockport",
+      "countyId": "greater_manchester",
+      "center": [
+        53.4083,
+        -2.1494
+      ],
+      "bounds": {
+        "north": 53.45,
+        "south": 53.35,
+        "east": -2.05,
+        "west": -2.25
+      },
+      "csvFile": "data/stockport_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_stockport.sql"
+    },
+    {
+      "id": "wigan",
+      "name": "Wigan",
+      "countyId": "greater_manchester",
+      "csvFile": "data/wigan_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_wigan.sql"
+    },
+    {
+      "id": "basingstoke",
+      "name": "Basingstoke",
+      "countyId": "hampshire",
+      "csvFile": "data/basingstoke_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_basingstoke.sql"
+    },
+    {
+      "id": "eastleigh",
+      "name": "Eastleigh",
+      "countyId": "hampshire",
+      "csvFile": "data/eastleigh_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_eastleigh.sql"
+    },
+    {
+      "id": "hampshire",
+      "name": "Hampshire",
+      "countyId": "hampshire",
+      "csvFile": "data/hampshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hampshire.sql"
+    },
+    {
+      "id": "portsmouth",
+      "name": "Portsmouth",
+      "countyId": "hampshire",
+      "center": [
+        50.8198,
+        -1.088
+      ],
+      "bounds": {
+        "north": 50.88,
+        "south": 50.77,
+        "east": -1.0,
+        "west": -1.15
+      },
+      "csvFile": "data/portsmouth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_portsmouth.sql"
+    },
+    {
+      "id": "southampton",
+      "name": "Southampton",
+      "countyId": "hampshire",
+      "center": [
+        50.9097,
+        -1.4044
+      ],
+      "bounds": {
+        "north": 50.98,
+        "south": 50.85,
+        "east": -1.3,
+        "west": -1.55
+      },
+      "csvFile": "data/southampton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_southampton.sql"
+    },
+    {
+      "id": "herefordshire",
+      "name": "Herefordshire",
+      "countyId": "herefordshire",
+      "csvFile": "data/herefordshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_herefordshire.sql"
+    },
+    {
+      "id": "hertfordshire",
+      "name": "Hertfordshire",
+      "countyId": "hertfordshire",
+      "csvFile": "data/hertfordshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hertfordshire.sql"
+    },
+    {
+      "id": "st_albans",
+      "name": "St Albans",
+      "countyId": "hertfordshire",
+      "center": [
+        51.7527,
+        -0.3394
+      ],
+      "bounds": {
+        "north": 51.8,
+        "south": 51.7,
+        "east": -0.25,
+        "west": -0.45
+      },
+      "csvFile": "data/st_albans_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_st_albans.sql"
+    },
+    {
+      "id": "canterbury",
+      "name": "Canterbury",
+      "countyId": "kent",
+      "center": [
+        51.2802,
+        1.0789
+      ],
+      "bounds": {
+        "north": 51.35,
+        "south": 51.2,
+        "east": 1.15,
+        "west": 1.0
+      },
+      "csvFile": "data/canterbury_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_canterbury.sql"
+    },
+    {
+      "id": "dartford",
+      "name": "Dartford",
+      "countyId": "kent",
+      "csvFile": "data/dartford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dartford.sql"
+    },
+    {
+      "id": "kent",
+      "name": "Kent",
+      "countyId": "kent",
+      "csvFile": "data/kent_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_kent.sql"
+    },
+    {
+      "id": "maidstone",
+      "name": "Maidstone",
+      "countyId": "kent",
+      "center": [
+        51.2725,
+        0.5233
+      ],
+      "bounds": {
+        "north": 51.32,
+        "south": 51.22,
+        "east": 0.6,
+        "west": 0.45
+      },
+      "csvFile": "data/maidstone_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_maidstone.sql"
+    },
+    {
+      "id": "blackburn",
+      "name": "Blackburn",
+      "countyId": "lancashire",
+      "center": [
+        53.748,
+        -2.482
+      ],
+      "bounds": {
+        "north": 53.8,
+        "south": 53.7,
+        "east": -2.4,
+        "west": -2.6
+      },
+      "csvFile": "data/blackburn_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_blackburn.sql"
+    },
+    {
+      "id": "blackpool",
+      "name": "Blackpool",
+      "countyId": "lancashire",
+      "center": [
+        53.8175,
+        -3.0357
+      ],
+      "bounds": {
+        "north": 53.86,
+        "south": 53.77,
+        "east": -2.95,
+        "west": -3.1
+      },
+      "csvFile": "data/blackpool_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_blackpool.sql"
+    },
+    {
+      "id": "burnley",
+      "name": "Burnley",
+      "countyId": "lancashire",
+      "csvFile": "data/burnley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_burnley.sql"
+    },
+    {
+      "id": "lancashire",
+      "name": "Lancashire",
+      "countyId": "lancashire",
+      "csvFile": "data/lancashire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_lancashire.sql"
+    },
+    {
+      "id": "preston",
+      "name": "Preston",
+      "countyId": "lancashire",
+      "center": [
+        53.7609,
+        -2.7033
+      ],
+      "bounds": {
+        "north": 53.82,
+        "south": 53.7,
+        "east": -2.6,
+        "west": -2.8
+      },
+      "csvFile": "data/preston_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_preston.sql"
+    },
+    {
+      "id": "leicester",
+      "name": "Leicester",
+      "countyId": "leicestershire",
+      "csvFile": "data/leicester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_leicester.sql"
+    },
+    {
+      "id": "leicestershire",
+      "name": "Leicestershire",
+      "countyId": "leicestershire",
+      "csvFile": "data/leicestershire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_leicestershire.sql"
+    },
+    {
+      "id": "lincolnshire",
+      "name": "Lincolnshire",
+      "countyId": "lincolnshire",
+      "csvFile": "data/lincolnshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_lincolnshire.sql"
+    },
+    {
+      "id": "liverpool",
+      "name": "Liverpool",
+      "countyId": "merseyside",
+      "center": [
+        53.4084,
+        -2.9916
+      ],
+      "bounds": {
+        "north": 53.5,
+        "south": 53.32,
+        "east": -2.85,
+        "west": -3.15
+      },
+      "csvFile": "data/liverpool_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_liverpool.sql"
+    },
+    {
+      "id": "merseyside",
+      "name": "Merseyside",
+      "countyId": "merseyside",
+      "csvFile": "data/merseyside_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_merseyside.sql"
+    },
+    {
+      "id": "middlesex",
+      "name": "Middlesex",
+      "countyId": "middlesex",
+      "csvFile": "data/middlesex_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_middlesex.sql"
+    },
+    {
+      "id": "norfolk",
+      "name": "Norfolk",
+      "countyId": "norfolk",
+      "csvFile": "data/norfolk_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_norfolk.sql"
+    },
+    {
+      "id": "norwich",
+      "name": "Norwich",
+      "countyId": "norfolk",
+      "center": [
+        52.6309,
+        1.2974
+      ],
+      "bounds": {
+        "north": 52.7,
+        "south": 52.55,
+        "east": 1.4,
+        "west": 1.2
+      },
+      "csvFile": "data/norwich_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_norwich.sql"
+    },
+    {
+      "id": "north_yorkshire",
+      "name": "North Yorkshire",
+      "countyId": "north_yorkshire",
+      "csvFile": "data/north_yorkshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_north_yorkshire.sql"
+    },
+    {
+      "id": "stockton_on_tees",
+      "name": "Stockton On Tees",
+      "countyId": "north_yorkshire",
+      "csvFile": "data/stockton_on_tees_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_stockton_on_tees.sql"
+    },
+    {
+      "id": "york",
+      "name": "York",
+      "countyId": "north_yorkshire",
+      "csvFile": "data/york_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_york.sql"
+    },
+    {
+      "id": "northampton",
+      "name": "Northampton",
+      "countyId": "northamptonshire",
+      "csvFile": "data/northampton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_northampton.sql"
+    },
+    {
+      "id": "northamptonshire",
+      "name": "Northamptonshire",
+      "countyId": "northamptonshire",
+      "csvFile": "data/northamptonshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_northamptonshire.sql"
+    },
+    {
+      "id": "northumberland",
+      "name": "Northumberland",
+      "countyId": "northumberland",
+      "csvFile": "data/northumberland_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_northumberland.sql"
+    },
+    {
+      "id": "nottingham",
+      "name": "Nottingham",
+      "countyId": "nottinghamshire",
+      "csvFile": "data/nottingham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_nottingham.sql"
+    },
+    {
+      "id": "nottinghamshire",
+      "name": "Nottinghamshire",
+      "countyId": "nottinghamshire",
+      "csvFile": "data/nottinghamshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_nottinghamshire.sql"
+    },
+    {
+      "id": "oxford",
+      "name": "Oxford",
+      "countyId": "oxfordshire",
+      "csvFile": "data/oxford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_oxford.sql"
+    },
+    {
+      "id": "oxfordshire",
+      "name": "Oxfordshire",
+      "countyId": "oxfordshire",
+      "csvFile": "data/oxfordshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_oxfordshire.sql"
+    },
+    {
+      "id": "rutland",
+      "name": "Rutland",
+      "countyId": "rutland",
+      "csvFile": "data/rutland_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_rutland.sql"
+    },
+    {
+      "id": "shropshire",
+      "name": "Shropshire",
+      "countyId": "shropshire",
+      "csvFile": "data/shropshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_shropshire.sql"
+    },
+    {
+      "id": "telford",
+      "name": "Telford",
+      "countyId": "shropshire",
+      "center": [
+        52.6784,
+        -2.4453
+      ],
+      "bounds": {
+        "north": 52.75,
+        "south": 52.6,
+        "east": -2.3,
+        "west": -2.6
+      },
+      "csvFile": "data/telford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_telford.sql"
+    },
+    {
+      "id": "somerset",
+      "name": "Somerset",
+      "countyId": "somerset",
+      "csvFile": "data/somerset_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_somerset.sql"
+    },
+    {
+      "id": "barnsley",
+      "name": "Barnsley",
+      "countyId": "south_yorkshire",
+      "csvFile": "data/barnsley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_barnsley.sql"
+    },
+    {
+      "id": "doncaster",
+      "name": "Doncaster",
+      "countyId": "south_yorkshire",
+      "csvFile": "data/doncaster_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_doncaster.sql"
+    },
+    {
+      "id": "rotherham",
+      "name": "Rotherham",
+      "countyId": "south_yorkshire",
+      "center": [
+        53.43,
+        -1.3568
+      ],
+      "bounds": {
+        "north": 53.48,
+        "south": 53.38,
+        "east": -1.25,
+        "west": -1.45
+      },
+      "csvFile": "data/rotherham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_rotherham.sql"
+    },
+    {
+      "id": "sheffield",
+      "name": "Sheffield",
+      "countyId": "south_yorkshire",
+      "center": [
+        53.3811,
+        -1.4701
+      ],
+      "bounds": {
+        "north": 53.5,
+        "south": 53.2,
+        "east": -1.3,
+        "west": -1.6
+      },
+      "csvFile": "data/sheffield_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_sheffield.sql"
+    },
+    {
+      "id": "south_yorkshire",
+      "name": "South Yorkshire",
+      "countyId": "south_yorkshire",
+      "csvFile": "data/south_yorkshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_south_yorkshire.sql"
+    },
+    {
+      "id": "cannock",
+      "name": "Cannock",
+      "countyId": "staffordshire",
+      "csvFile": "data/cannock_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cannock.sql"
+    },
+    {
+      "id": "staffordshire",
+      "name": "Staffordshire",
+      "countyId": "staffordshire",
+      "csvFile": "data/staffordshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_staffordshire.sql"
+    },
+    {
+      "id": "stoke_on_trent",
+      "name": "Stoke On Trent",
+      "countyId": "staffordshire",
+      "center": [
+        53.002,
+        -2.185
+      ],
+      "bounds": {
+        "north": 53.1,
+        "south": 52.9,
+        "east": -2.1,
+        "west": -2.3
+      },
+      "csvFile": "data/stoke_on_trent_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_stoke_on_trent.sql"
+    },
+    {
+      "id": "ipswich",
+      "name": "Ipswich",
+      "countyId": "suffolk",
+      "center": [
+        52.0567,
+        1.1482
+      ],
+      "bounds": {
+        "north": 52.1,
+        "south": 52.0,
+        "east": 1.25,
+        "west": 1.05
+      },
+      "csvFile": "data/ipswich_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ipswich.sql"
+    },
+    {
+      "id": "suffolk",
+      "name": "Suffolk",
+      "countyId": "suffolk",
+      "csvFile": "data/suffolk_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_suffolk.sql"
+    },
+    {
+      "id": "epsom",
+      "name": "Epsom",
+      "countyId": "surrey",
+      "csvFile": "data/epsom_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_epsom.sql"
+    },
+    {
+      "id": "guildford",
+      "name": "Guildford",
+      "countyId": "surrey",
+      "center": [
+        51.2362,
+        -0.5704
+      ],
+      "bounds": {
+        "north": 51.28,
+        "south": 51.18,
+        "east": -0.5,
+        "west": -0.65
+      },
+      "csvFile": "data/guildford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_guildford.sql"
+    },
+    {
+      "id": "surrey",
+      "name": "Surrey",
+      "countyId": "surrey",
+      "csvFile": "data/surrey_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_surrey.sql"
+    },
+    {
+      "id": "sussex",
+      "name": "Sussex",
+      "countyId": "sussex",
+      "csvFile": "data/sussex_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_sussex.sql"
+    },
+    {
+      "id": "gateshead",
+      "name": "Gateshead",
+      "countyId": "tyne_and_wear",
+      "csvFile": "data/gateshead_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_gateshead.sql"
+    },
+    {
+      "id": "newcastle",
+      "name": "Newcastle",
+      "countyId": "tyne_and_wear",
+      "center": [
+        54.9783,
+        -1.6178
+      ],
+      "bounds": {
+        "north": 55.05,
+        "south": 54.9,
+        "east": -1.5,
+        "west": -1.75
+      },
+      "csvFile": "data/newcastle_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_newcastle.sql"
+    },
+    {
+      "id": "sunderland",
+      "name": "Sunderland",
+      "countyId": "tyne_and_wear",
+      "center": [
+        54.9069,
+        -1.3838
+      ],
+      "bounds": {
+        "north": 54.95,
+        "south": 54.85,
+        "east": -1.3,
+        "west": -1.45
+      },
+      "csvFile": "data/sunderland_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_sunderland.sql"
+    },
+    {
+      "id": "tyne_and_wear",
+      "name": "Tyne And Wear",
+      "countyId": "tyne_and_wear",
+      "csvFile": "data/tyne_and_wear_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_tyne_and_wear.sql"
+    },
+    {
+      "id": "warwickshire",
+      "name": "Warwickshire",
+      "countyId": "warwickshire",
+      "csvFile": "data/warwickshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_warwickshire.sql"
+    },
+    {
+      "id": "birmingham",
+      "name": "Birmingham",
+      "countyId": "west_midlands",
+      "center": [
+        52.4862,
+        -1.8904
+      ],
+      "bounds": {
+        "north": 52.6,
+        "south": 52.3,
+        "east": -1.7,
+        "west": -2.1
+      },
+      "csvFile": "data/birmingham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_birmingham.sql"
+    },
+    {
+      "id": "coventry",
+      "name": "Coventry",
+      "countyId": "west_midlands",
+      "center": [
+        52.4068,
+        -1.5197
+      ],
+      "bounds": {
+        "north": 52.5,
+        "south": 52.3,
+        "east": -1.4,
+        "west": -1.6
+      },
+      "csvFile": "data/coventry_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_coventry.sql"
+    },
+    {
+      "id": "dudley",
+      "name": "Dudley",
+      "countyId": "west_midlands",
+      "center": [
+        52.5123,
+        -2.0811
+      ],
+      "bounds": {
+        "north": 52.55,
+        "south": 52.45,
+        "east": -2.0,
+        "west": -2.2
+      },
+      "csvFile": "data/dudley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dudley.sql"
+    },
+    {
+      "id": "west_midlands",
+      "name": "West Midlands",
+      "countyId": "west_midlands",
+      "csvFile": "data/west_midlands_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_west_midlands.sql"
+    },
+    {
+      "id": "wolverhampton",
+      "name": "Wolverhampton",
+      "countyId": "west_midlands",
+      "center": [
+        52.5862,
+        -2.1288
+      ],
+      "bounds": {
+        "north": 52.65,
+        "south": 52.5,
         "east": -2.0,
         "west": -2.25
       },
-      "csvFile": "data/aberdeen_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_aberdeen.sql"
+      "csvFile": "data/wolverhampton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_wolverhampton.sql"
+    },
+    {
+      "id": "west_riding",
+      "name": "West Riding",
+      "countyId": "west_riding",
+      "csvFile": "data/west_riding_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_west_riding.sql"
+    },
+    {
+      "id": "west_suffolk",
+      "name": "West Suffolk",
+      "countyId": "west_suffolk",
+      "csvFile": "data/west_suffolk_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_west_suffolk.sql"
+    },
+    {
+      "id": "west_sussex",
+      "name": "West Sussex",
+      "countyId": "west_sussex",
+      "csvFile": "data/west_sussex_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_west_sussex.sql"
+    },
+    {
+      "id": "batley",
+      "name": "Batley",
+      "countyId": "west_yorkshire",
+      "csvFile": "data/batley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_batley.sql"
+    },
+    {
+      "id": "bradford",
+      "name": "Bradford",
+      "countyId": "west_yorkshire",
+      "center": [
+        53.7938,
+        -1.7515
+      ],
+      "bounds": {
+        "north": 53.85,
+        "south": 53.7,
+        "east": -1.6,
+        "west": -1.9
+      },
+      "csvFile": "data/bradford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bradford.sql"
+    },
+    {
+      "id": "halifax",
+      "name": "Halifax",
+      "countyId": "west_yorkshire",
+      "csvFile": "data/halifax_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_halifax.sql"
+    },
+    {
+      "id": "huddersfield",
+      "name": "Huddersfield",
+      "countyId": "west_yorkshire",
+      "center": [
+        53.6458,
+        -1.785
+      ],
+      "bounds": {
+        "north": 53.7,
+        "south": 53.6,
+        "east": -1.7,
+        "west": -1.9
+      },
+      "csvFile": "data/huddersfield_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_huddersfield.sql"
+    },
+    {
+      "id": "leeds",
+      "name": "Leeds",
+      "countyId": "west_yorkshire",
+      "center": [
+        53.8008,
+        -1.5491
+      ],
+      "bounds": {
+        "north": 53.9,
+        "south": 53.7,
+        "east": -1.4,
+        "west": -1.7
+      },
+      "csvFile": "data/leeds_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_leeds.sql"
+    },
+    {
+      "id": "west_yorkshire",
+      "name": "West Yorkshire",
+      "countyId": "west_yorkshire",
+      "csvFile": "data/west_yorkshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_west_yorkshire.sql"
+    },
+    {
+      "id": "wiltshire",
+      "name": "Wiltshire",
+      "countyId": "wiltshire",
+      "csvFile": "data/wiltshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_wiltshire.sql"
+    },
+    {
+      "id": "worcester",
+      "name": "Worcester",
+      "countyId": "worcestershire",
+      "csvFile": "data/worcester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_worcester.sql"
+    },
+    {
+      "id": "worcestershire",
+      "name": "Worcestershire",
+      "countyId": "worcestershire",
+      "csvFile": "data/worcestershire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_worcestershire.sql"
+    },
+    {
+      "id": "hull",
+      "name": "Hull",
+      "countyId": "east_riding_of_yorkshire",
+      "center": [
+        53.7443,
+        -0.3325
+      ],
+      "bounds": {
+        "north": 53.8,
+        "south": 53.7,
+        "east": -0.2,
+        "west": -0.4
+      },
+      "csvFile": "data/hull_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hull.sql"
+    },
+    {
+      "id": "belfast",
+      "name": "Belfast",
+      "countyId": "belfast",
+      "csvFile": "data/belfast_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_belfast.sql"
+    },
+    {
+      "id": "antrim",
+      "name": "Antrim",
+      "countyId": "antrim",
+      "csvFile": "data/antrim_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_antrim.sql"
+    },
+    {
+      "id": "armagh",
+      "name": "Armagh",
+      "countyId": "armagh",
+      "csvFile": "data/armagh_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_armagh.sql"
+    },
+    {
+      "id": "craigavon",
+      "name": "Craigavon",
+      "countyId": "armagh",
+      "csvFile": "data/craigavon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_craigavon.sql"
+    },
+    {
+      "id": "down",
+      "name": "Down",
+      "countyId": "down",
+      "csvFile": "data/down_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_down.sql"
+    },
+    {
+      "id": "fermanagh",
+      "name": "Fermanagh",
+      "countyId": "fermanagh",
+      "csvFile": "data/fermanagh_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_fermanagh.sql"
+    },
+    {
+      "id": "coleraine",
+      "name": "Coleraine",
+      "countyId": "londonderry",
+      "csvFile": "data/coleraine_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_coleraine.sql"
+    },
+    {
+      "id": "derry",
+      "name": "Derry",
+      "countyId": "londonderry",
+      "csvFile": "data/derry_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_derry.sql"
+    },
+    {
+      "id": "londonderry",
+      "name": "Londonderry",
+      "countyId": "londonderry",
+      "csvFile": "data/londonderry_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_londonderry.sql"
+    },
+    {
+      "id": "tyrone",
+      "name": "Tyrone",
+      "countyId": "tyrone",
+      "csvFile": "data/tyrone_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_tyrone.sql"
+    },
+    {
+      "id": "aberaeron",
+      "name": "Aberaeron",
+      "csvFile": "data/aberaeron_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_aberaeron.sql"
+    },
+    {
+      "id": "aberystwyth",
+      "name": "Aberystwyth",
+      "csvFile": "data/aberystwyth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_aberystwyth.sql"
+    },
+    {
+      "id": "abingdon_on_thames",
+      "name": "Abingdon On Thames",
+      "csvFile": "data/abingdon_on_thames_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_abingdon_on_thames.sql"
+    },
+    {
+      "id": "accrington",
+      "name": "Accrington",
+      "csvFile": "data/accrington_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_accrington.sql"
+    },
+    {
+      "id": "alcester",
+      "name": "Alcester",
+      "csvFile": "data/alcester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_alcester.sql"
+    },
+    {
+      "id": "alfreton",
+      "name": "Alfreton",
+      "csvFile": "data/alfreton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_alfreton.sql"
+    },
+    {
+      "id": "altrincham",
+      "name": "Altrincham",
+      "csvFile": "data/altrincham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_altrincham.sql"
+    },
+    {
+      "id": "amersham",
+      "name": "Amersham",
+      "csvFile": "data/amersham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_amersham.sql"
+    },
+    {
+      "id": "ammanford",
+      "name": "Ammanford",
+      "csvFile": "data/ammanford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ammanford.sql"
+    },
+    {
+      "id": "andover",
+      "name": "Andover",
+      "csvFile": "data/andover_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_andover.sql"
+    },
+    {
+      "id": "annan",
+      "name": "Annan",
+      "csvFile": "data/annan_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_annan.sql"
+    },
+    {
+      "id": "arbroath",
+      "name": "Arbroath",
+      "csvFile": "data/arbroath_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_arbroath.sql"
+    },
+    {
+      "id": "ardrossan",
+      "name": "Ardrossan",
+      "csvFile": "data/ardrossan_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ardrossan.sql"
+    },
+    {
+      "id": "ashford",
+      "name": "Ashford",
+      "csvFile": "data/ashford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ashford.sql"
+    },
+    {
+      "id": "ashington",
+      "name": "Ashington",
+      "csvFile": "data/ashington_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ashington.sql"
+    },
+    {
+      "id": "ashton_under_lyne",
+      "name": "Ashton Under Lyne",
+      "csvFile": "data/ashton_under_lyne_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ashton_under_lyne.sql"
+    },
+    {
+      "id": "atherton",
+      "name": "Atherton",
+      "csvFile": "data/atherton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_atherton.sql"
+    },
+    {
+      "id": "attestborough",
+      "name": "Attestborough",
+      "csvFile": "data/attestborough_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_attestborough.sql"
+    },
+    {
+      "id": "attleborough",
+      "name": "Attleborough",
+      "csvFile": "data/attleborough_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_attleborough.sql"
+    },
+    {
+      "id": "aylesbury",
+      "name": "Aylesbury",
+      "csvFile": "data/aylesbury_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_aylesbury.sql"
+    },
+    {
+      "id": "banbury",
+      "name": "Banbury",
+      "csvFile": "data/banbury_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_banbury.sql"
+    },
+    {
+      "id": "banstead",
+      "name": "Banstead",
+      "csvFile": "data/banstead_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_banstead.sql"
+    },
+    {
+      "id": "barnstaple",
+      "name": "Barnstaple",
+      "csvFile": "data/barnstaple_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_barnstaple.sql"
+    },
+    {
+      "id": "barrow_in_furness",
+      "name": "Barrow In Furness",
+      "csvFile": "data/barrow_in_furness_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_barrow_in_furness.sql"
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "csvFile": "data/barry_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_barry.sql"
     },
     {
       "id": "basildon",
@@ -49,1666 +1486,58 @@
       "sqlFile": "dataconnect/queries/town_bath.sql"
     },
     {
-      "id": "belfast",
-      "name": "Belfast",
-      "center": [
-        54.5973,
-        -5.9301
-      ],
-      "bounds": {
-        "north": 54.7,
-        "south": 54.5,
-        "east": -5.8,
-        "west": -6.1
-      },
-      "csvFile": "data/belfast_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_belfast.sql"
+      "id": "battle",
+      "name": "Battle",
+      "csvFile": "data/battle_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_battle.sql"
     },
     {
-      "id": "birmingham",
-      "name": "Birmingham",
-      "center": [
-        52.4862,
-        -1.8904
-      ],
-      "bounds": {
-        "north": 52.6,
-        "south": 52.3,
-        "east": -1.7,
-        "west": -2.1
-      },
-      "csvFile": "data/birmingham_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_birmingham.sql"
+      "id": "bebington",
+      "name": "Bebington",
+      "csvFile": "data/bebington_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bebington.sql"
     },
     {
-      "id": "blackburn",
-      "name": "Blackburn",
-      "center": [
-        53.748,
-        -2.482
-      ],
-      "bounds": {
-        "north": 53.8,
-        "south": 53.7,
-        "east": -2.4,
-        "west": -2.6
-      },
-      "csvFile": "data/blackburn_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_blackburn.sql"
+      "id": "bedford",
+      "name": "Bedford",
+      "csvFile": "data/bedford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bedford.sql"
     },
     {
-      "id": "blackpool",
-      "name": "Blackpool",
-      "center": [
-        53.8175,
-        -3.0357
-      ],
-      "bounds": {
-        "north": 53.86,
-        "south": 53.77,
-        "east": -2.95,
-        "west": -3.1
-      },
-      "csvFile": "data/blackpool_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_blackpool.sql"
+      "id": "bedworth",
+      "name": "Bedworth",
+      "csvFile": "data/bedworth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bedworth.sql"
     },
     {
-      "id": "bolton",
-      "name": "Bolton",
-      "center": [
-        53.5815,
-        -2.4282
-      ],
-      "bounds": {
-        "north": 53.63,
-        "south": 53.53,
-        "east": -2.35,
-        "west": -2.55
-      },
-      "csvFile": "data/bolton_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_bolton.sql"
+      "id": "beeston",
+      "name": "Beeston",
+      "csvFile": "data/beeston_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_beeston.sql"
     },
     {
-      "id": "bournemouth",
-      "name": "Bournemouth",
-      "center": [
-        50.7192,
-        -1.8808
-      ],
-      "bounds": {
-        "north": 50.77,
-        "south": 50.68,
-        "east": -1.8,
-        "west": -2.0
-      },
-      "csvFile": "data/bournemouth_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_bournemouth.sql"
+      "id": "benfleet",
+      "name": "Benfleet",
+      "csvFile": "data/benfleet_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_benfleet.sql"
     },
     {
-      "id": "bradford",
-      "name": "Bradford",
-      "center": [
-        53.7938,
-        -1.7515
-      ],
-      "bounds": {
-        "north": 53.85,
-        "south": 53.7,
-        "east": -1.6,
-        "west": -1.9
-      },
-      "csvFile": "data/bradford_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_bradford.sql"
+      "id": "berkhamsted",
+      "name": "Berkhamsted",
+      "csvFile": "data/berkhamsted_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_berkhamsted.sql"
     },
     {
-      "id": "brighton",
-      "name": "Brighton and Hove",
-      "center": [
-        50.8225,
-        -0.1372
-      ],
-      "bounds": {
-        "north": 50.87,
-        "south": 50.78,
-        "east": -0.05,
-        "west": -0.25
-      },
-      "csvFile": "data/brighton_hove_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_brighton.sql"
+      "id": "berwick_upon_tweed",
+      "name": "Berwick Upon Tweed",
+      "csvFile": "data/berwick_upon_tweed_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_berwick_upon_tweed.sql"
     },
     {
-      "id": "bristol",
-      "name": "Bristol",
-      "center": [
-        51.4545,
-        -2.5879
-      ],
-      "bounds": {
-        "north": 51.55,
-        "south": 51.35,
-        "east": -2.45,
-        "west": -2.75
-      },
-      "csvFile": "data/bristol_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_bristol.sql"
-    },
-    {
-      "id": "cambridge",
-      "name": "Cambridge",
-      "center": [
-        52.2053,
-        0.1218
-      ],
-      "bounds": {
-        "north": 52.3,
-        "south": 52.1,
-        "east": 0.2,
-        "west": 0.0
-      },
-      "csvFile": "data/cambridge_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_cambridge.sql"
-    },
-    {
-      "id": "canterbury",
-      "name": "Canterbury",
-      "center": [
-        51.2802,
-        1.0789
-      ],
-      "bounds": {
-        "north": 51.35,
-        "south": 51.2,
-        "east": 1.15,
-        "west": 1.0
-      },
-      "csvFile": "data/canterbury_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_canterbury.sql"
-    },
-    {
-      "id": "cardiff",
-      "name": "Cardiff",
-      "center": [
-        51.4816,
-        -3.1791
-      ],
-      "bounds": {
-        "north": 51.58,
-        "south": 51.43,
-        "east": -3.05,
-        "west": -3.35
-      },
-      "csvFile": "data/cardiff_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_cardiff.sql"
-    },
-    {
-      "id": "chelmsford",
-      "name": "Chelmsford",
-      "center": [
-        51.7356,
-        0.4688
-      ],
-      "bounds": {
-        "north": 51.8,
-        "south": 51.65,
-        "east": 0.55,
-        "west": 0.35
-      },
-      "csvFile": "data/chelmsford_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_chelmsford.sql"
-    },
-    {
-      "id": "cheltenham",
-      "name": "Cheltenham",
-      "center": [
-        51.8995,
-        -2.0711
-      ],
-      "bounds": {
-        "north": 51.95,
-        "south": 51.85,
-        "east": -1.95,
-        "west": -2.15
-      },
-      "csvFile": "data/cheltenham_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_cheltenham.sql"
-    },
-    {
-      "id": "colchester",
-      "name": "Colchester",
-      "center": [
-        51.8959,
-        0.8919
-      ],
-      "bounds": {
-        "north": 51.95,
-        "south": 51.85,
-        "east": 1.0,
-        "west": 0.8
-      },
-      "csvFile": "data/colchester_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_colchester.sql"
-    },
-    {
-      "id": "coventry",
-      "name": "Coventry",
-      "center": [
-        52.4068,
-        -1.5197
-      ],
-      "bounds": {
-        "north": 52.5,
-        "south": 52.3,
-        "east": -1.4,
-        "west": -1.6
-      },
-      "csvFile": "data/coventry_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_coventry.sql"
-    },
-    {
-      "id": "crawley",
-      "name": "Crawley",
-      "center": [
-        51.1132,
-        -0.1831
-      ],
-      "bounds": {
-        "north": 51.16,
-        "south": 51.08,
-        "east": -0.12,
-        "west": -0.26
-      },
-      "csvFile": "data/crawley_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_crawley.sql"
-    },
-    {
-      "id": "derby",
-      "name": "Derby",
-      "center": [
-        52.9225,
-        -1.4746
-      ],
-      "bounds": {
-        "north": 53.0,
-        "south": 52.85,
-        "east": -1.35,
-        "west": -1.6
-      },
-      "csvFile": "data/derby_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_derby.sql"
-    },
-    {
-      "id": "dudley",
-      "name": "Dudley",
-      "center": [
-        52.5123,
-        -2.0811
-      ],
-      "bounds": {
-        "north": 52.55,
-        "south": 52.45,
-        "east": -2.0,
-        "west": -2.2
-      },
-      "csvFile": "data/dudley_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_dudley.sql"
-    },
-    {
-      "id": "dundee",
-      "name": "Dundee",
-      "center": [
-        56.462,
-        -2.9707
-      ],
-      "bounds": {
-        "north": 56.55,
-        "south": 56.4,
-        "east": -2.85,
-        "west": -3.1
-      },
-      "csvFile": "data/dundee_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_dundee.sql"
-    },
-    {
-      "id": "eastbourne",
-      "name": "Eastbourne",
-      "center": [
-        50.7676,
-        0.2821
-      ],
-      "bounds": {
-        "north": 50.82,
-        "south": 50.72,
-        "east": 0.35,
-        "west": 0.2
-      },
-      "csvFile": "data/eastbourne_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_eastbourne.sql"
-    },
-    {
-      "id": "edinburgh",
-      "name": "Edinburgh",
-      "center": [
-        55.9533,
-        -3.1883
-      ],
-      "bounds": {
-        "north": 56.05,
-        "south": 55.85,
-        "east": -3.05,
-        "west": -3.35
-      },
-      "csvFile": "data/edinburgh_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_edinburgh.sql"
-    },
-    {
-      "id": "exeter",
-      "name": "Exeter",
-      "center": [
-        50.719,
-        -3.533
-      ],
-      "bounds": {
-        "north": 50.75,
-        "south": 50.68,
-        "east": -3.45,
-        "west": -3.6
-      },
-      "csvFile": "data/exeter_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_exeter.sql"
-    },
-    {
-      "id": "glasgow",
-      "name": "Glasgow",
-      "center": [
-        55.8642,
-        -4.2518
-      ],
-      "bounds": {
-        "north": 55.95,
-        "south": 55.75,
-        "east": -4.1,
-        "west": -4.4
-      },
-      "csvFile": "data/glasgow_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_glasgow.sql"
-    },
-    {
-      "id": "gloucester",
-      "name": "Gloucester",
-      "center": [
-        51.8642,
-        -2.2448
-      ],
-      "bounds": {
-        "north": 51.95,
-        "south": 51.75,
-        "east": -2.15,
-        "west": -2.35
-      },
-      "csvFile": "data/gloucester_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_gloucester.sql"
-    },
-    {
-      "id": "guildford",
-      "name": "Guildford",
-      "center": [
-        51.2362,
-        -0.5704
-      ],
-      "bounds": {
-        "north": 51.28,
-        "south": 51.18,
-        "east": -0.5,
-        "west": -0.65
-      },
-      "csvFile": "data/guildford_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_guildford.sql"
-    },
-    {
-      "id": "hastings",
-      "name": "Hastings",
-      "center": [
-        50.8542,
-        0.5735
-      ],
-      "bounds": {
-        "north": 50.91,
-        "south": 50.82,
-        "east": 0.67,
-        "west": 0.47
-      },
-      "csvFile": "data/hastings_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_hastings.sql"
-    },
-    {
-      "id": "huddersfield",
-      "name": "Huddersfield",
-      "center": [
-        53.6458,
-        -1.785
-      ],
-      "bounds": {
-        "north": 53.7,
-        "south": 53.6,
-        "east": -1.7,
-        "west": -1.9
-      },
-      "csvFile": "data/huddersfield_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_huddersfield.sql"
-    },
-    {
-      "id": "ipswich",
-      "name": "Ipswich",
-      "center": [
-        52.0567,
-        1.1482
-      ],
-      "bounds": {
-        "north": 52.1,
-        "south": 52.0,
-        "east": 1.25,
-        "west": 1.05
-      },
-      "csvFile": "data/ipswich_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_ipswich.sql"
-    },
-    {
-      "id": "hull",
-      "name": "Kingston upon Hull",
-      "center": [
-        53.7443,
-        -0.3325
-      ],
-      "bounds": {
-        "north": 53.8,
-        "south": 53.7,
-        "east": -0.2,
-        "west": -0.4
-      },
-      "csvFile": "data/hull_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_hull.sql"
-    },
-    {
-      "id": "leeds",
-      "name": "Leeds",
-      "center": [
-        53.8008,
-        -1.5491
-      ],
-      "bounds": {
-        "north": 53.9,
-        "south": 53.7,
-        "east": -1.4,
-        "west": -1.7
-      },
-      "csvFile": "data/leeds_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_leeds.sql"
-    },
-    {
-      "id": "leicester",
-      "name": "Leicester",
-      "center": [
-        52.6369,
-        -1.1398
-      ],
-      "bounds": {
-        "north": 52.7,
-        "south": 52.55,
-        "east": -1.0,
-        "west": -1.3
-      },
-      "csvFile": "data/leicester_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_leicester.sql"
-    },
-    {
-      "id": "lewes",
-      "name": "Lewes",
-      "center": [
-        50.8744,
-        0.0122
-      ],
-      "bounds": {
-        "north": 50.92,
-        "south": 50.83,
-        "east": 0.08,
-        "west": -0.05
-      },
-      "csvFile": "data/lewes_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_lewes.sql"
-    },
-    {
-      "id": "liverpool",
-      "name": "Liverpool",
-      "center": [
-        53.4084,
-        -2.9916
-      ],
-      "bounds": {
-        "north": 53.5,
-        "south": 53.32,
-        "east": -2.85,
-        "west": -3.15
-      },
-      "csvFile": "data/liverpool_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_liverpool.sql"
-    },
-    {
-      "id": "london",
-      "name": "London",
-      "center": [
-        51.5074,
-        -0.1278
-      ],
-      "bounds": {
-        "north": 51.7,
-        "south": 51.3,
-        "east": 0.3,
-        "west": -0.5
-      }
-    },
-    {
-      "id": "london_barking_and_dagenham",
-      "name": "Barking and Dagenham",
-      "center": [
-        51.535,
-        0.125
-      ],
-      "bounds": {
-        "north": 51.585,
-        "south": 51.485,
-        "east": 0.175,
-        "west": 0.075
-      },
-      "csvFile": "data/london_barking_and_dagenham_free_food_locations.csv"
-    },
-    {
-      "id": "london_barnet",
-      "name": "Barnet",
-      "center": [
-        51.625,
-        -0.195
-      ],
-      "bounds": {
-        "north": 51.675,
-        "south": 51.575,
-        "east": -0.145,
-        "west": -0.245
-      },
-      "csvFile": "data/london_barnet_free_food_locations.csv"
-    },
-    {
-      "id": "london_bexley",
-      "name": "Bexley",
-      "center": [
-        51.475,
-        0.15
-      ],
-      "bounds": {
-        "north": 51.525,
-        "south": 51.425,
-        "east": 0.2,
-        "west": 0.1
-      },
-      "csvFile": "data/london_bexley_free_food_locations.csv"
-    },
-    {
-      "id": "london_bromley",
-      "name": "Bromley",
-      "center": [
-        51.4,
-        0.025
-      ],
-      "bounds": {
-        "north": 51.45,
-        "south": 51.35,
-        "east": 0.075,
-        "west": -0.025
-      },
-      "csvFile": "data/london_bromley_free_food_locations.csv"
-    },
-    {
-      "id": "london_camden",
-      "name": "Camden",
-      "center": [
-        51.545,
-        -0.14
-      ],
-      "bounds": {
-        "north": 51.595,
-        "south": 51.495,
-        "east": -0.09,
-        "west": -0.19
-      },
-      "csvFile": "data/london_camden_free_food_locations.csv"
-    },
-    {
-      "id": "london_city_of_london",
-      "name": "City of London",
-      "center": [
-        51.5175,
-        -0.0875
-      ],
-      "bounds": {
-        "north": 51.5375,
-        "south": 51.4975,
-        "east": -0.0675,
-        "west": -0.1075
-      },
-      "csvFile": "data/london_city_of_london_free_food_locations.csv"
-    },
-    {
-      "id": "london_croydon",
-      "name": "Croydon",
-      "center": [
-        51.375,
-        -0.1
-      ],
-      "bounds": {
-        "north": 51.425,
-        "south": 51.325,
-        "east": -0.05,
-        "west": -0.15
-      },
-      "csvFile": "data/london_croydon_free_food_locations.csv"
-    },
-    {
-      "id": "london_ealing",
-      "name": "Ealing",
-      "center": [
-        51.52,
-        -0.305
-      ],
-      "bounds": {
-        "north": 51.57,
-        "south": 51.47,
-        "east": -0.255,
-        "west": -0.355
-      },
-      "csvFile": "data/london_ealing_free_food_locations.csv"
-    },
-    {
-      "id": "london_enfield",
-      "name": "Enfield",
-      "center": [
-        51.65,
-        -0.105
-      ],
-      "bounds": {
-        "north": 51.7,
-        "south": 51.6,
-        "east": -0.055,
-        "west": -0.155
-      },
-      "csvFile": "data/london_enfield_free_food_locations.csv"
-    },
-    {
-      "id": "london_greenwich",
-      "name": "Greenwich",
-      "center": [
-        51.48,
-        0.055
-      ],
-      "bounds": {
-        "north": 51.53,
-        "south": 51.43,
-        "east": 0.105,
-        "west": 0.005
-      },
-      "csvFile": "data/london_greenwich_free_food_locations.csv"
-    },
-    {
-      "id": "london_hackney",
-      "name": "Hackney",
-      "center": [
-        51.55,
-        -0.075
-      ],
-      "bounds": {
-        "north": 51.6,
-        "south": 51.5,
-        "east": -0.025,
-        "west": -0.125
-      },
-      "csvFile": "data/london_hackney_free_food_locations.csv"
-    },
-    {
-      "id": "london_hammersmith_and_fulham",
-      "name": "Hammersmith and Fulham",
-      "center": [
-        51.495,
-        -0.225
-      ],
-      "bounds": {
-        "north": 51.545,
-        "south": 51.445,
-        "east": -0.175,
-        "west": -0.275
-      },
-      "csvFile": "data/london_hammersmith_and_fulham_free_food_locations.csv"
-    },
-    {
-      "id": "london_haringey",
-      "name": "Haringey",
-      "center": [
-        51.58,
-        -0.125
-      ],
-      "bounds": {
-        "north": 51.63,
-        "south": 51.53,
-        "east": -0.075,
-        "west": -0.175
-      },
-      "csvFile": "data/london_haringey_free_food_locations.csv"
-    },
-    {
-      "id": "london_harrow",
-      "name": "Harrow",
-      "center": [
-        51.6,
-        -0.335
-      ],
-      "bounds": {
-        "north": 51.65,
-        "south": 51.55,
-        "east": -0.285,
-        "west": -0.385
-      },
-      "csvFile": "data/london_harrow_free_food_locations.csv"
-    },
-    {
-      "id": "london_havering",
-      "name": "Havering",
-      "center": [
-        51.585,
-        0.2
-      ],
-      "bounds": {
-        "north": 51.635,
-        "south": 51.535,
-        "east": 0.25,
-        "west": 0.15
-      },
-      "csvFile": "data/london_havering_free_food_locations.csv"
-    },
-    {
-      "id": "london_hillingdon",
-      "name": "Hillingdon",
-      "center": [
-        51.525,
-        -0.435
-      ],
-      "bounds": {
-        "north": 51.575,
-        "south": 51.475,
-        "east": -0.385,
-        "west": -0.485
-      },
-      "csvFile": "data/london_hillingdon_free_food_locations.csv"
-    },
-    {
-      "id": "london_hounslow",
-      "name": "Hounslow",
-      "center": [
-        51.475,
-        -0.375
-      ],
-      "bounds": {
-        "north": 51.525,
-        "south": 51.425,
-        "east": -0.325,
-        "west": -0.425
-      },
-      "csvFile": "data/london_hounslow_free_food_locations.csv"
-    },
-    {
-      "id": "london_islington",
-      "name": "Islington",
-      "center": [
-        51.54,
-        -0.115
-      ],
-      "bounds": {
-        "north": 51.59,
-        "south": 51.49,
-        "east": -0.065,
-        "west": -0.165
-      },
-      "csvFile": "data/london_islington_free_food_locations.csv"
-    },
-    {
-      "id": "london_kensington_and_chelsea",
-      "name": "Kensington and Chelsea",
-      "center": [
-        51.5,
-        -0.19
-      ],
-      "bounds": {
-        "north": 51.55,
-        "south": 51.45,
-        "east": -0.14,
-        "west": -0.24
-      },
-      "csvFile": "data/london_kensington_and_chelsea_free_food_locations.csv"
-    },
-    {
-      "id": "london_kingston_upon_thames",
-      "name": "Kingston upon Thames",
-      "center": [
-        51.42,
-        -0.295
-      ],
-      "bounds": {
-        "north": 51.47,
-        "south": 51.37,
-        "east": -0.245,
-        "west": -0.345
-      },
-      "csvFile": "data/london_kingston_upon_thames_free_food_locations.csv"
-    },
-    {
-      "id": "london_lambeth",
-      "name": "Lambeth",
-      "center": [
-        51.485,
-        -0.115
-      ],
-      "bounds": {
-        "north": 51.535,
-        "south": 51.435,
-        "east": -0.065,
-        "west": -0.165
-      },
-      "csvFile": "data/london_lambeth_free_food_locations.csv"
-    },
-    {
-      "id": "london_lewisham",
-      "name": "Lewisham",
-      "center": [
-        51.455,
-        -0.04
-      ],
-      "bounds": {
-        "north": 51.505,
-        "south": 51.405,
-        "east": 0.01,
-        "west": -0.09
-      },
-      "csvFile": "data/london_lewisham_free_food_locations.csv"
-    },
-    {
-      "id": "london_merton",
-      "name": "Merton",
-      "center": [
-        51.42,
-        -0.2
-      ],
-      "bounds": {
-        "north": 51.47,
-        "south": 51.37,
-        "east": -0.15,
-        "west": -0.25
-      },
-      "csvFile": "data/london_merton_free_food_locations.csv"
-    },
-    {
-      "id": "london_newham",
-      "name": "Newham",
-      "center": [
-        51.525,
-        0.035
-      ],
-      "bounds": {
-        "north": 51.575,
-        "south": 51.475,
-        "east": 0.085,
-        "west": -0.015
-      },
-      "csvFile": "data/london_newham_free_food_locations.csv"
-    },
-    {
-      "id": "london_redbridge",
-      "name": "Redbridge",
-      "center": [
-        51.585,
-        0.075
-      ],
-      "bounds": {
-        "north": 51.635,
-        "south": 51.535,
-        "east": 0.125,
-        "west": 0.025
-      },
-      "csvFile": "data/london_redbridge_free_food_locations.csv"
-    },
-    {
-      "id": "london_richmond_upon_thames",
-      "name": "Richmond upon Thames",
-      "center": [
-        51.47,
-        -0.29
-      ],
-      "bounds": {
-        "north": 51.52,
-        "south": 51.42,
-        "east": -0.24,
-        "west": -0.34
-      },
-      "csvFile": "data/london_richmond_upon_thames_free_food_locations.csv"
-    },
-    {
-      "id": "london_southwark",
-      "name": "Southwark",
-      "center": [
-        51.505,
-        -0.09
-      ],
-      "bounds": {
-        "north": 51.555,
-        "south": 51.455,
-        "east": -0.04,
-        "west": -0.14
-      },
-      "csvFile": "data/london_southwark_free_food_locations.csv"
-    },
-    {
-      "id": "london_sutton",
-      "name": "Sutton",
-      "center": [
-        51.39,
-        -0.2
-      ],
-      "bounds": {
-        "north": 51.44,
-        "south": 51.34,
-        "east": -0.15,
-        "west": -0.25
-      },
-      "csvFile": "data/london_sutton_free_food_locations.csv"
-    },
-    {
-      "id": "london_tower_hamlets",
-      "name": "Tower Hamlets",
-      "center": [
-        51.525,
-        -0.035
-      ],
-      "bounds": {
-        "north": 51.575,
-        "south": 51.475,
-        "east": 0.015,
-        "west": -0.085
-      },
-      "csvFile": "data/london_tower_hamlets_free_food_locations.csv"
-    },
-    {
-      "id": "london_waltham_forest",
-      "name": "Waltham Forest",
-      "center": [
-        51.595,
-        -0.025
-      ],
-      "bounds": {
-        "north": 51.645,
-        "south": 51.545,
-        "east": 0.025,
-        "west": -0.075
-      },
-      "csvFile": "data/london_waltham_forest_free_food_locations.csv"
-    },
-    {
-      "id": "london_wandsworth",
-      "name": "Wandsworth",
-      "center": [
-        51.455,
-        -0.19
-      ],
-      "bounds": {
-        "north": 51.505,
-        "south": 51.405,
-        "east": -0.14,
-        "west": -0.24
-      },
-      "csvFile": "data/london_wandsworth_free_food_locations.csv"
-    },
-    {
-      "id": "london_westminster",
-      "name": "Westminster",
-      "center": [
-        51.505,
-        -0.15
-      ],
-      "bounds": {
-        "north": 51.555,
-        "south": 51.455,
-        "east": -0.1,
-        "west": -0.2
-      },
-      "csvFile": "data/london_westminster_free_food_locations.csv"
-    },
-    {
-      "id": "luton",
-      "name": "Luton",
-      "center": [
-        51.8787,
-        -0.42
-      ],
-      "bounds": {
-        "north": 51.95,
-        "south": 51.8,
-        "east": -0.35,
-        "west": -0.5
-      },
-      "csvFile": "data/luton_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_luton.sql"
-    },
-    {
-      "id": "maidstone",
-      "name": "Maidstone",
-      "center": [
-        51.2725,
-        0.5233
-      ],
-      "bounds": {
-        "north": 51.32,
-        "south": 51.22,
-        "east": 0.6,
-        "west": 0.45
-      },
-      "csvFile": "data/maidstone_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_maidstone.sql"
-    },
-    {
-      "id": "manchester",
-      "name": "Manchester",
-      "center": [
-        53.4808,
-        -2.2426
-      ],
-      "bounds": {
-        "north": 53.6,
-        "south": 53.3,
-        "east": -2.0,
-        "west": -2.5
-      },
-      "csvFile": "data/manchester_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_manchester.sql"
-    },
-    {
-      "id": "mansfield",
-      "name": "Mansfield",
-      "center": [
-        53.144,
-        -1.198
-      ],
-      "bounds": {
-        "north": 53.2,
-        "south": 53.1,
-        "east": -1.1,
-        "west": -1.3
-      },
-      "csvFile": "data/mansfield_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_mansfield.sql"
-    },
-    {
-      "id": "middlesbrough",
-      "name": "Middlesbrough",
-      "center": [
-        54.5762,
-        -1.2348
-      ],
-      "bounds": {
-        "north": 54.62,
-        "south": 54.52,
-        "east": -1.15,
-        "west": -1.35
-      },
-      "csvFile": "data/middlesbrough_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_middlesbrough.sql"
-    },
-    {
-      "id": "milton_keynes",
-      "name": "Milton Keynes",
-      "center": [
-        52.0406,
-        -0.7594
-      ],
-      "bounds": {
-        "north": 52.1,
-        "south": 51.95,
-        "east": -0.65,
-        "west": -0.85
-      },
-      "csvFile": "data/milton_keynes_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_milton_keynes.sql"
-    },
-    {
-      "id": "newcastle",
-      "name": "Newcastle upon Tyne",
-      "center": [
-        54.9783,
-        -1.6178
-      ],
-      "bounds": {
-        "north": 55.05,
-        "south": 54.9,
-        "east": -1.5,
-        "west": -1.75
-      },
-      "csvFile": "data/newcastle_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_newcastle.sql"
-    },
-    {
-      "id": "newport",
-      "name": "Newport",
-      "center": [
-        51.5886,
-        -2.9975
-      ],
-      "bounds": {
-        "north": 51.65,
-        "south": 51.5,
-        "east": -2.9,
-        "west": -3.15
-      },
-      "csvFile": "data/newport_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_newport.sql"
-    },
-    {
-      "id": "northampton",
-      "name": "Northampton",
-      "center": [
-        52.2405,
-        -0.9027
-      ],
-      "bounds": {
-        "north": 52.3,
-        "south": 52.15,
-        "east": -0.8,
-        "west": -1.0
-      },
-      "csvFile": "data/northampton_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_northampton.sql"
-    },
-    {
-      "id": "norwich",
-      "name": "Norwich",
-      "center": [
-        52.6309,
-        1.2974
-      ],
-      "bounds": {
-        "north": 52.7,
-        "south": 52.55,
-        "east": 1.4,
-        "west": 1.2
-      },
-      "csvFile": "data/norwich_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_norwich.sql"
-    },
-    {
-      "id": "nottingham",
-      "name": "Nottingham",
-      "center": [
-        52.9548,
-        -1.1581
-      ],
-      "bounds": {
-        "north": 53.05,
-        "south": 52.85,
-        "east": -1.0,
-        "west": -1.3
-      },
-      "csvFile": "data/nottingham_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_nottingham.sql"
-    },
-    {
-      "id": "oxford",
-      "name": "Oxford",
-      "center": [
-        51.752,
-        -1.2577
-      ],
-      "bounds": {
-        "north": 51.85,
-        "south": 51.7,
-        "east": -1.15,
-        "west": -1.35
-      },
-      "csvFile": "data/oxford_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_oxford.sql"
-    },
-    {
-      "id": "peterborough",
-      "name": "Peterborough",
-      "center": [
-        52.5695,
-        -0.2405
-      ],
-      "bounds": {
-        "north": 52.62,
-        "south": 52.5,
-        "east": -0.15,
-        "west": -0.35
-      },
-      "csvFile": "data/peterborough_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_peterborough.sql"
-    },
-    {
-      "id": "plymouth",
-      "name": "Plymouth",
-      "center": [
-        50.3755,
-        -4.1427
-      ],
-      "bounds": {
-        "north": 50.46,
-        "south": 50.33,
-        "east": -4.0,
-        "west": -4.25
-      },
-      "csvFile": "data/plymouth_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_plymouth.sql"
-    },
-    {
-      "id": "portsmouth",
-      "name": "Portsmouth",
-      "center": [
-        50.8198,
-        -1.088
-      ],
-      "bounds": {
-        "north": 50.88,
-        "south": 50.77,
-        "east": -1.0,
-        "west": -1.15
-      },
-      "csvFile": "data/portsmouth_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_portsmouth.sql"
-    },
-    {
-      "id": "preston",
-      "name": "Preston",
-      "center": [
-        53.7609,
-        -2.7033
-      ],
-      "bounds": {
-        "north": 53.82,
-        "south": 53.7,
-        "east": -2.6,
-        "west": -2.8
-      },
-      "csvFile": "data/preston_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_preston.sql"
-    },
-    {
-      "id": "reading",
-      "name": "Reading",
-      "center": [
-        51.4543,
-        -0.9701
-      ],
-      "bounds": {
-        "north": 51.52,
-        "south": 51.4,
-        "east": -0.88,
-        "west": -1.08
-      },
-      "csvFile": "data/reading_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_reading.sql"
-    },
-    {
-      "id": "rotherham",
-      "name": "Rotherham",
-      "center": [
-        53.43,
-        -1.3568
-      ],
-      "bounds": {
-        "north": 53.48,
-        "south": 53.38,
-        "east": -1.25,
-        "west": -1.45
-      },
-      "csvFile": "data/rotherham_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_rotherham.sql"
-    },
-    {
-      "id": "sheffield",
-      "name": "Sheffield",
-      "center": [
-        53.3811,
-        -1.4701
-      ],
-      "bounds": {
-        "north": 53.5,
-        "south": 53.2,
-        "east": -1.3,
-        "west": -1.6
-      },
-      "csvFile": "data/sheffield_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_sheffield.sql"
-    },
-    {
-      "id": "slough",
-      "name": "Slough",
-      "center": [
-        51.5085,
-        -0.5916
-      ],
-      "bounds": {
-        "north": 51.55,
-        "south": 51.45,
-        "east": -0.5,
-        "west": -0.7
-      },
-      "csvFile": "data/slough_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_slough.sql"
-    },
-    {
-      "id": "southampton",
-      "name": "Southampton",
-      "center": [
-        50.9097,
-        -1.4044
-      ],
-      "bounds": {
-        "north": 50.98,
-        "south": 50.85,
-        "east": -1.3,
-        "west": -1.55
-      },
-      "csvFile": "data/southampton_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_southampton.sql"
-    },
-    {
-      "id": "southend",
-      "name": "Southend-on-Sea",
-      "center": [
-        51.5413,
-        0.7132
-      ],
-      "bounds": {
-        "north": 51.58,
-        "south": 51.5,
-        "east": 0.8,
-        "west": 0.6
-      },
-      "csvFile": "data/southend_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_southend.sql"
-    },
-    {
-      "id": "st_albans",
-      "name": "St Albans",
-      "center": [
-        51.7527,
-        -0.3394
-      ],
-      "bounds": {
-        "north": 51.8,
-        "south": 51.7,
-        "east": -0.25,
-        "west": -0.45
-      },
-      "csvFile": "data/st_albans_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_st_albans.sql"
-    },
-    {
-      "id": "stevenage",
-      "name": "Stevenage",
-      "center": [
-        51.9023,
-        -0.2026
-      ],
-      "bounds": {
-        "north": 51.95,
-        "south": 51.85,
-        "east": -0.15,
-        "west": -0.25
-      },
-      "csvFile": "data/stevenage_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_stevenage.sql"
-    },
-    {
-      "id": "stockport",
-      "name": "Stockport",
-      "center": [
-        53.4083,
-        -2.1494
-      ],
-      "bounds": {
-        "north": 53.45,
-        "south": 53.35,
-        "east": -2.05,
-        "west": -2.25
-      },
-      "csvFile": "data/stockport_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_stockport.sql"
-    },
-    {
-      "id": "stoke_on_trent",
-      "name": "Stoke-on-Trent",
-      "center": [
-        53.002,
-        -2.185
-      ],
-      "bounds": {
-        "north": 53.1,
-        "south": 52.9,
-        "east": -2.1,
-        "west": -2.3
-      },
-      "csvFile": "data/stoke_on_trent_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_stoke_on_trent.sql"
-    },
-    {
-      "id": "sunderland",
-      "name": "Sunderland",
-      "center": [
-        54.9069,
-        -1.3838
-      ],
-      "bounds": {
-        "north": 54.95,
-        "south": 54.85,
-        "east": -1.3,
-        "west": -1.45
-      },
-      "csvFile": "data/sunderland_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_sunderland.sql"
-    },
-    {
-      "id": "swansea",
-      "name": "Swansea",
-      "center": [
-        51.6214,
-        -3.9436
-      ],
-      "bounds": {
-        "north": 51.7,
-        "south": 51.55,
-        "east": -3.8,
-        "west": -4.1
-      },
-      "csvFile": "data/swansea_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_swansea.sql"
-    },
-    {
-      "id": "swindon",
-      "name": "Swindon",
-      "center": [
-        51.5558,
-        -1.7797
-      ],
-      "bounds": {
-        "north": 51.65,
-        "south": 51.45,
-        "east": -1.65,
-        "west": -1.9
-      },
-      "csvFile": "data/swindon_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_swindon.sql"
-    },
-    {
-      "id": "telford",
-      "name": "Telford",
-      "center": [
-        52.6784,
-        -2.4453
-      ],
-      "bounds": {
-        "north": 52.75,
-        "south": 52.6,
-        "east": -2.3,
-        "west": -2.6
-      },
-      "csvFile": "data/telford_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_telford.sql"
-    },
-    {
-      "id": "walsall",
-      "name": "Walsall",
-      "center": [
-        52.5844,
-        -1.9783
-      ],
-      "bounds": {
-        "north": 52.65,
-        "south": 52.55,
-        "east": -1.8,
-        "west": -2.1
-      },
-      "csvFile": "data/walsall_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_walsall.sql"
-    },
-    {
-      "id": "watford",
-      "name": "Watford",
-      "center": [
-        51.6565,
-        -0.3903
-      ],
-      "bounds": {
-        "north": 51.7,
-        "south": 51.6,
-        "east": -0.3,
-        "west": -0.5
-      },
-      "csvFile": "data/watford_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_watford.sql"
-    },
-    {
-      "id": "winchester",
-      "name": "Winchester",
-      "center": [
-        51.0632,
-        -1.308
-      ],
-      "bounds": {
-        "north": 51.12,
-        "south": 51.01,
-        "east": -1.25,
-        "west": -1.4
-      },
-      "csvFile": "data/winchester_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_winchester.sql"
-    },
-    {
-      "id": "wolverhampton",
-      "name": "Wolverhampton",
-      "center": [
-        52.5862,
-        -2.1288
-      ],
-      "bounds": {
-        "north": 52.65,
-        "south": 52.5,
-        "east": -2.0,
-        "west": -2.25
-      },
-      "csvFile": "data/wolverhampton_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_wolverhampton.sql"
-    },
-    {
-      "id": "worcester",
-      "name": "Worcester",
-      "center": [
-        52.1936,
-        -2.2215
-      ],
-      "bounds": {
-        "north": 52.25,
-        "south": 52.15,
-        "east": -2.1,
-        "west": -2.3
-      },
-      "csvFile": "data/worcester_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_worcester.sql"
-    },
-    {
-      "id": "worthing",
-      "name": "Worthing",
-      "center": [
-        50.8175,
-        -0.3711
-      ],
-      "bounds": {
-        "north": 50.87,
-        "south": 50.77,
-        "east": -0.3,
-        "west": -0.45
-      },
-      "csvFile": "data/worthing_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_worthing.sql"
-    },
-    {
-      "id": "york",
-      "name": "York",
-      "center": [
-        53.9591,
-        -1.0815
-      ],
-      "bounds": {
-        "north": 54.0,
-        "south": 53.9,
-        "east": -1.0,
-        "west": -1.2
-      },
-      "csvFile": "data/york_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_york.sql"
-    },
-    {
-      "id": "carlisle",
-      "name": "Carlisle",
-      "center": [
-        54.892,
-        -2.9295
-      ],
-      "bounds": {
-        "north": 54.95,
-        "south": 54.85,
-        "east": -2.85,
-        "west": -2.99
-      },
-      "csvFile": "data/carlisle_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_carlisle.sql"
-    },
-    {
-      "id": "woking",
-      "name": "Woking",
-      "center": [
-        51.3167,
-        -0.56
-      ],
-      "bounds": {
-        "north": 51.37,
-        "south": 51.27,
-        "east": -0.5,
-        "west": -0.65
-      },
-      "csvFile": "data/woking_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_woking.sql"
+      "id": "beverley",
+      "name": "Beverley",
+      "csvFile": "data/beverley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_beverley.sql"
     },
     {
       "id": "bexhill",
@@ -1727,20 +1556,224 @@
       "sqlFile": "dataconnect/queries/town_bexhill.sql"
     },
     {
-      "id": "haywards_heath",
-      "name": "Haywards Heath",
+      "id": "bicester",
+      "name": "Bicester",
+      "csvFile": "data/bicester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bicester.sql"
+    },
+    {
+      "id": "billingham",
+      "name": "Billingham",
+      "csvFile": "data/billingham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_billingham.sql"
+    },
+    {
+      "id": "billingshurst",
+      "name": "Billingshurst",
       "center": [
-        51.0066,
-        -0.1106
+        51.02,
+        -0.45
       ],
       "bounds": {
-        "north": 51.03,
+        "north": 51.04,
         "south": 51.0,
-        "east": -0.09,
-        "west": -0.14
+        "east": -0.42,
+        "west": -0.48
       },
-      "csvFile": "data/haywards-heath-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_haywards_heath.sql"
+      "csvFile": "data/billingshurst-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_billingshurst.sql"
+    },
+    {
+      "id": "billington",
+      "name": "Billington",
+      "csvFile": "data/billington_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_billington.sql"
+    },
+    {
+      "id": "bingley",
+      "name": "Bingley",
+      "csvFile": "data/bingley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bingley.sql"
+    },
+    {
+      "id": "birkenhead",
+      "name": "Birkenhead",
+      "csvFile": "data/birkenhead_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_birkenhead.sql"
+    },
+    {
+      "id": "bishop_auckland",
+      "name": "Bishop Auckland",
+      "csvFile": "data/bishop_auckland_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bishop_auckland.sql"
+    },
+    {
+      "id": "bishops_stortford",
+      "name": "Bishops Stortford",
+      "csvFile": "data/bishops_stortford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bishops_stortford.sql"
+    },
+    {
+      "id": "blackwood",
+      "name": "Blackwood",
+      "csvFile": "data/blackwood_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_blackwood.sql"
+    },
+    {
+      "id": "blyth",
+      "name": "Blyth",
+      "csvFile": "data/blyth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_blyth.sql"
+    },
+    {
+      "id": "bodmin",
+      "name": "Bodmin",
+      "csvFile": "data/bodmin_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bodmin.sql"
+    },
+    {
+      "id": "bolton",
+      "name": "Bolton",
+      "center": [
+        53.5815,
+        -2.4282
+      ],
+      "bounds": {
+        "north": 53.63,
+        "south": 53.53,
+        "east": -2.35,
+        "west": -2.55
+      },
+      "csvFile": "data/bolton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bolton.sql"
+    },
+    {
+      "id": "boncath",
+      "name": "Boncath",
+      "csvFile": "data/boncath_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_boncath.sql"
+    },
+    {
+      "id": "bootle",
+      "name": "Bootle",
+      "csvFile": "data/bootle_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bootle.sql"
+    },
+    {
+      "id": "borth",
+      "name": "Borth",
+      "csvFile": "data/borth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_borth.sql"
+    },
+    {
+      "id": "boston",
+      "name": "Boston",
+      "csvFile": "data/boston_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_boston.sql"
+    },
+    {
+      "id": "bournemouth",
+      "name": "Bournemouth",
+      "center": [
+        50.7192,
+        -1.8808
+      ],
+      "bounds": {
+        "north": 50.77,
+        "south": 50.68,
+        "east": -1.8,
+        "west": -2.0
+      },
+      "csvFile": "data/bournemouth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bournemouth.sql"
+    },
+    {
+      "id": "bow_street",
+      "name": "Bow Street",
+      "csvFile": "data/bow_street_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bow_street.sql"
+    },
+    {
+      "id": "braintree",
+      "name": "Braintree",
+      "csvFile": "data/braintree_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_braintree.sql"
+    },
+    {
+      "id": "brechin",
+      "name": "Brechin",
+      "csvFile": "data/brechin_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_brechin.sql"
+    },
+    {
+      "id": "bridgwater",
+      "name": "Bridgwater",
+      "csvFile": "data/bridgwater_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bridgwater.sql"
+    },
+    {
+      "id": "bridlington",
+      "name": "Bridlington",
+      "csvFile": "data/bridlington_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bridlington.sql"
+    },
+    {
+      "id": "brighouse",
+      "name": "Brighouse",
+      "csvFile": "data/brighouse_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_brighouse.sql"
+    },
+    {
+      "id": "brighton",
+      "name": "Brighton and Hove",
+      "center": [
+        50.8225,
+        -0.1372
+      ],
+      "bounds": {
+        "north": 50.87,
+        "south": 50.78,
+        "east": -0.05,
+        "west": -0.25
+      },
+      "csvFile": "data/brighton_hove_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_brighton.sql"
+    },
+    {
+      "id": "broadstairs",
+      "name": "Broadstairs",
+      "csvFile": "data/broadstairs_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_broadstairs.sql"
+    },
+    {
+      "id": "bromsgrove",
+      "name": "Bromsgrove",
+      "csvFile": "data/bromsgrove_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bromsgrove.sql"
+    },
+    {
+      "id": "bromyard",
+      "name": "Bromyard",
+      "csvFile": "data/bromyard_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bromyard.sql"
+    },
+    {
+      "id": "broxbourne",
+      "name": "Broxbourne",
+      "csvFile": "data/broxbourne_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_broxbourne.sql"
+    },
+    {
+      "id": "broxtowe",
+      "name": "Broxtowe",
+      "csvFile": "data/broxtowe_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_broxtowe.sql"
+    },
+    {
+      "id": "buckingham",
+      "name": "Buckingham",
+      "csvFile": "data/buckingham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_buckingham.sql"
     },
     {
       "id": "burgess_hill",
@@ -1759,20 +1792,616 @@
       "sqlFile": "dataconnect/queries/town_burgess_hill.sql"
     },
     {
-      "id": "heathfield",
-      "name": "Heathfield",
+      "id": "burnham_on_sea",
+      "name": "Burnham On Sea",
+      "csvFile": "data/burnham_on_sea_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_burnham_on_sea.sql"
+    },
+    {
+      "id": "burton_upon_trent",
+      "name": "Burton Upon Trent",
+      "csvFile": "data/burton_upon_trent_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_burton_upon_trent.sql"
+    },
+    {
+      "id": "bury_st_edmunds",
+      "name": "Bury St Edmunds",
+      "csvFile": "data/bury_st_edmunds_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bury_st_edmunds.sql"
+    },
+    {
+      "id": "caernarfon",
+      "name": "Caernarfon",
+      "csvFile": "data/caernarfon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_caernarfon.sql"
+    },
+    {
+      "id": "camberley",
+      "name": "Camberley",
+      "csvFile": "data/camberley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_camberley.sql"
+    },
+    {
+      "id": "camborne",
+      "name": "Camborne",
+      "csvFile": "data/camborne_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_camborne.sql"
+    },
+    {
+      "id": "cambridge",
+      "name": "Cambridge",
+      "csvFile": "data/cambridge_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cambridge.sql"
+    },
+    {
+      "id": "capel_bangor",
+      "name": "Capel Bangor",
+      "csvFile": "data/capel_bangor_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_capel_bangor.sql"
+    },
+    {
+      "id": "carlisle",
+      "name": "Carlisle",
       "center": [
-        51.0583,
-        0.2575
+        54.892,
+        -2.9295
+      ],
+      "bounds": {
+        "north": 54.95,
+        "south": 54.85,
+        "east": -2.85,
+        "west": -2.99
+      },
+      "csvFile": "data/carlisle_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_carlisle.sql"
+    },
+    {
+      "id": "carlton",
+      "name": "Carlton",
+      "csvFile": "data/carlton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_carlton.sql"
+    },
+    {
+      "id": "carrickfergus",
+      "name": "Carrickfergus",
+      "csvFile": "data/carrickfergus_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_carrickfergus.sql"
+    },
+    {
+      "id": "castleford",
+      "name": "Castleford",
+      "csvFile": "data/castleford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_castleford.sql"
+    },
+    {
+      "id": "chatham",
+      "name": "Chatham",
+      "csvFile": "data/chatham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_chatham.sql"
+    },
+    {
+      "id": "chertsey",
+      "name": "Chertsey",
+      "csvFile": "data/chertsey_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_chertsey.sql"
+    },
+    {
+      "id": "chesterfield",
+      "name": "Chesterfield",
+      "csvFile": "data/chesterfield_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_chesterfield.sql"
+    },
+    {
+      "id": "chichester",
+      "name": "Chichester",
+      "csvFile": "data/chichester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_chichester.sql"
+    },
+    {
+      "id": "chigwell",
+      "name": "Chigwell",
+      "csvFile": "data/chigwell_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_chigwell.sql"
+    },
+    {
+      "id": "chorley",
+      "name": "Chorley",
+      "csvFile": "data/chorley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_chorley.sql"
+    },
+    {
+      "id": "clacton_on_sea",
+      "name": "Clacton On Sea",
+      "csvFile": "data/clacton_on_sea_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_clacton_on_sea.sql"
+    },
+    {
+      "id": "cleethorpes",
+      "name": "Cleethorpes",
+      "csvFile": "data/cleethorpes_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cleethorpes.sql"
+    },
+    {
+      "id": "clevedon",
+      "name": "Clevedon",
+      "csvFile": "data/clevedon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_clevedon.sql"
+    },
+    {
+      "id": "clifton",
+      "name": "Clifton",
+      "csvFile": "data/clifton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_clifton.sql"
+    },
+    {
+      "id": "clydau",
+      "name": "Clydau",
+      "csvFile": "data/clydau_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_clydau.sql"
+    },
+    {
+      "id": "clynderwen",
+      "name": "Clynderwen",
+      "csvFile": "data/clynderwen_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_clynderwen.sql"
+    },
+    {
+      "id": "coalville",
+      "name": "Coalville",
+      "csvFile": "data/coalville_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_coalville.sql"
+    },
+    {
+      "id": "coatbridge",
+      "name": "Coatbridge",
+      "csvFile": "data/coatbridge_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_coatbridge.sql"
+    },
+    {
+      "id": "colwyn_bay",
+      "name": "Colwyn Bay",
+      "csvFile": "data/colwyn_bay_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_colwyn_bay.sql"
+    },
+    {
+      "id": "congleton",
+      "name": "Congleton",
+      "csvFile": "data/congleton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_congleton.sql"
+    },
+    {
+      "id": "consett",
+      "name": "Consett",
+      "csvFile": "data/consett_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_consett.sql"
+    },
+    {
+      "id": "corby",
+      "name": "Corby",
+      "csvFile": "data/corby_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_corby.sql"
+    },
+    {
+      "id": "corris",
+      "name": "Corris",
+      "csvFile": "data/corris_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_corris.sql"
+    },
+    {
+      "id": "cosheston",
+      "name": "Cosheston",
+      "csvFile": "data/cosheston_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cosheston.sql"
+    },
+    {
+      "id": "cowes",
+      "name": "Cowes",
+      "csvFile": "data/cowes_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cowes.sql"
+    },
+    {
+      "id": "cranbrook",
+      "name": "Cranbrook",
+      "csvFile": "data/cranbrook_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cranbrook.sql"
+    },
+    {
+      "id": "crawley",
+      "name": "Crawley",
+      "center": [
+        51.1132,
+        -0.1831
+      ],
+      "bounds": {
+        "north": 51.16,
+        "south": 51.08,
+        "east": -0.12,
+        "west": -0.26
+      },
+      "csvFile": "data/crawley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_crawley.sql"
+    },
+    {
+      "id": "crewe",
+      "name": "Crewe",
+      "csvFile": "data/crewe_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_crewe.sql"
+    },
+    {
+      "id": "crosby",
+      "name": "Crosby",
+      "csvFile": "data/crosby_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_crosby.sql"
+    },
+    {
+      "id": "crosskeys",
+      "name": "Crosskeys",
+      "csvFile": "data/crosskeys_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_crosskeys.sql"
+    },
+    {
+      "id": "crowborough",
+      "name": "Crowborough",
+      "center": [
+        51.06,
+        0.16
       ],
       "bounds": {
         "north": 51.08,
         "south": 51.04,
-        "east": 0.29,
-        "west": 0.23
+        "east": 0.19,
+        "west": 0.13
       },
-      "csvFile": "data/heathfield-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_heathfield.sql"
+      "csvFile": "data/crowborough-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_crowborough.sql"
+    },
+    {
+      "id": "crymych",
+      "name": "Crymych",
+      "csvFile": "data/crymych_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_crymych.sql"
+    },
+    {
+      "id": "darlaston",
+      "name": "Darlaston",
+      "csvFile": "data/darlaston_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_darlaston.sql"
+    },
+    {
+      "id": "darwen",
+      "name": "Darwen",
+      "csvFile": "data/darwen_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_darwen.sql"
+    },
+    {
+      "id": "daventry",
+      "name": "Daventry",
+      "csvFile": "data/daventry_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_daventry.sql"
+    },
+    {
+      "id": "deeside",
+      "name": "Deeside",
+      "csvFile": "data/deeside_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_deeside.sql"
+    },
+    {
+      "id": "denton",
+      "name": "Denton",
+      "csvFile": "data/denton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_denton.sql"
+    },
+    {
+      "id": "devizes",
+      "name": "Devizes",
+      "csvFile": "data/devizes_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_devizes.sql"
+    },
+    {
+      "id": "dewsbury",
+      "name": "Dewsbury",
+      "csvFile": "data/dewsbury_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dewsbury.sql"
+    },
+    {
+      "id": "dinas_mawddwy",
+      "name": "Dinas Mawddwy",
+      "csvFile": "data/dinas_mawddwy_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dinas_mawddwy.sql"
+    },
+    {
+      "id": "ditchling",
+      "name": "Ditchling",
+      "center": [
+        51.0027,
+        0.085
+      ],
+      "bounds": {
+        "north": 51.02,
+        "south": 50.99,
+        "east": 0.11,
+        "west": 0.06
+      },
+      "csvFile": "data/ditchling-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_ditchling.sql"
+    },
+    {
+      "id": "dolphins_barn",
+      "name": "Dolphins Barn",
+      "csvFile": "data/dolphins_barn_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dolphins_barn.sql"
+    },
+    {
+      "id": "dorking",
+      "name": "Dorking",
+      "csvFile": "data/dorking_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dorking.sql"
+    },
+    {
+      "id": "dover",
+      "name": "Dover",
+      "csvFile": "data/dover_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dover.sql"
+    },
+    {
+      "id": "droitwich_spa",
+      "name": "Droitwich Spa",
+      "csvFile": "data/droitwich_spa_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_droitwich_spa.sql"
+    },
+    {
+      "id": "droylsden",
+      "name": "Droylsden",
+      "csvFile": "data/droylsden_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_droylsden.sql"
+    },
+    {
+      "id": "durham",
+      "name": "Durham",
+      "csvFile": "data/durham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_durham.sql"
+    },
+    {
+      "id": "earby",
+      "name": "Earby",
+      "csvFile": "data/earby_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_earby.sql"
+    },
+    {
+      "id": "east_grinstead",
+      "name": "East Grinstead",
+      "center": [
+        51.129,
+        -0.008
+      ],
+      "bounds": {
+        "north": 51.15,
+        "south": 51.11,
+        "east": 0.02,
+        "west": -0.03
+      },
+      "csvFile": "data/east-grinstead-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_east_grinstead.sql"
+    },
+    {
+      "id": "eastbourne",
+      "name": "Eastbourne",
+      "center": [
+        50.7676,
+        0.2821
+      ],
+      "bounds": {
+        "north": 50.82,
+        "south": 50.72,
+        "east": 0.35,
+        "west": 0.2
+      },
+      "csvFile": "data/eastbourne_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_eastbourne.sql"
+    },
+    {
+      "id": "eastwood",
+      "name": "Eastwood",
+      "csvFile": "data/eastwood_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_eastwood.sql"
+    },
+    {
+      "id": "eccles",
+      "name": "Eccles",
+      "csvFile": "data/eccles_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_eccles.sql"
+    },
+    {
+      "id": "edmonton",
+      "name": "Edmonton",
+      "csvFile": "data/edmonton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_edmonton.sql"
+    },
+    {
+      "id": "egham",
+      "name": "Egham",
+      "csvFile": "data/egham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_egham.sql"
+    },
+    {
+      "id": "ellesmere_port",
+      "name": "Ellesmere Port",
+      "csvFile": "data/ellesmere_port_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ellesmere_port.sql"
+    },
+    {
+      "id": "elstree",
+      "name": "Elstree",
+      "csvFile": "data/elstree_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_elstree.sql"
+    },
+    {
+      "id": "epping",
+      "name": "Epping",
+      "csvFile": "data/epping_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_epping.sql"
+    },
+    {
+      "id": "epping_forest",
+      "name": "Epping Forest",
+      "csvFile": "data/epping_forest_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_epping_forest.sql"
+    },
+    {
+      "id": "erith",
+      "name": "Erith",
+      "csvFile": "data/erith_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_erith.sql"
+    },
+    {
+      "id": "evesham",
+      "name": "Evesham",
+      "csvFile": "data/evesham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_evesham.sql"
+    },
+    {
+      "id": "failsworth",
+      "name": "Failsworth",
+      "csvFile": "data/failsworth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_failsworth.sql"
+    },
+    {
+      "id": "falmouth",
+      "name": "Falmouth",
+      "csvFile": "data/falmouth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_falmouth.sql"
+    },
+    {
+      "id": "fareham",
+      "name": "Fareham",
+      "csvFile": "data/fareham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_fareham.sql"
+    },
+    {
+      "id": "farnborough",
+      "name": "Farnborough",
+      "csvFile": "data/farnborough_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_farnborough.sql"
+    },
+    {
+      "id": "farnham",
+      "name": "Farnham",
+      "csvFile": "data/farnham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_farnham.sql"
+    },
+    {
+      "id": "fenton",
+      "name": "Fenton",
+      "csvFile": "data/fenton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_fenton.sql"
+    },
+    {
+      "id": "ferndown",
+      "name": "Ferndown",
+      "csvFile": "data/ferndown_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ferndown.sql"
+    },
+    {
+      "id": "fishguard",
+      "name": "Fishguard",
+      "csvFile": "data/fishguard_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_fishguard.sql"
+    },
+    {
+      "id": "fleet",
+      "name": "Fleet",
+      "csvFile": "data/fleet_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_fleet.sql"
+    },
+    {
+      "id": "folkestone",
+      "name": "Folkestone",
+      "csvFile": "data/folkestone_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_folkestone.sql"
+    },
+    {
+      "id": "formby",
+      "name": "Formby",
+      "csvFile": "data/formby_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_formby.sql"
+    },
+    {
+      "id": "frodsham",
+      "name": "Frodsham",
+      "csvFile": "data/frodsham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_frodsham.sql"
+    },
+    {
+      "id": "frome",
+      "name": "Frome",
+      "csvFile": "data/frome_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_frome.sql"
+    },
+    {
+      "id": "gillingham",
+      "name": "Gillingham",
+      "csvFile": "data/gillingham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_gillingham.sql"
+    },
+    {
+      "id": "glogue",
+      "name": "Glogue",
+      "csvFile": "data/glogue_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_glogue.sql"
+    },
+    {
+      "id": "glossop",
+      "name": "Glossop",
+      "csvFile": "data/glossop_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_glossop.sql"
+    },
+    {
+      "id": "godalming",
+      "name": "Godalming",
+      "csvFile": "data/godalming_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_godalming.sql"
+    },
+    {
+      "id": "gosport",
+      "name": "Gosport",
+      "csvFile": "data/gosport_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_gosport.sql"
+    },
+    {
+      "id": "grantham",
+      "name": "Grantham",
+      "csvFile": "data/grantham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_grantham.sql"
+    },
+    {
+      "id": "gravesend",
+      "name": "Gravesend",
+      "csvFile": "data/gravesend_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_gravesend.sql"
+    },
+    {
+      "id": "grays",
+      "name": "Grays",
+      "csvFile": "data/grays_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_grays.sql"
+    },
+    {
+      "id": "great_yarmouth",
+      "name": "Great Yarmouth",
+      "csvFile": "data/great_yarmouth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_great_yarmouth.sql"
+    },
+    {
+      "id": "greenock",
+      "name": "Greenock",
+      "csvFile": "data/greenock_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_greenock.sql"
+    },
+    {
+      "id": "guisborough",
+      "name": "Guisborough",
+      "csvFile": "data/guisborough_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_guisborough.sql"
     },
     {
       "id": "hailsham",
@@ -1791,6 +2420,620 @@
       "sqlFile": "dataconnect/queries/town_hailsham.sql"
     },
     {
+      "id": "halesowen",
+      "name": "Halesowen",
+      "csvFile": "data/halesowen_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_halesowen.sql"
+    },
+    {
+      "id": "harlow",
+      "name": "Harlow",
+      "csvFile": "data/harlow_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_harlow.sql"
+    },
+    {
+      "id": "harrogate",
+      "name": "Harrogate",
+      "csvFile": "data/harrogate_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_harrogate.sql"
+    },
+    {
+      "id": "haverfordwest",
+      "name": "Haverfordwest",
+      "csvFile": "data/haverfordwest_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_haverfordwest.sql"
+    },
+    {
+      "id": "haywards_heath",
+      "name": "Haywards Heath",
+      "center": [
+        51.0066,
+        -0.1106
+      ],
+      "bounds": {
+        "north": 51.03,
+        "south": 51.0,
+        "east": -0.09,
+        "west": -0.14
+      },
+      "csvFile": "data/haywards-heath-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_haywards_heath.sql"
+    },
+    {
+      "id": "heathfield",
+      "name": "Heathfield",
+      "center": [
+        51.0583,
+        0.2575
+      ],
+      "bounds": {
+        "north": 51.08,
+        "south": 51.04,
+        "east": 0.29,
+        "west": 0.23
+      },
+      "csvFile": "data/heathfield-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_heathfield.sql"
+    },
+    {
+      "id": "hednesford",
+      "name": "Hednesford",
+      "csvFile": "data/hednesford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hednesford.sql"
+    },
+    {
+      "id": "hemel_hempstead",
+      "name": "Hemel Hempstead",
+      "csvFile": "data/hemel_hempstead_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hemel_hempstead.sql"
+    },
+    {
+      "id": "hendon",
+      "name": "Hendon",
+      "csvFile": "data/hendon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hendon.sql"
+    },
+    {
+      "id": "henfield",
+      "name": "Henfield",
+      "center": [
+        50.9312,
+        -0.2678
+      ],
+      "bounds": {
+        "north": 50.95,
+        "south": 50.92,
+        "east": -0.24,
+        "west": -0.29
+      },
+      "csvFile": "data/henfield-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_henfield.sql"
+    },
+    {
+      "id": "hundleton",
+      "name": "Hundleton",
+      "csvFile": "data/hundleton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_hundleton.sql"
+    },
+    {
+      "id": "huntingdon",
+      "name": "Huntingdon",
+      "csvFile": "data/huntingdon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_huntingdon.sql"
+    },
+    {
+      "id": "iow",
+      "name": "Iow",
+      "csvFile": "data/iow_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_iow.sql"
+    },
+    {
+      "id": "jeffreyston",
+      "name": "Jeffreyston",
+      "csvFile": "data/jeffreyston_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_jeffreyston.sql"
+    },
+    {
+      "id": "lampeter_velfrey",
+      "name": "Lampeter Velfrey",
+      "csvFile": "data/lampeter_velfrey_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_lampeter_velfrey.sql"
+    },
+    {
+      "id": "laugharne",
+      "name": "Laugharne",
+      "csvFile": "data/laugharne_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_laugharne.sql"
+    },
+    {
+      "id": "lawrenny",
+      "name": "Lawrenny",
+      "csvFile": "data/lawrenny_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_lawrenny.sql"
+    },
+    {
+      "id": "llanarth",
+      "name": "Llanarth",
+      "csvFile": "data/llanarth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llanarth.sql"
+    },
+    {
+      "id": "llanbadarn_fawr",
+      "name": "Llanbadarn Fawr",
+      "csvFile": "data/llanbadarn_fawr_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llanbadarn_fawr.sql"
+    },
+    {
+      "id": "llandeilo",
+      "name": "Llandeilo",
+      "csvFile": "data/llandeilo_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llandeilo.sql"
+    },
+    {
+      "id": "llandre",
+      "name": "Llandre",
+      "csvFile": "data/llandre_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llandre.sql"
+    },
+    {
+      "id": "llandudno",
+      "name": "Llandudno",
+      "csvFile": "data/llandudno_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llandudno.sql"
+    },
+    {
+      "id": "llanelli",
+      "name": "Llanelli",
+      "csvFile": "data/llanelli_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llanelli.sql"
+    },
+    {
+      "id": "llanfallteg",
+      "name": "Llanfallteg",
+      "csvFile": "data/llanfallteg_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llanfallteg.sql"
+    },
+    {
+      "id": "llanfyrnach",
+      "name": "Llanfyrnach",
+      "csvFile": "data/llanfyrnach_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llanfyrnach.sql"
+    },
+    {
+      "id": "llangrannog",
+      "name": "Llangrannog",
+      "csvFile": "data/llangrannog_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llangrannog.sql"
+    },
+    {
+      "id": "llangwm",
+      "name": "Llangwm",
+      "csvFile": "data/llangwm_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llangwm.sql"
+    },
+    {
+      "id": "llanrhystud",
+      "name": "Llanrhystud",
+      "csvFile": "data/llanrhystud_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llanrhystud.sql"
+    },
+    {
+      "id": "llanuwchllyn",
+      "name": "Llanuwchllyn",
+      "csvFile": "data/llanuwchllyn_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_llanuwchllyn.sql"
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "center": [
+        51.5074,
+        -0.1278
+      ],
+      "bounds": {
+        "north": 51.7,
+        "south": 51.3,
+        "east": 0.3,
+        "west": -0.5
+      },
+      "csvFile": "data/london_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london.sql"
+    },
+    {
+      "id": "london_barking_and_dagenham",
+      "name": "London Barking And Dagenham",
+      "csvFile": "data/london_barking_and_dagenham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_barking_and_dagenham.sql"
+    },
+    {
+      "id": "london_barnet",
+      "name": "London Barnet",
+      "csvFile": "data/london_barnet_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_barnet.sql"
+    },
+    {
+      "id": "london_bexley",
+      "name": "London Bexley",
+      "csvFile": "data/london_bexley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_bexley.sql"
+    },
+    {
+      "id": "london_bromley",
+      "name": "London Bromley",
+      "csvFile": "data/london_bromley_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_bromley.sql"
+    },
+    {
+      "id": "london_camden",
+      "name": "London Camden",
+      "csvFile": "data/london_camden_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_camden.sql"
+    },
+    {
+      "id": "london_city_of_london",
+      "name": "London City Of London",
+      "csvFile": "data/london_city_of_london_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_city_of_london.sql"
+    },
+    {
+      "id": "london_croydon",
+      "name": "London Croydon",
+      "csvFile": "data/london_croydon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_croydon.sql"
+    },
+    {
+      "id": "london_ealing",
+      "name": "London Ealing",
+      "csvFile": "data/london_ealing_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_ealing.sql"
+    },
+    {
+      "id": "london_enfield",
+      "name": "London Enfield",
+      "csvFile": "data/london_enfield_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_enfield.sql"
+    },
+    {
+      "id": "london_greenwich",
+      "name": "London Greenwich",
+      "csvFile": "data/london_greenwich_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_greenwich.sql"
+    },
+    {
+      "id": "london_hackney",
+      "name": "London Hackney",
+      "csvFile": "data/london_hackney_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_hackney.sql"
+    },
+    {
+      "id": "london_hammersmith_and_fulham",
+      "name": "London Hammersmith And Fulham",
+      "csvFile": "data/london_hammersmith_and_fulham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_hammersmith_and_fulham.sql"
+    },
+    {
+      "id": "london_haringey",
+      "name": "London Haringey",
+      "csvFile": "data/london_haringey_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_haringey.sql"
+    },
+    {
+      "id": "london_harrow",
+      "name": "London Harrow",
+      "csvFile": "data/london_harrow_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_harrow.sql"
+    },
+    {
+      "id": "london_havering",
+      "name": "London Havering",
+      "csvFile": "data/london_havering_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_havering.sql"
+    },
+    {
+      "id": "london_hillingdon",
+      "name": "London Hillingdon",
+      "csvFile": "data/london_hillingdon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_hillingdon.sql"
+    },
+    {
+      "id": "london_hounslow",
+      "name": "London Hounslow",
+      "csvFile": "data/london_hounslow_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_hounslow.sql"
+    },
+    {
+      "id": "london_islington",
+      "name": "London Islington",
+      "csvFile": "data/london_islington_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_islington.sql"
+    },
+    {
+      "id": "london_kensington_and_chelsea",
+      "name": "London Kensington And Chelsea",
+      "csvFile": "data/london_kensington_and_chelsea_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_kensington_and_chelsea.sql"
+    },
+    {
+      "id": "london_kingston_upon_thames",
+      "name": "London Kingston Upon Thames",
+      "csvFile": "data/london_kingston_upon_thames_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_kingston_upon_thames.sql"
+    },
+    {
+      "id": "london_lambeth",
+      "name": "London Lambeth",
+      "csvFile": "data/london_lambeth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_lambeth.sql"
+    },
+    {
+      "id": "london_lewisham",
+      "name": "London Lewisham",
+      "csvFile": "data/london_lewisham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_lewisham.sql"
+    },
+    {
+      "id": "london_merton",
+      "name": "London Merton",
+      "center": [
+        51.42,
+        -0.2
+      ],
+      "bounds": {
+        "north": 51.47,
+        "south": 51.37,
+        "east": -0.15,
+        "west": -0.25
+      },
+      "csvFile": "data/london_merton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_merton.sql"
+    },
+    {
+      "id": "london_newham",
+      "name": "London Newham",
+      "center": [
+        51.525,
+        0.035
+      ],
+      "bounds": {
+        "north": 51.575,
+        "south": 51.475,
+        "east": 0.085,
+        "west": -0.015
+      },
+      "csvFile": "data/london_newham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_newham.sql"
+    },
+    {
+      "id": "london_redbridge",
+      "name": "London Redbridge",
+      "center": [
+        51.585,
+        0.075
+      ],
+      "bounds": {
+        "north": 51.635,
+        "south": 51.535,
+        "east": 0.125,
+        "west": 0.025
+      },
+      "csvFile": "data/london_redbridge_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_redbridge.sql"
+    },
+    {
+      "id": "london_richmond_upon_thames",
+      "name": "London Richmond Upon Thames",
+      "center": [
+        51.47,
+        -0.29
+      ],
+      "bounds": {
+        "north": 51.52,
+        "south": 51.42,
+        "east": -0.24,
+        "west": -0.34
+      },
+      "csvFile": "data/london_richmond_upon_thames_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_richmond_upon_thames.sql"
+    },
+    {
+      "id": "london_southwark",
+      "name": "London Southwark",
+      "center": [
+        51.505,
+        -0.09
+      ],
+      "bounds": {
+        "north": 51.555,
+        "south": 51.455,
+        "east": -0.04,
+        "west": -0.14
+      },
+      "csvFile": "data/london_southwark_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_southwark.sql"
+    },
+    {
+      "id": "london_sutton",
+      "name": "London Sutton",
+      "center": [
+        51.39,
+        -0.2
+      ],
+      "bounds": {
+        "north": 51.44,
+        "south": 51.34,
+        "east": -0.15,
+        "west": -0.25
+      },
+      "csvFile": "data/london_sutton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_sutton.sql"
+    },
+    {
+      "id": "london_tower_hamlets",
+      "name": "London Tower Hamlets",
+      "center": [
+        51.525,
+        -0.035
+      ],
+      "bounds": {
+        "north": 51.575,
+        "south": 51.475,
+        "east": 0.015,
+        "west": -0.085
+      },
+      "csvFile": "data/london_tower_hamlets_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_tower_hamlets.sql"
+    },
+    {
+      "id": "london_waltham_forest",
+      "name": "London Waltham Forest",
+      "center": [
+        51.595,
+        -0.025
+      ],
+      "bounds": {
+        "north": 51.645,
+        "south": 51.545,
+        "east": 0.025,
+        "west": -0.075
+      },
+      "csvFile": "data/london_waltham_forest_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_waltham_forest.sql"
+    },
+    {
+      "id": "london_wandsworth",
+      "name": "London Wandsworth",
+      "center": [
+        51.455,
+        -0.19
+      ],
+      "bounds": {
+        "north": 51.505,
+        "south": 51.405,
+        "east": -0.14,
+        "west": -0.24
+      },
+      "csvFile": "data/london_wandsworth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_wandsworth.sql"
+    },
+    {
+      "id": "london_westminster",
+      "name": "London Westminster",
+      "center": [
+        51.505,
+        -0.15
+      ],
+      "bounds": {
+        "north": 51.555,
+        "south": 51.455,
+        "east": -0.1,
+        "west": -0.2
+      },
+      "csvFile": "data/london_westminster_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_london_westminster.sql"
+    },
+    {
+      "id": "machynlleth",
+      "name": "Machynlleth",
+      "csvFile": "data/machynlleth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_machynlleth.sql"
+    },
+    {
+      "id": "maenclochog",
+      "name": "Maenclochog",
+      "csvFile": "data/maenclochog_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_maenclochog.sql"
+    },
+    {
+      "id": "mansfield",
+      "name": "Mansfield",
+      "center": [
+        53.144,
+        -1.198
+      ],
+      "bounds": {
+        "north": 53.2,
+        "south": 53.1,
+        "east": -1.1,
+        "west": -1.3
+      },
+      "csvFile": "data/mansfield_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_mansfield.sql"
+    },
+    {
+      "id": "martletwy",
+      "name": "Martletwy",
+      "csvFile": "data/martletwy_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_martletwy.sql"
+    },
+    {
+      "id": "mathry",
+      "name": "Mathry",
+      "csvFile": "data/mathry_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_mathry.sql"
+    },
+    {
+      "id": "middlesbrough",
+      "name": "Middlesbrough",
+      "center": [
+        54.5762,
+        -1.2348
+      ],
+      "bounds": {
+        "north": 54.62,
+        "south": 54.52,
+        "east": -1.15,
+        "west": -1.35
+      },
+      "csvFile": "data/middlesbrough_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_middlesbrough.sql"
+    },
+    {
+      "id": "midhurst",
+      "name": "Midhurst",
+      "center": [
+        50.987,
+        -0.723
+      ],
+      "bounds": {
+        "north": 51.0,
+        "south": 50.97,
+        "east": -0.7,
+        "west": -0.75
+      },
+      "csvFile": "data/midhurst-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_midhurst.sql"
+    },
+    {
+      "id": "minwear",
+      "name": "Minwear",
+      "csvFile": "data/minwear_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_minwear.sql"
+    },
+    {
+      "id": "mwnt",
+      "name": "Mwnt",
+      "csvFile": "data/mwnt_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_mwnt.sql"
+    },
+    {
+      "id": "narberth",
+      "name": "Narberth",
+      "csvFile": "data/narberth_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_narberth.sql"
+    },
+    {
+      "id": "new_moat",
+      "name": "New Moat",
+      "csvFile": "data/new_moat_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_new_moat.sql"
+    },
+    {
+      "id": "new_quay",
+      "name": "New Quay",
+      "csvFile": "data/new_quay_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_new_quay.sql"
+    },
+    {
       "id": "newhaven",
       "name": "Newhaven",
       "center": [
@@ -1805,6 +3048,64 @@
       },
       "csvFile": "data/newhaven-free-food-locations.csv",
       "sqlFile": "dataconnect/queries/town_newhaven.sql"
+    },
+    {
+      "id": "newtown",
+      "name": "Newtown",
+      "csvFile": "data/newtown_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_newtown.sql"
+    },
+    {
+      "id": "oldham",
+      "name": "Oldham",
+      "csvFile": "data/oldham_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_oldham.sql"
+    },
+    {
+      "id": "pembroke",
+      "name": "Pembroke",
+      "csvFile": "data/pembroke_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_pembroke.sql"
+    },
+    {
+      "id": "penbryn",
+      "name": "Penbryn",
+      "csvFile": "data/penbryn_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_penbryn.sql"
+    },
+    {
+      "id": "penparcau",
+      "name": "Penparcau",
+      "csvFile": "data/penparcau_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_penparcau.sql"
+    },
+    {
+      "id": "polegate",
+      "name": "Polegate",
+      "center": [
+        50.8123,
+        0.2456
+      ],
+      "bounds": {
+        "north": 50.84,
+        "south": 50.79,
+        "east": 0.28,
+        "west": 0.21
+      },
+      "csvFile": "data/polegate-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_polegate.sql"
+    },
+    {
+      "id": "pont_rhyd_y_groes",
+      "name": "Pont Rhyd Y Groes",
+      "csvFile": "data/pont_rhyd_y_groes_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_pont_rhyd_y_groes.sql"
+    },
+    {
+      "id": "pontypridd",
+      "name": "Pontypridd",
+      "csvFile": "data/pontypridd_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_pontypridd.sql"
     },
     {
       "id": "portslade",
@@ -1823,6 +3124,40 @@
       "sqlFile": "dataconnect/queries/town_portslade.sql"
     },
     {
+      "id": "pulborough",
+      "name": "Pulborough",
+      "center": [
+        50.9456,
+        -0.5234
+      ],
+      "bounds": {
+        "north": 50.97,
+        "south": 50.93,
+        "east": -0.5,
+        "west": -0.56
+      },
+      "csvFile": "data/pulborough-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_pulborough.sql"
+    },
+    {
+      "id": "rhyl",
+      "name": "Rhyl",
+      "csvFile": "data/rhyl_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_rhyl.sql"
+    },
+    {
+      "id": "robeston_wathen",
+      "name": "Robeston Wathen",
+      "csvFile": "data/robeston_wathen_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_robeston_wathen.sql"
+    },
+    {
+      "id": "rosemarket",
+      "name": "Rosemarket",
+      "csvFile": "data/rosemarket_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_rosemarket.sql"
+    },
+    {
       "id": "shoreham-by-sea",
       "name": "Shoreham-by-Sea",
       "center": [
@@ -1839,6 +3174,52 @@
       "sqlFile": "dataconnect/queries/town_shoreham-by-sea.sql"
     },
     {
+      "id": "solva",
+      "name": "Solva",
+      "csvFile": "data/solva_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_solva.sql"
+    },
+    {
+      "id": "south_shields",
+      "name": "South Shields",
+      "csvFile": "data/south_shields_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_south_shields.sql"
+    },
+    {
+      "id": "spittal",
+      "name": "Spittal",
+      "csvFile": "data/spittal_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_spittal.sql"
+    },
+    {
+      "id": "st_davids",
+      "name": "St Davids",
+      "csvFile": "data/st_davids_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_st_davids.sql"
+    },
+    {
+      "id": "st_florence",
+      "name": "St Florence",
+      "csvFile": "data/st_florence_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_st_florence.sql"
+    },
+    {
+      "id": "stevenage",
+      "name": "Stevenage",
+      "center": [
+        51.9023,
+        -0.2026
+      ],
+      "bounds": {
+        "north": 51.95,
+        "south": 51.85,
+        "east": -0.15,
+        "west": -0.25
+      },
+      "csvFile": "data/stevenage_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_stevenage.sql"
+    },
+    {
       "id": "steyning",
       "name": "Steyning",
       "center": [
@@ -1853,6 +3234,74 @@
       },
       "csvFile": "data/steyning-free-food-locations.csv",
       "sqlFile": "dataconnect/queries/town_steyning.sql"
+    },
+    {
+      "id": "storrington",
+      "name": "Storrington",
+      "center": [
+        50.915,
+        -0.455
+      ],
+      "bounds": {
+        "north": 50.94,
+        "south": 50.9,
+        "east": -0.43,
+        "west": -0.48
+      },
+      "csvFile": "data/storrington-free-food-locations.csv",
+      "sqlFile": "dataconnect/queries/town_storrington.sql"
+    },
+    {
+      "id": "stretford",
+      "name": "Stretford",
+      "csvFile": "data/stretford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_stretford.sql"
+    },
+    {
+      "id": "swindon",
+      "name": "Swindon",
+      "center": [
+        51.5558,
+        -1.7797
+      ],
+      "bounds": {
+        "north": 51.65,
+        "south": 51.45,
+        "east": -1.65,
+        "west": -1.9
+      },
+      "csvFile": "data/swindon_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_swindon.sql"
+    },
+    {
+      "id": "swinton",
+      "name": "Swinton",
+      "csvFile": "data/swinton_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_swinton.sql"
+    },
+    {
+      "id": "talsarn",
+      "name": "Talsarn",
+      "csvFile": "data/talsarn_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_talsarn.sql"
+    },
+    {
+      "id": "tenby",
+      "name": "Tenby",
+      "csvFile": "data/tenby_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_tenby.sql"
+    },
+    {
+      "id": "tregaron",
+      "name": "Tregaron",
+      "csvFile": "data/tregaron_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_tregaron.sql"
+    },
+    {
+      "id": "tresaith",
+      "name": "Tresaith",
+      "csvFile": "data/tresaith_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_tresaith.sql"
     },
     {
       "id": "uckfield",
@@ -1887,152 +3336,192 @@
       "sqlFile": "dataconnect/queries/town_wadhurst.sql"
     },
     {
-      "id": "crowborough",
-      "name": "Crowborough",
-      "center": [
-        51.06,
-        0.16
-      ],
-      "bounds": {
-        "north": 51.08,
-        "south": 51.04,
-        "east": 0.19,
-        "west": 0.13
-      },
-      "csvFile": "data/crowborough-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_crowborough.sql"
+      "id": "wakefield",
+      "name": "Wakefield",
+      "csvFile": "data/wakefield_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_wakefield.sql"
     },
     {
-      "id": "polegate",
-      "name": "Polegate",
+      "id": "walsall",
+      "name": "Walsall",
       "center": [
-        50.8123,
-        0.2456
+        52.5844,
+        -1.9783
       ],
       "bounds": {
-        "north": 50.84,
-        "south": 50.79,
-        "east": 0.28,
-        "west": 0.21
+        "north": 52.65,
+        "south": 52.55,
+        "east": -1.8,
+        "west": -2.1
       },
-      "csvFile": "data/polegate-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_polegate.sql"
+      "csvFile": "data/walsall_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_walsall.sql"
     },
     {
-      "id": "east_grinstead",
-      "name": "East Grinstead",
+      "id": "watford",
+      "name": "Watford",
       "center": [
-        51.129,
-        -0.008
+        51.6565,
+        -0.3903
       ],
       "bounds": {
-        "north": 51.15,
-        "south": 51.11,
-        "east": 0.02,
-        "west": -0.03
+        "north": 51.7,
+        "south": 51.6,
+        "east": -0.3,
+        "west": -0.5
       },
-      "csvFile": "data/east-grinstead-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_east_grinstead.sql"
+      "csvFile": "data/watford_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_watford.sql"
     },
     {
-      "id": "ditchling",
-      "name": "Ditchling",
-      "center": [
-        51.0027,
-        0.085
-      ],
-      "bounds": {
-        "north": 51.02,
-        "south": 50.99,
-        "east": 0.11,
-        "west": 0.06
-      },
-      "csvFile": "data/ditchling-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_ditchling.sql"
+      "id": "whitland",
+      "name": "Whitland",
+      "csvFile": "data/whitland_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_whitland.sql"
     },
     {
-      "id": "henfield",
-      "name": "Henfield",
+      "id": "winchester",
+      "name": "Winchester",
       "center": [
-        50.9312,
-        -0.2678
+        51.0632,
+        -1.308
       ],
       "bounds": {
-        "north": 50.95,
-        "south": 50.92,
-        "east": -0.24,
-        "west": -0.29
+        "north": 51.12,
+        "south": 51.01,
+        "east": -1.25,
+        "west": -1.4
       },
-      "csvFile": "data/henfield-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_henfield.sql"
+      "csvFile": "data/winchester_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_winchester.sql"
     },
     {
-      "id": "billingshurst",
-      "name": "Billingshurst",
+      "id": "woking",
+      "name": "Woking",
       "center": [
-        51.02,
-        -0.45
+        51.3167,
+        -0.56
       ],
       "bounds": {
-        "north": 51.04,
-        "south": 51.0,
-        "east": -0.42,
-        "west": -0.48
-      },
-      "csvFile": "data/billingshurst-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_billingshurst.sql"
-    },
-    {
-      "id": "pulborough",
-      "name": "Pulborough",
-      "center": [
-        50.9456,
-        -0.5234
-      ],
-      "bounds": {
-        "north": 50.97,
-        "south": 50.93,
+        "north": 51.37,
+        "south": 51.27,
         "east": -0.5,
-        "west": -0.56
+        "west": -0.65
       },
-      "csvFile": "data/pulborough-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_pulborough.sql"
+      "csvFile": "data/woking_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_woking.sql"
     },
     {
-      "id": "storrington",
-      "name": "Storrington",
-      "center": [
-        50.915,
-        -0.455
-      ],
-      "bounds": {
-        "north": 50.94,
-        "south": 50.9,
-        "east": -0.43,
-        "west": -0.48
-      },
-      "csvFile": "data/storrington-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_storrington.sql"
+      "id": "wolfscastle",
+      "name": "Wolfscastle",
+      "csvFile": "data/wolfscastle_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_wolfscastle.sql"
     },
     {
-      "id": "midhurst",
-      "name": "Midhurst",
+      "id": "worthing",
+      "name": "Worthing",
       "center": [
-        50.987,
-        -0.723
+        50.8175,
+        -0.3711
       ],
       "bounds": {
-        "north": 51.0,
-        "south": 50.97,
-        "east": -0.7,
-        "west": -0.75
+        "north": 50.87,
+        "south": 50.77,
+        "east": -0.3,
+        "west": -0.45
       },
-      "csvFile": "data/midhurst-free-food-locations.csv",
-      "sqlFile": "dataconnect/queries/town_midhurst.sql"
+      "csvFile": "data/worthing_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_worthing.sql"
+    },
+    {
+      "id": "y_ferwig",
+      "name": "Y Ferwig",
+      "csvFile": "data/y_ferwig_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_y_ferwig.sql"
+    },
+    {
+      "id": "ystrad_meurig",
+      "name": "Ystrad Meurig",
+      "csvFile": "data/ystrad_meurig_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ystrad_meurig.sql"
+    },
+    {
+      "id": "aberdeen",
+      "name": "Aberdeen",
+      "countyId": "aberdeenshire",
+      "csvFile": "data/aberdeen_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_aberdeen.sql"
+    },
+    {
+      "id": "argyll_bute",
+      "name": "Argyll Bute",
+      "countyId": "argyll_bute",
+      "csvFile": "data/argyll_bute_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_argyll_bute.sql"
+    },
+    {
+      "id": "edinburgh",
+      "name": "Edinburgh",
+      "countyId": "edinburgh",
+      "csvFile": "data/edinburgh_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_edinburgh.sql"
+    },
+    {
+      "id": "dumfries_galloway",
+      "name": "Dumfries Galloway",
+      "countyId": "dumfries_galloway",
+      "csvFile": "data/dumfries_galloway_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dumfries_galloway.sql"
+    },
+    {
+      "id": "dunfermline",
+      "name": "Dunfermline",
+      "countyId": "fife",
+      "csvFile": "data/dunfermline_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dunfermline.sql"
+    },
+    {
+      "id": "glasgow",
+      "name": "Glasgow",
+      "countyId": "glasgow",
+      "csvFile": "data/glasgow_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_glasgow.sql"
+    },
+    {
+      "id": "perth_kinross",
+      "name": "Perth Kinross",
+      "countyId": "perth_kinross",
+      "csvFile": "data/perth_kinross_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_perth_kinross.sql"
+    },
+    {
+      "id": "ayr",
+      "name": "Ayr",
+      "countyId": "ayrshire",
+      "csvFile": "data/ayr_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_ayr.sql"
+    },
+    {
+      "id": "dundee",
+      "name": "Dundee",
+      "countyId": "dundee",
+      "center": [
+        56.462,
+        -2.9707
+      ],
+      "bounds": {
+        "north": 56.55,
+        "south": 56.4,
+        "east": -2.85,
+        "west": -3.1
+      },
+      "csvFile": "data/dundee_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_dundee.sql"
     },
     {
       "id": "stirling",
       "name": "Stirling",
+      "countyId": "stirling",
       "center": [
         56.12,
         -4.05
@@ -2047,8 +3536,114 @@
       "sqlFile": "dataconnect/queries/town_stirling.sql"
     },
     {
+      "id": "cardiff",
+      "name": "Cardiff",
+      "countyId": "cardiff",
+      "csvFile": "data/cardiff_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_cardiff.sql"
+    },
+    {
+      "id": "carmarthenshire",
+      "name": "Carmarthenshire",
+      "countyId": "carmarthenshire",
+      "csvFile": "data/carmarthenshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_carmarthenshire.sql"
+    },
+    {
+      "id": "conwy",
+      "name": "Conwy",
+      "countyId": "conwy",
+      "csvFile": "data/conwy_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_conwy.sql"
+    },
+    {
+      "id": "denbighshire",
+      "name": "Denbighshire",
+      "countyId": "denbighshire",
+      "csvFile": "data/denbighshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_denbighshire.sql"
+    },
+    {
+      "id": "flintshire",
+      "name": "Flintshire",
+      "countyId": "flintshire",
+      "csvFile": "data/flintshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_flintshire.sql"
+    },
+    {
+      "id": "bangor",
+      "name": "Bangor",
+      "countyId": "gwynedd",
+      "csvFile": "data/bangor_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bangor.sql"
+    },
+    {
+      "id": "gwynedd",
+      "name": "Gwynedd",
+      "countyId": "gwynedd",
+      "csvFile": "data/gwynedd_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_gwynedd.sql"
+    },
+    {
+      "id": "monmouthshire",
+      "name": "Monmouthshire",
+      "countyId": "monmouthshire",
+      "csvFile": "data/monmouthshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_monmouthshire.sql"
+    },
+    {
+      "id": "pembrokeshire",
+      "name": "Pembrokeshire",
+      "countyId": "pembrokeshire",
+      "csvFile": "data/pembrokeshire_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_pembrokeshire.sql"
+    },
+    {
+      "id": "powys",
+      "name": "Powys",
+      "countyId": "powys",
+      "csvFile": "data/powys_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_powys.sql"
+    },
+    {
+      "id": "swansea",
+      "name": "Swansea",
+      "countyId": "swansea",
+      "csvFile": "data/swansea_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_swansea.sql"
+    },
+    {
+      "id": "bridgend",
+      "name": "Bridgend",
+      "countyId": "bridgend",
+      "csvFile": "data/bridgend_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_bridgend.sql"
+    },
+    {
+      "id": "caerphilly",
+      "name": "Caerphilly",
+      "countyId": "caerphilly",
+      "csvFile": "data/caerphilly_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_caerphilly.sql"
+    },
+    {
+      "id": "merthyr_tydfil",
+      "name": "Merthyr Tydfil",
+      "countyId": "merthyr_tydfil",
+      "csvFile": "data/merthyr_tydfil_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_merthyr_tydfil.sql"
+    },
+    {
+      "id": "newport",
+      "name": "Newport",
+      "countyId": "newport",
+      "csvFile": "data/newport_free_food_locations.csv",
+      "sqlFile": "dataconnect/queries/town_newport.sql"
+    },
+    {
       "id": "wrexham",
       "name": "Wrexham",
+      "countyId": "wrexham",
       "center": [
         53.04,
         -2.99
@@ -2061,38 +3656,16 @@
       },
       "csvFile": "data/wrexham_free_food_locations.csv",
       "sqlFile": "dataconnect/queries/town_wrexham.sql"
-    },
-    {
-      "id": "derry",
-      "name": "Derry",
-      "center": [
-        54.99,
-        -7.32
-      ],
-      "bounds": {
-        "north": 55.05,
-        "south": 54.9,
-        "east": -7.2,
-        "west": -7.5
-      },
-      "csvFile": "data/derry_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_derry.sql"
-    },
-    {
-      "id": "bedford",
-      "name": "Bedford",
-      "center": [
-        52.135,
-        -0.465
-      ],
-      "bounds": {
-        "north": 52.2,
-        "south": 52.05,
-        "east": -0.4,
-        "west": -0.55
-      },
-      "csvFile": "data/bedford_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_bedford.sql"
     }
-  ]
+  ],
+  "metadata": {
+    "description": "UK Towns with CSV file references and county associations for food location data",
+    "version": "1.2.0",
+    "lastUpdated": "2026-05-13",
+    "totalTowns": 432,
+    "townsWithCountyId": 155,
+    "townsWithCoordinates": 91,
+    "source": "Generated from data/ folder CSV files and uk_counties.json mapping",
+    "notes": "Some towns lack center/bounds coordinates (rely on county defaults) or countyId (not mapped to a county). Field order: id, name, countyId?, center?, bounds?, csvFile, sqlFile. Sorted by Country > County > Town name."
+  }
 }
