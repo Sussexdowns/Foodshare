@@ -4,10 +4,10 @@
 <head>
   <title>Contact Us</title>
 
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
        script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://www.gstatic.com 'unsafe-inline';
       style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
@@ -104,13 +104,13 @@
               <div class="valid-feedback">Looks good!</div>
               <div class="invalid-feedback">Please enter your message (at least 10 characters).</div>
             </div>
-<div class="col-12 d-flex gap-2">
-                <button type="button" class="btn btn-outline-primary" id="contact-signin">
-                  <i class="fab fa-google"></i> Sign in with Google
-                </button>
-                <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">Send Message</button>
-                <button type="reset" class="btn btn-outline-secondary">Reset</button>
-              </div>
+            <div class="col-12 d-flex gap-2">
+              <button type="button" class="btn btn-outline-primary" id="contact-signin">
+                <i class="fab fa-google"></i> Sign in with Google
+              </button>
+              <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">Send Message</button>
+              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            </div>
           </div>
         </form>
       </div>
@@ -127,153 +127,153 @@
   <!-- Footer placeholder - loaded via JavaScript -->
   <div id="footer-placeholder" class="fixed-bottom"></div>
 
-   <!-- Scripts -->
-   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-   <!-- Firebase config first -->
-   <script src="config.js"></script>
+  <!-- Firebase config first -->
+  <script src="config.js"></script>
 
-   <!-- Firebase SDKs -->
-   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="scripts/sanitize.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="scripts/sanitize.js"></script>
 
-    <script src="scripts/base.js"></script>
+  <script src="scripts/base.js"></script>
 
-<script>
-      document.addEventListener('DOMContentLoaded', function () {
-       const contactForm = document.getElementById('contact-form');
-       const submitBtn = document.getElementById('submit-btn');
-       const signinBtn = document.getElementById('contact-signin');
-       const alertDiv = document.getElementById('contact-alert');
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const contactForm = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const signinBtn = document.getElementById('contact-signin');
+      const alertDiv = document.getElementById('contact-alert');
 
-// Check auth state on page load and show appropriate button
-        function updateAuthButtons() {
-          if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
-            if (isUserAuthenticated()) {
-              signinBtn.style.display = 'none';
-              submitBtn.style.display = 'inline-block';
-            } else {
-              signinBtn.style.display = 'inline-block';
-              submitBtn.style.display = 'none';
-            }
+      // Check auth state on page load and show appropriate button
+      function updateAuthButtons() {
+        if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+          if (isUserAuthenticated()) {
+            signinBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+          } else {
+            signinBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'none';
           }
         }
+      }
 
-        // Auth state observer - only after Firebase is initialized
-        if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0 && firebase.auth) {
-          firebase.auth().onAuthStateChanged(function() {
-            updateAuthButtons();
-          });
-        }
+      // Auth state observer - only after Firebase is initialized
+      if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0 && firebase.auth) {
+        firebase.auth().onAuthStateChanged(function () {
+          updateAuthButtons();
+        });
+      }
 
-        // Initial check after a delay for Firebase to initialize
-        setTimeout(updateAuthButtons, 1000);
+      // Initial check after a delay for Firebase to initialize
+      setTimeout(updateAuthButtons, 1000);
 
-       // Sign-in button handler
-       if (signinBtn) {
-         signinBtn.addEventListener('click', async function() {
-           const signedIn = await signInWithGoogle();
-           if (signedIn) {
-             signinBtn.style.display = 'none';
-             submitBtn.style.display = 'inline-block';
-           }
-         });
-       }
+      // Sign-in button handler
+      if (signinBtn) {
+        signinBtn.addEventListener('click', async function () {
+          const signedIn = await signInWithGoogle();
+          if (signedIn) {
+            signinBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+          }
+        });
+      }
 
-if (contactForm) {
-          // Bootstrap 5 validation
-           contactForm.addEventListener('submit', async function (event) {
-             // Check form validity
-             if (!contactForm.checkValidity()) {
-               event.preventDefault();
-               event.stopPropagation();
-               contactForm.classList.add('was-validated');
-               
-               // Show validation errors in alert panel
-               const invalidFields = [];
-               contactForm.querySelectorAll(':invalid').forEach(field => {
-                 const label = contactForm.querySelector(`label[for="${field.id}"]`);
-                 invalidFields.push(label ? label.textContent.replace('*','').trim() : field.name);
-               });
-               alertDiv.classList.remove('d-none');
-               alertDiv.className = 'alert alert-danger';
-               alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
-                 invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
-               return;
-             } else {
-               // Form is valid, require Google authentication
-               event.preventDefault();
+      if (contactForm) {
+        // Bootstrap 5 validation
+        contactForm.addEventListener('submit', async function (event) {
+          // Check form validity
+          if (!contactForm.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+            contactForm.classList.add('was-validated');
 
-               // Ensure user is signed in with Google
-               if (!isUserAuthenticated()) {
-                 alert('Please sign in with Google to send a message.');
-                 const signedIn = await signInWithGoogle();
-                 if (!signedIn) return;
-               }
+            // Show validation errors in alert panel
+            const invalidFields = [];
+            contactForm.querySelectorAll(':invalid').forEach(field => {
+              const label = contactForm.querySelector(`label[for="${field.id}"]`);
+              invalidFields.push(label ? label.textContent.replace('*', '').trim() : field.name);
+            });
+            alertDiv.classList.remove('d-none');
+            alertDiv.className = 'alert alert-danger';
+            alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
+              invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
+            return;
+          } else {
+            // Form is valid, require Google authentication
+            event.preventDefault();
 
-// Verify provider (defense in depth)
-                const user = firebase.auth().currentUser;
-                if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
-                  alert('Please sign in with Google to send a message.');
-                  const signedIn = await signInWithGoogle();
-                  if (!signedIn) return;
-                }
+            // Ensure user is signed in with Google
+            if (!isUserAuthenticated()) {
+              alert('Please sign in with Google to send a message.');
+              const signedIn = await signInWithGoogle();
+              if (!signedIn) return;
+            }
 
-              // Sanitize inputs before submission
-              const nameInput = document.getElementById('entry.2107060613');
-             const emailInput = document.getElementById('entry.413525859');
-             const messageInput = document.getElementById('entry.1834693471');
+            // Verify provider (defense in depth)
+            const user = firebase.auth().currentUser;
+            if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
+              alert('Please sign in with Google to send a message.');
+              const signedIn = await signInWithGoogle();
+              if (!signedIn) return;
+            }
 
-             // Basic length checks
-             if (nameInput.value.trim().length < 2 || nameInput.value.length > 100) {
-               alert('Name must be 2-100 characters');
-               return;
-             }
-             if (messageInput.value.trim().length < 10 || messageInput.value.length > 2000) {
-               alert('Message must be 10-2000 characters');
-               return;
-             }
+            // Sanitize inputs before submission
+            const nameInput = document.getElementById('entry.2107060613');
+            const emailInput = document.getElementById('entry.413525859');
+            const messageInput = document.getElementById('entry.1834693471');
 
-             // Strip HTML tags from text inputs
-             nameInput.value = SecurityUtils.sanitizeHtml(nameInput.value).substring(0, 100);
-             messageInput.value = SecurityUtils.sanitizeHtml(messageInput.value).substring(0, 2000);
+            // Basic length checks
+            if (nameInput.value.trim().length < 2 || nameInput.value.length > 100) {
+              alert('Name must be 2-100 characters');
+              return;
+            }
+            if (messageInput.value.trim().length < 10 || messageInput.value.length > 2000) {
+              alert('Message must be 10-2000 characters');
+              return;
+            }
 
-             // Show submitting message
-             submitBtn.disabled = true;
-             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+            // Strip HTML tags from text inputs
+            nameInput.value = SecurityUtils.sanitizeHtml(nameInput.value).substring(0, 100);
+            messageInput.value = SecurityUtils.sanitizeHtml(messageInput.value).substring(0, 2000);
 
-             // Create form data
-             const formData = new FormData(contactForm);
+            // Show submitting message
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
 
-// Submit using fetch with no-cors mode for Google Forms
-              fetch(contactForm.action, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: formData
+            // Create form data
+            const formData = new FormData(contactForm);
+
+            // Submit using fetch with no-cors mode for Google Forms
+            fetch(contactForm.action, {
+              method: 'POST',
+              mode: 'no-cors',
+              body: formData
+            })
+              .then(function () {
+                // Hide the form
+                contactForm.closest('.form-section').style.display = 'none';
+                // Show success message
+                alertDiv.classList.remove('d-none');
+                alertDiv.className = 'alert alert-success';
+                alertDiv.innerHTML = '<strong>Thank you!</strong> Your message has been sent successfully.';
               })
-                .then(function () {
-                  // Hide the form
-                  contactForm.closest('.form-section').style.display = 'none';
-                  // Show success message
-                  alertDiv.classList.remove('d-none');
-                  alertDiv.className = 'alert alert-success';
-                  alertDiv.innerHTML = '<strong>Thank you!</strong> Your message has been sent successfully.';
-                })
-                .catch(function (error) {
-                  // Even on error, Google Forms may have received the submission
-                  contactForm.closest('.form-section').style.display = 'none';
-                  alertDiv.classList.remove('d-none');
-                  alertDiv.className = 'alert alert-success';
-                  alertDiv.innerHTML = '<strong>Thank you!</strong> Your message has been sent.';
-                })
-           }
+              .catch(function (error) {
+                // Even on error, Google Forms may have received the submission
+                contactForm.closest('.form-section').style.display = 'none';
+                alertDiv.classList.remove('d-none');
+                alertDiv.className = 'alert alert-success';
+                alertDiv.innerHTML = '<strong>Thank you!</strong> Your message has been sent.';
+              })
+          }
 
-           // Add validation class for styling
-           contactForm.classList.add('was-validated');
-         });
+          // Add validation class for styling
+          contactForm.classList.add('was-validated');
+        });
 
         // Real-time validation feedback
         const inputs = contactForm.querySelectorAll('.form-control');

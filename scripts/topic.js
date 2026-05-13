@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Sort items alphabetically within each category
       for (const category in itemsData) {
-        itemsData[category].sort((a, b) => a.Name.localeCompare(b.Name));
+        itemsData[category].sort((a, b) => a.name.localeCompare(b.name));
       }
 
       if (categorySelect) {
@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
     itemSelect.innerHTML = '';
     if (!itemsData[categoryKey]) return;
 
-    itemsData[categoryKey].forEach(item => {
-      const option = document.createElement('option');
-      option.value = item.Name.toLowerCase().replace(/\s+/g, '-');
-      option.textContent = item.Name;
-      itemSelect.appendChild(option);
-    });
+itemsData[categoryKey].forEach(item => {
+       const option = document.createElement('option');
+       option.value = item.name.toLowerCase().replace(/\s+/g, '-');
+       option.textContent = item.name;
+       itemSelect.appendChild(option);
+     });
 
     newItemInput.classList.add('d-none');
     newItemInput.value = '';
@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Create image
         const img = document.createElement('img');
         img.className = 'topic-img';
-        img.src = item.Image || '';
-        img.alt = item.Name;
+        img.src = item.image || '';
+        img.alt = item.name;
         img.loading = 'lazy';
         img.decoding = 'async';
         img.onerror = function() {
@@ -97,19 +97,19 @@ document.addEventListener('DOMContentLoaded', function () {
         // Create title
         const title = document.createElement('div');
         title.className = 'topic-title';
-        title.textContent = item.Name;
+        title.textContent = item.name;
         body.appendChild(title);
 
         // Create description
         const desc = document.createElement('div');
         desc.className = 'topic-desc';
-        desc.textContent = item.Desc || '';
+        desc.textContent = item.desc || '';
         body.appendChild(desc);
 
         // Create Wikipedia link
         const wikiLink = document.createElement('a');
         wikiLink.className = 'topic-link';
-        wikiLink.href = item.Link;
+        wikiLink.href = item.link;
         wikiLink.target = '_blank';
         wikiLink.rel = 'noopener noreferrer';
         wikiLink.textContent = 'Learn more';
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Create image source link
         const imgLink = document.createElement('a');
         imgLink.className = 'topic-link';
-        imgLink.href = item.Image || '#';
+        imgLink.href = item.image || '#';
         imgLink.target = '_blank';
         imgLink.rel = 'noopener noreferrer';
         imgLink.textContent = 'Image source';

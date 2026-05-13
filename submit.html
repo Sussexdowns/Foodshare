@@ -6,15 +6,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!-- Content Security Policy -->
-<meta http-equiv="Content-Security-Policy" content="
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
        script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline';
-      style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
-       font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://ka-f.fontawesome.com https://fonts.gstatic.com;
-      img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co https://cdn.jsdelivr.net https://commons.wikimedia.org https://*.wikimedia.org;
-       connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com https://script.google.com https://ka-f.fontawesome.com https://cdn.jsdelivr.net;
-      frame-src 'self' https://script.google.com;
+       style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
+        font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://ka-f.fontawesome.com https://fonts.gstatic.com;
+       img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co https://cdn.jsdelivr.net https://commons.wikimedia.org https://*.wikimedia.org;
+        connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com https://script.google.com https://ka-f.fontawesome.com https://cdn.jsdelivr.net;
+       frame-src 'self' https://script.google.com;
     ">
 
   <!-- CSS & Icons -->
@@ -66,43 +66,43 @@
       </h1>
     </div>
 
-<form name="submitForm" id="submitForm" class="container mb-4 needs-validation" novalidate>
+    <form name="submitForm" id="submitForm" class="container mb-4 needs-validation" novalidate>
 
-        <!-- Feedback Panel -->
-        <div id="submit-alert" class="alert d-none mb-3"></div>
+      <!-- Feedback Panel -->
+      <div id="submit-alert" class="alert d-none mb-3"></div>
 
-        <input type="hidden" id="lat" name="lat" required>
-        <input type="hidden" id="lng" name="lng" required>
-        <input type="hidden" id="csrf_token" name="csrf_token" value="">
+      <input type="hidden" id="lat" name="lat" required>
+      <input type="hidden" id="lng" name="lng" required>
+      <input type="hidden" id="csrf_token" name="csrf_token" value="">
 
-        <div class="form-section">
-          <h3><i class="fas fa-tag me-2"></i>Basic Information</h3>
+      <div class="form-section">
+        <h3><i class="fas fa-tag me-2"></i>Basic Information</h3>
 
-          <div class="mb-3">
-            <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
-            <select id="category" name="category" class="form-select" required>
-              <option value="">Select a category...</option>
-            </select>
-            <div class="valid-feedback">Looks good!</div>
-            <div class="invalid-feedback">Please select a category.</div>
-          </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
+          <select id="category" name="category" class="form-select" required>
+            <option value="">Select a category...</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please select a category.</div>
+        </div>
 
-          <div class="mb-3">
-            <label for="item" class="form-label">Item <span class="text-danger">*</span></label>
-            <select id="item" name="item" class="form-select" required>
-              <option value="">-- Select an item --</option>
-            </select>
-            <div class="valid-feedback">Looks good!</div>
-            <div class="invalid-feedback">Please select an item.</div>
-          </div>
+        <div class="mb-3">
+          <label for="item" class="form-label">Item <span class="text-danger">*</span></label>
+          <select id="item" name="item" class="form-select" required>
+            <option value="">-- Select an item --</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please select an item.</div>
+        </div>
 
-          <div class="mb-3">
-            <label for="name" class="form-label">Location Name <span class="text-danger">*</span></label>
-            <input type="text" id="name" name="name" class="form-control" required
-              minlength="2" maxlength="200" placeholder="e.g., Apple tree near the park">
-            <div class="valid-feedback">Looks good!</div>
-            <div class="invalid-feedback">Please enter a location name (2-200 characters).</div>
-          </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Location Name <span class="text-danger">*</span></label>
+          <input type="text" id="name" name="name" class="form-control" required minlength="2" maxlength="200"
+            placeholder="e.g., Apple tree near the park">
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a location name (2-200 characters).</div>
+        </div>
 
         <!-- Item Details Display -->
         <div id="item-details" style="display: none;">
@@ -172,15 +172,15 @@
 
         <div class="mb-3">
           <label for="shortDesc" class="form-label">Short Description <span class="text-danger">*</span></label>
-          <input type="text" id="shortDesc" name="shortDesc" class="form-control" required
-            minlength="10" maxlength="500" placeholder="Brief description (shown on map)">
+          <input type="text" id="shortDesc" name="shortDesc" class="form-control" required minlength="10"
+            maxlength="500" placeholder="Brief description (shown on map)">
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please enter a brief description (10-500 characters).</div>
         </div>
         <div class="mb-3">
           <label for="desc" class="form-label">Full Description <span class="text-danger">*</span></label>
-          <textarea id="desc" name="desc" class="form-control" rows="4" required
-            minlength="20" maxlength="2000" placeholder="Detailed information about this location..."></textarea>
+          <textarea id="desc" name="desc" class="form-control" rows="4" required minlength="20" maxlength="2000"
+            placeholder="Detailed information about this location..."></textarea>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please enter a full description (20-2000 characters).</div>
         </div>
@@ -191,31 +191,29 @@
 
         <div class="mb-3">
           <label for="links" class="form-label">Links (optional)</label>
-          <input type="url" id="links" name="links" class="form-control"
-            placeholder="https://example.com">
+          <input type="url" id="links" name="links" class="form-control" placeholder="https://example.com">
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please enter a valid URL.</div>
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image URL (optional)</label>
-          <input type="url" id="image" name="image" class="form-control"
-            placeholder="https://example.com/image.jpg">
+          <input type="url" id="image" name="image" class="form-control" placeholder="https://example.com/image.jpg">
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please enter a valid image URL.</div>
         </div>
       </div>
 
-<div class="d-flex gap-2">
-          <button type="button" class="btn btn-outline-primary" id="submit-signin">
-            <i class="fab fa-google"></i> Sign in with Google
-          </button>
-          <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">
-            <i class="fas fa-paper-plane me-1"></i> Submit
-          </button>
-         <button type="reset" class="btn btn-secondary">
-           <i class="fas fa-undo me-1"></i> Reset
-         </button>
-       </div>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-primary" id="submit-signin">
+          <i class="fab fa-google"></i> Sign in with Google
+        </button>
+        <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">
+          <i class="fas fa-paper-plane me-1"></i> Submit
+        </button>
+        <button type="reset" class="btn btn-secondary">
+          <i class="fas fa-undo me-1"></i> Reset
+        </button>
+      </div>
     </form>
 
     <div class="container mb-4">
@@ -252,297 +250,297 @@
   <!-- Footer placeholder - loaded via JavaScript -->
   <div id="footer-placeholder" class="fixed-bottom"></div>
 
-   <!-- Scripts -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
 
-   <!-- Firebase SDKs must load BEFORE config.js (which calls initializeApp) -->
-   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <!-- Firebase SDKs must load BEFORE config.js (which calls initializeApp) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-   <!-- Firebase config (calls initializeApp - must come after SDK scripts) -->
-   <script src="config.js"></script>
+  <!-- Firebase config (calls initializeApp - must come after SDK scripts) -->
+  <script src="config.js"></script>
 
-   <script src="scripts/sanitize.js"></script>
+  <script src="scripts/sanitize.js"></script>
 
-   <script src="scripts/base.js"></script>
-   <script src="scripts/app.js"></script>
-   <script src="scripts/form.js"></script>
-   <script src="scripts/submit.js"></script>
+  <script src="scripts/base.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/form.js"></script>
+  <script src="scripts/submit.js"></script>
 
-<script>
-       // Form submission handler - posts to Firebase 'sources' collection
-       document.addEventListener('DOMContentLoaded', function () {
-         // Set CSRF token on page load
-         const csrfInput = document.getElementById('csrf_token');
-         if (csrfInput) {
-           csrfInput.value = SecurityUtils.getCsrfToken();
-         }
+  <script>
+    // Form submission handler - posts to Firebase 'sources' collection
+    document.addEventListener('DOMContentLoaded', function () {
+      // Set CSRF token on page load
+      const csrfInput = document.getElementById('csrf_token');
+      if (csrfInput) {
+        csrfInput.value = SecurityUtils.getCsrfToken();
+      }
 
-         const form = document.getElementById('submitForm');
-         const submitBtn = document.getElementById('submit-btn');
-         const signinBtn = document.getElementById('submit-signin');
-         const alertDiv = document.getElementById('submit-alert');
+      const form = document.getElementById('submitForm');
+      const submitBtn = document.getElementById('submit-btn');
+      const signinBtn = document.getElementById('submit-signin');
+      const alertDiv = document.getElementById('submit-alert');
 
-// Check auth state on page load and show appropriate button
-          function updateAuthButtons() {
-            if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
-              if (isUserAuthenticated()) {
-                signinBtn.style.display = 'none';
-                submitBtn.style.display = 'inline-block';
-              } else {
-                signinBtn.style.display = 'inline-block';
-                submitBtn.style.display = 'none';
-              }
-            }
+      // Check auth state on page load and show appropriate button
+      function updateAuthButtons() {
+        if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+          if (isUserAuthenticated()) {
+            signinBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+          } else {
+            signinBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'none';
           }
+        }
+      }
 
-          // Auth state observer - only after Firebase is initialized
-          if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0 && firebase.auth) {
-            firebase.auth().onAuthStateChanged(function() {
-              updateAuthButtons();
+      // Auth state observer - only after Firebase is initialized
+      if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0 && firebase.auth) {
+        firebase.auth().onAuthStateChanged(function () {
+          updateAuthButtons();
+        });
+      }
+
+      // Initial check after a delay for Firebase to initialize
+      setTimeout(updateAuthButtons, 1000);
+
+      // Sign-in button handler
+      if (signinBtn) {
+        signinBtn.addEventListener('click', async function () {
+          const signedIn = await signInWithGoogle();
+          if (signedIn) {
+            signinBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+          }
+        });
+      }
+
+      if (form) {
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          // Reset feedback panel
+          alertDiv.className = 'alert d-none mb-3';
+
+          // HTML5 validation check
+          if (!form.checkValidity()) {
+            e.stopPropagation();
+            form.classList.add('was-validated');
+
+            // Explicit check for map location (hidden fields may not trigger validation)
+            const lat = document.getElementById('lat').value;
+            const lng = document.getElementById('lng').value;
+            const selectedMonths = document.querySelectorAll('.month-checkbox:checked');
+            const invalidFields = [];
+
+            if (!lat || !lng) {
+              invalidFields.push('Location on map (click to select)');
+            }
+
+            if (selectedMonths.length === 0) {
+              invalidFields.push('Month (select at least one)');
+            }
+
+            form.querySelectorAll(':invalid').forEach(field => {
+              const label = form.querySelector(`label[for="${field.id}"]`);
+              if (field.id !== 'lat' && field.id !== 'lng' && label) {
+                invalidFields.push(label.textContent.replace('*', '').trim());
+              }
             });
+
+            alertDiv.classList.remove('d-none');
+            alertDiv.className = 'alert alert-danger mb-3';
+            alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
+              invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
+            return;
           }
 
-          // Initial check after a delay for Firebase to initialize
-          setTimeout(updateAuthButtons, 1000);
+          // Check authentication - require Google login
+          if (!isUserAuthenticated()) {
+            alert('Please sign in with Google to submit a location.');
+            const signedIn = await signInWithGoogle();
+            if (!signedIn) return;
+          }
 
-         // Sign-in button handler
-         if (signinBtn) {
-           signinBtn.addEventListener('click', async function() {
-             const signedIn = await signInWithGoogle();
-             if (signedIn) {
-               signinBtn.style.display = 'none';
-               submitBtn.style.display = 'inline-block';
-             }
-           });
-         }
+          // Verify it's a Google account (defense in depth)
+          const user = firebase.auth().currentUser;
+          if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
+            alert('Please sign in with Google to submit a location.');
+            const signedIn = await signInWithGoogle();
+            if (!signedIn) return;
+          }
 
-         if (form) {
-           form.addEventListener('submit', async function (e) {
-             e.preventDefault();
+          // Collect form data
+          let category = document.getElementById('category').value;
+          let item = document.getElementById('item').value;
+          let name = document.getElementById('name').value;
+          let shortDesc = document.getElementById('shortDesc').value;
+          let desc = document.getElementById('desc').value;
+          let links = document.getElementById('links').value;
+          let image = document.getElementById('image').value;
+          const lat = document.getElementById('lat').value;
+          const lng = document.getElementById('lng').value;
 
-             // Reset feedback panel
-             alertDiv.className = 'alert d-none mb-3';
+          // Collect selected months
+          const selectedMonths = Array.from(document.querySelectorAll('.month-checkbox:checked'))
+            .map(cb => cb.value);
+          const monthsMap = {
+            'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+            'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+          };
+          const months = selectedMonths.map(m => monthsMap[m]).filter(Boolean);
 
-             // HTML5 validation check
-             if (!form.checkValidity()) {
-               e.stopPropagation();
-               form.classList.add('was-validated');
-              
-               // Explicit check for map location (hidden fields may not trigger validation)
-               const lat = document.getElementById('lat').value;
-               const lng = document.getElementById('lng').value;
-               const selectedMonths = document.querySelectorAll('.month-checkbox:checked');
-               const invalidFields = [];
-              
-               if (!lat || !lng) {
-                 invalidFields.push('Location on map (click to select)');
-               }
-              
-               if (selectedMonths.length === 0) {
-                 invalidFields.push('Month (select at least one)');
-               }
-              
-               form.querySelectorAll(':invalid').forEach(field => {
-                 const label = form.querySelector(`label[for="${field.id}"]`);
-                 if (field.id !== 'lat' && field.id !== 'lng' && label) {
-                   invalidFields.push(label.textContent.replace('*','').trim());
-                 }
-               });
-              
-               alertDiv.classList.remove('d-none');
-              alertDiv.className = 'alert alert-danger mb-3';
-              alertDiv.innerHTML = '<strong>Please fix the following fields:</strong><ul class="mb-0">' +
-                invalidFields.map(f => `<li>${f}</li>`).join('') + '</ul>';
-              return;
+          // Validation
+          if (!lat || !lng) {
+            alert('Please select a location on the map.');
+            return;
+          }
+          if (!name || name.trim().length < 2) {
+            alert('Please enter a location name (at least 2 characters).');
+            return;
+          }
+          if (!item || item.trim().length === 0) {
+            alert('Please select an item.');
+            return;
+          }
+          if (!shortDesc || shortDesc.trim().length < 10) {
+            alert('Please enter a brief description (at least 10 characters).');
+            return;
+          }
+          if (!desc || desc.trim().length < 20) {
+            alert('Please enter a full description (at least 20 characters).');
+            return;
+          }
+          if (!selectedMonths || selectedMonths.length === 0) {
+            alert('Please select at least one month.');
+            return;
+          }
+
+          // Sanitize inputs
+          name = SecurityUtils.sanitizeHtml(name).substring(0, 200);
+          shortDesc = SecurityUtils.sanitizeHtml(shortDesc).substring(0, 500);
+          desc = SecurityUtils.sanitizeHtml(desc).substring(0, 2000);
+          if (links) links = SecurityUtils.sanitizeUrl(links);
+          if (image) image = SecurityUtils.sanitizeUrl(image);
+          if (category) category = SecurityUtils.sanitizeHtml(category).substring(0, 100);
+          if (item) item = SecurityUtils.sanitizeHtml(item).substring(0, 100);
+
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+
+          try {
+            // Generate a unique source ID
+            const sourceId = 'src_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            // Prepare source data matching the Firestore schema
+            const sourceData = {
+              sourceId: sourceId,
+              name: name,
+              type: category || 'Other',
+              category: category || 'Other',
+              subCategory: item || 'Other',
+              lat: parseFloat(lat),
+              lng: parseFloat(lng),
+              shortDescription: shortDesc || '',
+              description: desc || '',
+              season: selectedMonths.join(';'),
+              months: months,
+              imageUrl: image || '',
+              sourceLink: links || '',
+              tags: [category, item].filter(Boolean),
+              likes: 0,
+              dislikes: 0,
+              reports: 0,
+              comments: '',
+              whatThreeWords: '',
+              plusCode: '',
+              address: '',
+              town: '',
+              area: '',
+              county: '',
+              postcode: '',
+              approved: false,
+              timestamp: new Date().toISOString(),
+              postedById: user.uid,
+              createdAt: new Date().toISOString(),
+              postedByEmail: user.email || '',
+              csrfToken: csrfInput.value
+            };
+
+            // Post to Firebase
+            if (typeof firebase !== 'undefined' && firebase.firestore) {
+              const db = firebase.firestore();
+              await db.collection('sources').doc(sourceId).set(sourceData);
+            } else {
+              throw new Error('Firebase not initialized');
             }
 
-            // Check authentication - require Google login
-            if (!isUserAuthenticated()) {
-              alert('Please sign in with Google to submit a location.');
-              const signedIn = await signInWithGoogle();
-              if (!signedIn) return;
+            // Also submit to Google Apps Script for approval workflow
+            const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
+            fetch(appsScriptUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({
+                name: sourceData.name,
+                category: sourceData.category,
+                item: sourceData.subCategory,
+                lat: sourceData.lat,
+                lng: sourceData.lng,
+                shortDesc: sourceData.shortDescription,
+                desc: sourceData.description,
+                months: sourceData.season,
+                links: sourceData.sourceLink,
+                image: sourceData.imageUrl,
+                postedByEmail: sourceData.postedByEmail
+              })
+            }).catch(() => { }); // Fire and forget
+
+            alert('Thank you! Your submission has been received and will be reviewed.');
+            form.reset();
+            if (submissionMarker) submissionMap.removeLayer(submissionMarker);
+          } catch (err) {
+            console.error('Submission error:', err);
+            if (err.code === 'permission-denied') {
+              alert('Permission denied. Please ensure you are signed in with Google and try again.');
+            } else {
+              alert('Sorry, there was an error submitting your entry. Please try again.');
             }
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Submit';
+          }
+        });
 
-            // Verify it's a Google account (defense in depth)
-            const user = firebase.auth().currentUser;
-            if (!user || !user.providerData.some(p => p.providerId === 'google.com')) {
-              alert('Please sign in with Google to submit a location.');
-              const signedIn = await signInWithGoogle();
-              if (!signedIn) return;
-            }
-
-           // Collect form data
-           let category = document.getElementById('category').value;
-           let item = document.getElementById('item').value;
-           let name = document.getElementById('name').value;
-           let shortDesc = document.getElementById('shortDesc').value;
-           let desc = document.getElementById('desc').value;
-           let links = document.getElementById('links').value;
-           let image = document.getElementById('image').value;
-           const lat = document.getElementById('lat').value;
-           const lng = document.getElementById('lng').value;
-
-           // Collect selected months
-           const selectedMonths = Array.from(document.querySelectorAll('.month-checkbox:checked'))
-             .map(cb => cb.value);
-           const monthsMap = {
-             'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
-             'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
-           };
-           const months = selectedMonths.map(m => monthsMap[m]).filter(Boolean);
-
-// Validation
-             if (!lat || !lng) {
-               alert('Please select a location on the map.');
-               return;
-             }
-             if (!name || name.trim().length < 2) {
-               alert('Please enter a location name (at least 2 characters).');
-               return;
-             }
-             if (!item || item.trim().length === 0) {
-               alert('Please select an item.');
-               return;
-             }
-             if (!shortDesc || shortDesc.trim().length < 10) {
-               alert('Please enter a brief description (at least 10 characters).');
-               return;
-             }
-if (!desc || desc.trim().length < 20) {
-                alert('Please enter a full description (at least 20 characters).');
-                return;
-              }
-              if (!selectedMonths || selectedMonths.length === 0) {
-                alert('Please select at least one month.');
-                return;
-              }
-
-// Sanitize inputs
-             name = SecurityUtils.sanitizeHtml(name).substring(0, 200);
-             shortDesc = SecurityUtils.sanitizeHtml(shortDesc).substring(0, 500);
-             desc = SecurityUtils.sanitizeHtml(desc).substring(0, 2000);
-             if (links) links = SecurityUtils.sanitizeUrl(links);
-             if (image) image = SecurityUtils.sanitizeUrl(image);
-             if (category) category = SecurityUtils.sanitizeHtml(category).substring(0, 100);
-             if (item) item = SecurityUtils.sanitizeHtml(item).substring(0, 100);
-
-            // Disable button and show loading
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
-
-            try {
-              // Generate a unique source ID
-              const sourceId = 'src_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-
-              // Prepare source data matching the Firestore schema
-              const sourceData = {
-                sourceId: sourceId,
-                name: name,
-                type: category || 'Other',
-                category: category || 'Other',
-                subCategory: item || 'Other',
-                lat: parseFloat(lat),
-                lng: parseFloat(lng),
-                shortDescription: shortDesc || '',
-                description: desc || '',
-                season: selectedMonths.join(';'),
-                months: months,
-                imageUrl: image || '',
-                sourceLink: links || '',
-                tags: [category, item].filter(Boolean),
-                likes: 0,
-                dislikes: 0,
-                reports: 0,
-                comments: '',
-                whatThreeWords: '',
-                plusCode: '',
-                address: '',
-                town: '',
-                area: '',
-                county: '',
-                postcode: '',
-                approved: false,
-                timestamp: new Date().toISOString(),
-                postedById: user.uid,
-                createdAt: new Date().toISOString(),
-                postedByEmail: user.email || '',
-                csrfToken: csrfInput.value
-              };
-
-              // Post to Firebase
-              if (typeof firebase !== 'undefined' && firebase.firestore) {
-                const db = firebase.firestore();
-                await db.collection('sources').doc(sourceId).set(sourceData);
-              } else {
-                throw new Error('Firebase not initialized');
-              }
-
-              // Also submit to Google Apps Script for approval workflow
-              const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
-              fetch(appsScriptUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                  name: sourceData.name,
-                  category: sourceData.category,
-                  item: sourceData.subCategory,
-                  lat: sourceData.lat,
-                  lng: sourceData.lng,
-                  shortDesc: sourceData.shortDescription,
-                  desc: sourceData.description,
-                  months: sourceData.season,
-                  links: sourceData.sourceLink,
-                  image: sourceData.imageUrl,
-                  postedByEmail: sourceData.postedByEmail
-                })
-              }).catch(() => {}); // Fire and forget
-
-              alert('Thank you! Your submission has been received and will be reviewed.');
-              form.reset();
-              if (submissionMarker) submissionMap.removeLayer(submissionMarker);
-            } catch (err) {
-              console.error('Submission error:', err);
-              if (err.code === 'permission-denied') {
-                alert('Permission denied. Please ensure you are signed in with Google and try again.');
-              } else {
-                alert('Sorry, there was an error submitting your entry. Please try again.');
-              }
-            } finally {
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Submit';
-            }
-         });
-
-// Reset button handler
-          const resetBtn = form.querySelector('button[type="reset"]');
-           if (resetBtn) {
-             resetBtn.addEventListener('click', function () {
-               if (submissionMarker) submissionMap.removeLayer(submissionMarker);
-               document.getElementById('coord-display').textContent = 'None';
-               document.getElementById('coord-display').className = 'badge bg-secondary';
-               const monthsReq = document.getElementById('months-required');
-               if (monthsReq) monthsReq.value = '';
-             });
-           }
+        // Reset button handler
+        const resetBtn = form.querySelector('button[type="reset"]');
+        if (resetBtn) {
+          resetBtn.addEventListener('click', function () {
+            if (submissionMarker) submissionMap.removeLayer(submissionMarker);
+            document.getElementById('coord-display').textContent = 'None';
+            document.getElementById('coord-display').className = 'badge bg-secondary';
+            const monthsReq = document.getElementById('months-required');
+            if (monthsReq) monthsReq.value = '';
+          });
         }
-      });
+      }
+    });
 
-      // Initialize map with fullscreen control
-      let submissionMap = L.map('map', {
-        fullscreenControl: true,
-        fullscreenControlOptions: {
-          position: 'topleft'
-        }
-      }).setView([50.873, 0.009], 14);
+    // Initialize map with fullscreen control
+    let submissionMap = L.map('map', {
+      fullscreenControl: true,
+      fullscreenControlOptions: {
+        position: 'topleft'
+      }
+    }).setView([50.873, 0.009], 14);
 
-      let submissionMarker = null;
-      let submissionUserLocationMarker = null;
+    let submissionMarker = null;
+    let submissionUserLocationMarker = null;
 
     // Check dark mode for tile layer
     const isDarkMode = document.body.classList.contains('dark-mode');
@@ -550,116 +548,116 @@ if (!desc || desc.trim().length < 20) {
     const lightTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const tileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
 
-     L.tileLayer(tileUrl, {
-       maxZoom: 19,
-       attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
-     }).addTo(submissionMap);
+    L.tileLayer(tileUrl, {
+      maxZoom: 19,
+      attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(submissionMap);
 
-     // Listen for dark mode changes to switch tile layer
-     const observer = new MutationObserver((mutations) => {
-       mutations.forEach((mutation) => {
-         if (mutation.attributeName === 'class') {
-           updateMapTheme();
-         }
-       });
-     });
-     observer.observe(document.body, { attributes: true });
+    // Listen for dark mode changes to switch tile layer
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          updateMapTheme();
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
 
-     function updateMapTheme() {
-       const isDarkMode = document.body.classList.contains('dark-mode');
-       const newTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
+    function updateMapTheme() {
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      const newTileUrl = isDarkMode ? darkTileUrl : lightTileUrl;
 
-       // Remove existing tile layer and add new one
-       submissionMap.eachLayer((layer) => {
-         if (layer instanceof L.TileLayer) {
-           submissionMap.removeLayer(layer);
-           L.tileLayer(newTileUrl, {
-             maxZoom: 19,
-             attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
-           }).addTo(submissionMap);
-         }
-       });
-     }
+      // Remove existing tile layer and add new one
+      submissionMap.eachLayer((layer) => {
+        if (layer instanceof L.TileLayer) {
+          submissionMap.removeLayer(layer);
+          L.tileLayer(newTileUrl, {
+            maxZoom: 19,
+            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | © <a href="https://carto.com/attributions">CARTO</a>'
+          }).addTo(submissionMap);
+        }
+      });
+    }
 
-     submissionMap.on('click', function (e) {
-       const { lat, lng } = e.latlng;
-       updateMarker(lat, lng);
-     });
+    submissionMap.on('click', function (e) {
+      const { lat, lng } = e.latlng;
+      updateMarker(lat, lng);
+    });
 
-     function updateMarker(lat, lng) {
-       if (submissionMarker) submissionMap.removeLayer(submissionMarker);
+    function updateMarker(lat, lng) {
+      if (submissionMarker) submissionMap.removeLayer(submissionMarker);
 
-       submissionMarker = L.marker([lat, lng], {
-         draggable: true,
-         icon: L.AwesomeMarkers.icon({
-           icon: 'map-pin',
-           markerColor: 'red',
-           prefix: 'fa'
-         })
-       }).addTo(submissionMap);
+      submissionMarker = L.marker([lat, lng], {
+        draggable: true,
+        icon: L.AwesomeMarkers.icon({
+          icon: 'map-pin',
+          markerColor: 'red',
+          prefix: 'fa'
+        })
+      }).addTo(submissionMap);
 
-       // Set initial coordinate values
-       updateLatLngInputs(lat, lng);
+      // Set initial coordinate values
+      updateLatLngInputs(lat, lng);
 
-       // Update coordinates when the marker is dragged
-       submissionMarker.on('dragend', function (e) {
-         const position = submissionMarker.getLatLng();
-         updateLatLngInputs(position.lat, position.lng);
-       });
-     }
+      // Update coordinates when the marker is dragged
+      submissionMarker.on('dragend', function (e) {
+        const position = submissionMarker.getLatLng();
+        updateLatLngInputs(position.lat, position.lng);
+      });
+    }
 
-     function updateLatLngInputs(lat, lng) {
-       document.getElementById('lat').value = lat.toFixed(6);
-       document.getElementById('lng').value = lng.toFixed(6);
-       document.getElementById('coord-display').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-       document.getElementById('coord-display').classList.remove('bg-secondary');
-       document.getElementById('coord-display').classList.add('bg-success');
-     }
+    function updateLatLngInputs(lat, lng) {
+      document.getElementById('lat').value = lat.toFixed(6);
+      document.getElementById('lng').value = lng.toFixed(6);
+      document.getElementById('coord-display').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+      document.getElementById('coord-display').classList.remove('bg-secondary');
+      document.getElementById('coord-display').classList.add('bg-success');
+    }
 
-     // Preview button functionality
-     document.getElementById('preview-location-btn').addEventListener('click', () => {
-       const lat = parseFloat(document.getElementById('lat').value);
-       const lng = parseFloat(document.getElementById('lng').value);
+    // Preview button functionality
+    document.getElementById('preview-location-btn').addEventListener('click', () => {
+      const lat = parseFloat(document.getElementById('lat').value);
+      const lng = parseFloat(document.getElementById('lng').value);
 
-       if (!isNaN(lat) && !isNaN(lng)) {
-         submissionMap.setView([lat, lng], 16);
-         updateMarker(lat, lng);
-       } else {
-         alert("Please select a location by clicking on the map first.");
-       }
-     });
-
-     // Try to center map on user's current location
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            submissionMap.setView([latitude, longitude], 16);
-
-            // Remove existing user location marker if any
-            if (submissionUserLocationMarker) {
-              submissionMap.removeLayer(submissionUserLocationMarker);
-            }
-
-            // Add "You are here" marker
-            submissionUserLocationMarker = L.marker([latitude, longitude], {
-              icon: L.AwesomeMarkers.icon({
-                icon: 'user',
-                markerColor: 'green',
-                prefix: 'fa'
-              })
-            }).addTo(submissionMap);
-
-            submissionUserLocationMarker.bindPopup("<div style='text-align: center;'><i class='fas fa-user me-1'></i><br><strong>You are here</strong></div>").openPopup();
-          },
-          (error) => {
-            console.warn("Geolocation failed:", error.message);
-          }
-        );
+      if (!isNaN(lat) && !isNaN(lng)) {
+        submissionMap.setView([lat, lng], 16);
+        updateMarker(lat, lng);
       } else {
-        console.warn("Geolocation not supported by this browser.");
+        alert("Please select a location by clicking on the map first.");
       }
-    </script>
+    });
+
+    // Try to center map on user's current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          submissionMap.setView([latitude, longitude], 16);
+
+          // Remove existing user location marker if any
+          if (submissionUserLocationMarker) {
+            submissionMap.removeLayer(submissionUserLocationMarker);
+          }
+
+          // Add "You are here" marker
+          submissionUserLocationMarker = L.marker([latitude, longitude], {
+            icon: L.AwesomeMarkers.icon({
+              icon: 'user',
+              markerColor: 'green',
+              prefix: 'fa'
+            })
+          }).addTo(submissionMap);
+
+          submissionUserLocationMarker.bindPopup("<div style='text-align: center;'><i class='fas fa-user me-1'></i><br><strong>You are here</strong></div>").openPopup();
+        },
+        (error) => {
+          console.warn("Geolocation failed:", error.message);
+        }
+      );
+    } else {
+      console.warn("Geolocation not supported by this browser.");
+    }
+  </script>
 
 </body>
 
