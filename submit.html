@@ -501,16 +501,19 @@
               })
             }).catch(() => { }); // Fire and forget
 
-            alert('Thank you! Your submission has been received and will be reviewed.');
+            showSubmitSuccess(user, sourceData);
             form.reset();
             if (submissionMarker) submissionMap.removeLayer(submissionMarker);
           } catch (err) {
             console.error('Submission error:', err);
+            alertDiv.classList.remove('d-none');
+            alertDiv.className = 'alert alert-danger mb-3';
             if (err.code === 'permission-denied') {
-              alert('Permission denied. Please ensure you are signed in with Google and try again.');
+              alertDiv.innerHTML = '<i class="fas fa-lock me-2"></i><strong>Permission denied.</strong> Please ensure you are signed in with Google and try again.';
             } else {
-              alert('Sorry, there was an error submitting your entry. Please try again.');
+              alertDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i><strong>Submission failed.</strong> Please try again.';
             }
+            alertDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Submit';
@@ -528,6 +531,26 @@
             if (monthsReq) monthsReq.value = '';
           });
         }
+      }
+
+      function showSubmitSuccess(user, data) {
+        const main = document.querySelector('main');
+        main.innerHTML = `
+          <div class="container my-5">
+            <div class="card border-0 shadow-sm text-center p-5">
+              <div style="font-size:4rem; margin-bottom:1rem;">🌱</div>
+              <h2 class="mb-2" style="color: var(--bs-success, #198754);">Submission Received!</h2>
+              <p class="text-muted mb-1">Thank you for contributing to Foodshare.</p>
+              <p class="text-muted mb-4">Your entry for <strong>${SecurityUtils.escapeHtml(data.name)}</strong> has been submitted and is pending review.</p>
+              ${user ? `<p class="text-muted small mb-1"><i class="fab fa-google me-1"></i> Submitted as <strong>${SecurityUtils.escapeHtml(user.email || '')}</strong></p>` : ''}
+              <p class="text-muted small mb-4"><i class="fas fa-map-marker-alt me-1"></i> Location: <strong>${parseFloat(data.lat).toFixed(5)}, ${parseFloat(data.lng).toFixed(5)}</strong></p>
+              <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="index.html" class="btn btn-outline-success"><i class="fas fa-home me-1"></i> Home</a>
+                <a href="submit.html" class="btn btn-success"><i class="fas fa-plus me-1"></i> Submit Another</a>
+              </div>
+            </div>
+          </div>`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
 
