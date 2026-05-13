@@ -8,6 +8,55 @@
   margin-bottom: 1rem;
 }
 
+/* Map Legend */
+.topics-legend {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 400;
+}
+
+.topics-legend .map-legend {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-size: 0.8rem;
+}
+
+.topics-legend h6 {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+.topics-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+  color: #555;
+}
+
+.topics-legend .legend-icon {
+  width: 18px;
+  text-align: center;
+}
+
+/* Dark mode for legend */
+body.dark-mode .topics-legend .map-legend {
+  background: rgba(42, 42, 64, 0.95);
+  color: #ddd;
+}
+
+body.dark-mode .topics-legend h6 {
+  color: #eee;
+}
+
+body.dark-mode .topics-legend .legend-item {
+  color: #ccc;
+}
+
 /* Topic grid layout */
 #topics-grid .col-md-4 {
   margin-bottom: 1rem;

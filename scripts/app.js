@@ -89,6 +89,12 @@ const jsonfile = window.BASE_PATH + 'locations.json'; // Assume this JSON file e
 
 // --- Initialization ---
 function initApp() {
+  // Warn if running via file:// protocol (Firebase Auth requires HTTP)
+  if (window.location.protocol === 'file:') {
+    console.warn('⚠️ Warning: Running via file:// protocol. Firebase Auth will not work. Please use a local web server (e.g., python3 -m http.server 8000)');
+    addStatusMessage('⚠️ Please serve via HTTP server for full functionality', 'error');
+  }
+
   addStatusMessage('🚀 Initializing application...', 'success');
   debugLibraries();
 
@@ -2217,6 +2223,12 @@ function isUserAuthenticated() {
  * Returns a promise that resolves to true if sign-in successful
  */
 async function signInWithGoogle() {
+  // Check for file:// protocol
+  if (window.location.protocol === 'file:') {
+    alert('Please run this application via a web server (e.g., python3 -m http.server 8000) for sign-in to work.');
+    return false;
+  }
+
   if (typeof firebase === 'undefined' || typeof firebase.auth === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
     console.error('Firebase Auth not available or not initialized');
     addStatusMessage('Firebase not loaded. Please refresh.', 'error');

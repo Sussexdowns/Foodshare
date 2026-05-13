@@ -65,8 +65,8 @@ node_modules/
 # dotenv environment variables file
 .env
 
-# Firebase config (contains API keys)
-config.js
+# Firebase config - removed from gitignore as it contains public API keys needed for the site
+# The security keys in Firebase are handled via Firebase console rules, not by hiding these public keys
 
 # dataconnect generated files
 .dataconnect
