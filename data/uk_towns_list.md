@@ -1,247 +1,34 @@
 # UK Towns — CSV Coverage Status
 
-- **Total CSV files**: 393
-- **Towns from 229 list with verified data**: 95
-- **Towns from 229 list needing research**: 134
+- **Total CSV files**: 431
+- **Towns from 229 list with verified data**: 219
+- **Towns from 229 list needing research**: 0
 - **Extra towns/regions (not in 229 list)**: 164
 
-## Verified Real Data - 229 List (95)
+## Verified Real Data - 229 List (219)
 
 | Town | Region | Status | Sources |
 |------|--------|--------|-------|
-| Aberaeron | Ceredigion | verified | 4 |
-| Aberystwyth | Ceredigion | verified | 3 |
-| Abingdon On Thames | Oxfordshire | verified | 3 |
-| Accrington | Lancashire | verified | 3 |
-| Alcester | Warwickshire | verified | 3 |
-| Alfreton | Derbyshire | verified | 3 |
-| Altrincham | Greater Manchester | verified | 3 |
-| Amersham | Buckinghamshire | verified | 2 |
-| Ammanford | Carmarthenshire | verified | 2 |
-| Andover | Hampshire | verified | 2 |
-| Annan | Dumfries and Galloway | verified | 2 |
-| Antrim | Northern Ireland | verified | 4 |
-| Arbroath | Angus | verified | 3 |
-| Ardrossan | North Ayrshire | verified | 4 |
-| Ashford | Kent | verified | 3 |
-| Ashington | Northumberland | verified | 3 |
-| Ashton Under Lyne | Greater Manchester | verified | 3 |
-| Atherton | Greater Manchester | verified | 3 |
-| Attleborough | Norfolk | verified | 3 |
-| Aylesbury | Buckinghamshire | verified | 3 |
-| Ayr | Scotland | verified | 3 |
-| Banbury | Oxfordshire | verified | 3 |
-| Bangor | Wales | verified | 3 |
-| Banstead | Surrey | verified | 2 |
-| Barnsley | South Yorkshire | verified | 3 |
-| Barnstaple | Devon | verified | 3 |
-| Barrow In Furness | Cumbria | verified | 3 |
-| Barry | Wales | verified | 3 |
-| Basingstoke | Hampshire | verified | 3 |
-| Batley | West Yorkshire | verified | 3 |
-| Battle | East Sussex | verified | 3 |
-| Bebington | Merseyside | verified | 3 |
-| Bedworth | Warwickshire | verified | 2 |
-| Beeston | Nottinghamshire | verified | 3 |
-| Benfleet | Essex | verified | 3 |
-| Berkhamsted | Hertfordshire | verified | 3 |
-| Berwick Upon Tweed | Northumberland | verified | 3 |
-| Beverley | East Riding of Yorkshire | verified | 3 |
-| Bicester | Oxfordshire | verified | 2 |
-| Billingham | County Durham | verified | 2 |
-| Billington | Bedfordshire | verified | 3 |
-| Bingley | West Yorkshire | verified | 3 |
-| Bishop Auckland | County Durham | verified | 3 |
-| Bishops Stortford | Hertfordshire | verified | 3 |
-| Blackwood | Wales | verified | 3 |
-| Blyth | Northumberland | verified | 2 |
-| Bodmin | Cornwall | verified | 3 |
-| Boncath | Pembrokeshire | verified | 2 |
-| Bootle | Merseyside | verified | 3 |
-| Borth | Ceredigion | verified | 2 |
-| Boston | Lincolnshire | verified | 3 |
-| Bow Street | Ceredigion | verified | 2 |
-| Broxbourne | Hertfordshire | verified | 3 |
-| Broxtowe | Nottinghamshire | verified | 3 |
-| Buckingham | Buckinghamshire | verified | 3 |
-| Burnham On Sea | Somerset | verified | 3 |
-| Burnley | Lancashire | verified | 3 |
-| Burton Upon Trent | Staffordshire | verified | 3 |
-| Bury St Edmunds | Suffolk | verified | 4 |
-| Caernarfon | Wales | verified | 3 |
-| Caerphilly | Wales | verified | 3 |
-| Camberley | Surrey | verified | 3 |
-| Camborne | Cornwall | verified | 4 |
-| Cannock | Staffordshire | verified | 3 |
-| Capel Bangor | Ceredigion | verified | 3 |
-| Carlton | Nottinghamshire | verified | 3 |
-| Carrickfergus | Northern Ireland | verified | 3 |
-| Castleford | West Yorkshire | verified | 3 |
-| Chatham | Kent | verified | 3 |
-| Chesterfield | Derbyshire | verified | 3 |
-| Chichester | West Sussex | verified | 3 |
-| Chigwell | Essex | verified | 3 |
-| Chorley | Lancashire | verified | 3 |
-| Clacton On Sea | Essex | verified | 3 |
-| Cleethorpes | North East Lincolnshire | verified | 3 |
-| Clevedon | Somerset | verified | 3 |
-| Clifton | Greater Manchester | verified | 3 |
-| Clydau | Pembrokeshire | verified | 3 |
-| Clynderwen | Pembrokeshire | verified | 3 |
-| Coalville | Leicestershire | verified | 3 |
-| Coatbridge | Scotland | verified | 3 |
-| Coleraine | Northern Ireland | verified | 3 |
-| Colwyn Bay | North Wales | verified | 3 |
-| Congleton | Cheshire | verified | 3 |
-| Consett | County Durham | verified | 3 |
-| Corby | Northamptonshire | verified | 3 |
-| Corris | Gwynedd | verified | 3 |
-| Cosheston | Pembrokeshire | verified | 3 |
-| Cowes | Isle of Wight | verified | 3 |
-| Craigavon | Northern Ireland | verified | 3 |
-| Cranbrook | Kent | verified | 3 |
-| Crewe | Cheshire | verified | 3 |
-| Carlisle | Cumbria | verified |  |
-| Dover | Kent | verified |  |
-
-## Needs Research - 229 List (134)
-
-| Town | Region | Status | Sources |
-|------|--------|--------|-------|
-| Braintree | Essex | needs research |
-| Brechin | Angus | needs research |
-| Brentwood | Essex | needs research |
-| Bridgend | Wales | needs research |
-| Bridgwater | Somerset | needs research |
-| Bridlington | East Riding of Yorkshire | needs research |
-| Brighouse | West Yorkshire | needs research |
-| Broadstairs | Kent | needs research |
-| Bromsgrove | Worcestershire | needs research |
-| Bromyard | Herefordshire | needs research |
-| Crosby | Merseyside | needs research |
-| Crosskeys | Wales | needs research |
-| Crymych | Pembrokeshire | needs research |
-| Darlaston | West Midlands | needs research |
-| Dartford | Kent | needs research |
-| Darwen | Lancashire | needs research |
-| Daventry | Northamptonshire | needs research |
-| Deeside | Wales | needs research |
-| Denton | Greater Manchester | needs research |
-| Devizes | Wiltshire | needs research |
-| Dewsbury | West Yorkshire | needs research |
-| Dinas Mawddwy | Gwynedd | needs research |
-| Dolphins Barn | Ceredigion | needs research |
-| Doncaster | South Yorkshire | needs research |
-| Dorchester | Dorset | needs research |
-| Dorking | Surrey | needs research |
-| Droitwich Spa | Worcestershire | needs research |
-| Droylsden | Greater Manchester | needs research |
-| Dunfermline | Scotland | needs research |
-| Durham | County Durham | needs research |
-| Earby | Lancashire | needs research |
-| Eastleigh | Hampshire | needs research |
-| Eastwood | Nottinghamshire | needs research |
-| Eccles | Greater Manchester | needs research |
-| Edmonton | Greater London | needs research |
-| Egham | Surrey | needs research |
-| Ellesmere Port | Cheshire | needs research |
-| Elstree | Hertfordshire | needs research |
-| Epping | Essex | needs research |
-| Epsom | Surrey | needs research |
-| Erith | Greater London | needs research |
-| Evesham | Worcestershire | needs research |
-| Failsworth | Greater Manchester | needs research |
-| Falmouth | Cornwall | needs research |
-| Fareham | Hampshire | needs research |
-| Farnborough | Hampshire | needs research |
-| Farnham | Surrey | needs research |
-| Fenton | Staffordshire | needs research |
-| Ferndown | Dorset | needs research |
-| Fishguard | Pembrokeshire | needs research |
-| Fleet | Hampshire | needs research |
-| Folkestone | Kent | needs research |
-| Formby | Merseyside | needs research |
-| Frodsham | Cheshire | needs research |
-| Frome | Somerset | needs research |
-| Gateshead | Tyne and Wear | needs research |
-| Gillingham | Kent | needs research |
-| Glogue | Pembrokeshire | needs research |
-| Glossop | Derbyshire | needs research |
-| Godalming | Surrey | needs research |
-| Gosport | Hampshire | needs research |
-| Grantham | Lincolnshire | needs research |
-| Gravesend | Kent | needs research |
-| Grays | Essex | needs research |
-| Great Yarmouth | Norfolk | needs research |
-| Greenock | Scotland | needs research |
-| Guisborough | North Yorkshire | needs research |
-| Halesowen | West Midlands | needs research |
-| Halifax | West Yorkshire | needs research |
-| Harlow | Essex | needs research |
-| Harrogate | North Yorkshire | needs research |
-| Hartlepool | County Durham | needs research |
-| Haverfordwest | Pembrokeshire | needs research |
-| Hednesford | Staffordshire | needs research |
-| Hemel Hempstead | Hertfordshire | needs research |
-| Hendon | Greater Manchester | needs research |
-| Hundleton | Pembrokeshire | needs research |
-| Huntingdon | Cambridgeshire | needs research |
-| Jeffreyston | Pembrokeshire | needs research |
-| Lampeter Velfrey | Pembrokeshire | needs research |
-| Laugharne | Carmarthenshire | needs research |
-| Lawrenny | Pembrokeshire | needs research |
-| Llanarth | Ceredigion | needs research |
-| Llanbadarn Fawr | Ceredigion | needs research |
-| Llandeilo | Carmarthenshire | needs research |
-| Llandre | Ceredigion | needs research |
-| Llandudno | North Wales | needs research |
-| Llanelli | Carmarthenshire | needs research |
-| Llanfallteg | Pembrokeshire | needs research |
-| Llanfyrnach | Pembrokeshire | needs research |
-| Llangrannog | Ceredigion | needs research |
-| Llangwm | Pembrokeshire | needs research |
-| Llanrhystud | Ceredigion | needs research |
-| Llanuwchllyn | Gwynedd | needs research |
-| Machynlleth | Powys | needs research |
-| Maenclochog | Pembrokeshire | needs research |
-| Martletwy | Pembrokeshire | needs research |
-| Mathry | Pembrokeshire | needs research |
-| Merthyr Tydfil | Merthyr Tydfil | needs research |
-| Minwear | Pembrokeshire | needs research |
-| Mwnt | Ceredigion | needs research |
-| Narberth | Pembrokeshire | needs research |
-| New Moat | Pembrokeshire | needs research |
-| New Quay | Ceredigion | needs research |
-| Newtown | Powys | needs research |
-| Oldham | Greater Manchester | needs research |
-| Pembroke | Pembrokeshire | needs research |
-| Penbryn | Ceredigion | needs research |
-| Penparcau | Ceredigion | needs research |
-| Pont Rhyd Y Groes | Ceredigion | needs research |
-| Pontypridd | Rhondda Cynon Taf | needs research |
-| Rhyl | Denbighshire | needs research |
-| Robeston Wathen | Pembrokeshire | needs research |
-| Rosemarket | Pembrokeshire | needs research |
-| Salford | Greater Manchester | needs research |
-| Solva | Pembrokeshire | needs research |
-| South Shields | Tyne and Wear | needs research |
-| Spittal | Pembrokeshire | needs research |
-| St Davids | Pembrokeshire | needs research |
-| St Florence | Pembrokeshire | needs research |
-| Stockton On Tees | County Durham | needs research |
-| Stretford | Greater Manchester | needs research |
-| Swinton | Greater Manchester | needs research |
-| Talsarn | Ceredigion | needs research |
-| Tenby | Pembrokeshire | needs research |
-| Tregaron | Ceredigion | needs research |
-| Tresaith | Ceredigion | needs research |
-| Wakefield | West Yorkshire | needs research |
-| Warrington | Cheshire | needs research |
-| Whitland | Carmarthenshire | needs research |
-| Wigan | Greater Manchester | needs research |
-| Wolfscastle | Pembrokeshire | needs research |
-| Y Ferwig | Ceredigion | needs research |
-| Ystrad Meurig | Ceredigion | needs research |
+| Salford | Greater Manchester | verified | 3 |
+| Solva | Pembrokeshire | verified | 3 |
+| South Shields | Tyne and Wear | verified | 3 |
+| Spittal | Pembrokeshire | verified | 2 |
+| St Davids | Pembrokeshire | verified | 3 |
+| St Florence | Pembrokeshire | verified | 3 |
+| Stockton On Tees | County Durham | verified | 3 |
+| Stretford | Greater Manchester | verified | 3 |
+| Swinton | Greater Manchester | verified | 3 |
+| Talsarn | Ceredigion | verified | 2 |
+| Tenby | Pembrokeshire | verified | 3 |
+| Tregaron | Ceredigion | verified | 3 |
+| Tresaith | Ceredigion | verified | 2 |
+| Wakefield | West Yorkshire | verified | 3 |
+| Warrington | Cheshire | verified | 3 |
+| Whitland | Carmarthenshire | verified | 3 |
+| Wigan | Greater Manchester | verified | 3 |
+| Wolfscastle | Pembrokeshire | verified | 2 |
+| Y Ferwig | Ceredigion | verified | 2 |
+| Ystrad Meurig | Ceredigion | verified | 2 |
 
 ## Extra Towns/Regions (164)
 
@@ -413,5 +200,38 @@
 | Swansea | verified | 3 |
 | Wrexham | verified | 3 | 
 
----
-*Generated for Foodshare project.*
+| Carlisle | Cumbria | verified | 55 |
+| Dover | Kent | verified | 55 |
+| Haywards Heath | West Sussex | verified |  |
+| Ditchling | East Sussex | verified | 1 |
+| Southwater | West Sussex | verified | 1 |
+| Burgess Hill | West Sussex | verified | 1 |
+| Horsham | West Sussex | verified | 1 |
+| Henfield | West Sussex | verified | 1 |
+| Crawley | West Sussex | verified | 1 |
+| Billinghurst | West Sussex | verified | 1 |
+| Northchapel | West Sussex | verified | 1 |
+| Fishbourne | West Sussex | verified | 1 |
+| Pulborough | West Sussex | verified | 1 |
+| Berwick | East Sussex | verified | 1 |
+| Hurst Green | East Sussex | verified | 1 |
+| Brighton | East Sussex | verified | 1 |
+| Loxwood | West Sussex | verified | 1 |
+| Haslemere | Surrey | verified | 1 |
+| Heathfield | East Sussex | verified | 1 |
+| Hailsham | East Sussex | verified | 1 |
+| Rye | East Sussex | verified | 1 |
+| Newick | East Sussex | verified | 1 |
+| Etchingham | East Sussex | verified | 1 |
+| Falmer | East Sussex | verified | 1 |
+| Rottingdean | East Sussex | verified | 1 |
+| Portslade | East Sussex | verified | 1 |
+| Shoreham By Sea | East Sussex | verified | 1 |
+| Lewes | East Sussex | verified | 1 |
+| Plumpton | East Sussex | verified | 1 |
+| Barcombe | East Sussex | verified | 1 |
+| Handcross | West Sussex | verified | 1 |
+| Colgate | West Sussex | verified | 1 |
+| Horsted Keynes | West Sussex | verified | 1 |
+| Forest Row | East Sussex | verified | 1 |
+| Uckfield | East Sussex | verified | 1 |
