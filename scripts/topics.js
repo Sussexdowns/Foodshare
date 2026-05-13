@@ -1,3 +1,8 @@
+// Defensive check: initialize BASE_PATH if base.js hasn't run yet
+if (typeof window.BASE_PATH === 'undefined') {
+  window.BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
+}
+
 // Global data
 let allTopics = [];        // All topics from items.json
 let categoriesData = [];   // Categories and subcategories from categories.json
@@ -9,7 +14,7 @@ let markers = [];
 // Load categories from JSON
 async function loadCategories() {
   try {
-    const response = await fetch('categories.json');
+    const response = await fetch(window.BASE_PATH + 'categories.json');
     if (response.ok) {
       const data = await response.json();
       categoriesData = data;
@@ -66,7 +71,7 @@ function populateSubcategoryDropdown(categoryId) {
 async function loadData() {
   try {
     // Load items.json first to get all topics
-    const itemsResponse = await fetch('items.json');
+    const itemsResponse = await fetch(window.BASE_PATH + 'items.json');
     if (!itemsResponse.ok) {
       throw new Error('Failed to load items.json');
     }
@@ -98,7 +103,7 @@ async function loadData() {
     
     // Load categories.json
     try {
-      const categoriesResponse = await fetch('categories.json');
+      const categoriesResponse = await fetch(window.BASE_PATH + 'categories.json');
       if (categoriesResponse.ok) {
         categoriesData = await categoriesResponse.json();
         populateCategoryDropdown();
@@ -109,7 +114,7 @@ async function loadData() {
     
     // Load locations.json
     try {
-      const locationsResponse = await fetch('locations.json');
+      const locationsResponse = await fetch(window.BASE_PATH + 'locations.json');
       if (locationsResponse.ok) {
         locationData = await locationsResponse.json();
         console.log('Loaded ' + locationData.length + ' locations');
@@ -121,10 +126,16 @@ async function loadData() {
     initializePage();
   } catch (error) {
     console.error('Error loading data:', error);
-    const grid = document.getElementById('topics-grid');
-    if (grid) {
-      grid.innerHTML = '<div class="col-12 text-center"><p class="text-danger">Unable to load topics data: ' + error.message + '</p></div>';
-    }
+     const grid = document.getElementById('topics-grid');
+     if (grid) {
+       const errorDiv = document.createElement('div');
+       errorDiv.className = 'col-12 text-center';
+       const p = document.createElement('p');
+       p.className = 'text-danger';
+       p.textContent = 'Unable to load topics data: ' + (error.message || 'Unknown error');
+       errorDiv.appendChild(p);
+       grid.appendChild(errorDiv);
+     }
   }
 }
 
@@ -198,57 +209,81 @@ function renderTopics(filteredData = allTopics) {
     topicLocations.get(key).push(loc);
   });
   
-  filteredData.forEach(topic => {
-    const locations = topicLocations.get(topic.Name ? topic.Name.toLowerCase() : '') || [];
-    const hasLocation = locations.length > 0;
-    
-    const col = document.createElement('div');
-    col.className = 'col-md-4 col-lg-3';
-    
-    // Use image from items.json or fallback
-    const imageUrl = topic.Image || 'https://placehold.co/300x200/1b5e20/e8f5e9?text=' + encodeURIComponent(topic.Name);
-    
-    col.innerHTML = `
-      <div class="topic-card ${hasLocation ? 'has-location' : 'no-location'}" 
-           data-name="${(topic.Name || '').toLowerCase()}" 
-           data-category="${(topic.category || '').toLowerCase()}"
-           data-has-location="${hasLocation}">
-        <img src="${imageUrl}" alt="${topic.Name}" class="topic-img" onerror="this.src='https://placehold.co/300x200/1b5e20/e8f5e9?text=${encodeURIComponent(topic.Name || 'Topic')}'">
-        <div class="topic-body">
-          <h4 class="topic-title">${topic.Name || 'Unknown'}</h4>
-          <p class="topic-desc">${topic.Desc || 'No description available.'}</p>
-          <div class="topic-meta">
-            <i class="fas fa-folder"></i> ${topic.categoryDisplay || 'General'}
-          </div>
-          <span class="status-badge ${hasLocation ? 'available' : 'coming-soon'}">
-            <i class="fas fa-${hasLocation ? 'check' : 'clock'}"></i>
-            ${hasLocation ? 'Available' : 'Coming Soon'}
-          </span>
-          ${hasLocation ? `
-            <div class="location-info">
-              <i class="fas fa-map-marker-alt"></i>
-              ${locations.length} location${locations.length > 1 ? 's' : ''} on map
-            </div>
-          ` : ''}
-        </div>
-      </div>
-    `;
-    
-    // Add click handler for topics with locations
-    const card = col.querySelector('.topic-card');
-    if (hasLocation) {
-      card.addEventListener('click', () => {
-        // Zoom to first location
-        const firstLoc = locations[0];
-        if (firstLoc.lat && firstLoc.lng) {
-          map.setView([firstLoc.lat, firstLoc.lng], 16);
-          map.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    }
-    
-    grid.appendChild(col);
-  });
+   filteredData.forEach(topic => {
+     const locations = topicLocations.get(topic.Name ? topic.Name.toLowerCase() : '') || [];
+     const hasLocation = locations.length > 0;
+
+     const col = document.createElement('div');
+     col.className = 'col-md-4 col-lg-3';
+
+     // Use image from items.json or fallback
+     const imageUrl = topic.Image || 'https://placehold.co/300x200/1b5e20/e8f5e9?text=' + encodeURIComponent(topic.Name || 'Topic');
+
+     // Build topic card using DOM methods to prevent XSS
+     const card = document.createElement('div');
+     card.className = `topic-card ${hasLocation ? 'has-location' : 'no-location'}`;
+     card.dataset.name = (topic.Name || '').toLowerCase();
+     card.dataset.category = (topic.category || '').toLowerCase();
+     card.dataset.hasLocation = hasLocation;
+
+     // Image
+     const img = document.createElement('img');
+     img.src = imageUrl;
+     img.alt = topic.Name || 'Topic';
+     img.className = 'topic-img';
+     img.onerror = function() {
+       this.src = `https://placehold.co/300x200/1b5e20/e8f5e9?text=${encodeURIComponent(topic.Name || 'Topic')}`;
+     };
+     
+     // Topic body
+     const body = document.createElement('div');
+     body.className = 'topic-body';
+
+     const title = document.createElement('h4');
+     title.className = 'topic-title';
+     title.textContent = topic.Name || 'Unknown';
+
+     const desc = document.createElement('p');
+     desc.className = 'topic-desc';
+     desc.textContent = topic.Desc || 'No description available.';
+
+     const meta = document.createElement('div');
+     meta.className = 'topic-meta';
+     meta.innerHTML = `<i class="fas fa-folder"></i> ${SecurityUtils.escapeHtml(topic.categoryDisplay || 'General')}`;
+
+     const badge = document.createElement('span');
+     badge.className = `status-badge ${hasLocation ? 'available' : 'coming-soon'}`;
+     badge.innerHTML = `<i class="fas fa-${hasLocation ? 'check' : 'clock'}"></i> ${hasLocation ? 'Available' : 'Coming Soon'}`;
+
+     body.appendChild(title);
+     body.appendChild(desc);
+     body.appendChild(meta);
+     body.appendChild(badge);
+
+     if (hasLocation) {
+       const locInfo = document.createElement('div');
+       locInfo.className = 'location-info';
+       locInfo.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${locations.length} location${locations.length > 1 ? 's' : ''} on map`;
+       body.appendChild(locInfo);
+     }
+
+     card.appendChild(img);
+     card.appendChild(body);
+     col.appendChild(card);
+
+     // Add click handler for topics with locations
+     if (hasLocation) {
+       card.addEventListener('click', () => {
+         const firstLoc = locations[0];
+         if (firstLoc.lat && firstLoc.lng) {
+           map.setView([firstLoc.lat, firstLoc.lng], 16);
+           map.scrollIntoView({ behavior: 'smooth' });
+         }
+       });
+     }
+
+     grid.appendChild(col);
+   });
 }
 
 function setupFilters() {

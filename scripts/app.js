@@ -1,7 +1,31 @@
 // --- app.js ---
-var fileExec = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
+// Google Apps Script endpoint for feedback (like/dislike/report).
+// If you deploy the Apps Script from `apps-script-code.gs`, update this URL.
+const fileExec = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
+
+// --- Firebase Initialization ---
+
+// Load config from external config.js (keeps API key out of main bundle)
+const firebaseConfig = window.__FIREBASE_CONFIG__ || {
+  apiKey: "AIzaSyBlfE9xj7mXHiBTRV7MfG_HrN0fU7wpnIg",
+  authDomain: "foodshare-50695.firebaseapp.com",
+  databaseURL: "https://foodshare-50695-default-rtdb.firebaseio.com",
+  projectId: "foodshare-50695",
+  storageBucket: "foodshare-50695.firebasestorage.app",
+  messagingSenderId: "143975249437",
+  appId: "1:143975249437:web:05ffd1cf48cdaddc2338f4",
+  measurementId: "G-HZN4Q1DMFY"
+};
+
+let firebaseApp;
+let db; // Firestore instance
 
 // Base path will be set by base.js - use window.BASE_PATH directly
+// Defensive check: initialize if base.js hasn't run yet
+if (typeof window.BASE_PATH === 'undefined') {
+  window.BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
+}
+
 document.addEventListener('DOMContentLoaded', initApp);
 
 // --- Global Variables ---
@@ -93,6 +117,7 @@ function initApp() {
       // Continue with other initialization
       loadFooterDetailsTemplate().then(() => {
         initMap();
+        initializeFirebase(); // Initialize Firebase after map
         detectUserLocationAndLoadData();
       });
     })
@@ -102,6 +127,7 @@ function initApp() {
       // Continue without config data
       loadFooterDetailsTemplate().then(() => {
         initMap();
+        initializeFirebase(); // Initialize Firebase after map
         fetchData(); // Fallback to default data loading
       });
     });
@@ -302,6 +328,52 @@ function createFallbackFooterTemplate() {
       });
     }
   }
+}
+
+/**
+ * Initializes Firebase and Firestore.
+ * Ensure Firebase SDK scripts (firebase-app.js, firebase-firestore.js) are included in your HTML.
+ */
+function initializeFirebase() {
+  if (typeof firebase === 'undefined' || typeof firebase.firestore === 'undefined') {
+    console.error("Firebase SDK not loaded. Please ensure config.js and Firebase SDK scripts are included in your HTML.");
+    addStatusMessage('❌ Firebase SDK not loaded. Check console.', 'error');
+    return;
+  }
+  if (!firebase.apps.length) {
+    firebaseApp = firebase.initializeApp(firebaseConfig);
+    db = firebaseApp.firestore();
+  } else {
+    firebaseApp = firebase.app();
+    db = firebaseApp.firestore();
+  }
+
+  // Set up auth listeners
+  if (typeof firebase.auth !== 'undefined') {
+    const auth = firebase.auth();
+    
+    // Set language
+    auth.useDeviceLanguage();
+    
+    // Configure persistence
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .catch(function(err) {
+        console.warn('Auth persistence error:', err);
+      });
+    
+    // Auth state observer
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        console.log('✅ Auth state: User signed in', { uid: user.uid, email: user.email, provider: user.providerData[0]?.providerId });
+      } else {
+        console.log('Auth state: User signed out');
+      }
+    }, function(error) {
+      console.error('Auth state observer error:', error);
+    });
+  }
+
+  console.log("✅ Firebase initialized.");
 }
 
 function initMap() {
@@ -1019,20 +1091,20 @@ function processCSVData(csvData) {
       const foodCategory = row.category ? row.category.trim() : 'other';
 
       location = {
-        id: parseInt(id), // Store ID as integer in the object
+        id: id, // Keep ID as string for better compatibility
         name: subCategoryValue || foodCategory, // Use sub-category or food category as name
         locationName: row.name ? row.name.trim() : `Location ${id}`, // Store location name separately
         lat: lat,
         lng: lng,
         category: foodCategory, // Use food category (fruits, vegetables, herbs)
+        likes: parseInt(row.likes) || 0,
+        dislikes: parseInt(row.dislikes) || 0,
         originalType: row.type ? row.type.trim() : '', // Store original type for reference
         description: row.description ? row.description.trim() : '',
         short_description: row.short_description ? row.short_description.trim() : (row.short_description ? row.short_description.trim() : ''),
         season: parseSeasonData(row.months || row.season), // Parse months column (supports both formats)
         // Ensure image and link are trimmed to avoid leading/trailing spaces
         image: row.image ? row.image.trim() : '',
-        likes: parseInt(row.likes) || 0,    // Initialize likes for new location
-        dislikes: parseInt(row.dislikes) || 0, // Initialize dislikes for new location
         // Ensure link is trimmed to avoid leading/trailing spaces
         link: row.link ? row.link.trim() : '',
         // Additional fields from CSV
@@ -1042,6 +1114,10 @@ function processCSVData(csvData) {
         address: row.address ? row.address.trim() : '',
         tags: row.tags ? row.tags.trim() : ''
       };
+
+      // Log missing data to assist with the /data/ audit
+      if (!location.link) console.info(`Audit: Location ${id} is missing a source link.`);
+      if (!location.image) console.info(`Audit: Location ${id} has no image specified.`);
 
       // Use short_description from CSV if available
       if (row.short_description) {
@@ -1705,29 +1781,125 @@ function updateHeatmap(filteredLocations) {
 }
 
 function addMarker(location) {
+  // Helper: safely build popup content using DOM methods
+  function buildPopupContent(loc, isFullscreen) {
+    const container = document.createElement('div');
+    container.className = 'leaflet-popup-content';
+    if (isFullscreen) container.style.maxWidth = '280px';
+
+    const showImages = localStorage.getItem('showImages') !== 'false';
+
+    // Image (if enabled and available)
+    if (showImages && loc.image && loc.image.trim()) {
+      const imgDiv = document.createElement('div');
+      imgDiv.style.marginBottom = isFullscreen ? '8px' : '4px';
+      const img = document.createElement('img');
+      img.src = SecurityUtils.sanitizeUrl(loc.image);
+      img.alt = loc.locationName || loc.name || 'Location image';
+      img.style = isFullscreen ? 'max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px;' :
+                                 'width: 100%; max-height: 80px; object-fit: cover; border-radius: 4px;';
+      img.onerror = function() { this.style.display = 'none'; };
+      imgDiv.appendChild(img);
+      container.appendChild(imgDiv);
+    }
+
+    // Title with name + category badge
+    const titleRow = document.createElement('div');
+    titleRow.style.display = 'flex';
+    titleRow.style.alignItems = 'center';
+    titleRow.style.gap = '8px';
+    titleRow.style.marginBottom = '4px';
+
+    const title = document.createElement('strong');
+    title.textContent = loc.locationName || loc.name || 'Unnamed';
+    titleRow.appendChild(title);
+
+    if (loc.originalType || loc.category) {
+      const badge = document.createElement('span');
+      badge.textContent = loc.originalType || loc.category || 'Other';
+      badge.className = `badge bg-${getCategoryColor(loc.category)}`;
+      titleRow.appendChild(badge);
+    }
+    container.appendChild(titleRow);
+
+    // Description
+    const desc = document.createElement('small');
+    desc.style.display = 'block';
+    desc.style.marginBottom = isFullscreen ? '8px' : '4px';
+    desc.textContent = loc.short_description || loc.description || '';
+    container.appendChild(desc);
+
+    // Links: directions + learn more
+    const links = document.createElement('div');
+    links.style.display = 'flex';
+    links.style.flexWrap = 'wrap';
+    links.style.gap = '5px';
+    links.style.marginBottom = '8px';
+
+    if (loc.lat && loc.lng) {
+      const dir = document.createElement('a');
+      dir.href = `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}&travelmode=walking`;
+      dir.target = '_blank';
+      dir.className = 'btn btn-sm btn-outline-primary';
+      dir.innerHTML = '<i class="fa fa-map-marker-alt"></i> Get Directions';
+      links.appendChild(dir);
+    }
+    if (loc.link) {
+      const learn = document.createElement('a');
+      learn.href = SecurityUtils.sanitizeUrl(loc.link);
+      learn.target = '_blank';
+      learn.className = 'btn btn-sm btn-outline-primary';
+      learn.innerHTML = '<i class="fa fa-info-circle"></i> Learn more';
+      links.appendChild(learn);
+    }
+    container.appendChild(links);
+
+    // Action buttons
+    const btnDiv = document.createElement('div');
+    btnDiv.className = 'popup-buttons';
+    btnDiv.style.display = 'flex';
+    btnDiv.style.gap = '5px';
+
+    const safeId = String(loc.id).replace(/['"]/g, '');
+
+    const likeBtn = document.createElement('button');
+    likeBtn.className = 'btn btn-sm btn-outline-success popup-like';
+    likeBtn.title = 'Like';
+    likeBtn.dataset.id = safeId;
+    likeBtn.innerHTML = `<i class="fas fa-thumbs-up"></i> <span>${loc.likes || 0}</span>`;
+    btnDiv.appendChild(likeBtn);
+
+    const dislikeBtn = document.createElement('button');
+    dislikeBtn.className = 'btn btn-sm btn-outline-danger popup-dislike';
+    dislikeBtn.title = 'Dislike';
+    dislikeBtn.dataset.id = safeId;
+    dislikeBtn.innerHTML = `<i class="fas fa-thumbs-down"></i> <span>${loc.dislikes || 0}</span>`;
+    btnDiv.appendChild(dislikeBtn);
+
+    const reportBtn = document.createElement('button');
+    reportBtn.className = 'btn btn-sm btn-outline-warning popup-flag';
+    reportBtn.title = 'Report';
+    reportBtn.dataset.id = safeId;
+    reportBtn.innerHTML = `<i class="fas fa-flag"></i>`;
+    btnDiv.appendChild(reportBtn);
+
+    container.appendChild(btnDiv);
+    return container;
+  }
+
+  // Marker icon selection
   const categoryColors = {
-    "fruits": "red",
-    "vegetables": "green",
-    "flowers": "purple",
-    "herbs": "blue",
-    "mushrooms": "orange",
-    "nuts": "orange",
-    "other": "gray"
+    "fruits": "red", "vegetables": "green", "flowers": "purple",
+    "herbs": "blue", "mushrooms": "orange", "nuts": "orange", "other": "gray"
   };
   const categoryIcons = {
-    "fruits": "apple-whole",
-    "vegetables": "carrot",
-    "flowers": "seedling",
-    "herbs": "leaf",
-    "mushrooms": "cloud",      // Free icon (mushroom cap shape)
-    "nuts": "circle",          // Free icon (round nut shape)
-    "other": "map-marker-alt"
+    "fruits": "apple-whole", "vegetables": "carrot", "flowers": "seedling",
+    "herbs": "leaf", "mushrooms": "cloud", "nuts": "circle", "other": "map-marker-alt"
   };
 
   const color = categoryColors[location.category] || "purple";
   const iconName = categoryIcons[location.category] || "location-dot";
 
-  // Use L.divIcon for Font Awesome control if needed, otherwise L.AwesomeMarkers.icon
   let markerIcon;
   if (useFontAwesome) {
     markerIcon = L.divIcon({
@@ -1742,118 +1914,29 @@ function addMarker(location) {
   }
 
   const marker = L.marker([location.lat, location.lng], { icon: markerIcon }).addTo(map);
+  marker.locationData = location;
 
-  // Initialize likes/dislikes
+  // Initialize counters
   location.likes = location.likes || 0;
   location.dislikes = location.dislikes || 0;
 
-  // Store location data on marker for easy access
-  marker.locationData = location;
-
-  // Click handler - show details in footer AND popup
+  // Click handler
   marker.on('click', () => {
     showFooterDetails(location);
-
-    // Check if map is in fullscreen mode
     const isFullscreen = document.fullscreenElement !== null ||
       document.webkitFullscreenElement !== null ||
       map.isFullscreen === true;
-
-    // Check if images should be shown
-    const showImages = localStorage.getItem('showImages') !== 'false';
-
-    // Build popup content based on fullscreen state
-    let popupContent;
-
-    if (isFullscreen) {
-      // Enhanced popup for fullscreen mode with image, category badge, and links
-      const imageHtml = showImages ? `
-        <div style="margin-bottom: 8px;">
-          <img src="${location.image || 'images/Image-not-found.png'}" 
-               alt="Location" 
-               style="max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px;"
-               onerror="this.src='images/Image-not-found.png'">
-        </div>
-      ` : '';
-
-      const categoryBadge = `
-        <span class="badge bg-${getCategoryColor(location.category)}" style="margin-bottom: 8px;">
-          ${location.originalType || location.category || 'Other'}
-        </span>
-      `;
-
-      const directionsHtml = location.lat && location.lng ? `
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking" 
-           target="_blank" 
-           class="btn btn-sm btn-outline-primary"
-           style="text-decoration: none; margin-right: 5px;">
-          <i class="fa fa-map-marker-alt"></i> Get Directions
-        </a>
-      ` : '';
-
-      const linkHtml = location.link ? `
-        <a href="${location.link}" target="_blank" class="btn btn-sm btn-outline-primary" style="text-decoration: none;">
-          <i class="fa fa-info-circle"></i> Learn more
-        </a>
-      ` : '';
-
-      popupContent = `
-        <div class="leaflet-popup-content" style="max-width: 280px;">
-          ${imageHtml}
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-            <strong>${location.locationName || location.name}</strong>
-            ${categoryBadge}
-          </div>
-          <small style="display: block; margin-bottom: 8px;">${location.short_description || location.description || ''}</small>
-          <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px;">
-            ${directionsHtml}
-            ${linkHtml}
-          </div>
-          <div class="popup-buttons" style="display: flex; gap: 5px;">
-            <button class="btn btn-sm btn-outline-success popup-like" data-id="${location.id}" title="Like">
-              <i class="fas fa-thumbs-up"></i> <span>${location.likes || 0}</span>
-            </button>
-            <button class="btn btn-sm btn-outline-danger popup-dislike" data-id="${location.id}" title="Dislike">
-              <i class="fas fa-thumbs-down"></i> <span>${location.dislikes || 0}</span>
-            </button>
-            <button class="btn btn-sm btn-outline-warning popup-flag" data-id="${location.id}" title="Report">
-              <i class="fas fa-flag"></i>
-            </button>
-          </div>
-        </div>
-      `;
-    } else {
-      // Simple popup for normal mode
-      popupContent = `
-        <div class="leaflet-popup-content">
-          <strong>${location.locationName || location.name}</strong><br>
-          <small>${location.short_description || location.description || ''}</small>
-          <div class="popup-buttons" style="margin-top: 8px; display: flex; gap: 5px;">
-            <button class="btn btn-sm btn-outline-success popup-like" data-id="${location.id}" title="Like">
-              <i class="fas fa-thumbs-up"></i> <span>${location.likes || 0}</span>
-            </button>
-            <button class="btn btn-sm btn-outline-danger popup-dislike" data-id="${location.id}" title="Dislike">
-              <i class="fas fa-thumbs-down"></i> <span>${location.dislikes || 0}</span>
-            </button>
-            <button class="btn btn-sm btn-outline-warning popup-flag" data-id="${location.id}" title="Report">
-              <i class="fas fa-flag"></i>
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
+    const popupContent = buildPopupContent(location, isFullscreen);
     marker.bindPopup(popupContent).openPopup();
   });
 
-  // Hover handler - also show details on hover
+  // Hover handler
   marker.on('mouseover', () => {
     showFooterDetails(location);
   });
 
   markers.push(marker);
 }
-
 // Event delegation for popup buttons (using document because popups are dynamically created)
 document.addEventListener('click', function (e) {
   // Handle popup like button
@@ -1875,7 +1958,6 @@ document.addEventListener('click', function (e) {
     handleFeedbackClick('report', id, btn.closest('.leaflet-popup-content'));
   }
 });
-
 function displayAllLocations() {
   clearMarkers();
   allLocations.forEach(addMarker);
@@ -1981,52 +2063,52 @@ function showFooterDetails(location) {
     categoryBadge.className = `badge bg-${getCategoryColor(location.category)}`;
   }
 
-  // Handle "Get Directions" link visibility based on coordinates
-  if (directionsLink && location.lat && location.lng) {
-    const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking`;
-    directionsLink.href = directionsURL;
-    directionsLink.style.display = 'inline-block';
-    directionsLink.innerHTML = '<i class="fa fa-map-marker-alt"></i> Get Directions';
-    directionsLink.title = `Get directions to ${location.locationName || location.name}`;
-  } else if (directionsLink) {
-    directionsLink.style.display = 'none';
-  }
+   // Handle "Get Directions" link visibility based on coordinates
+   if (directionsLink && location.lat && location.lng) {
+     const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking`;
+     directionsLink.href = directionsURL;
+     directionsLink.style.display = 'inline-block';
+     directionsLink.innerHTML = '<i class="fa fa-map-marker-alt"></i> Get Directions';
+     const title = `Get directions to ${location.locationName || location.name}`;
+     directionsLink.title = SecurityUtils.escapeHtml(title);
+   } else if (directionsLink) {
+     directionsLink.style.display = 'none';
+   }
 
-  // Handle "Learn more" link visibility based on link presence
-  if (link) {
-    if (location.link) {
-      link.href = location.link;
-      link.style.display = 'inline-block';
-      link.innerHTML = '<i class="fa fa-info-circle"></i> Learn more';
-      link.title = `Learn more about ${location.locationName || location.name}`;
-    } else {
-      link.style.display = 'none';
-    }
-  }
+   // Handle "Learn more" link visibility based on link presence
+   if (link) {
+     if (location.link) {
+       link.href = SecurityUtils.sanitizeUrl(location.link);
+       link.style.display = 'inline-block';
+       link.innerHTML = '<i class="fa fa-info-circle"></i> Learn more';
+       const title = `Learn more about ${location.locationName || location.name}`;
+       link.title = SecurityUtils.escapeHtml(title);
+     } else {
+       link.style.display = 'none';
+     }
+   }
 
-  // Handle image - show image from CSV or fallback to Image-not-found.png
-  // Respect the showImages setting
-  const showImages = localStorage.getItem('showImages') !== 'false';
+   // Handle image - show image from CSV or fallback to Image-not-found.png
+   // Respect the showImages setting
+   const showImages = localStorage.getItem('showImages') !== 'false';
 
-  if (image) {
-    if (showImages) {
-      if (location.image && location.image.trim() !== '') {
-        image.src = location.image;
-        image.onerror = function () {
-          // If image fails to load, show fallback
-          this.src = 'images/Image-not-found.png';
-        };
-        image.style.display = 'block';
-      } else {
-        // No image in CSV, show fallback image
-        image.src = 'images/Image-not-found.png';
-        image.style.display = 'block';
-      }
-    } else {
-      // Images disabled in settings
-      image.style.display = 'none';
-    }
-  }
+   if (image) {
+     if (showImages) {
+       if (location.image && location.image.trim() !== '') {
+         image.src = SecurityUtils.sanitizeUrl(location.image);
+         image.onerror = function () {
+           this.style.display = 'none'; // Hide if URL is broken
+         };
+         image.style.display = 'block';
+       } else {
+         // Hide image container if intentionally left empty
+         image.style.display = 'none';
+       }
+     } else {
+       // Images disabled in settings
+       image.style.display = 'none';
+     }
+   }
 
   // Update footer actions with location ID
   if (footerActions) {
@@ -2053,11 +2135,22 @@ function showFooterDetails(location) {
       footerDislikeBtn.disabled = true;
       footerDislikeBtn.style.opacity = '0.5';
     }
-    if (sessionStorage.getItem(`${locationId}-report`)) {
-      footerReportBtn.disabled = true;
-      footerReportBtn.style.opacity = '0.5';
-    }
-  }
+     if (sessionStorage.getItem(`${locationId}-report`)) {
+       footerReportBtn.disabled = true;
+       footerReportBtn.style.opacity = '0.5';
+     }
+
+     // Attach click event handlers to footer action buttons (clone to avoid duplicates)
+     const attachFooterBtnListener = (btn, action) => {
+       if (!btn) return;
+       const newBtn = btn.cloneNode(true);
+       btn.parentNode.replaceChild(newBtn, btn);
+       newBtn.addEventListener('click', () => handleFooterActionClick(action, locationId));
+     };
+     attachFooterBtnListener(footerLikeBtn, 'like');
+     attachFooterBtnListener(footerDislikeBtn, 'dislike');
+     attachFooterBtnListener(footerReportBtn, 'report');
+   }
 
   // Show the footer when user clicks on it (add 'open' class)
   footer.classList.add('open');
@@ -2096,15 +2189,245 @@ function getCategoryColor(category) {
 }
 
 /**
- * Handle footer action button clicks
+ * Check if user is signed in with Google (non-anonymous)
+ */
+function isUserAuthenticated() {
+  return typeof firebase !== 'undefined'
+    && firebase.auth
+    && firebase.auth().currentUser
+    && firebase.auth().currentUser.providerData.some(p => p.providerId === 'google.com');
+}
+
+/**
+ * Prompt user to sign in with Google
+ * Returns a promise that resolves to true if sign-in successful
+ */
+async function signInWithGoogle() {
+  if (typeof firebase === 'undefined' || typeof firebase.auth === 'undefined') {
+    console.error('Firebase Auth not available');
+    addStatusMessage('Firebase not loaded. Please refresh.', 'error');
+    return false;
+  }
+
+  // Check for existing session
+  try {
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser && currentUser.providerData.some(p => p.providerId === 'google.com')) {
+      console.log('Already signed in as:', currentUser.email);
+      return true;
+    }
+  } catch (e) {
+    console.warn('Auth state check failed, will attempt sign-in anyway:', e);
+  }
+
+  const provider = new firebase.auth.GoogleAuthProvider();
+  
+  try {
+    // Ensure auth is ready
+    await firebase.auth().signInWithPopup(provider);
+    const user = firebase.auth().currentUser;
+    if (user) {
+      console.log('Signed in successfully:', user.uid, user.email);
+      addStatusMessage('✅ Signed in with Google', 'success');
+      return true;
+    } else {
+      throw new Error('Sign-in succeeded but no user returned');
+    }
+  } catch (err) {
+    console.error('Google sign-in error:', err.code, err.message, err);
+    
+    if (err.code === 'auth/popup-blocked') {
+      addStatusMessage('Popup blocked. Allow popups for this site.', 'error');
+      alert('Popup blocked. Please allow popups for this site and try again.');
+    } else if (err.code === 'auth/popup-closed-by-user') {
+      addStatusMessage('Sign-in cancelled', 'info');
+      return false;
+    } else if (err.code === 'auth/internal-error') {
+      // Often caused by misconfiguration or blocked third-party cookies
+      addStatusMessage('Authentication error. Check console for details.', 'error');
+      console.error('Possible causes:');
+      console.error('- Firebase Auth not properly configured (check enabled providers in Firebase Console > Authentication > Sign-in method)');
+      console.error('- Third-party cookies blocked in browser');
+      console.error('- Using file:// protocol instead of http(s)');
+      alert('Authentication error. Ensure:\n1. Google sign-in is enabled in Firebase Console\n2. Your browser allows third-party cookies\n3. You are accessing via http/https (not file://)');
+    } else if (err.code === 'auth/network-request-failed') {
+      addStatusMessage('Network error. Check connection.', 'error');
+      alert('Network error. Please check your internet connection.');
+    } else {
+      addStatusMessage('Sign-in failed: ' + err.message, 'error');
+    }
+    return false;
+  }
+}
+
+function handleFeedbackClick(action, id, container) {
+  // Require Google authentication
+  if (!isUserAuthenticated()) {
+    addStatusMessage('Please sign in with Google to give feedback.', 'warning');
+    signInWithGoogle();
+    return;
+  }
+
+  const key = `${id}-${action}`;
+  if (sessionStorage.getItem(key)) {
+    addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
+    return;
+  }
+
+  // If action is 'report', open the modal instead of immediate submit
+  if (action === 'report') {
+    openReportModal(id, container);
+    return;
+  }
+
+  // Disable button IMMEDIATELY when clicked to prevent double-clicking
+  const btn = container.querySelector(`.${action}-btn`);
+  if (btn) {
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    btn.style.cursor = 'not-allowed';
+  }
+
+  sessionStorage.setItem(key, 'true');
+  submitFeedback(id, action);
+  updateButtonCount(`.${action}-btn`, container);
+
+  addStatusMessage(`Submitted feedback: ${action} for ID ${id}.`, 'info');
+}
+
+/**
+ * Open the report modal for a specific location
+ */
+function openReportModal(sourceId, container) {
+  // Ensure user is authenticated
+  if (!isUserAuthenticated()) {
+    addStatusMessage('Please sign in with Google to report a location.', 'warning');
+    signInWithGoogle();
+    return;
+  }
+
+  const modalEl = document.getElementById('reportModal');
+  if (!modalEl) return;
+
+  // Set the sourceId in the modal
+  document.getElementById('report-source-id').value = sourceId;
+
+  // Reset modal fields
+  document.getElementById('report-reason').value = '';
+  document.getElementById('report-details').value = '';
+
+  // Store container reference for updating after submit
+  modalEl.dataset.containerId = container ? 'popup' : 'footer';
+
+  // Show modal using Bootstrap 5 API
+  const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+  modal.show();
+}
+
+
+
+
+
+/**
+ * Handle report submission from modal
+ */
+function submitReport() {
+  const sourceId = document.getElementById('report-source-id').value;
+  const reason = document.getElementById('report-reason').value;
+  const details = document.getElementById('report-details').value.trim();
+
+  // Validation
+  if (!reason) {
+    alert('Please select a reason for the report.');
+    return;
+  }
+
+  if (!sourceId) {
+    alert('Error: Source ID missing. Please try again.');
+    return;
+  }
+
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    alert('You must be signed in to submit a report.');
+    return;
+  }
+
+  const reportData = {
+    sourceId: sourceId,
+    reason: reason,
+    details: details || '',
+    userId: user.uid,
+    userEmail: user.email || '',
+    name: reason,
+    status: 'pending',
+    adminNote: '',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  const submitBtn = document.getElementById('report-submit');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
+  }
+
+  // Submit to Firestore reports collection
+  const db = firebase.firestore();
+  db.collection('reports').add(reportData)
+    .then(docRef => {
+      console.log('Report submitted with ID:', docRef.id);
+      addStatusMessage('Report submitted successfully. Thank you.', 'success');
+
+      // Hide modal
+      const modalEl = document.getElementById('reportModal');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+
+      // Also submit feedback via Apps Script to increment report count on source
+      submitFeedback(sourceId, 'report');
+
+      // Mark as reported in session storage
+      sessionStorage.setItem(`${sourceId}-report`, 'true');
+    })
+    .catch(err => {
+      console.error('Error submitting report:', err);
+      if (err.code === 'permission-denied') {
+        alert('Permission denied. You must be signed in with Google to submit a report.');
+      } else {
+        alert('Failed to submit report. Please try again.');
+      }
+    })
+    .finally(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Submit Report';
+      }
+    });
+}
+
+/**
+ * Handle footer action button clicks (like/dislike/report from footer panel)
  */
 function handleFooterActionClick(action, locationId) {
+  // Require Google authentication
+  if (!isUserAuthenticated()) {
+    addStatusMessage('Please sign in with Google to give feedback.', 'warning');
+    signInWithGoogle();
+    return;
+  }
+
+  if (action === 'report') {
+    openReportModal(locationId, 'footer');
+    return;
+  }
+
   const key = `${locationId}-${action}`;
   if (sessionStorage.getItem(key)) {
     addStatusMessage(`Already submitted ${action} for this location.`, 'warning');
     return;
   }
 
+  // Disable button immediately
   const btn = document.querySelector(`.footer-${action}-btn`);
   if (btn) {
     btn.disabled = true;
@@ -2115,96 +2438,9 @@ function handleFooterActionClick(action, locationId) {
   submitFeedback(locationId, action);
   addStatusMessage(`Submitted ${action} for location ID ${locationId}.`, 'info');
 }
-function handlePopupOpen(e, location) {
-  const container = e.popup.getElement();
-  if (!container) return;
-  const locationId = location.id;
-
-  const likeBtn = container.querySelector('.like-btn');
-  const dislikeBtn = container.querySelector('.dislike-btn');
-  const reportBtn = container.querySelector('.report-btn');
-
-  // Check session storage and disable buttons if already submitted
-  if (sessionStorage.getItem(`${locationId}-like`)) {
-    likeBtn.disabled = true;
-    likeBtn.style.opacity = '0.5';
-    likeBtn.style.cursor = 'not-allowed';
-  }
-  if (sessionStorage.getItem(`${locationId}-dislike`)) {
-    dislikeBtn.disabled = true;
-    dislikeBtn.style.opacity = '0.5';
-    dislikeBtn.style.cursor = 'not-allowed';
-  }
-  if (sessionStorage.getItem(`${locationId}-report`)) {
-    reportBtn.disabled = true;
-    reportBtn.style.opacity = '0.5';
-    reportBtn.style.cursor = 'not-allowed';
-  }
-
-  // Remove old listeners to prevent multiple bindings if popup is reopened
-  const newLikeBtn = likeBtn.cloneNode(true);
-  const newDislikeBtn = dislikeBtn.cloneNode(true);
-  const newReportBtn = reportBtn.cloneNode(true);
-
-  // Preserve disabled state when cloning
-  if (likeBtn.disabled) {
-    newLikeBtn.disabled = true;
-    newLikeBtn.style.opacity = '0.5';
-    newLikeBtn.style.cursor = 'not-allowed';
-  }
-  if (dislikeBtn.disabled) {
-    newDislikeBtn.disabled = true;
-    newDislikeBtn.style.opacity = '0.5';
-    newDislikeBtn.style.cursor = 'not-allowed';
-  }
-  if (reportBtn.disabled) {
-    newReportBtn.disabled = true;
-    newReportBtn.style.opacity = '0.5';
-    newReportBtn.style.cursor = 'not-allowed';
-  }
-
-  likeBtn.parentNode.replaceChild(newLikeBtn, likeBtn);
-  dislikeBtn.parentNode.replaceChild(newDislikeBtn, dislikeBtn);
-  reportBtn.parentNode.replaceChild(newReportBtn, reportBtn);
-
-  // Add new listeners only if buttons are not disabled
-  if (!newLikeBtn.disabled) {
-    newLikeBtn.addEventListener('click', () => handleFeedbackClick('like', locationId, container));
-  }
-  if (!newDislikeBtn.disabled) {
-    newDislikeBtn.addEventListener('click', () => handleFeedbackClick('dislike', locationId, container));
-  }
-  if (!newReportBtn.disabled) {
-    newReportBtn.addEventListener('click', () => handleFeedbackClick('report', locationId, container));
-  }
-}
-
-function handleFeedbackClick(action, id, container) {
-  const key = `${id}-${action}`;
-  if (sessionStorage.getItem(key)) {
-    addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
-    return; // Prevent multiple submissions
-  }
-
-  // Disable button IMMEDIATELY when clicked to prevent double-clicking
-  const btn = container.querySelector(`.${action}-btn`);
-  if (btn) {
-    btn.disabled = true;
-    btn.style.opacity = '0.5'; // Visual feedback that it's disabled
-    btn.style.cursor = 'not-allowed';
-  }
-
-  sessionStorage.setItem(key, 'true'); // Mark as submitted in session
-  submitFeedback(id, action);
-  updateButtonCount(`.${action}-btn`, container);
-
-  addStatusMessage(`Submitted feedback: ${action} for ID ${id}.`, 'info');
-}
-
 
 function submitFeedback(id, action) {
-
-  // Map the action to the correct column name in your spreadsheet
+  // Map the action to the correct column name
   const actionMapping = {
     'like': 'likes',
     'dislike': 'dislikes',
@@ -2212,24 +2448,25 @@ function submitFeedback(id, action) {
   };
 
   const columnName = actionMapping[action] || action;
-
   const formURL = fileExec;
+
+  // Get CSRF token from localStorage
+  const csrfToken = SecurityUtils.getCsrfToken();
 
   fetch(formURL, {
     method: 'POST',
-    mode: 'no-cors', // Important for avoiding CORS errors with Google Scripts
+    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: new URLSearchParams({
-      id: id,
-      action: columnName  // Send the mapped column name instead of the raw action
+      id: SecurityUtils.escapeAttribute(id),
+      action: columnName,
+      csrf_token: csrfToken
     })
   })
     .then(() => {
       console.log(`✅ Submission sent for action '${action}' on ID ${id}`);
-      // Note: We cannot read the response from the server in 'no-cors' mode,
-      // but the data will be sent successfully.
     })
     .catch(err => {
       console.error('❌ Submission error:', err);
@@ -2241,6 +2478,12 @@ function updateButtonCount(buttonSelector, popupEl) {
   const span = popupEl.querySelector(`${buttonSelector} span`);
   if (!span) return;
   span.textContent = (parseInt(span.textContent) || 0) + 1;
+}
+
+// Attach global event listeners (report modal submit)
+const reportSubmitBtn = document.getElementById('report-submit');
+if (reportSubmitBtn) {
+  reportSubmitBtn.addEventListener('click', submitReport);
 }
 
 // --- Utilities ---
@@ -2380,3 +2623,4 @@ styleSheet.innerText = `
 }
 `;
 document.head.appendChild(styleSheet);
+

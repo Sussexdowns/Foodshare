@@ -1,0 +1,147 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Public read-only access to the items catalog
+    match /items/{itemId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Submissions: require Google auth (non-anonymous), only approved items are readable
+    match /sources/{sourceId} {
+      // Only approved sources are publicly readable
+      allow read: if resource.data.approved == true;
+
+      // Authenticated Google users can create new source submissions
+      allow create: if request.auth != null
+                    && request.auth.token.firebase.sign_in_provider == 'google.com'
+                    && request.resource.data.keys().hasAll([
+                        'name', 'type', 'category', 'lat', 'lng', 'timestamp'
+                      ])
+                    && request.resource.data.name is string
+                    && request.resource.data.type is string
+                    && request.resource.data.category is string
+                    && request.resource.data.lat is number
+                    && request.resource.data.lng is number
+                    && request.resource.data.lat >= -90
+                    && request.resource.data.lat <= 90
+                    && request.resource.data.lng >= -180
+                    && request.resource.data.lng <= 180
+                    && request.resource.data.name.size() >= 2
+                    && request.resource.data.name.size() <= 200
+                    && request.resource.data.type.size() >= 2
+                    && request.resource.data.type.size() <= 100
+                    && request.resource.data.category.size() >= 2
+                    && request.resource.data.category.size() <= 100
+                    && !request.resource.data.name.matches('.*[<>].*')
+                    && !request.resource.data.type.matches('.*[<>].*')
+                    && (!(request.resource.data.description is string) || !request.resource.data.description.matches('.*[<>].*'))
+                    && (!(request.resource.data.shortDescription is string) || !request.resource.data.shortDescription.matches('.*[<>].*'));
+
+      allow update, delete: if false;
+    }
+
+    // Reports collection - admins can read/update/delete, users can create
+    match /reports/{reportId} {
+      // Admins can read, update, delete
+      allow read, update, delete: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'google.com'
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+
+      // Authenticated Google users can create reports
+      allow create: if request.auth != null
+                    && request.auth.token.firebase.sign_in_provider == 'google.com'
+                    && request.resource.data.keys().hasAll(['sourceId', 'reason', 'userId', 'name'])
+                    && request.resource.data.sourceId is string
+                    && request.resource.data.reason is string
+                    && request.resource.data.userId is string
+                    && request.resource.data.name is string
+                    && (request.resource.data.details is string || request.resource.data.details == null);
+    }
+
+    // Feedback collection for likes/dislikes (if used directly in Firestore)
+    match /feedback/{feedbackId} {
+      allow read: if false;
+      allow create: if request.auth != null
+                    && request.auth.token.firebase.sign_in_provider == 'google.com'
+                    && request.resource.data.keys().hasAll(['sourceId', 'type', 'userId'])
+                    && request.resource.data.sourceId is string
+                    && request.resource.data.type in ['like', 'dislike', 'report']
+                    && request.resource.data.userId is string;
+      allow update, delete: if false;
+    }
+
+    // User profiles (admin role support)
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Deny all other access by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+    // Submissions: require Google auth (non-anonymous), only approved items are readable
+    match /sources/{sourceId} {
+      // Only approved sources are publicly readable
+      allow read: if resource.data.approved == true;
+
+      // Authenticated Google users can create new source submissions
+      // Must be non-anonymous and sign-in provider is google.com
+      allow create: if request.auth != null
+                    && request.auth.token.firebase.sign_in_provider == 'google.com'
+                    && request.resource.data.keys().hasAll([
+                        'name', 'type', 'category', 'lat', 'lng', 'timestamp'
+                      ])
+                    // Type checks
+                    && request.resource.data.name is string
+                    && request.resource.data.type is string
+                    && request.resource.data.category is string
+                    && request.resource.data.lat is number
+                    && request.resource.data.lng is number
+                    // Range checks
+                    && request.resource.data.lat >= -90
+                    && request.resource.data.lat <= 90
+                    && request.resource.data.lng >= -180
+                    && request.resource.data.lng <= 180
+                    // Length limits to prevent abuse
+                    && request.resource.data.name.size() >= 2
+                    && request.resource.data.name.size() <= 200
+                    && request.resource.data.type.size() >= 2
+                    && request.resource.data.type.size() <= 100
+                    && request.resource.data.category.size() >= 2
+                    && request.resource.data.category.size() <= 100
+                    // Disallow HTML/script tags in text fields
+                    && !request.resource.data.name.matches('.*[<>].*')
+                    && !request.resource.data.type.matches('.*[<>].*')
+                    && (!(request.resource.data.description is string) || !request.resource.data.description.matches('.*[<>].*'))
+                    && (!(request.resource.data.shortDescription is string) || !request.resource.data.shortDescription.matches('.*[<>].*'));
+
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // Feedback collection for likes/dislikes/reports (if used)
+    // Requires Google authentication to prevent spam
+    match /feedback/{feedbackId} {
+      allow read: if false;
+      allow create: if request.auth != null
+                    && request.auth.token.firebase.sign_in_provider == 'google.com'
+                    && request.resource.data.keys().hasAll(['sourceId', 'type', 'userId'])
+                    && request.resource.data.sourceId is string
+                    && request.resource.data.type in ['like', 'dislike', 'report']
+                    && request.resource.data.userId is string;
+      allow update, delete: if false;
+    }
+
+    // Deny all other access by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

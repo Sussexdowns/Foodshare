@@ -6,6 +6,16 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net 'unsafe-inline';
+    style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
+    font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://fonts.gstatic.com;
+    img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co;
+    connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com;
+    frame-src 'self';
+  ">
 
   <!-- CSS & Icons -->
   <link rel="stylesheet" href="css/style.css">
@@ -56,12 +66,13 @@
       </h1>
     </div>
 
-    <form name="submitForm" id="submitForm" class="container mb-4">
+     <form name="submitForm" id="submitForm" class="container mb-4">
 
-      <input type="hidden" id="lat" name="lat">
-      <input type="hidden" id="lng" name="lng">
+       <input type="hidden" id="lat" name="lat">
+       <input type="hidden" id="lng" name="lng">
+       <input type="hidden" id="csrf_token" name="csrf_token" value="">
 
-      <div class="form-section">
+       <div class="form-section">
         <h3><i class="fas fa-tag me-2"></i>Basic Information</h3>
 
         <div class="mb-3">
@@ -214,16 +225,213 @@
   <!-- Footer placeholder - loaded via JavaScript -->
   <div id="footer-placeholder" class="fixed-bottom"></div>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
-  <script src="scripts/form.js"></script>
-  <script src="scripts/base.js"></script>
-  <script src="scripts/submit.js"></script>
+   <!-- Scripts -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
 
-  <script>
+   <!-- Firebase config first -->
+   <script src="../config.js"></script>
+
+   <!-- Firebase SDKs -->
+   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+   <script src="scripts/sanitize.js"></script>
+
+   <!-- Initialize Firebase Auth (before app.js) -->
+   <script>
+     document.addEventListener('DOMContentLoaded', function() {
+       if (typeof firebase !== 'undefined' && typeof firebase.auth !== 'undefined') {
+         if (!firebase.apps.length && window.__FIREBASE_CONFIG__) {
+           firebase.initializeApp(window.__FIREBASE_CONFIG__);
+         }
+         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+           .catch(function(err) { console.warn('Auth persistence error:', err); });
+       }
+     });
+   </script>
+
+   <script src="scripts/base.js"></script>
+   <script src="scripts/app.js"></script>
+   <script src="scripts/form.js"></script>
+   <script src="scripts/submit.js"></script>
+   <script>
+     // Form submission handler - posts to Firebase 'sources' collection
+     document.addEventListener('DOMContentLoaded', function () {
+       // Set CSRF token on page load
+       const csrfInput = document.getElementById('csrf_token');
+       if (csrfInput) {
+         csrfInput.value = SecurityUtils.getCsrfToken();
+       }
+
+       const form = document.getElementById('submitForm');
+       const submitBtn = form.querySelector('button[type="submit"]');
+
+       if (form) {
+         form.addEventListener('submit', async function (e) {
+           e.preventDefault();
+
+           // Check authentication - require Google login
+           if (typeof firebase === 'undefined' || !firebase.auth() || !firebase.auth().currentUser) {
+             alert('Please sign in with Google to submit a location.');
+             // Trigger Google sign-in
+             const provider = new firebase.auth.GoogleAuthProvider();
+             try {
+               await firebase.auth().signInWithPopup(provider);
+             } catch (err) {
+               console.error('Sign-in failed:', err);
+               alert('Sign-in was cancelled or failed. Please try again.');
+               return;
+             }
+           }
+
+           // Verify it's a Google account (not anonymous)
+           const user = firebase.auth().currentUser;
+           const isGoogle = user.providerData.some(p => p.providerId === 'google.com');
+           if (!isGoogle) {
+             alert('Please sign in with Google to submit a location.');
+             const provider = new firebase.auth.GoogleAuthProvider();
+             try {
+               await firebase.auth().signInWithPopup(provider);
+             } catch (err) {
+               console.error('Sign-in failed:', err);
+               return;
+             }
+           }
+
+           // Collect form data
+           let category = document.getElementById('category').value;
+           let item = document.getElementById('item').value;
+           let name = document.getElementById('name').value;
+           let shortDesc = document.getElementById('shortDesc').value;
+           let desc = document.getElementById('desc').value;
+           let links = document.getElementById('links').value;
+           let image = document.getElementById('image').value;
+           const lat = document.getElementById('lat').value;
+           const lng = document.getElementById('lng').value;
+
+           // Collect selected months
+           const selectedMonths = Array.from(document.querySelectorAll('.month-checkbox:checked'))
+             .map(cb => cb.value);
+           const monthsMap = {
+             'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+             'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+           };
+           const months = selectedMonths.map(m => monthsMap[m]).filter(Boolean);
+
+           // Validation
+           if (!lat || !lng) {
+             alert('Please select a location on the map.');
+             return;
+           }
+           if (!name || name.trim().length < 2) {
+             alert('Please enter a location name (at least 2 characters).');
+             return;
+           }
+
+           // Sanitize inputs
+           name = SecurityUtils.sanitizeHtml(name).substring(0, 200);
+           if (shortDesc) shortDesc = SecurityUtils.sanitizeHtml(shortDesc).substring(0, 500);
+           if (desc) desc = SecurityUtils.sanitizeHtml(desc).substring(0, 2000);
+           if (links) links = SecurityUtils.sanitizeUrl(links);
+           if (image) image = SecurityUtils.sanitizeUrl(image);
+           if (category) category = SecurityUtils.sanitizeHtml(category).substring(0, 100);
+           if (item) item = SecurityUtils.sanitizeHtml(item).substring(0, 100);
+
+           // Disable button and show loading
+           submitBtn.disabled = true;
+           submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+
+           try {
+             // Generate a unique source ID
+             const sourceId = 'src_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+             // Prepare source data matching the Firestore schema
+             const sourceData = {
+               sourceId: sourceId,
+               name: name,
+               type: category || 'Other',
+               category: category || 'Other',
+               subCategory: item || 'Other',
+               lat: parseFloat(lat),
+               lng: parseFloat(lng),
+               shortDescription: shortDesc || '',
+               description: desc || '',
+               season: selectedMonths.join(';'),
+               months: months,
+               imageUrl: image || '',
+               sourceLink: links || '',
+               tags: [category, item].filter(Boolean),
+               likes: 0,
+               dislikes: 0,
+               reports: 0,
+               comments: '',
+               whatThreeWords: '',
+               plusCode: '',
+               address: '',
+               town: '',
+               area: '',
+               county: '',
+               postcode: '',
+               approved: false,
+               timestamp: new Date().toISOString(),
+               postedById: user.uid,
+               createdAt: new Date().toISOString(),
+               postedByEmail: user.email || '',
+               csrfToken: csrfInput.value
+             };
+
+             // Post to Firebase
+             if (typeof firebase !== 'undefined' && firebase.firestore) {
+               const db = firebase.firestore();
+               await db.collection('sources').doc(sourceId).set(sourceData);
+               alert('Thank you! Your submission has been received and will be reviewed.');
+               form.reset();
+               if (marker) map.removeLayer(marker);
+             } else {
+               throw new Error('Firebase not initialized');
+             }
+           } catch (err) {
+             console.error('Submission error:', err);
+             if (err.code === 'permission-denied') {
+               alert('Permission denied. Please ensure you are signed in with Google and try again.');
+             } else {
+               alert('Sorry, there was an error submitting your entry. Please try again.');
+             }
+           } finally {
+             submitBtn.disabled = false;
+             submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Submit';
+           }
+         });
+
+         // Reset button handler
+         const resetBtn = form.querySelector('button[type="reset"]');
+         if (resetBtn) {
+           resetBtn.addEventListener('click', function () {
+             if (marker) map.removeLayer(marker);
+             document.getElementById('coord-display').textContent = 'None';
+             document.getElementById('coord-display').className = 'badge bg-secondary';
+           });
+         }
+       }
+     });
+
+         // Reset button handler
+         const resetBtn = form.querySelector('button[type="reset"]');
+         if (resetBtn) {
+           resetBtn.addEventListener('click', function () {
+             if (marker) map.removeLayer(marker);
+             document.getElementById('coord-display').textContent = 'None';
+             document.getElementById('coord-display').className = 'badge bg-secondary';
+           });
+         }
+       }
+     });
+
+
     // Initialize map with fullscreen control
     let map = L.map('map', {
       fullscreenControl: true,

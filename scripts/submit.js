@@ -1,7 +1,43 @@
+// Defensive check: initialize BASE_PATH if base.js hasn't run yet
+if (typeof window.BASE_PATH === 'undefined') {
+  window.BASE_PATH = window.location.pathname.includes('/Foodshare/') ? '/Foodshare/' : '/';
+}
+
 // Global data
 let categoriesData = [];
 let locationData = [];
 let allItems = [];
+
+// Check if JSON source is enabled
+const useJsonAsSource = localStorage.getItem('useJsonAsSource') !== 'false';
+
+// Load items from Firebase
+async function loadItemsFromFirebase() {
+  if (typeof firebase === 'undefined' || !firebase.firestore) {
+    console.error('Firebase not available for items loading.');
+    return {};
+  }
+  const db = firebase.firestore();
+  const snapshot = await db.collection('items').get();
+  const itemsData = {};
+  snapshot.forEach(doc => {
+    const item = doc.data();
+    const category = item.category || 'other';
+    if (!itemsData[category]) itemsData[category] = [];
+    // Normalize field names to match items.json format
+    itemsData[category].push({
+      Name: item.name || item.Name,
+      name: item.name || item.Name,
+      Link: item.link || item.Link,
+      link: item.link || item.Link,
+      Image: item.image || item.Image,
+      image: item.image || item.Image,
+      Desc: item.desc || item.Desc,
+      desc: item.desc || item.Desc
+    });
+  });
+  return itemsData;
+}
 
 // Load categories and items data
 async function loadData() {
@@ -21,11 +57,31 @@ async function loadData() {
       locationData = await locationsResponse.json();
     }
 
-    // Load items from items.json for item mapping
-    const itemsResponse = await fetch(window.BASE_PATH + 'items.json');
-    if (itemsResponse.ok) {
-      const itemsJson = await itemsResponse.json();
-      allItems = itemsJson;
+    // Load items from appropriate source
+    if (useJsonAsSource) {
+      try {
+        const itemsResponse = await fetch(window.BASE_PATH + 'items.json');
+        if (itemsResponse.ok) {
+          allItems = await itemsResponse.json();
+        }
+      } catch (e) {
+        console.warn('Failed to load items.json, trying Firebase:', e);
+        allItems = await loadItemsFromFirebase();
+      }
+    } else {
+      allItems = await loadItemsFromFirebase();
+    }
+
+    // Normalize items field names (handle both Name and name formats)
+    for (const category in allItems) {
+      if (allItems[category] && Array.isArray(allItems[category])) {
+        allItems[category].forEach(item => {
+          if (item.name && !item.Name) item.Name = item.name;
+          if (item.link && !item.Link) item.Link = item.link;
+          if (item.image && !item.Image) item.Image = item.image;
+          if (item.desc && !item.Desc) item.Desc = item.desc;
+        });
+      }
     }
 
   } catch (error) {

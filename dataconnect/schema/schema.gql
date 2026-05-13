@@ -2,11 +2,41 @@ type User @table {
   displayName: String!
   email: String!
   createdAt: Timestamp!
+  role: String! @default(value: "user")
   userType: String!
   phoneNumber: String
   address: String
   bio: String
   profilePictureUrl: String
+}
+
+type Category @table(key: "categoryId") {
+  categoryId: String!
+  categoryName: String!
+  categoryLink: String
+  categoryParentId: String
+  categoryIcon: String
+  categoryImage: String
+  createdAt: Timestamp!
+}
+
+type Location @table {
+  name: String!
+  category: String
+  shortDescription: String
+  description: String
+  images: [String]
+  lat: Float
+  lng: Float
+  likes: Int @default(value: 0)
+  dislikes: Int @default(value: 0)
+  months: [Int]
+  season: String
+  status: String @default(value: "active")
+  tags: [String]
+  whatThreeWords: String
+  createdAt: Timestamp!
+  postedBy: User
 }
 
 type FoodItem @table {
@@ -44,6 +74,16 @@ type Request @table {
   createdAt: Timestamp!
   status: String!
   messageToDonor: String
+}
+
+type Report @table {
+  category: String!
+  details: String!
+  status: String! @default(value: "pending")
+  createdAt: Timestamp!
+  locationName: String
+  location: Location
+  reportedBy: User
 }
 
 type Community @table {

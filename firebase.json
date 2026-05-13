@@ -2,6 +2,9 @@
   "emulators": {
     "dataconnect": {
       "dataDir": "dataconnect/.dataconnect/pgliteData"
+    },
+    "firestore": {
+      "rules": "firestore.rules"
     }
   },
   "dataconnect": {

@@ -70,6 +70,7 @@
 }
 
 .footer-details-content h4 {
+  font-weight: bold;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
 }
@@ -84,11 +85,13 @@
 }
 
 .footer-details-content a {
-  color: var(--primary-color);
+  color: var(--cream-accent);
   text-decoration: none;
+
 }
 
 .footer-details-content a:hover {
+  color: var(---cream-accent-hover);
   text-decoration: underline;
 }
 

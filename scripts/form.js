@@ -2,31 +2,90 @@
 
 let itemsData = {};
 
-// Load JSON data from items.json
-fetch(window.BASE_PATH + 'items.json')
-  .then(response => {
-    if (!response.ok) throw new Error('Failed to load items.json');
-    return response.json();
-  })
-  .then(data => {
-    itemsData = data;
+// Check if JSON source is enabled (when disabled, use Firebase)
+const useJsonAsSource = localStorage.getItem('useJsonAsSource') !== 'false';
 
-    // Sort each category's items alphabetically by Name (with null checks)
-    for (const category in itemsData) {
-      if (itemsData[category] && Array.isArray(itemsData[category])) {
-        itemsData[category].sort((a, b) => {
-          const nameA = a && a.Name ? a.Name : '';
-          const nameB = b && b.Name ? b.Name : '';
-          return nameA.localeCompare(nameB);
-        });
-      }
+// Load items data from appropriate source
+async function loadItemsData() {
+  if (useJsonAsSource) {
+    // Load from local items.json
+    try {
+      const response = await fetch(window.BASE_PATH + 'items.json');
+      if (!response.ok) throw new Error('Failed to load items.json');
+      itemsData = await response.json();
+    } catch (err) {
+      console.error('Error loading items.json:', err);
+      // Fallback to Firebase if local JSON fails
+      loadItemsFromFirebase();
+      return;
     }
+  } else {
+    // Load from Firebase when JSON source is disabled
+    loadItemsFromFirebase();
+    return;
+  }
 
-    populateItemsDropdown(document.getElementById('category').value);
-  })
-  .catch(err => {
-    console.error('Error loading items.json:', err);
-  });
+  // Sort each category's items alphabetically by name
+  processAndSortItemsData();
+  populateItemsDropdown(document.getElementById('category').value);
+}
+
+// Process and sort items data (normalizes field names and sorts)
+function processAndSortItemsData() {
+  for (const category in itemsData) {
+    if (itemsData[category] && Array.isArray(itemsData[category])) {
+      itemsData[category].forEach(item => {
+        // Normalize field names - ensure both Name and name are set
+        if (item.name && !item.Name) item.Name = item.name;
+        if (item.icon && !item.Icon) item.Icon = item.icon;
+        if (item.link && !item.Link) item.Link = item.link;
+        if (item.image && !item.Image) item.Image = item.image;
+        if (item.desc && !item.Desc) item.Desc = item.desc;
+      });
+      itemsData[category].sort((a, b) => {
+        const nameA = a && (a.Name || a.name) ? (a.Name || a.name) : '';
+        const nameB = b && (b.Name || b.name) ? (b.Name || b.name) : '';
+        return nameA.localeCompare(nameB);
+      });
+    }
+  }
+}
+
+// Load items from Firebase Firestore
+function loadItemsFromFirebase() {
+  if (typeof firebase === 'undefined' || !firebase.firestore) {
+    console.error('Firebase not available. Cannot load items.');
+    return;
+  }
+
+  const db = firebase.firestore();
+  db.collection('items').get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        const item = doc.data();
+        const category = item.category || 'other';
+        if (!itemsData[category]) {
+          itemsData[category] = [];
+        }
+        // Normalize Firebase field names to match items.json format
+        itemsData[category].push({
+          Name: item.name || item.Name,
+          Link: item.link || item.Link,
+          Image: item.image || item.Image,
+          Desc: item.desc || item.Desc
+        });
+      });
+
+      processAndSortItemsData();
+      populateItemsDropdown(document.getElementById('category').value);
+    })
+    .catch(err => {
+      console.error('Error loading items from Firebase:', err);
+    });
+}
+
+// Initialize items loading
+loadItemsData();
 
 const categorySelect = document.getElementById('category');
 const itemSelect = document.getElementById('item');
@@ -51,14 +110,16 @@ function populateItemsDropdown(categoryKey) {
   if (!items || !Array.isArray(items)) return;
 
   items.forEach(item => {
-    if (!item || !item.Name) return;
+    if (!item) return;
+    const itemName = item.Name || item.name;
+    if (!itemName) return;
     const option = document.createElement('option');
-    option.value = item.Name.toLowerCase().replace(/\s+/g, '-');
-    option.textContent = item.Name;
-    option.setAttribute('data-link', item.Link || '');
-    option.setAttribute('data-image', item.Image || '');
-    option.setAttribute('data-desc', item.Desc || '');
-    option.setAttribute('data-name', item.Name || '');
+    option.value = itemName.toLowerCase().replace(/\s+/g, '-');
+    option.textContent = itemName;
+    option.setAttribute('data-link', (item.Link || item.link) || '');
+    option.setAttribute('data-image', (item.Image || item.image) || '');
+    option.setAttribute('data-desc', (item.Desc || item.desc) || '');
+    option.setAttribute('data-name', itemName);
     itemSelect.appendChild(option);
   });
 
@@ -83,7 +144,7 @@ function showItemDetails(itemData) {
   const descEl = document.getElementById('item-desc');
   const linkEl = document.getElementById('item-link');
 
-  if (itemData && itemData.link) {
+  if (itemData && itemData.name) {
     // Show item details container
     itemDetailsContainer.style.display = 'block';
 

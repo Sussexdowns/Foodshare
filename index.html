@@ -5,6 +5,17 @@
   <title>Lewes Food Sharing Map</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' https://www.gstatic.com https://cdn.jsdelivr.net https://kit.fontawesome.com 'unsafe-inline';
+    style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
+    font-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://fonts.gstatic.com;
+    img-src 'self' data: https://*.tile.openstreetmap.org https://*.basemaps.cartocdn.com https://placehold.co https://commons.wikimedia.org;
+    connect-src 'self' https://www.gstatic.com https://firestore.googleapis.com https://*.google.com https://nominatim.openstreetmap.org https://script.google.com;
+    frame-src https://*.google.com https://script.google.com;
+    form-action 'self' https://docs.google.com https://script.google.com;
+  ">
 
   <!-- CSS & Icons -->
   <link rel="stylesheet" href="css/style.css">
@@ -166,21 +177,66 @@
   <!-- Footer placeholder - loaded via JavaScript -->
   <div id="footer-placeholder" class="fixed-bottom"></div>
 
-  <!-- Footer details container - loaded via JavaScript -->
-  <div id="footer-details-container"></div>
+   <!-- Footer details container - loaded via JavaScript -->
+   <div id="footer-details-container"></div>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
+   <!-- Report Modal -->
+   <div class="modal fade" id="reportModal" tabindex="-1" aria-modal="true" role="dialog" data-bs-backdrop="static">
+     <div class="modal-dialog modal-dialog-centered">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title">Report Location</h5>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+           <input type="hidden" id="report-source-id">
+           <div class="mb-3">
+             <label for="report-reason" class="form-label">Reason</label>
+             <select id="report-reason" class="form-select" required>
+               <option value="">Select a reason...</option>
+               <option value="incorrect">Incorrect location</option>
+               <option value="unsafe">Unsafe / restricted</option>
+               <option value="duplicate">Duplicate</option>
+               <option value="seasonal">Out of season</option>
+               <option value="other">Other</option>
+             </select>
+           </div>
+           <div class="mb-3">
+             <label for="report-details" class="form-label">Details (optional)</label>
+             <textarea id="report-details" class="form-control" rows="3" placeholder="Add any context that would help us review this report..."></textarea>
+           </div>
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+           <button type="button" class="btn btn-danger" id="report-submit">Submit Report</button>
+         </div>
+       </div>
+     </div>
+   </div>
 
-  <script src="scripts/base.js"></script>
-  <script src="scripts/app.js"></script>
-  <script src="scripts/index.js"></script>
+   <!-- Scripts -->
+   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@2.4.0/Control.FullScreen.js"></script>
+
+   <!-- Firebase config MUST come BEFORE Firebase SDKs -->
+   <script src="config.js"></script>
+
+   <!-- Firebase SDKs (use compat versions for simple namespace access) -->
+   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+   <!-- Security utilities -->
+   <script src="scripts/sanitize.js"></script>
+
+   <script src="scripts/base.js"></script>
+   <script src="scripts/app.js"></script>
+   <script src="scripts/index.js"></script>
 
 </body>
 

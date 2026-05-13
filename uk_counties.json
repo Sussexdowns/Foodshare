@@ -13,7 +13,8 @@
         "south": 51.25,
         "east": -2.25,
         "west": -2.917
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_avon.sql"
     },
     {
       "id": "bedfordshire",
@@ -28,7 +29,8 @@
         "south": 51.849,
         "east": -0.031,
         "west": -0.825
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_bedfordshire.sql"
     },
     {
       "id": "berkshire",
@@ -43,7 +45,8 @@
         "south": 51.225,
         "east": -0.417,
         "west": -1.383
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_berkshire.sql"
     },
     {
       "id": "bristol",
@@ -58,7 +61,8 @@
         "south": 51.391,
         "east": -2.492,
         "west": -2.684
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_bristol.sql"
     },
     {
       "id": "buckinghamshire",
@@ -73,7 +77,8 @@
         "south": 51.467,
         "east": -0.333,
         "west": -1.333
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_buckinghamshire.sql"
     },
     {
       "id": "cambridgeshire",
@@ -88,7 +93,8 @@
         "south": 51.983,
         "east": 0.567,
         "west": -0.4
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_cambridgeshire.sql"
     },
     {
       "id": "cheshire",
@@ -103,7 +109,8 @@
         "south": 52.917,
         "east": -1.917,
         "west": -3.083
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_cheshire.sql"
     },
     {
       "id": "county_durham",
@@ -118,7 +125,8 @@
         "south": 54.5,
         "east": -1.167,
         "west": -2.0
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_county_durham.sql"
     },
     {
       "id": "cumberland",
@@ -133,7 +141,8 @@
         "south": 54.333,
         "east": -2.333,
         "west": -3.333
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_cumberland.sql"
     },
     {
       "id": "cumbria",
@@ -148,7 +157,8 @@
         "south": 53.917,
         "east": -2.167,
         "west": -3.5
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_cumbria.sql"
     },
     {
       "id": "derbyshire",
@@ -163,7 +173,8 @@
         "south": 52.667,
         "east": -1.0,
         "west": -2.0
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_derbyshire.sql"
     },
     {
       "id": "devon",
@@ -178,7 +189,8 @@
         "south": 50.183,
         "east": -3.0,
         "west": -4.25
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_devon.sql"
     },
     {
       "id": "dorset",
@@ -193,7 +205,8 @@
         "south": 50.5,
         "east": -1.833,
         "west": -3.0
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_dorset.sql"
     },
     {
       "id": "east_suffolk",
@@ -208,7 +221,8 @@
         "south": 51.917,
         "east": 1.833,
         "west": 0.833
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_east_suffolk.sql"
     },
     {
       "id": "east_sussex",
@@ -223,7 +237,8 @@
         "south": 50.733,
         "east": 0.717,
         "west": -0.2
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_east_sussex.sql"
     },
     {
       "id": "essex",
@@ -238,7 +253,8 @@
         "south": 51.467,
         "east": 1.25,
         "west": 0.25
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_essex.sql"
     },
     {
       "id": "gloucestershire",
@@ -253,7 +269,8 @@
         "south": 51.5,
         "east": -1.667,
         "west": -2.667
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_gloucestershire.sql"
     },
     {
       "id": "greater_london",
@@ -268,7 +285,8 @@
         "south": 51.283,
         "east": 0.333,
         "west": -0.5
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_greater_london.sql"
     },
     {
       "id": "greater_manchester",
@@ -283,7 +301,8 @@
         "south": 53.283,
         "east": -1.917,
         "west": -2.583
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_greater_manchester.sql"
     },
     {
       "id": "hampshire",
@@ -298,12 +317,13 @@
         "south": 50.7,
         "east": -0.7,
         "west": -1.95
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_hampshire.sql"
     },
     {
       "id": "herefordshire",
       "name": "Herefordshire",
-      "csvFile": null,
+      "csvFile": "data/herefordshire_free_food_locations.csv",
       "center": [
         52.0833,
         -2.75
@@ -313,7 +333,8 @@
         "south": 51.833,
         "east": -2.333,
         "west": -3.167
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_herefordshire.sql"
     },
     {
       "id": "hertfordshire",
@@ -328,7 +349,8 @@
         "south": 51.55,
         "east": 0.083,
         "west": -0.75
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_hertfordshire.sql"
     },
     {
       "id": "isle_of_wight",
@@ -343,7 +365,8 @@
         "south": 50.567,
         "east": -1.05,
         "west": -1.55
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_isle_of_wight.sql"
     },
     {
       "id": "kent",
@@ -358,7 +381,8 @@
         "south": 50.883,
         "east": 1.417,
         "west": 0.0
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_kent.sql"
     },
     {
       "id": "lancashire",
@@ -373,7 +397,8 @@
         "south": 53.417,
         "east": -2.333,
         "west": -3.167
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_lancashire.sql"
     },
     {
       "id": "leicestershire",
@@ -388,7 +413,8 @@
         "south": 52.333,
         "east": -0.667,
         "west": -1.5
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_leicestershire.sql"
     },
     {
       "id": "lincolnshire",
@@ -403,7 +429,8 @@
         "south": 52.583,
         "east": 0.25,
         "west": -0.917
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_lincolnshire.sql"
     },
     {
       "id": "merseyside",
@@ -418,7 +445,8 @@
         "south": 53.283,
         "east": -2.75,
         "west": -3.083
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_merseyside.sql"
     },
     {
       "id": "middlesex",
@@ -433,7 +461,8 @@
         "south": 51.35,
         "east": -0.167,
         "west": -0.667
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_middlesex.sql"
     },
     {
       "id": "norfolk",
@@ -448,7 +477,8 @@
         "south": 52.167,
         "east": 1.917,
         "west": 0.25
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_norfolk.sql"
     },
     {
       "id": "north_yorkshire",
@@ -463,12 +493,13 @@
         "south": 53.5,
         "east": -0.333,
         "west": -2.5
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_north_yorkshire.sql"
     },
     {
       "id": "northamptonshire",
       "name": "Northamptonshire",
-      "csvFile": null,
+      "csvFile": "data/northamptonshire_free_food_locations.csv",
       "center": [
         52.25,
         -0.9167
@@ -478,7 +509,8 @@
         "south": 51.917,
         "east": -0.5,
         "west": -1.333
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_northamptonshire.sql"
     },
     {
       "id": "northumberland",
@@ -493,7 +525,24 @@
         "south": 54.833,
         "east": -1.333,
         "west": -2.667
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_northumberland.sql"
+    },
+    {
+      "id": "norfolk",
+      "name": "Norfolk",
+      "csvFile": "data/norfolk_free_food_locations.csv",
+      "center": [
+        52.6667,
+        1.0
+      ],
+      "bounds": {
+        "north": 53.25,
+        "south": 52.167,
+        "east": 1.917,
+        "west": 0.25
+      },
+      "sqlFile": "dataconnect/queries/county_norfolk.sql"
     },
     {
       "id": "nottinghamshire",
@@ -508,7 +557,8 @@
         "south": 52.75,
         "east": -0.583,
         "west": -1.417
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_nottinghamshire.sql"
     },
     {
       "id": "oxfordshire",
@@ -523,7 +573,8 @@
         "south": 51.417,
         "east": -0.833,
         "west": -1.667
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_oxfordshire.sql"
     },
     {
       "id": "rutland",
@@ -538,7 +589,8 @@
         "south": 52.5,
         "east": -0.417,
         "west": -0.75
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_rutland.sql"
     },
     {
       "id": "shropshire",
@@ -553,7 +605,8 @@
         "south": 52.333,
         "east": -2.333,
         "west": -3.167
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_shropshire.sql"
     },
     {
       "id": "somerset",
@@ -568,7 +621,8 @@
         "south": 50.833,
         "east": -2.25,
         "west": -3.5
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_somerset.sql"
     },
     {
       "id": "south_yorkshire",
@@ -583,7 +637,8 @@
         "south": 53.167,
         "east": -0.917,
         "west": -1.583
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_south_yorkshire.sql"
     },
     {
       "id": "staffordshire",
@@ -598,7 +653,8 @@
         "south": 52.417,
         "east": -1.583,
         "west": -2.417
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_staffordshire.sql"
     },
     {
       "id": "suffolk",
@@ -613,7 +669,8 @@
         "south": 51.917,
         "east": 1.75,
         "west": 0.417
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_suffolk.sql"
     },
     {
       "id": "surrey",
@@ -628,7 +685,8 @@
         "south": 51.05,
         "east": 0.0,
         "west": -0.9
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_surrey.sql"
     },
     {
       "id": "sussex",
@@ -643,7 +701,8 @@
         "south": 50.733,
         "east": 0.717,
         "west": -0.5
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_sussex.sql"
     },
     {
       "id": "tyne_and_wear",
@@ -658,7 +717,8 @@
         "south": 54.833,
         "east": -1.333,
         "west": -1.867
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_tyne_and_wear.sql"
     },
     {
       "id": "warwickshire",
@@ -673,7 +733,8 @@
         "south": 51.917,
         "east": -1.083,
         "west": -1.917
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_warwickshire.sql"
     },
     {
       "id": "west_midlands",
@@ -688,7 +749,8 @@
         "south": 52.333,
         "east": -1.667,
         "west": -2.167
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_west_midlands.sql"
     },
     {
       "id": "west_riding",
@@ -703,7 +765,8 @@
         "south": 53.25,
         "east": -1.0,
         "west": -2.0
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_west_riding.sql"
     },
     {
       "id": "west_suffolk",
@@ -718,7 +781,8 @@
         "south": 52.083,
         "east": 1.0,
         "west": 0.167
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_west_suffolk.sql"
     },
     {
       "id": "west_sussex",
@@ -733,7 +797,8 @@
         "south": 50.733,
         "east": -0.2,
         "west": -0.9
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_west_sussex.sql"
     },
     {
       "id": "west_yorkshire",
@@ -748,7 +813,8 @@
         "south": 53.417,
         "east": -1.333,
         "west": -2.0
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_west_yorkshire.sql"
     },
     {
       "id": "wiltshire",
@@ -763,7 +829,8 @@
         "south": 51.083,
         "east": -1.583,
         "west": -2.417
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_wiltshire.sql"
     },
     {
       "id": "worcestershire",
@@ -778,7 +845,8 @@
         "south": 51.917,
         "east": -1.75,
         "west": -2.583
-      }
+      },
+      "sqlFile": "dataconnect/queries/county_worcestershire.sql"
     }
   ],
   "metadata": {
