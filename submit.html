@@ -297,89 +297,111 @@
            };
            const months = selectedMonths.map(m => monthsMap[m]).filter(Boolean);
 
-           // Validation
-           if (!lat || !lng) {
-             alert('Please select a location on the map.');
-             return;
-           }
-           if (!name || name.trim().length < 2) {
-             alert('Please enter a location name (at least 2 characters).');
-             return;
-           }
+// Validation
+            if (!lat || !lng) {
+              alert('Please select a location on the map.');
+              return;
+            }
+            if (!name || name.trim().length < 2) {
+              alert('Please enter a location name (at least 2 characters).');
+              return;
+            }
 
-           // Sanitize inputs
-           name = SecurityUtils.sanitizeHtml(name).substring(0, 200);
-           if (shortDesc) shortDesc = SecurityUtils.sanitizeHtml(shortDesc).substring(0, 500);
-           if (desc) desc = SecurityUtils.sanitizeHtml(desc).substring(0, 2000);
-           if (links) links = SecurityUtils.sanitizeUrl(links);
-           if (image) image = SecurityUtils.sanitizeUrl(image);
-           if (category) category = SecurityUtils.sanitizeHtml(category).substring(0, 100);
-           if (item) item = SecurityUtils.sanitizeHtml(item).substring(0, 100);
+            // Sanitize inputs
+            name = SecurityUtils.sanitizeHtml(name).substring(0, 200);
+            if (shortDesc) shortDesc = SecurityUtils.sanitizeHtml(shortDesc).substring(0, 500);
+            if (desc) desc = SecurityUtils.sanitizeHtml(desc).substring(0, 2000);
+            if (links) links = SecurityUtils.sanitizeUrl(links);
+            if (image) image = SecurityUtils.sanitizeUrl(image);
+            if (category) category = SecurityUtils.sanitizeHtml(category).substring(0, 100);
+            if (item) item = SecurityUtils.sanitizeHtml(item).substring(0, 100);
 
-           // Disable button and show loading
-           submitBtn.disabled = true;
-           submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
 
-           try {
-             // Generate a unique source ID
-             const sourceId = 'src_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            try {
+              // Generate a unique source ID
+              const sourceId = 'src_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
-             // Prepare source data matching the Firestore schema
-             const sourceData = {
-               sourceId: sourceId,
-               name: name,
-               type: category || 'Other',
-               category: category || 'Other',
-               subCategory: item || 'Other',
-               lat: parseFloat(lat),
-               lng: parseFloat(lng),
-               shortDescription: shortDesc || '',
-               description: desc || '',
-               season: selectedMonths.join(';'),
-               months: months,
-               imageUrl: image || '',
-               sourceLink: links || '',
-               tags: [category, item].filter(Boolean),
-               likes: 0,
-               dislikes: 0,
-               reports: 0,
-               comments: '',
-               whatThreeWords: '',
-               plusCode: '',
-               address: '',
-               town: '',
-               area: '',
-               county: '',
-               postcode: '',
-               approved: false,
-               timestamp: new Date().toISOString(),
-               postedById: user.uid,
-               createdAt: new Date().toISOString(),
-               postedByEmail: user.email || '',
-               csrfToken: csrfInput.value
-             };
+              // Prepare source data matching the Firestore schema
+              const sourceData = {
+                sourceId: sourceId,
+                name: name,
+                type: category || 'Other',
+                category: category || 'Other',
+                subCategory: item || 'Other',
+                lat: parseFloat(lat),
+                lng: parseFloat(lng),
+                shortDescription: shortDesc || '',
+                description: desc || '',
+                season: selectedMonths.join(';'),
+                months: months,
+                imageUrl: image || '',
+                sourceLink: links || '',
+                tags: [category, item].filter(Boolean),
+                likes: 0,
+                dislikes: 0,
+                reports: 0,
+                comments: '',
+                whatThreeWords: '',
+                plusCode: '',
+                address: '',
+                town: '',
+                area: '',
+                county: '',
+                postcode: '',
+                approved: false,
+                timestamp: new Date().toISOString(),
+                postedById: user.uid,
+                createdAt: new Date().toISOString(),
+                postedByEmail: user.email || '',
+                csrfToken: csrfInput.value
+              };
 
-             // Post to Firebase
-             if (typeof firebase !== 'undefined' && firebase.firestore) {
-               const db = firebase.firestore();
+              // Post to Firebase
+              if (typeof firebase !== 'undefined' && firebase.firestore) {
+                const db = firebase.firestore();
                 await db.collection('sources').doc(sourceId).set(sourceData);
-                alert('Thank you! Your submission has been received and will be reviewed.');
-                form.reset();
-                if (submissionMarker) submissionMap.removeLayer(submissionMarker);
-             } else {
-               throw new Error('Firebase not initialized');
-             }
-           } catch (err) {
-             console.error('Submission error:', err);
-             if (err.code === 'permission-denied') {
-               alert('Permission denied. Please ensure you are signed in with Google and try again.');
-             } else {
-               alert('Sorry, there was an error submitting your entry. Please try again.');
-             }
-           } finally {
-             submitBtn.disabled = false;
-             submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Submit';
-           }
+              } else {
+                throw new Error('Firebase not initialized');
+              }
+
+              // Also submit to Google Apps Script for approval workflow
+              const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbx4NCdQmCLWdTPgLQuHyUmxg6ajNPbh9jV5BQKvRT50iP9u53TOvyilTb-V7KiDswjl/exec';
+              fetch(appsScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                  name: sourceData.name,
+                  category: sourceData.category,
+                  item: sourceData.subCategory,
+                  lat: sourceData.lat,
+                  lng: sourceData.lng,
+                  shortDesc: sourceData.shortDescription,
+                  desc: sourceData.description,
+                  months: sourceData.season,
+                  links: sourceData.sourceLink,
+                  image: sourceData.imageUrl,
+                  postedByEmail: sourceData.postedByEmail
+                })
+              }).catch(() => {}); // Fire and forget
+
+              alert('Thank you! Your submission has been received and will be reviewed.');
+              form.reset();
+              if (submissionMarker) submissionMap.removeLayer(submissionMarker);
+            } catch (err) {
+              console.error('Submission error:', err);
+              if (err.code === 'permission-denied') {
+                alert('Permission denied. Please ensure you are signed in with Google and try again.');
+              } else {
+                alert('Sorry, there was an error submitting your entry. Please try again.');
+              }
+            } finally {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Submit';
+            }
          });
 
          // Reset button handler

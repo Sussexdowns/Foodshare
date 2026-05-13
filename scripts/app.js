@@ -2394,6 +2394,19 @@ function submitReport() {
       // Also submit feedback via Apps Script to increment report count on source
       submitFeedback(sourceId, 'report');
 
+      // Also submit to Google Apps Script for approval workflow
+      fetch(fileExec, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          sourceId: sourceId,
+          reason: reason,
+          details: details,
+          postedByEmail: user.email || ''
+        })
+      }).catch(() => {});
+
       // Mark as reported in session storage
       sessionStorage.setItem(`${sourceId}-report`, 'true');
     })

@@ -42,12 +42,37 @@ function verifyRecaptcha(token) {
 }
 
 /**
- * Main entry point for feedback submissions (like/dislike/report)
- * POST parameters: id, action, csrf_token, recaptcha_token (optional)
+ * Main entry point for all submissions
+ * Routes to appropriate handler based on parameters
  */
 function doPost(e) {
   try {
-    // Parse parameters
+    const params = e.parameter;
+    
+    // Route to source submission handler (has name, category, lat, lng)
+    if (params.name && params.lat && params.lng) {
+      return doPostSource(e);
+    }
+    
+    // Route to report submission handler (has sourceId, reason)
+    if (params.sourceId && params.reason) {
+      return doPostReport(e);
+    }
+    
+    // Default to feedback handler (has id, action)
+    return doPostFeedback(e);
+  } catch (err) {
+    console.error('Routing error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500);
+  }
+}
+
+/**
+ * Handle feedback submissions (like/dislike/report)
+ * POST parameters: id, action, csrf_token, recaptcha_token (optional)
+ */
+function doPostFeedback(e) {
+  try {
     const params = e.parameter;
     const id = params.id;
     const action = params.action; // 'likes', 'dislikes', 'reports'
@@ -157,6 +182,116 @@ function doPostContact(e) {
 }
 
 /**
+ * Handle source (location) submissions from the submit page
+ * Stores in spreadsheet for approval workflow
+ */
+function doPostSource(e) {
+  try {
+    const params = e.parameter;
+    const name = (params.name || '').trim();
+    const category = (params.category || '').trim();
+    const item = (params.item || '').trim();
+    const lat = params.lat || '';
+    const lng = params.lng || '';
+    const shortDesc = (params.shortDesc || '').trim();
+    const desc = (params.desc || '').trim();
+    const months = (params.months || '').trim();
+    const links = (params.links || '').trim();
+    const image = (params.image || '').trim();
+    const postedByEmail = (params.postedByEmail || '').trim();
+
+    // Validation
+    if (!name || name.length < 2) {
+      return jsonResponse({ error: 'Invalid name' }, 400);
+    }
+    if (!lat || !lng) {
+      return jsonResponse({ error: 'Missing coordinates' }, 400);
+    }
+
+    // Store in sheet
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName('Submissions') || ss.insertSheet('Submissions');
+    
+    // Add header row if sheet is empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(['Timestamp', 'Name', 'Category', 'Item', 'Lat', 'Lng', 'Short Desc', 'Description', 'Months', 'Links', 'Image', 'Posted By', 'Approved', 'SourceId']);
+    }
+
+    const sourceId = 'src_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    sheet.appendRow([
+      new Date(),
+      name,
+      category,
+      item,
+      lat,
+      lng,
+      shortDesc,
+      desc,
+      months,
+      links,
+      image,
+      postedByEmail,
+      'pending',
+      sourceId
+    ]);
+
+    console.log(`Source submission: ${name} at ${lat},${lng} from ${postedByEmail}`);
+    return jsonResponse({ success: true, sourceId: sourceId });
+
+  } catch (err) {
+    console.error('Source submission error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500);
+  }
+}
+
+/**
+ * Handle report submissions from the report modal
+ * Stores in spreadsheet for review workflow
+ */
+function doPostReport(e) {
+  try {
+    const params = e.parameter;
+    const sourceId = (params.sourceId || '').trim();
+    const reason = (params.reason || '').trim();
+    const details = (params.details || '').trim();
+    const postedByEmail = (params.postedByEmail || '').trim();
+
+    // Validation
+    if (!sourceId) {
+      return jsonResponse({ error: 'Missing source ID' }, 400);
+    }
+    if (!reason) {
+      return jsonResponse({ error: 'Missing report reason' }, 400);
+    }
+
+    // Store in sheet
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName('Reports') || ss.insertSheet('Reports');
+    
+    // Add header row if sheet is empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(['Timestamp', 'SourceId', 'Reason', 'Details', 'Posted By', 'Status']);
+    }
+
+    sheet.appendRow([
+      new Date(),
+      sourceId,
+      reason,
+      details,
+      postedByEmail,
+      'pending'
+    ]);
+
+    console.log(`Report submission: ${reason} for ${sourceId} from ${postedByEmail}`);
+    return jsonResponse({ success: true });
+
+  } catch (err) {
+    console.error('Report submission error:', err);
+    return jsonResponse({ error: 'Internal server error' }, 500);
+  }
+}
+
+/**
  * Validate email format
  */
 function isValidEmail(email) {
@@ -168,14 +303,11 @@ function isValidEmail(email) {
  * Get client IP from request headers
  */
 function getClientIP(e) {
-  // X-Forwarded-For may contain multiple IPs; take first
   const xfHeader = e.headers['X-Forwarded-For'] || e.headers['X-Forwarded-For-0'];
   if (xfHeader) {
     return xfHeader.split(',')[0].trim();
   }
-  // Fallback to other headers
-  const forward = e.headers['X-Real-IP'] || e.parameters.ip || 'unknown';
-  return forward;
+  return e.headers['X-Real-IP'] || e.parameters.ip || 'unknown';
 }
 
 /**
