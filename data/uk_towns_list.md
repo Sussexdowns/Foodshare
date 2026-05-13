@@ -1,9 +1,5 @@
 # UK Towns — CSV Coverage Status
 
-- **Total CSV files**: 431
-- **Towns from 229 list with verified data**: 219
-- **Towns from 229 list needing research**: 0
-- **Extra towns/regions (not in 229 list)**: 164
 
 ## Verified Real Data - 229 List (219)
 

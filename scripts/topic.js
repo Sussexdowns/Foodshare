@@ -81,10 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Create image
         const img = document.createElement('img');
         img.className = 'topic-img';
-        img.src = item.Image || 'https://commons.wikimedia.org/wiki/Special:FilePath/No_image_placeholder.svg';
+        img.src = item.Image || '';
         img.alt = item.Name;
         img.loading = 'lazy';
         img.decoding = 'async';
+        img.onerror = function() {
+          this.style.display = 'none';
+        };
         card.appendChild(img);
 
         // Create body
