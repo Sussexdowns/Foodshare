@@ -2310,29 +2310,39 @@ function handleFeedbackClick(action, id, container) {
  * Open the report modal for a specific location
  */
 function openReportModal(sourceId, container) {
-  // Ensure user is authenticated
-  if (!isUserAuthenticated()) {
-    addStatusMessage('Please sign in with Google to report a location.', 'warning');
-    signInWithGoogle();
-    return;
-  }
+   // Ensure user is authenticated
+   if (!isUserAuthenticated()) {
+     addStatusMessage('Please sign in with Google to report a location.', 'warning');
+     signInWithGoogle().then(signedIn => {
+       if (signedIn) {
+         openReportModal(sourceId, container);
+       }
+     });
+     return;
+   }
 
-  const modalEl = document.getElementById('reportModal');
-  if (!modalEl) return;
+   const modalEl = document.getElementById('reportModal');
+   if (!modalEl) return;
 
-  // Set the sourceId in the modal
-  document.getElementById('report-source-id').value = sourceId;
+   // Set the sourceId in the modal
+   document.getElementById('report-source-id').value = sourceId;
 
-  // Reset modal fields
-  document.getElementById('report-reason').value = '';
-  document.getElementById('report-details').value = '';
+   // Reset modal fields
+   const reasonSelect = document.getElementById('report-reason');
+   const detailsTextarea = document.getElementById('report-details');
+   const alertDiv = document.getElementById('report-alert');
 
-  // Store container reference for updating after submit
-  modalEl.dataset.containerId = container ? 'popup' : 'footer';
+   reasonSelect.value = '';
+   reasonSelect.classList.remove('is-invalid');
+   detailsTextarea.value = '';
+   alertDiv.classList.add('d-none');
 
-  // Show modal using Bootstrap 5 API
-  const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-  modal.show();
+   // Store container reference for updating after submit
+   modalEl.dataset.containerId = container ? 'popup' : 'footer';
+
+   // Show modal using Bootstrap 5 API
+   const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+   modal.show();
 }
 
 
@@ -2343,90 +2353,107 @@ function openReportModal(sourceId, container) {
  * Handle report submission from modal
  */
 function submitReport() {
-  const sourceId = document.getElementById('report-source-id').value;
-  const reason = document.getElementById('report-reason').value;
-  const details = document.getElementById('report-details').value.trim();
+   const sourceId = document.getElementById('report-source-id').value;
+   const reason = document.getElementById('report-reason').value;
+   const details = document.getElementById('report-details').value.trim();
+   const alertDiv = document.getElementById('report-alert');
+   const reasonSelect = document.getElementById('report-reason');
 
-  // Validation
-  if (!reason) {
-    alert('Please select a reason for the report.');
-    return;
-  }
+   // Reset alert
+   alertDiv.classList.add('d-none');
+   reasonSelect.classList.remove('is-invalid');
 
-  if (!sourceId) {
-    alert('Error: Source ID missing. Please try again.');
-    return;
-  }
+   // Validation
+   if (!reason) {
+     reasonSelect.classList.add('is-invalid');
+     alertDiv.classList.remove('d-none');
+     alertDiv.className = 'alert alert-danger';
+     alertDiv.innerHTML = '<strong>Please select a reason for the report.</strong>';
+     return;
+   }
 
-  const user = firebase.auth().currentUser;
-  if (!user) {
-    alert('You must be signed in to submit a report.');
-    return;
-  }
+   if (!sourceId) {
+     alertDiv.classList.remove('d-none');
+     alertDiv.className = 'alert alert-danger';
+     alertDiv.innerHTML = '<strong>Error:</strong> Source ID missing. Please try again.';
+     return;
+   }
 
-  const reportData = {
-    sourceId: sourceId,
-    reason: reason,
-    details: details || '',
-    userId: user.uid,
-    userEmail: user.email || '',
-    name: reason,
-    status: 'pending',
-    adminNote: '',
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  };
+   const user = firebase.auth().currentUser;
+   if (!user) {
+     alertDiv.classList.remove('d-none');
+     alertDiv.className = 'alert alert-danger';
+     alertDiv.innerHTML = '<strong>Error:</strong> You must be signed in to submit a report.';
+     return;
+   }
 
-  const submitBtn = document.getElementById('report-submit');
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
-  }
+   const reportData = {
+     sourceId: sourceId,
+     reason: reason,
+     details: details || '',
+     userId: user.uid,
+     userEmail: user.email || '',
+     name: reason,
+     status: 'pending',
+     adminNote: '',
+     createdAt: firebase.firestore.FieldValue.serverTimestamp()
+   };
 
-  // Submit to Firestore reports collection
-  const db = firebase.firestore();
-  db.collection('reports').add(reportData)
-    .then(docRef => {
-      console.log('Report submitted with ID:', docRef.id);
-      addStatusMessage('Report submitted successfully. Thank you.', 'success');
+   const submitBtn = document.getElementById('report-submit');
+   if (submitBtn) {
+     submitBtn.disabled = true;
+     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
+   }
 
-      // Hide modal
-      const modalEl = document.getElementById('reportModal');
-      const modal = bootstrap.Modal.getInstance(modalEl);
-      if (modal) modal.hide();
+   // Submit to Firestore reports collection
+   const db = firebase.firestore();
+   db.collection('reports').add(reportData)
+     .then(docRef => {
+       console.log('Report submitted with ID:', docRef.id);
+       addStatusMessage('Report submitted successfully. Thank you.', 'success');
 
-      // Also submit feedback via Apps Script to increment report count on source
-      submitFeedback(sourceId, 'report');
+       // Hide modal
+       const modalEl = document.getElementById('reportModal');
+       const modal = bootstrap.Modal.getInstance(modalEl);
+       if (modal) modal.hide();
 
-      // Also submit to Google Apps Script for approval workflow
-      fetch(fileExec, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          sourceId: sourceId,
-          reason: reason,
-          details: details,
-          postedByEmail: user.email || ''
-        })
-      }).catch(() => {});
+// Also submit feedback via Apps Script to increment report count on source
+        submitFeedback(sourceId, 'report');
 
-      // Mark as reported in session storage
-      sessionStorage.setItem(`${sourceId}-report`, 'true');
-    })
-    .catch(err => {
-      console.error('Error submitting report:', err);
-      if (err.code === 'permission-denied') {
-        alert('Permission denied. You must be signed in with Google to submit a report.');
-      } else {
-        alert('Failed to submit report. Please try again.');
-      }
-    })
-    .finally(() => {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Submit Report';
-      }
-    });
+        // Submit to Google Form for approval workflow
+        fetch(fileExec, {
+         method: 'POST',
+         mode: 'no-cors',
+         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+         body: new URLSearchParams({
+           sourceId: sourceId,
+           reason: reason,
+           details: details,
+           postedByEmail: user.email || ''
+         })
+       }).catch(() => {});
+
+       // Mark as reported in session storage
+       sessionStorage.setItem(`${sourceId}-report`, 'true');
+     })
+     .catch(err => {
+       console.error('Error submitting report:', err);
+       if (err.code === 'permission-denied') {
+         alertDiv.classList.remove('d-none');
+         alertDiv.className = 'alert alert-danger';
+         alertDiv.innerHTML = '<strong>Permission denied.</strong> You must be signed in with Google to submit a report.';
+       } else {
+         alertDiv.classList.remove('d-none');
+         alertDiv.className = 'alert alert-danger';
+         alertDiv.innerHTML = '<strong>Failed to submit report.</strong> Please try again.';
+       }
+     })
+     .finally(() => {
+       if (submitBtn) {
+         submitBtn.disabled = false;
+         submitBtn.innerHTML = 'Submit Report';
+       }
+     });
 }
 
 /**
