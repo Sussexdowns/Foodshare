@@ -5,7 +5,7 @@
       "name": "Apple",
       "icon": "fa-apple-whole",
       "link": "https://en.wikipedia.org/wiki/Apple",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Malus_domestica_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-108.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Malus_domestica_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-108.jpg",
       "desc": "Common orchard fruit; look for public or community-access trees in season."
     },
     {
@@ -13,7 +13,7 @@
       "name": "Blackberry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Blackberry",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rubus_fruticosus_%28Bramble%2C_Blackberry%29_-_Theodore_Green_-_26_1931_79.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Rubus_fruticosus_%28Bramble%2C_Blackberry%29_-_Theodore_Green_-_26_1931_79.jpg",
       "desc": "Bramble fruit found along paths, hedgerows, and scrub."
     },
     {
@@ -21,7 +21,7 @@
       "name": "Raspberry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Raspberry",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Rubus_idaeus0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Illustration_Rubus_idaeus0.jpg",
       "desc": "Soft red berries; wild raspberries occur in woodland edges and hedges."
     },
     {
@@ -29,7 +29,7 @@
       "name": "Strawberry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Strawberry",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Fragaria_vesca0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Illustration_Fragaria_vesca0.jpg",
       "desc": "Wild strawberries are small but intensely flavored; found in grassland and woodland edges."
     },
     {
@@ -37,7 +37,7 @@
       "name": "Cherry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Cherry",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Prunus_cerasus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-113.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Prunus_cerasus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-113.jpg",
       "desc": "Stone fruit from cherry trees; some public trees appear in parks and streets."
     },
     {
@@ -45,7 +45,7 @@
       "name": "Plum",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Plum",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Prunus_domestica.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/74/Prunus_domestica.jpg",
       "desc": "Juicy stone fruit; damsons and plums are common in old gardens and hedges."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Gooseberry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Gooseberry",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Ribes_uva-crispa0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Illustration_Ribes_uva-crispa0.jpg",
       "desc": "Hedgerow and woodland berry; excellent for cooking and preserves."
     },
     {
@@ -61,7 +61,7 @@
       "name": "Blueberry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Blueberry",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Vaccinium_corymbosum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-169.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Vaccinium_corymbosum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-169.jpg",
       "desc": "Native blueberries found on heathland and moorland; also cultivated varieties."
     },
     {
@@ -69,7 +69,7 @@
       "name": "Redcurrant",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Redcurrant",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Ribes_rubrum0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/99/Illustration_Ribes_rubrum0.jpg",
       "desc": "Bright red berries from woodland and hedgerow shrubs; tart flavor."
     },
     {
@@ -77,7 +77,7 @@
       "name": "Blackcurrant",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Blackcurrant",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Ribes_nigrum0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Illustration_Ribes_nigrum0.jpg",
       "desc": "Dark berries rich in vitamin C; found in gardens and countryside hedgerows."
     },
     {
@@ -85,7 +85,7 @@
       "name": "Whitecurrant",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Whitecurrant",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/White_currants_in_basket_2020_G1.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/23/White_currants_in_basket_2020_G1.jpg",
       "desc": "Sweet, pale berries; less common but found in hedgerows and gardens."
     },
     {
@@ -93,7 +93,7 @@
       "name": "Sea Buckthorn",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Sea_buckthorn",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hippophae_rhamnoides_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-067.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Hippophae_rhamnoides_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-067.jpg",
       "desc": "Bright orange berries on coastal shrubs; high in vitamin C."
     },
     {
@@ -101,7 +101,7 @@
       "name": "Hawthorn",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Hawthorn",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Crataegus_%28Hawthorn%29_-_Theodore_Green_-_26_1931_27.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Crataegus_%28Hawthorn%29_-_Theodore_Green_-_26_1931_27.jpg",
       "desc": "Hedgerow tree with red haws in autumn; common in countryside boundaries."
     },
     {
@@ -109,7 +109,7 @@
       "name": "Rose Hip",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Rose_hip",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Rosa_canina0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Illustration_Rosa_canina0.jpg",
       "desc": "Fruits of wild roses; high in vitamin C and used for teas and jams."
     },
     {
@@ -117,7 +117,7 @@
       "name": "Sloes",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Sloe",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Prunus_spinosa0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Illustration_Prunus_spinosa0.jpg",
       "desc": "Small dark fruits on blackthorn hedges; traditionally used for sloe gin."
     },
     {
@@ -125,7 +125,7 @@
       "name": "Elderberry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Sambucus",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sambucus_nigra_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-127.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/27/Sambucus_nigra_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-127.jpg",
       "desc": "Dark berries from elder; used in syrups and cordials when cooked."
     },
     {
@@ -133,7 +133,7 @@
       "name": "Rowan",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Rowan",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sorbus_aucuparia_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-143.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/89/Sorbus_aucuparia_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-143.jpg",
       "desc": "Bright orange-red berries on mountain ash trees; berries need cooking."
     },
     {
@@ -141,7 +141,7 @@
       "name": "Wild Cherry",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Prunus_avium",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Prunus_avium_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-112.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/25/Prunus_avium_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-112.jpg",
       "desc": "Sweet cherries from native woodland trees; harvest when fully ripe."
     },
     {
@@ -149,7 +149,7 @@
       "name": "Bullace",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Bullace",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Prunus_domestica_inflorescence_-_Botanischer_Garten_T%C3%BCbingen.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/26/Prunus_domestica_inflorescence_-_Botanischer_Garten_T%C3%BCbingen.jpg",
       "desc": "Small wild plums found in hedgerows; similar to damsons."
     },
     {
@@ -157,7 +157,7 @@
       "name": "Hazelnut",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Corylus_avellana",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Corylus_avellana0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Illustration_Corylus_avellana0.jpg",
       "desc": "Nuts from hazel coppices and hedgerows; harvest when ripe and brown."
     }
   ],
@@ -167,7 +167,7 @@
       "name": "Carrot",
       "icon": "fa-carrot",
       "link": "https://en.wikipedia.org/wiki/Carrot",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Daucus_carota0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Illustration_Daucus_carota0.jpg",
       "desc": "Cultivated root; included for community garden plots and allotments."
     },
     {
@@ -175,7 +175,7 @@
       "name": "Potato",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Potato",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Solanum_tuberosum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-146.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Solanum_tuberosum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-146.jpg",
       "desc": "Root vegetable grown in gardens and allotments; store in dark, cool places."
     },
     {
@@ -183,7 +183,7 @@
       "name": "Cabbage",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Cabbage",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Brassica_oleracea_var_capitata0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/48/Brassica_oleracea_var_capitata0.jpg",
       "desc": "Hardy leafy vegetable; many varieties available for different seasons."
     },
     {
@@ -191,7 +191,7 @@
       "name": "Leek",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Leek",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Allium_scorodoprasum_and_Allium_porrum0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/Illustration_Allium_scorodoprasum_and_Allium_porrum0.jpg",
       "desc": "Hardy allium grown in gardens and plots; available through winter."
     },
     {
@@ -199,7 +199,7 @@
       "name": "Parsnip",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Parsnip",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pastinaca_sativa_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-117.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Pastinaca_sativa_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-117.jpg",
       "desc": "Sweet root vegetable; flavours improve after frost exposure."
     },
     {
@@ -207,7 +207,7 @@
       "name": "Broccoli",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Broccoli",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Brassica_oleracea_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-026.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Brassica_oleracea_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-026.jpg",
       "desc": "Popular garden vegetable; harvest before flowers open."
     },
     {
@@ -215,7 +215,7 @@
       "name": "Cauliflower",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Cauliflower",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Brassica_oleracea_botrytis.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/74/Brassica_oleracea_botrytis.jpg",
       "desc": "Versatile vegetable grown in allotments; requires consistent moisture."
     },
     {
@@ -223,7 +223,7 @@
       "name": "Pea",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Pea",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pisum_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-120.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/11/Pisum_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-120.jpg",
       "desc": "Garden vegetable; edible pods and seeds; fix nitrogen in soil."
     },
     {
@@ -231,7 +231,7 @@
       "name": "Onion",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Onion",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Allium_cepa_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-004.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Allium_cepa_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-004.jpg",
       "desc": "Essential kitchen allium; store in cool, dry conditions after harvest."
     },
     {
@@ -239,7 +239,7 @@
       "name": "Swede",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Rutabaga",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Brassica_napus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-029.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Brassica_napus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-029.jpg",
       "desc": "Root vegetable hardy through winter; sweet flavor improves with frost."
     },
     {
@@ -247,7 +247,7 @@
       "name": "Turnip",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Turnip",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Brassica_rapa_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-027.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Brassica_rapa_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-027.jpg",
       "desc": "Quick-growing root vegetable; both roots and leaves are edible."
     },
     {
@@ -255,7 +255,7 @@
       "name": "Kale",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Kale",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Brassica_oleracea_var._acephala_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-025.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/36/Brassica_oleracea_var._acephala_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-025.jpg",
       "desc": "Hardy winter green; becomes sweeter after frost exposure."
     },
     {
@@ -263,7 +263,7 @@
       "name": "Spinach",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Spinach",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Spinacia_oleracea_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-153.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/25/Spinacia_oleracea_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-153.jpg",
       "desc": "Fast-growing leafy green; harvest leaves before flowering."
     },
     {
@@ -271,7 +271,7 @@
       "name": "Chard",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Chard",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Beta_vulgaris_%28Chard%29.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Beta_vulgaris_%28Chard%29.jpg",
       "desc": "Colorful leafy green; both leaves and stalks are edible."
     },
     {
@@ -279,7 +279,7 @@
       "name": "Rhubarb",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Rhubarb",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rheum_rhabarbarum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-132.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Rheum_rhabarbarum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-132.jpg",
       "desc": "Garden perennial; stems are edible but leaves are toxic."
     },
     {
@@ -287,7 +287,7 @@
       "name": "Asparagus",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Asparagus",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Asparagus_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-015.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/0/07/Asparagus_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-015.jpg",
       "desc": "Spring perennial; takes 2-3 years to establish but yields for decades."
     },
     {
@@ -295,7 +295,7 @@
       "name": "Jerusalem Artichoke",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Jerusalem_artichoke",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Helianthus_tuberosus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-062.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Helianthus_tuberosus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-062.jpg",
       "desc": "Sunflower relative with edible tubers; easy to grow but can be invasive."
     },
     {
@@ -303,7 +303,7 @@
       "name": "Salsify",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Salsify",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Tragopogon_porrifolius_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-163.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/63/Tragopogon_porrifolius_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-163.jpg",
       "desc": "Root vegetable with oyster-like flavor; requires long growing season."
     },
     {
@@ -311,7 +311,7 @@
       "name": "Scorzonera",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Scorzonera",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Scorzonera_hispanica_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-140.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/31/Scorzonera_hispanica_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-140.jpg",
       "desc": "Root vegetable similar to salsify; perennial and easy to grow."
     },
     {
@@ -319,7 +319,7 @@
       "name": "Lovage",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Lovage",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Levisticum_officinale_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-083.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Levisticum_officinale_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-083.jpg",
       "desc": "Perennial herb with celery-like flavor; leaves used in soups and stews."
     },
     {
@@ -327,7 +327,7 @@
       "name": "Beetroot",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Beta_vulgaris",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Beta_vulgaris_var._rapacea0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Illustration_Beta_vulgaris_var._rapacea0.jpg",
       "desc": "Root vegetable common in allotments; leaves are also edible."
     },
     {
@@ -335,7 +335,7 @@
       "name": "Garlic",
       "icon": "fa-asterisk",
       "link": "https://en.wikipedia.org/wiki/Garlic",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Allium_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-003.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/93/Allium_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-003.jpg",
       "desc": "Essential kitchen allium; planted in autumn for summer harvest."
     }
   ],
@@ -345,7 +345,7 @@
       "name": "Elderflower",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Elderflower",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sambucus_nigra_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-127.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/27/Sambucus_nigra_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-127.jpg",
       "desc": "Elder blossoms used for cordial; pick lightly and leave plenty for berries."
     },
     {
@@ -353,7 +353,7 @@
       "name": "Nasturtium",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Nasturtium",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Tropaeolum_majus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-164.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Tropaeolum_majus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-164.jpg",
       "desc": "Bright flowers and leaves with peppery flavor; easy to grow in gardens."
     },
     {
@@ -361,7 +361,7 @@
       "name": "Violet",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Violet_(plant)",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pansy_-_Heartsease_(Viola_tricolor).jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Pansy_-_Heartsease_%28Viola_tricolor%29.jpg",
       "desc": "Sweet-scented spring flowers; used in salads and for crystallizing."
     },
     {
@@ -369,7 +369,7 @@
       "name": "Dandelion",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Taraxacum",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Taraxacum_officinale_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-135.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Taraxacum_officinale_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-135.jpg",
       "desc": "Common wildflower; young leaves are edible and flowers can be used in syrups."
     },
     {
@@ -377,7 +377,7 @@
       "name": "Rose",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Rose",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rosa_%28Rose%29.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Rosa_%28Rose%29.jpg",
       "desc": "Petals are edible and fragrant; use unsprayed garden or wild roses."
     },
     {
@@ -385,7 +385,7 @@
       "name": "Chamomile",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Chamomile",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Matricaria_chamomilla_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-094.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/42/Matricaria_chamomilla_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-094.jpg",
       "desc": "Daisy-like flowers used for tea; grows in meadows and gardens."
     },
     {
@@ -393,7 +393,7 @@
       "name": "Lavender",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Lavandula",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Lavandula_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-082.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Lavandula_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-082.jpg",
       "desc": "Fragrant herb; flowers used in baking, tea, and crafts."
     },
     {
@@ -401,7 +401,7 @@
       "name": "Borage",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Borage",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Borago_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-019.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Borago_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-019.jpg",
       "desc": "Star-shaped blue flowers; cucumber-flavored leaves and flowers."
     },
     {
@@ -409,7 +409,7 @@
       "name": "Calendula",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Calendula",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Calendula_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-031.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/0/08/Calendula_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-031.jpg",
       "desc": "Bright orange flowers; petals add color to salads and rice dishes."
     },
     {
@@ -417,7 +417,7 @@
       "name": "Honeysuckle",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Honeysuckle",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Lonicera_periclymenum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-088.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Lonicera_periclymenum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-088.jpg",
       "desc": "Fragrant evening flowers; nectar can be sucked from the base."
     },
     {
@@ -425,7 +425,7 @@
       "name": "Primrose",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Primrose",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Primula_vulgaris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-124.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Primula_vulgaris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-124.jpg",
       "desc": "Pale yellow spring flowers; petals are edible and slightly sweet."
     },
     {
@@ -433,7 +433,7 @@
       "name": "Cowslip",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Cowslip",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Primula_veris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-125.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Primula_veris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-125.jpg",
       "desc": "Meadow flower with yellow bells; used in salads and for wine making."
     },
     {
@@ -441,7 +441,7 @@
       "name": "Wild Garlic",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Allium_ursinum",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Allium_ursinum0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/75/Illustration_Allium_ursinum0.jpg",
       "desc": "Spring woodland herb with garlic scent; leaves used in pestos and soups."
     },
     {
@@ -449,7 +449,7 @@
       "name": "Sorrel",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Sorrel",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rumex_acetosella_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-133.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/be/Rumex_acetosella_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-133.jpg",
       "desc": "Lemon-flavored leaves; young leaves best in salads or cooked."
     },
     {
@@ -457,7 +457,7 @@
       "name": "Red Clover",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Red_clover",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Trifolium_pratense_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-162.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Trifolium_pratense_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-162.jpg",
       "desc": "Meadow flower; heads can be eaten raw or brewed as tea."
     },
     {
@@ -465,7 +465,7 @@
       "name": "Mallow",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Mallow",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Malva_sylvestris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-091.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Malva_sylvestris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-091.jpg",
       "desc": "Edible flowers and leaves; mild flavor similar to okra."
     },
     {
@@ -473,7 +473,7 @@
       "name": "Chickweed",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Chickweed",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Stellaria_media_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-155.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Stellaria_media_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-155.jpg",
       "desc": "Common garden weed; mild flavor good in salads."
     },
     {
@@ -481,7 +481,7 @@
       "name": "Jack-by-the-Hedge",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Jack_by_the_hedge",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Alliaria_petiolata_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-002.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Alliaria_petiolata_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-002.jpg",
       "desc": "Garlic and mustard flavored leaves; spring hedgerow herb."
     },
     {
@@ -489,7 +489,7 @@
       "name": "Hairy Bittercress",
       "icon": "fa-seedling",
       "link": "https://en.wikipedia.org/wiki/Hairy_bittercress",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Cardamine_hirsuta_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-035.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Cardamine_hirsuta_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-035.jpg",
       "desc": "Peppery cress found in gardens; adds zing to salads."
     }
   ],
@@ -499,7 +499,7 @@
       "name": "Mint",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Mint_(plant)",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Mentha_%28Mint%29.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/85/Mentha_%28Mint%29.jpg",
       "desc": "Vigorous aromatic herb; use in tea, cooking, and cocktails."
     },
     {
@@ -507,7 +507,7 @@
       "name": "Rosemary",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Rosemary",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Rosmarinus_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-130.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Rosmarinus_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-130.jpg",
       "desc": "Fragrant Mediterranean herb; excellent with roasted meats and potatoes."
     },
     {
@@ -515,7 +515,7 @@
       "name": "Thyme",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Thyme",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Thymus_%28Thyme%29.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Thymus_%28Thyme%29.jpg",
       "desc": "Low-growing herb; flowers and leaves both edible."
     },
     {
@@ -523,7 +523,7 @@
       "name": "Parsley",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Parsley",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Petroselinum_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Petroselinum_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg",
       "desc": "Versatile kitchen herb; biennial plant with flat or curly varieties."
     },
     {
@@ -531,7 +531,7 @@
       "name": "Sage",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Salvia_officinalis",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Salvia_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-137.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Salvia_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-137.jpg",
       "desc": "Aromatic herb; traditional stuffing herb for poultry."
     },
     {
@@ -539,7 +539,7 @@
       "name": "Chives",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Chives",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Allium_schoenoprasum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-006.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/Allium_schoenoprasum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-006.jpg",
       "desc": "Mild onion-flavored herb; edible purple flowers."
     },
     {
@@ -547,7 +547,7 @@
       "name": "Basil",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Basil",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ocimum_basilicum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-111.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Ocimum_basilicum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-111.jpg",
       "desc": "Essential for pesto; sweet aromatic leaves best in warm dishes."
     },
     {
@@ -555,7 +555,7 @@
       "name": "Oregano",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Oregano",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Origanum_vulgare_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-115.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/11/Origanum_vulgare_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-115.jpg",
       "desc": "Robust Mediterranean herb; key in Italian and Greek cuisine."
     },
     {
@@ -563,7 +563,7 @@
       "name": "Coriander",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Coriander",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Coriandrum_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-040.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Coriandrum_sativum_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-040.jpg",
       "desc": "Both leaves and seeds used; divisive herb with citrusy flavor."
     },
     {
@@ -571,7 +571,7 @@
       "name": "Dill",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Dill",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Anethum_graveolens_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-009.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Anethum_graveolens_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-009.jpg",
       "desc": "Feathery herb; seeds and leaves used in pickling and fish dishes."
     },
     {
@@ -579,7 +579,7 @@
       "name": "Fennel",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Fennel",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Foeniculum_vulgare_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-053.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Foeniculum_vulgare_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-053.jpg",
       "desc": "Anise-flavored herb; fronds, bulbs, and seeds all edible."
     },
     {
@@ -587,7 +587,7 @@
       "name": "Chervil",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Chervil",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Anthriscus_cerefolium_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-012.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/2/29/Anthriscus_cerefolium_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-012.jpg",
       "desc": "Delicate herb with mild anise flavor; key in fines herbes."
     },
     {
@@ -595,7 +595,7 @@
       "name": "Tarragon",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Tarragon",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Artemisia_dracunculus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-014.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/da/Artemisia_dracunculus_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-014.jpg",
       "desc": "Key ingredient in béarnaise sauce; subtle vanilla-anise flavor."
     },
     {
@@ -603,7 +603,7 @@
       "name": "Lemon Balm",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Lemon_balm",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Melissa_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-096.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/0/01/Melissa_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-096.jpg",
       "desc": "Lemony mint family herb; excellent for tea and salads."
     },
     {
@@ -611,7 +611,7 @@
       "name": "Stinging Nettle",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Stinging_nettle",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Illustration_Urtica_dioica0.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Illustration_Urtica_dioica0.jpg",
       "desc": "Young leaves are edible when cooked; common along paths and hedges."
     },
     {
@@ -619,7 +619,7 @@
       "name": "Plantain",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Plantago",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Plantago_lanceolata_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-121.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Plantago_lanceolata_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-121.jpg",
       "desc": "Common lawn weed; young leaves edible in salads or cooked."
     },
     {
@@ -627,7 +627,7 @@
       "name": "Yarrow",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Yarrow",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Achillea_millefolium_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-001.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Achillea_millefolium_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-001.jpg",
       "desc": "Feathery leaves and flat flower heads; young leaves in salads."
     },
     {
@@ -635,7 +635,7 @@
       "name": "Selfheal",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Selfheal",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Prunella_vulgaris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-128.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/Prunella_vulgaris_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-128.jpg",
       "desc": "Low-growing herb; leaves edible raw or cooked."
     },
     {
@@ -643,7 +643,7 @@
       "name": "Comfrey",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Comfrey",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Symphytum_officinale_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-157.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Symphytum_officinale_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-157.jpg",
       "desc": "Leafy herb; traditionally used externally; young leaves cooked."
     },
     {
@@ -651,7 +651,7 @@
       "name": "Marjoram",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Marjoram",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Origanum_majorana_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-114.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Origanum_majorana_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-114.jpg",
       "desc": "Sweet oregano-like herb; excellent in soups and stews."
     }
   ],
@@ -661,7 +661,7 @@
       "name": "Field Mushroom",
       "icon": "fa-mushroom",
       "link": "https://en.wikipedia.org/wiki/Agaricus_campestris",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Agaricus_campestris_%28Field_Mushroom%29.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Agaricus_campestris_%28Field_Mushroom%29.jpg",
       "desc": "Common meadow mushroom; white cap with pink gills turning brown."
     },
     {
@@ -669,7 +669,7 @@
       "name": "Chestnut Mushroom",
       "icon": "fa-mushroom",
       "link": "https://en.wikipedia.org/wiki/Hypsizygus_tessellatus",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Hypsizygus_tessellatus_(Buna_shimeji).jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Hypsizygus_tessellatus_%28Buna_shimeji%29.jpg",
       "desc": "Commercial mushroom also found in woodlands; small brown cap."
     },
     {
@@ -677,7 +677,7 @@
       "name": "Oyster Mushroom",
       "icon": "fa-mushroom",
       "link": "https://en.wikipedia.org/wiki/Pleurotus_ostreatus",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pleurotus_ostreatus.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Pleurotus_ostreatus.jpg",
       "desc": "Common on dead hardwood trees; shelf-like shape."
     },
     {
@@ -685,7 +685,7 @@
       "name": "Morel",
       "icon": "fa-mushroom",
       "link": "https://en.wikipedia.org/wiki/Morel",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Morchella_esculenta_3.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Morchella_esculenta_3.jpg",
       "desc": "Highly prized honeycomb-like cap; requires cooking before eating."
     },
     {
@@ -693,7 +693,7 @@
       "name": "Porcini",
       "icon": "fa-mushroom",
       "link": "https://en.wikipedia.org/wiki/Boletus_edulis",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Boletus_edulis_3.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Boletus_edulis_3.jpg",
       "desc": "Bolete with brown cap and thick stem; found under birch and pine."
     }
   ],
@@ -703,7 +703,7 @@
       "name": "Honey",
       "icon": "fa-bee",
       "link": "https://en.wikipedia.org/wiki/Honey",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Honey_01.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Honey_01.jpg",
       "desc": "Natural sweetener from beekeeping; local varieties reflect local flora."
     },
     {
@@ -711,7 +711,7 @@
       "name": "Maple Syrup",
       "icon": "fa-leaf",
       "link": "https://en.wikipedia.org/wiki/Maple_syrup",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Maple_syrup.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Maple_syrup.jpg",
       "desc": "Sap from maple trees reduced to syrup; not local but traditional."
     },
     {
@@ -719,7 +719,7 @@
       "name": "Eggs",
       "icon": "fa-egg",
       "link": "https://en.wikipedia.org/wiki/Egg_(food)",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Chicken_eggs.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Chicken_eggs.jpg",
       "desc": "Fresh eggs from local poultry; varies by season."
     },
     {
@@ -727,7 +727,7 @@
       "name": "Milk",
       "icon": "fa-glass-water",
       "link": "https://en.wikipedia.org/wiki/Milk",
-      "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Milk_01.jpg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/11/Milk_01.jpg",
       "desc": "Fresh milk from local farms; check for raw milk providers."
     }
   ]
