@@ -10,27 +10,50 @@ const CACHE_ASSETS = [
   BASE_PATH + 'credits.html',
   BASE_PATH + 'submit.html',
   BASE_PATH + 'topics.html',
+  BASE_PATH + 'footer-details.html',
+  BASE_PATH + 'footer.html',
+  BASE_PATH + 'header.html',
+
   // CSS files
   BASE_PATH + 'css/style.css',
   BASE_PATH + 'css/index.css',
   BASE_PATH + 'css/pages.css',
+  BASE_PATH + 'css/select2-bootstrap.css',
+  BASE_PATH + 'css/topics.css',
+  BASE_PATH + 'css/submit.css',
+
   // JavaScript files
   BASE_PATH + 'scripts/app.js',
   BASE_PATH + 'scripts/base.js',
+  BASE_PATH + 'scripts/form.js',
   BASE_PATH + 'scripts/index.js',
+  BASE_PATH + 'scripts/geocode-towns.js',
+  BASE_PATH + 'scripts/topic.js',
+  BASE_PATH + 'scripts/sanitize.js',
+  BASE_PATH + 'scripts/submit.js',
+  BASE_PATH + 'scripts/topics.js',
+
   // JSON data files
   BASE_PATH + 'items.json',
   BASE_PATH + 'locations.json',
   BASE_PATH + 'categories.json',
+  BASE_PATH + 'topics.json',
+  BASE_PATH + 'uk_counties.json',
+  BASE_PATH + 'uk_towns.json',
+  BASE_PATH + 'scripts/data/footer-details.json',
+
   // Favicon files
   BASE_PATH + 'favicon/favicon.ico',
   BASE_PATH + 'favicon/favicon.svg',
   BASE_PATH + 'favicon/apple-touch-icon.png',
+
   // App manifest
   BASE_PATH + 'site.webmanifest',
-  // Logo assets
+
+  // GFX assets
   BASE_PATH + 'assets/logo.png',
-  BASE_PATH + 'assets/logo_dark.png'
+  BASE_PATH + 'assets/logo_dark.png',
+  ASE_PATH + 'assets/Image-not-found.png '
 ];
 
 self.addEventListener('install', event => {

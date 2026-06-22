@@ -47,7 +47,8 @@ let currentTier = null; // Track current zoom tier ('national', 'county', 'city'
 // Tiered loading zoom thresholds
 const ZOOM_TIER_NATIONAL_MAX = 7; // Zoom 1-7: National view (heatmap only)
 const ZOOM_TIER_COUNTY_MAX = 10; // Zoom 8-10: County view (load county CSVs)
-// Zoom 11+: City/Town view (load specific town CSVs)
+const ZOOM_TIER_CITY_MIN = 11; // Zoom 11: City view (load larger towns with bigger bounds)
+const ZOOM_TIER_TOWN_MIN = 12; // Zoom 12+: Small town view (load all towns with smaller bounds)
 
 // Legacy threshold for heatmap/marker toggle - only show heatmap at very zoomed out levels
 const ZOOM_THRESHOLD = 7; // Show heatmap only when zoomed out to national view (zoom <= 7)
@@ -497,8 +498,8 @@ function detectUserLocationAndLoadData() {
 }
 
 /**
- * Handles initial data loading based on current zoom tier
- */
+  * Handles initial data loading based on current zoom tier
+  */
 function handleInitialDataLoad() {
   const tier = getTierForZoom(map.getZoom());
   currentTier = tier;
@@ -510,8 +511,8 @@ function handleInitialDataLoad() {
   } else if (tier === 'county') {
     // County view - load county data
     loadCountiesForMapView();
-  } else if (tier === 'city') {
-    // City view - load town data
+  } else if (tier === 'city' || tier === 'town') {
+    // City/Town view - load town data
     loadTownForMapView();
   }
 }
@@ -564,7 +565,7 @@ function handleMapMove() {
   // Load data based on current tier
   if (newTier === 'county') {
     loadCountiesForMapView();
-  } else if (newTier === 'city') {
+  } else if (newTier === 'city' || newTier === 'town') {
     loadTownForMapView();
   }
 }
@@ -572,21 +573,23 @@ function handleMapMove() {
 /**
  * Determines the tier based on zoom level
  * @param {number} zoom - Current zoom level
- * @returns {string} - 'national', 'county', or 'city'
+ * @returns {string} - 'national', 'county', 'city', or 'town'
  */
 function getTierForZoom(zoom) {
   if (zoom <= ZOOM_TIER_NATIONAL_MAX) {
     return 'national';
   } else if (zoom <= ZOOM_TIER_COUNTY_MAX) {
     return 'county';
-  } else {
+  } else if (zoom < ZOOM_TIER_TOWN_MIN) {
     return 'city';
+  } else {
+    return 'town';
   }
 }
 
 /**
  * Handles transitions between zoom tiers
- * @param {string} newTier - The new tier ('national', 'county', or 'city')
+ * @param {string} newTier - The new tier ('national', 'county', 'city', or 'town')
  */
 function handleTierChange(newTier) {
   const previousTier = currentTier;
@@ -600,7 +603,7 @@ function handleTierChange(newTier) {
     showHeatmap();
   } else if (newTier === 'county') {
     // County view: clear town data, show county markers
-    if (previousTier === 'city') {
+    if (previousTier === 'city' || previousTier === 'town') {
       clearTownData();
     }
     addStatusMessage('🗺️ County view: Loading county data', 'info');
@@ -611,8 +614,18 @@ function handleTierChange(newTier) {
     }
     showMarkers();
   } else if (newTier === 'city') {
-    // City view: clear county data, load specific town
+    // City view: load specific town (larger towns at zoom 11)
     addStatusMessage('🏙️ City view: Loading detailed town data', 'info');
+    clearCountyData();
+    // Remove heatmap and show markers
+    if (heatLayer) {
+      map.removeLayer(heatLayer);
+      heatLayer = null;
+    }
+    showMarkers();
+  } else if (newTier === 'town') {
+    // Town view: load specific small town (zoom 12+)
+    addStatusMessage('🏘️ Town view: Loading detailed small town data', 'info');
     clearCountyData();
     // Remove heatmap and show markers
     if (heatLayer) {
@@ -686,17 +699,45 @@ function loadTownForMapView() {
  * @returns {Object|null} - Town object or null if not found
  */
 function findTownForLocation(lat, lng) {
+  // At zoom 12+ (town tier), prefer exact matches; at zoom 11 (city tier), prefer larger towns
+  const isTownTier = currentTier === 'town';
+  
+  // First pass: find all matching towns
+  const matchingTowns = [];
+  
   for (const town of ukTowns) {
     if (town.bounds) {
       const { north, south, east, west } = town.bounds;
 
       // Check if coordinates fall within town bounds
       if (lat >= south && lat <= north && lng >= west && lng <= east) {
-        return town;
+        matchingTowns.push(town);
       }
     }
   }
-  return null;
+  
+  if (matchingTowns.length === 0) {
+    return null;
+  }
+  
+  // If at town tier (zoom 12+), prefer smaller towns (tighter bounds) for more precise matching
+  if (isTownTier) {
+    // Sort by bounds area (smaller bounds = more specific town = higher priority)
+    matchingTowns.sort((a, b) => {
+      const areaA = (a.bounds.north - a.bounds.south) * (a.bounds.east - a.bounds.west);
+      const areaB = (b.bounds.north - b.bounds.south) * (b.bounds.east - b.bounds.west);
+      return areaA - areaB; // Smaller area first
+    });
+  } else {
+    // At city tier (zoom 11), prefer larger towns/cities (bigger bounds)
+    matchingTowns.sort((a, b) => {
+      const areaA = (a.bounds.north - a.bounds.south) * (a.bounds.east - a.bounds.west);
+      const areaB = (b.bounds.north - b.bounds.south) * (b.bounds.east - b.bounds.west);
+      return areaB - areaA; // Larger area first (more likely to be a city)
+    });
+  }
+  
+  return matchingTowns[0];
 }
 
 /**

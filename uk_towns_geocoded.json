@@ -2469,17 +2469,7 @@
       "id": "attestborough",
       "name": "Attestborough",
       "csvFile": "data/attestborough_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_attestborough.sql",
-      "center": [
-        52.518,
-        1.01
-      ],
-      "bounds": {
-        "north": 52.538,
-        "south": 52.498,
-        "east": 1.035,
-        "west": 0.985
-      }
+      "sqlFile": "dataconnect/queries/town_attestborough.sql"
     },
     {
       "id": "attleborough",
@@ -4069,17 +4059,7 @@
       "id": "dolphins_barn",
       "name": "Dolphins Barn",
       "csvFile": "data/dolphins_barn_free_food_locations.csv",
-      "sqlFile": "dataconnect/queries/town_dolphins_barn.sql",
-      "center": [
-        52.415,
-        -4.07
-      ],
-      "bounds": {
-        "north": 52.435,
-        "south": 52.395,
-        "east": -4.045,
-        "west": -4.095
-      }
+      "sqlFile": "dataconnect/queries/town_dolphins_barn.sql"
     },
     {
       "id": "dorking",

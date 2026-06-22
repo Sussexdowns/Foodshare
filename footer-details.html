@@ -1,6 +1,6 @@
 <!-- Footer Details -->
 <div id="footer-details">
-  <!-- Close Button -->
+  <!-- Close Button - outside scrollable area -->
   <button type="button" id="footer-close" class="footer-close-btn" aria-label="Close" title="Close details">
     <i class="fas fa-times"></i>
   </button>
@@ -10,42 +10,46 @@
     <span><i class="fa fa-info-circle"></i> Click to see location details</span>
   </div>
 
-  <img id="footer-image" src="" alt="Location Image"
-    style="display: none; max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 8px; flex-shrink: 0;">
+  <!-- Scrollable Content Container -->
+  <div class="footer-scrollable-content">
+    <img id="footer-image" src="" alt="Location Image"
+      style="display: none; max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 8px; flex-shrink: 0;">
 
-  <div class="footer-content" style="flex: 1;">
-    <div class="d-flex align-items-center mb-2 flex-wrap gap-2">
-      <h5 id="footer-title" class="mb-0 me-2">Click on a pin to see details</h5>
-      <span id="footer-category" class="badge bg-secondary">Other</span>
+    <div class="footer-content" style="flex: 1;">
+      <div class="d-flex align-items-center mb-2 flex-wrap gap-2">
+        <h5 id="footer-title" class="mb-0 me-2">Click on a pin to see details</h5>
+        <span id="footer-category" class="badge bg-secondary">Other</span>
+      </div>
+      <p id="footer-description" class="mb-2 text-muted"></p>
+
+      <!-- Footer Actions -->
+      <div id="footer-actions" class="footer-actions" data-id=""
+        style="display: none; gap: 0.5rem; margin-bottom: 0.5rem;">
+        <button class="footer-like-btn btn btn-sm btn-outline-success" title="Like">
+          <i class="fa fa-thumbs-up"></i> <span>0</span>
+        </button>
+        <button class="footer-dislike-btn btn btn-sm btn-outline-danger" title="Dislike">
+          <i class="fa fa-thumbs-down"></i> <span>0</span>
+        </button>
+        <button class="footer-report-btn btn btn-sm btn-outline-warning" title="Report">
+          <i class="fa fa-flag"></i>
+        </button>
+      </div>
+
+      <!-- Action Links -->
+      <div class="footer-links" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <a id="footer-directions" href="#" target="_blank" class="btn btn-sm btn-outline-primary"
+          style="display: none;">
+          <i class="fa fa-map-marker-alt"></i> Get Directions
+        </a>
+        <a id="footer-link" href="#" class="btn btn-sm btn-outline-primary" target="_blank" style="display: none;">
+          <i class="fa fa-info-circle"></i> Learn more
+        </a>
+      </div>
     </div>
-    <p id="footer-description" class="mb-2 text-muted"></p>
+  </div>
 
-    <!-- Footer Actions -->
-    <div id="footer-actions" class="footer-actions" data-id=""
-      style="display: none; gap: 0.5rem; margin-bottom: 0.5rem;">
-      <button class="footer-like-btn btn btn-sm btn-outline-success" title="Like">
-        <i class="fa fa-thumbs-up"></i> <span>0</span>
-      </button>
-      <button class="footer-dislike-btn btn btn-sm btn-outline-danger" title="Dislike">
-        <i class="fa fa-thumbs-down"></i> <span>0</span>
-      </button>
-      <button class="footer-report-btn btn btn-sm btn-outline-warning" title="Report">
-        <i class="fa fa-flag"></i>
-      </button>
-    </div>
-
-    <!-- Action Links -->
-    <div class="footer-links" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-      <a id="footer-directions" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="display: none;">
-        <i class="fa fa-map-marker-alt"></i> Get Directions
-      </a>
-      <a id="footer-link" href="#" class="btn btn-sm btn-outline-primary" target="_blank" style="display: none;">
-        <i class="fa fa-info-circle"></i> Learn more
-      </a>
-    </div>
-   </div>
-
-   <style>
+  <style>
     .footer-close-btn {
       position: absolute;
       top: 10px;
@@ -109,6 +113,39 @@
       pointer-events: none;
     }
 
+    /* Scrollable content container */
+    .footer-scrollable-content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 0 25px 25px;
+      height: calc(100% - 40px);
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .footer-scrollable-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .footer-scrollable-content::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 3px;
+    }
+
+    .footer-scrollable-content::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+
+    body.dark-mode .footer-scrollable-content::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .footer-scrollable-content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
     /* Dark mode support */
     body.dark-mode .footer-close-btn {
       background-color: rgba(37, 37, 64, 0.95);
@@ -132,6 +169,45 @@
 
     body.dark-mode .footer-overlay:hover {
       background: rgba(50, 50, 80, 0.95);
+    }
+
+    /* Mobile styles - smaller height with scrollable content */
+    @media (max-width: 768px) {
+      #footer-details {
+        max-height: 200px !important;
+        height: 200px !important;
+        padding: 20px 15px 15px !important;
+        gap: 15px;
+      }
+
+      .footer-scrollable-content {
+        padding: 0px 15px 15px 15px;
+        gap: 15px;
+      }
+
+      #footer-details #footer-image {
+        max-width: 80px;
+        max-height: 80px;
+        min-width: 60px;
+        min-height: 60px;
+      }
+
+      .footer-content h5 {
+        font-size: 1.1rem !important;
+      }
+
+      .footer-content p {
+        font-size: 0.9rem !important;
+        margin-bottom: 10px !important;
+      }
+
+      .footer-actions {
+        margin-bottom: 10px !important;
+      }
+
+      .footer-close-btn {
+        top: -10px;
+      }
     }
   </style>
 </div>
