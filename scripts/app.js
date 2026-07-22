@@ -14,8 +14,8 @@ const firebaseConfig = window.__FIREBASE_CONFIG__ || {
   storageBucket: "foodshare-50695.firebasestorage.app",
   messagingSenderId: "143975249437",
   appId: "1:143975249437:web:05ffd1cf48cdaddc2338f4",
-   measurementId: "G-HZN4Q1DMFY"
-  };
+  measurementId: "G-HZN4Q1DMFY"
+};
 
 let firebaseApp;
 let db; // Firestore instance
@@ -238,10 +238,10 @@ function createFallbackFooterTemplate() {
           </div>
           <div class="footer-links" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
             <a id="footer-directions" href="#" target="_blank" class="btn btn-sm btn-outline-primary" style="display: none;">
-              <i class="fa fa-map-marker-alt"></i> Get Directions
+              <i class="fa fa-map-marker-alt"></i> <span>Directions</span>
             </a>
             <a id="footer-link" href="#" class="btn btn-sm btn-outline-primary" target="_blank" style="display: none;">
-              <i class="fa fa-info-circle"></i> Learn more
+              <i class="fa fa-info-circle"></i> <span>Learn more</span>
             </a>
           </div>
         </div>
@@ -365,24 +365,24 @@ function initializeFirebase() {
   // Set up auth listeners
   if (typeof firebase.auth !== 'undefined') {
     const auth = firebase.auth();
-    
+
     // Set language
     auth.useDeviceLanguage();
-    
+
     // Configure persistence
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .catch(function(err) {
+      .catch(function (err) {
         console.warn('Auth persistence error:', err);
       });
-    
+
     // Auth state observer
-    auth.onAuthStateChanged(function(user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         console.log('✅ Auth state: User signed in', { uid: user.uid, email: user.email, provider: user.providerData[0]?.providerId });
       } else {
         console.log('Auth state: User signed out');
       }
-    }, function(error) {
+    }, function (error) {
       console.error('Auth state observer error:', error);
     });
   }
@@ -701,10 +701,10 @@ function loadTownForMapView() {
 function findTownForLocation(lat, lng) {
   // At zoom 12+ (town tier), prefer exact matches; at zoom 11 (city tier), prefer larger towns
   const isTownTier = currentTier === 'town';
-  
+
   // First pass: find all matching towns
   const matchingTowns = [];
-  
+
   for (const town of ukTowns) {
     if (town.bounds) {
       const { north, south, east, west } = town.bounds;
@@ -715,11 +715,11 @@ function findTownForLocation(lat, lng) {
       }
     }
   }
-  
+
   if (matchingTowns.length === 0) {
     return null;
   }
-  
+
   // If at town tier (zoom 12+), prefer smaller towns (tighter bounds) for more precise matching
   if (isTownTier) {
     // Sort by bounds area (smaller bounds = more specific town = higher priority)
@@ -736,7 +736,7 @@ function findTownForLocation(lat, lng) {
       return areaB - areaA; // Larger area first (more likely to be a city)
     });
   }
-  
+
   return matchingTowns[0];
 }
 
@@ -1851,8 +1851,8 @@ function addMarker(location) {
       img.src = SecurityUtils.sanitizeUrl(loc.image);
       img.alt = loc.locationName || loc.name || 'Location image';
       img.style = isFullscreen ? 'max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px;' :
-                                 'width: 100%; max-height: 80px; object-fit: cover; border-radius: 4px;';
-      img.onerror = function() { this.style.display = 'none'; };
+        'width: 100%; max-height: 80px; object-fit: cover; border-radius: 4px;';
+      img.onerror = function () { this.style.display = 'none'; };
       imgDiv.appendChild(img);
       container.appendChild(imgDiv);
     }
@@ -2043,12 +2043,12 @@ function displayAllLocations() {
 }
 
 function displayFilteredLocations(locations) {
-   clearMarkers();
+  clearMarkers();
 
-   // Skip on submit page where map doesn't exist
-   if (!map) return;
+  // Skip on submit page where map doesn't exist
+  if (!map) return;
 
-   const currentZoom = map.getZoom();
+  const currentZoom = map.getZoom();
 
   // Only show heatmap at national tier (very zoomed out)
   // Always show markers at county and city tiers
@@ -2120,52 +2120,52 @@ function showFooterDetails(location) {
     categoryBadge.className = `badge bg-${getCategoryColor(location.category)}`;
   }
 
-   // Handle "Get Directions" link visibility based on coordinates
-   if (directionsLink && location.lat && location.lng) {
-     const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking`;
-     directionsLink.href = directionsURL;
-     directionsLink.style.display = 'inline-block';
-     directionsLink.innerHTML = '<i class="fa fa-map-marker-alt"></i> Get Directions';
-     const title = `Get directions to ${location.locationName || location.name}`;
-     directionsLink.title = SecurityUtils.escapeHtml(title);
-   } else if (directionsLink) {
-     directionsLink.style.display = 'none';
-   }
+  // Handle "Get Directions" link visibility based on coordinates
+  if (directionsLink && location.lat && location.lng) {
+    const directionsURL = `https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=walking`;
+    directionsLink.href = directionsURL;
+    directionsLink.style.display = 'inline-block';
+    directionsLink.innerHTML = '<i class="fa fa-map-marker-alt"></i> <span class="footer-link-text">Get Directions</span>';
+    const title = `Get directions to ${location.locationName || location.name}`;
+    directionsLink.title = SecurityUtils.escapeHtml(title);
+  } else if (directionsLink) {
+    directionsLink.style.display = 'none';
+  }
 
-   // Handle "Learn more" link visibility based on link presence
-   if (link) {
-     if (location.link) {
-       link.href = SecurityUtils.sanitizeUrl(location.link);
-       link.style.display = 'inline-block';
-       link.innerHTML = '<i class="fa fa-info-circle"></i> Learn more';
-       const title = `Learn more about ${location.locationName || location.name}`;
-       link.title = SecurityUtils.escapeHtml(title);
-     } else {
-       link.style.display = 'none';
-     }
-   }
+  // Handle "Learn more" link visibility based on link presence
+  if (link) {
+    if (location.link) {
+      link.href = SecurityUtils.sanitizeUrl(location.link);
+      link.style.display = 'inline-block';
+      link.innerHTML = '<i class="fa fa-info-circle"></i> <span class="footer-link-text">Learn more</span>';
+      const title = `Learn more about ${location.locationName || location.name}`;
+      link.title = SecurityUtils.escapeHtml(title);
+    } else {
+      link.style.display = 'none';
+    }
+  }
 
-   // Handle image - show image from CSV or fallback to Image-not-found.png
-   // Respect the showImages setting
-   const showImages = localStorage.getItem('showImages') !== 'false';
+  // Handle image - show image from CSV or fallback to Image-not-found.png
+  // Respect the showImages setting
+  const showImages = localStorage.getItem('showImages') !== 'false';
 
-   if (image) {
-     if (showImages) {
-       if (location.image && location.image.trim() !== '') {
-         image.src = SecurityUtils.sanitizeUrl(location.image);
-         image.onerror = function () {
-           this.style.display = 'none'; // Hide if URL is broken
-         };
-         image.style.display = 'block';
-       } else {
-         // Hide image container if intentionally left empty
-         image.style.display = 'none';
-       }
-     } else {
-       // Images disabled in settings
-       image.style.display = 'none';
-     }
-   }
+  if (image) {
+    if (showImages) {
+      if (location.image && location.image.trim() !== '') {
+        image.src = SecurityUtils.sanitizeUrl(location.image);
+        image.onerror = function () {
+          this.style.display = 'none'; // Hide if URL is broken
+        };
+        image.style.display = 'block';
+      } else {
+        // Hide image container if intentionally left empty
+        image.style.display = 'none';
+      }
+    } else {
+      // Images disabled in settings
+      image.style.display = 'none';
+    }
+  }
 
   // Update footer actions with location ID
   if (footerActions) {
@@ -2192,22 +2192,22 @@ function showFooterDetails(location) {
       footerDislikeBtn.disabled = true;
       footerDislikeBtn.style.opacity = '0.5';
     }
-     if (sessionStorage.getItem(`${locationId}-report`)) {
-       footerReportBtn.disabled = true;
-       footerReportBtn.style.opacity = '0.5';
-     }
+    if (sessionStorage.getItem(`${locationId}-report`)) {
+      footerReportBtn.disabled = true;
+      footerReportBtn.style.opacity = '0.5';
+    }
 
-     // Attach click event handlers to footer action buttons (clone to avoid duplicates)
-     const attachFooterBtnListener = (btn, action) => {
-       if (!btn) return;
-       const newBtn = btn.cloneNode(true);
-       btn.parentNode.replaceChild(newBtn, btn);
-       newBtn.addEventListener('click', () => handleFooterActionClick(action, locationId));
-     };
-     attachFooterBtnListener(footerLikeBtn, 'like');
-     attachFooterBtnListener(footerDislikeBtn, 'dislike');
-     attachFooterBtnListener(footerReportBtn, 'report');
-   }
+    // Attach click event handlers to footer action buttons (clone to avoid duplicates)
+    const attachFooterBtnListener = (btn, action) => {
+      if (!btn) return;
+      const newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      newBtn.addEventListener('click', () => handleFooterActionClick(action, locationId));
+    };
+    attachFooterBtnListener(footerLikeBtn, 'like');
+    attachFooterBtnListener(footerDislikeBtn, 'dislike');
+    attachFooterBtnListener(footerReportBtn, 'report');
+  }
 
   // Show the footer when user clicks on it (add 'open' class)
   footer.classList.add('open');
@@ -2288,7 +2288,7 @@ async function signInWithGoogle() {
   }
 
   const provider = new firebase.auth.GoogleAuthProvider();
-  
+
   try {
     // Ensure auth is ready
     await firebase.auth().signInWithPopup(provider);
@@ -2303,7 +2303,7 @@ async function signInWithGoogle() {
     }
   } catch (err) {
     console.error('Google sign-in error:', err.code, err.message, err);
-    
+
     if (err.code === 'auth/popup-blocked') {
       addStatusMessage('Popup blocked. Allow popups for this site.', 'error');
       alert('Popup blocked. Please allow popups for this site and try again.');
@@ -2329,24 +2329,24 @@ async function signInWithGoogle() {
 }
 
 function handleFeedbackClick(action, id, container) {
-   // If action is 'report', open the modal first (auth checked on submit)
-   if (action === 'report') {
-     openReportModal(id, container);
-     return;
-   }
+  // If action is 'report', open the modal first (auth checked on submit)
+  if (action === 'report') {
+    openReportModal(id, container);
+    return;
+  }
 
-   // Require Google authentication for other actions
-   if (!isUserAuthenticated()) {
-     addStatusMessage('Please sign in with Google to give feedback.', 'warning');
-     signInWithGoogle();
-     return;
-   }
+  // Require Google authentication for other actions
+  if (!isUserAuthenticated()) {
+    addStatusMessage('Please sign in with Google to give feedback.', 'warning');
+    signInWithGoogle();
+    return;
+  }
 
-   const key = `${id}-${action}`;
-   if (sessionStorage.getItem(key)) {
-     addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
-     return;
-   }
+  const key = `${id}-${action}`;
+  if (sessionStorage.getItem(key)) {
+    addStatusMessage(`Already submitted feedback for ${action} on ID ${id}.`, 'warning');
+    return;
+  }
 
   // Disable button IMMEDIATELY when clicked to prevent double-clicking
   const btn = container.querySelector(`.${action}-btn`);
@@ -2367,53 +2367,53 @@ function handleFeedbackClick(action, id, container) {
  * Open the report modal for a specific location
  */
 function openReportModal(sourceId, container) {
-   const modalEl = document.getElementById('reportModal');
-   if (!modalEl) return;
+  const modalEl = document.getElementById('reportModal');
+  if (!modalEl) return;
 
-   // Set the sourceId in the modal
-   document.getElementById('report-source-id').value = sourceId;
+  // Set the sourceId in the modal
+  document.getElementById('report-source-id').value = sourceId;
 
-   // Reset modal fields
-   const reasonSelect = document.getElementById('report-reason');
-   const detailsTextarea = document.getElementById('report-details');
-   const alertDiv = document.getElementById('report-alert');
-   const signinBtn = document.getElementById('report-signin');
-   const submitBtn = document.getElementById('report-submit');
+  // Reset modal fields
+  const reasonSelect = document.getElementById('report-reason');
+  const detailsTextarea = document.getElementById('report-details');
+  const alertDiv = document.getElementById('report-alert');
+  const signinBtn = document.getElementById('report-signin');
+  const submitBtn = document.getElementById('report-submit');
 
-   reasonSelect.value = '';
-   reasonSelect.classList.remove('is-invalid');
-   detailsTextarea.value = '';
-   alertDiv.classList.add('d-none');
-   alertDiv.className = 'alert alert-info d-none';
+  reasonSelect.value = '';
+  reasonSelect.classList.remove('is-invalid');
+  detailsTextarea.value = '';
+  alertDiv.classList.add('d-none');
+  alertDiv.className = 'alert alert-info d-none';
 
-   // Store container reference for updating after submit
-   modalEl.dataset.containerId = container ? 'popup' : 'footer';
+  // Store container reference for updating after submit
+  modalEl.dataset.containerId = container ? 'popup' : 'footer';
 
-   // Check auth state and show/hide sign-in button
-   if (isUserAuthenticated()) {
-     signinBtn.style.display = 'none';
-     submitBtn.style.display = 'inline-block';
-   } else {
-     signinBtn.style.display = 'inline-block';
-     submitBtn.style.display = 'none';
-   }
+  // Check auth state and show/hide sign-in button
+  if (isUserAuthenticated()) {
+    signinBtn.style.display = 'none';
+    submitBtn.style.display = 'inline-block';
+  } else {
+    signinBtn.style.display = 'inline-block';
+    submitBtn.style.display = 'none';
+  }
 
-   // Show modal using Bootstrap 5 API
-   const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-   modal.show();
+  // Show modal using Bootstrap 5 API
+  const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+  modal.show();
 }
 
 /**
  * Handle sign-in from report modal
  */
 async function handleReportSignin() {
-   const success = await signInWithGoogle();
-   if (success) {
-     const signinBtn = document.getElementById('report-signin');
-     const submitBtn = document.getElementById('report-submit');
-     signinBtn.style.display = 'none';
-     submitBtn.style.display = 'inline-block';
-   }
+  const success = await signInWithGoogle();
+  if (success) {
+    const signinBtn = document.getElementById('report-signin');
+    const submitBtn = document.getElementById('report-submit');
+    signinBtn.style.display = 'none';
+    submitBtn.style.display = 'inline-block';
+  }
 }
 
 
@@ -2424,127 +2424,127 @@ async function handleReportSignin() {
  * Handle report submission from modal
  */
 function submitReport() {
-   const sourceId = document.getElementById('report-source-id').value;
-   const reason = document.getElementById('report-reason').value;
-   const details = document.getElementById('report-details').value.trim();
-   const alertDiv = document.getElementById('report-alert');
-   const reasonSelect = document.getElementById('report-reason');
+  const sourceId = document.getElementById('report-source-id').value;
+  const reason = document.getElementById('report-reason').value;
+  const details = document.getElementById('report-details').value.trim();
+  const alertDiv = document.getElementById('report-alert');
+  const reasonSelect = document.getElementById('report-reason');
 
-// Reset alert
-    alertDiv.classList.add('d-none');
-    reasonSelect.classList.remove('is-invalid');
+  // Reset alert
+  alertDiv.classList.add('d-none');
+  reasonSelect.classList.remove('is-invalid');
 
-    // Validation
-    if (!reason) {
-      reasonSelect.classList.add('is-invalid');
-      alertDiv.classList.remove('d-none');
-      alertDiv.className = 'alert alert-danger';
-      alertDiv.innerHTML = '<strong>Please select a reason for the report.</strong>';
-      return;
-    }
+  // Validation
+  if (!reason) {
+    reasonSelect.classList.add('is-invalid');
+    alertDiv.classList.remove('d-none');
+    alertDiv.className = 'alert alert-danger';
+    alertDiv.innerHTML = '<strong>Please select a reason for the report.</strong>';
+    return;
+  }
 
-    if (!sourceId) {
-      alertDiv.classList.remove('d-none');
-      alertDiv.className = 'alert alert-danger';
-      alertDiv.innerHTML = '<strong>Error:</strong> Source ID missing. Please try again.';
-      return;
-    }
+  if (!sourceId) {
+    alertDiv.classList.remove('d-none');
+    alertDiv.className = 'alert alert-danger';
+    alertDiv.innerHTML = '<strong>Error:</strong> Source ID missing. Please try again.';
+    return;
+  }
 
-    const user = firebase.auth().currentUser;
-    if (!user) {
-      alertDiv.classList.remove('d-none');
-      alertDiv.className = 'alert alert-danger';
-      alertDiv.innerHTML = '<strong>Error:</strong> You must be signed in to submit a report.';
-      return;
-    }
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    alertDiv.classList.remove('d-none');
+    alertDiv.className = 'alert alert-danger';
+    alertDiv.innerHTML = '<strong>Error:</strong> You must be signed in to submit a report.';
+    return;
+  }
 
-    const reportData = {
-      sourceId: sourceId,
-      reason: reason,
-      details: details || '',
-      userId: user.uid,
-      userEmail: user.email || '',
-      name: reason,
-      status: 'pending',
-      adminNote: '',
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
+  const reportData = {
+    sourceId: sourceId,
+    reason: reason,
+    details: details || '',
+    userId: user.uid,
+    userEmail: user.email || '',
+    name: reason,
+    status: 'pending',
+    adminNote: '',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
 
-    const submitBtn = document.getElementById('report-submit');
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
-    }
+  const submitBtn = document.getElementById('report-submit');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
+  }
 
-    // Submit to Firestore reports collection
-    const db = firebase.firestore();
-    db.collection('reports').add(reportData)
-      .then(docRef => {
-        console.log('Report submitted with ID:', docRef.id);
-        addStatusMessage('Report submitted successfully. Thank you.', 'success');
+  // Submit to Firestore reports collection
+  const db = firebase.firestore();
+  db.collection('reports').add(reportData)
+    .then(docRef => {
+      console.log('Report submitted with ID:', docRef.id);
+      addStatusMessage('Report submitted successfully. Thank you.', 'success');
 
-        // Hide modal
-        const modalEl = document.getElementById('reportModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if (modal) modal.hide();
+      // Hide modal
+      const modalEl = document.getElementById('reportModal');
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
 
-        // Also submit feedback via Apps Script to increment report count on source
-        submitFeedback(sourceId, 'report');
+      // Also submit feedback via Apps Script to increment report count on source
+      submitFeedback(sourceId, 'report');
 
-        // Submit to Google Form for approval workflow
-        fetch(fileExec, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({
-            sourceId: sourceId,
-            reason: reason,
-            details: details,
-            postedByEmail: user.email || ''
-          })
-}).catch(() => {});
+      // Submit to Google Form for approval workflow
+      fetch(fileExec, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          sourceId: sourceId,
+          reason: reason,
+          details: details,
+          postedByEmail: user.email || ''
+        })
+      }).catch(() => { });
 
-        // Mark as reported in session storage
-        sessionStorage.setItem(`${sourceId}-report`, 'true');
-      })
-      .catch(err => {
-        console.error('Error submitting report:', err);
-        if (err.code === 'permission-denied') {
-          alertDiv.classList.remove('d-none');
-          alertDiv.className = 'alert alert-danger';
-          alertDiv.innerHTML = '<strong>Permission denied.</strong> You must be signed in with Google to submit a report.';
-        } else {
-          alertDiv.classList.remove('d-none');
-          alertDiv.className = 'alert alert-danger';
-          alertDiv.innerHTML = '<strong>Failed to submit report.</strong> Please try again.';
-        }
-      })
-      .finally(() => {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Submit Report';
-        }
-      });
+      // Mark as reported in session storage
+      sessionStorage.setItem(`${sourceId}-report`, 'true');
+    })
+    .catch(err => {
+      console.error('Error submitting report:', err);
+      if (err.code === 'permission-denied') {
+        alertDiv.classList.remove('d-none');
+        alertDiv.className = 'alert alert-danger';
+        alertDiv.innerHTML = '<strong>Permission denied.</strong> You must be signed in with Google to submit a report.';
+      } else {
+        alertDiv.classList.remove('d-none');
+        alertDiv.className = 'alert alert-danger';
+        alertDiv.innerHTML = '<strong>Failed to submit report.</strong> Please try again.';
+      }
+    })
+    .finally(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Submit Report';
+      }
+    });
 }
 
 /**
  * Handle footer action button clicks (like/dislike/report from footer panel)
  */
 function handleFooterActionClick(action, locationId) {
-   // For report, open modal first (auth checked on submit)
-   if (action === 'report') {
-     openReportModal(locationId, 'footer');
-     return;
-   }
+  // For report, open modal first (auth checked on submit)
+  if (action === 'report') {
+    openReportModal(locationId, 'footer');
+    return;
+  }
 
-   // Require Google authentication for other actions
-   if (!isUserAuthenticated()) {
-     addStatusMessage('Please sign in with Google to give feedback.', 'warning');
-     signInWithGoogle();
-     return;
-   }
+  // Require Google authentication for other actions
+  if (!isUserAuthenticated()) {
+    addStatusMessage('Please sign in with Google to give feedback.', 'warning');
+    signInWithGoogle();
+    return;
+  }
 
-   const key = `${locationId}-${action}`;
+  const key = `${locationId}-${action}`;
   if (sessionStorage.getItem(key)) {
     addStatusMessage(`Already submitted ${action} for this location.`, 'warning');
     return;
@@ -2750,6 +2750,22 @@ styleSheet.innerText = `
 #footer-details.open #footer-actions {
   display: flex !important;
 }
+
+/* On small screens, hide the text in footer links to save space */
+@media (max-width: 420px) {
+  .footer-link-text {
+    display: none;
+  }
+
+  /* Hide main footer nav text on small screens */
+  .footer-nav-text {
+    display: none;
+  }
+
+  /* Hide extra text in the footer on small screens */
+  .hide-on-small {
+    display: none;
+  }
+}
 `;
 document.head.appendChild(styleSheet);
-

@@ -336,4 +336,38 @@ function attachFooterEventListeners() {
 document.addEventListener('DOMContentLoaded', function () {
   // Load header and footer
   loadHeaderFooter();
+
+  // Inject shared responsive styles used across multiple pages
+  const sharedStyles = document.createElement('style');
+  sharedStyles.textContent = `
+    /* On small screens, hide text in various footer links to save space */
+    @media (max-width: 420px) {
+      /* For location detail buttons like "Get Directions" */
+      .footer-link-text {
+        display: none;
+      }
+
+      /* For main footer nav links like "Credits" and "Contact" */
+      .footer-nav-text {
+        display: none;
+      }
+
+      /* For copyright text like ". All rights reserved." */
+      .hide-on-small {
+        display: none;
+      }
+    }
+
+    /* Dark mode adjustments for close buttons */
+    .dark-mode .btn-close {
+      filter: invert(1) grayscale(100) brightness(200);
+    }
+
+    .dark-mode .footer-details-panel .footer-close {
+      color: #fff;
+      background-color: #495057;
+      border-color: #6c757d;
+    }
+  `;
+  document.head.appendChild(sharedStyles);
 });
